@@ -1,0 +1,65 @@
+# ==========================================
+# .gitignore for KTPM-2026-Seminar (Group 02)
+# ==========================================
+
+# Visual Studio / .NET / C#
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+.vs/
+TestResults/
+*.trx
+
+# Katalon Studio
+.cache/
+Libs/
+Reports/
+.classpath
+.project
+.settings/
+temp/
+
+# Python (if used for scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.venv/
+env/
+venv/
+ENV/
+
+# Large media files (Upload to YouTube as unlisted videos per requirements)
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.wmv
+
+# Office temporary lock files
+~$*.xlsx
+~$*.docx
+~$*.pptx
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Temporary archives / zips (packaging artifacts)
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Local backup / unzipped duplicate folders
+Group02_ZipTool/
+
+# Editor directories (keep user configs out of repo)
+.idea/
+.vscode/

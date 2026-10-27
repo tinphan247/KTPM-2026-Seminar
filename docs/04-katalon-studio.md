@@ -237,6 +237,100 @@ Qua quá trình triển khai automation thực tế trên ứng dụng WPF `Mini
 3. **Kiểm tra độ duy nhất của Locator:**
    * Luôn sử dụng tính năng **Verify / Highlight** trước khi bấm lưu. Nếu trình soi báo tìm thấy nhiều hơn 1 phần tử (*Multiple elements found*), cần bổ sung thêm điều kiện lọc hoặc ưu tiên chuyển sang `ACCESSIBILITY_ID` để đảm bảo tính tất định khi chạy tự động.
 
+### 2.4 Cấu trúc Dự án và Tổ chức Thực thi: Test Case, Test Suite và Test Listener
+
+Katalon Studio tổ chức các thành phần kiểm thử theo mô hình phân cấp chặt chẽ từ mức độ chi tiết (nguyên tử) đến mức độ điều phối kịch bản quy mô lớn. Việc nắm vững cấu trúc này giúp tester xây dựng các bộ kịch bản có khả năng mở rộng (scalability), dễ bảo trì và tích hợp mượt mà vào luồng CI/CD.
+
+#### 2.4.1 Mô hình phân cấp kiểm thử (Hierarchy Model)
+
+```mermaid
+graph TD
+    TSC["Test Suite Collection (Điều phối đa môi trường, Chạy song song/Tuần tự)"]
+    TS1["Test Suite: Smoke / BVA Test (Data Binding, Iteration)"]
+    TS2["Test Suite: Regression Test"]
+    TL["Test Listener (Hook AOP: @Before, @After, Auto Screenshot)"]
+    TC1["Test Case 1: Login Success (.groovy + .tc)"]
+    TC2["Test Case 2: Login Failed (.groovy + .tc)"]
+    TC3["Test Case 3: BVA Calculation (.groovy + .tc)"]
+    OR["Object Repository (.wrs)"]
+    TD["Test Data (Excel / CSV)"]
+
+    TSC --> TS1
+    TSC --> TS2
+    TS1 --> TC1
+    TS1 --> TC2
+    TS1 --> TC3
+    TS2 --> TC1
+    TD -.->|Data Binding| TS1
+    TC1 --> OR
+    TC2 --> OR
+    TC3 --> OR
+    TL -.->|Lắng nghe & Can thiệp sự kiện| TS1
+    TL -.->|Lắng nghe & Can thiệp sự kiện| TS2
+    TL -.->|Lắng nghe & Can thiệp sự kiện| TC1
+```
+
+#### 2.4.2 Chi tiết các thành phần cốt lõi
+
+##### 1. Test Case (Đơn vị kiểm thử cơ sở - Atomic Test Unit)
+* **Khái niệm:** Là đơn vị kiểm thử nhỏ nhất, độc lập, thực hiện một chuỗi thao tác nghiệp vụ và xác minh kết quả (Checkpoint/Assertion).
+* **Cấu trúc lưu trữ nội bộ:** Mỗi Test Case trong Katalon được tạo thành bởi 2 tập tin:
+  * `[TênTestCase].groovy`: Chứa toàn bộ mã nguồn kiểm thử thực thi bằng ngôn ngữ Groovy (gọi các từ khóa `Windows.*`, xử lý luồng logic `if/else`, vòng lặp, `assert`).
+  * `[TênTestCase].tc`: Tập tin XML lưu trữ thông tin định danh (UUID), mô tả, các thẻ phân loại (Tags), và đặc biệt là **bảng khai báo biến nội bộ** (`<variableLinks>`).
+* **Test Case Variables (Biến tham số hóa):**
+  * Định nghĩa trong tab *Variables* của Test Case.
+  * Đóng vai trò là các tham số đầu vào (ví dụ: `var_A`, `var_B`, `var_Expected`). Khi chạy đơn lẻ, biến nhận giá trị mặc định (Default Value); khi chạy trong Test Suite, giá trị này sẽ được ghi đè tự động bởi các dòng dữ liệu từ file Excel/CSV.
+
+##### 2. Test Suite & Test Suite Collection (Tổ chức & Điều phối kịch bản)
+* **Test Suite (`.ts` / `.tss`):**
+  * **Mục đích:** Nhóm các Test Case có chung mục tiêu kiểm thử (ví dụ: Sanity Suite, Regression Suite, hoặc Data-Driven BVA Suite).
+  * **Cơ chế Data Binding (Ràng buộc dữ liệu):** Test Suite là trung gian kết nối giữa **Test Data** (file Excel `BVA_TestData.xlsx`) và **Test Case Variables**. Tester thiết lập ánh xạ (Variable Mapping) theo cột dữ liệu. Khi chạy Suite, Katalon sẽ tự động lặp lại Test Case $N$ lần tương ứng với $N$ dòng dữ liệu (đã thực chứng chạy 12 kịch bản biên BVA trong `BVA_TestSuite`).
+  * **Tùy chọn thực thi:** Hỗ trợ chạy lại ca kiểm thử bị lỗi (*Retry on Failure*) giúp giảm thiểu sai số do môi trường.
+* **Test Suite Collection (`.tsc`):**
+  * Nhóm nhiều Test Suite lại với nhau để thực thi trong các đợt phát hành lớn.
+  * Hỗ trợ 2 chế độ điều phối:
+    * *Sequential:* Chạy lần lượt từng Test Suite.
+    * *Parallel:* Phân bổ chạy song song nhiều Test Suite trên nhiều luồng hoặc môi trường khác nhau để rút ngắn thời gian phản hồi kiểm thử.
+
+##### 3. Test Listener (Cơ chế Hook can thiệp vòng đời kiểm thử theo AOP)
+* **Bản chất kỹ thuật:** Test Listener áp dụng nguyên lý **Lập trình hướng khía cạnh (Aspect-Oriented Programming - AOP)**. Nó cho phép tester chèn các đoạn mã xử lý xuyên suốt (cross-cutting concerns) vào các mốc thời gian của vòng đời kiểm thử mà không làm biến đổi hay phụ thuộc vào mã nguồn của từng Test Case riêng lẻ.
+* **4 Annotation vòng đời cốt lõi (Lifecycle Hooks):**
+
+| Annotation | Thời điểm kích hoạt | Ứng dụng thực tế tiêu biểu |
+|---|---|---|
+| **`@BeforeTestSuite`** | 1 lần duy nhất ngay trước khi Test Suite bắt đầu chạy | Khởi động tiến trình WinAppDriver, dọn dẹp thư mục báo cáo cũ, chuẩn bị dữ liệu mẫu vào cơ sở dữ liệu. |
+| **`@BeforeTestCase`** | Trước mỗi Test Case được gọi | Đảm bảo ứng dụng Desktop sạch trạng thái (kill tiến trình treo cũ), ghi nhận thời gian bắt đầu chạy. |
+| **`@AfterTestCase`** | Ngay sau khi mỗi Test Case kết thúc | Dọn dẹp session, đóng ứng dụng kiểm thử, **chụp ảnh màn hình tự động nếu Test Case bị FAIL/ERROR**. |
+| **`@AfterTestSuite`** | 1 lần duy nhất sau khi toàn bộ Suite hoàn tất | Đóng WinAppDriver, tổng hợp báo cáo HTML/PDF, kích hoạt Webhook gửi thông báo kết quả vào Slack/Email. |
+
+* **Minh chứng triển khai thực tế trong đồ án (`ScreenshotOnFailure.groovy`):**
+  Nhóm đã xây dựng Test Listener chuyên trách chụp ảnh màn hình lỗi, tự động lưu vào thư mục `Reports/Screenshots/` khi có assert thất bại:
+  ```groovy
+  class ScreenshotOnFailure {
+      @AfterTestCase
+      def captureOnFailure(TestCaseContext testCaseContext) {
+          if (testCaseContext.getTestCaseStatus() == 'FAILED' || testCaseContext.getTestCaseStatus() == 'ERROR') {
+              String timestamp = new SimpleDateFormat('yyyyMMdd_HHmmss').format(new Date())
+              String tcName = testCaseContext.getTestCaseId().replace('/', '_')
+              String screenshotPath = "Reports/Screenshots/FAIL_${tcName}_${timestamp}.png"
+              
+              Windows.takeScreenshot(screenshotPath)
+              println ">>> [TEST LISTENER] Đã tự động chụp ảnh màn hình lỗi: ${screenshotPath}"
+          }
+      }
+  }
+  ```
+  *Ý nghĩa thực tiễn:* Giúp tester và lập trình viên có ngay bằng chứng trực quan (Visual Evidence) để điều tra lỗi (Root Cause Analysis) mà không cần phải nhồi nhét mã lệnh `try-catch` vào từng Test Case.
+
+#### 2.4.3 Bảng so sánh phạm vi và trách nhiệm (Scope & Responsibility Matrix)
+
+| Tiêu chí | Test Case | Test Suite | Test Listener |
+|---|---|---|---|
+| **Định dạng tập tin** | `.groovy` (script) + `.tc` (XML) | `.ts` (XML) + `.tss` (snapshot) + `.groovy` | `.groovy` (chứa các hook annotations) |
+| **Phạm vi tác động (Scope)** | Cục bộ trong 1 kịch bản kiểm thử | Cụm kịch bản được liên kết trong Suite | Toàn cục xuyên suốt các Suite và Case |
+| **Trách nhiệm chính** | Thực hiện các bước thao tác và kiểm tra kết quả nghiệp vụ (Action & Assertion) | Điều phối luồng chạy, ràng buộc dữ liệu Data-Driven, cấu hình Retry | Giám sát trạng thái, thiết lập/dọn dẹp môi trường (Setup/Teardown), chụp ảnh lỗi tự động |
+| **Khả năng tái sử dụng** | Có thể được gọi độc lập hoặc gọi lồng nhau qua `callTestCase()` | Tái sử dụng để lập lịch chạy định kỳ hoặc đưa vào CI/CD pipeline | Tự động áp dụng cho mọi kịch bản mà không cần gọi tường minh |
+
 ---
 
 ## 3. Ba Năng Lực Cốt Lõi (Theo Lý Thuyết Kiểm Thử)

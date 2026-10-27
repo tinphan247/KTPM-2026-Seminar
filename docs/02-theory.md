@@ -38,6 +38,12 @@
    - 8.2 [Nguyên nhân gốc rễ](#82-nguyên-nhân-gốc-rễ)
    - 8.3 [Cách phát hiện](#83-cách-phát-hiện)
    - 8.4 [Cách xử lý](#84-cách-xử-lý)
+9. [Wait Strategy – Implicit, Explicit và Fluent Wait](#9-wait-strategy--implicit-explicit-và-fluent-wait)
+   - 9.1 [Vì sao phải chờ](#91-vì-sao-phải-chờ)
+   - 9.2 [Implicit Wait](#92-implicit-wait)
+   - 9.3 [Explicit Wait](#93-explicit-wait)
+   - 9.4 [Fluent Wait](#94-fluent-wait)
+   - 9.5 [So sánh và cách chọn](#95-so-sánh-và-cách-chọn)
 12. [Fully vs Semi-Automated](#12-fully-vs-semi-automated)
    - 12.1 [Fully Automated](#121-fully-automated)
    - 12.2 [Semi-Automated](#122-semi-automated)
@@ -451,6 +457,97 @@ Flaky test là vấn đề nghiêm trọng hơn việc “không có test”, v�
 | Hành động | Sửa script (wait, locator, isolation) | Báo lỗi cho đội phát triển |
 
 > **Liên hệ MiniSum:** sau khi đăng nhập thành công, ứng dụng cố ý **giữ màn hình Login thêm 1 giây** trước khi mở cửa sổ Calculator. Nếu script không chờ mà đọc `lblMessage` hoặc tìm `winMain` ngay lập tức, test sẽ flaky. Đây là tình huống được dùng để minh hoạ wait strategy ở mục tiếp theo.
+
+---
+
+## 9. Wait Strategy – Implicit, Explicit và Fluent Wait
+
+### 9.1 Vì sao phải chờ
+
+Trong desktop app, giao diện **không cập nhật đồng bộ với thao tác của script**: cửa sổ cần thời gian khởi tạo handle, hiệu ứng chuyển màn hình có animation, xử lý nghiệp vụ chạy trên UI thread, dữ liệu được tải từ đĩa/dịch vụ. Nếu script tìm control hoặc đọc giá trị ngay sau khi click, nó có thể chạy *trước* khi ứng dụng kịp phản hồi → sinh ra flaky test.
+
+Có ba cơ chế chờ phổ biến trong automation desktop, đều được hỗ trợ bởi WinAppDriver/Appium và Katalon Studio.
+
+### 9.2 Implicit Wait
+
+**Implicit Wait** là thời gian chờ mặc định được cấu hình **một lần cho toàn bộ driver**. Mỗi khi gọi tìm phần tử, driver sẽ thử lại liên tục trong khoảng thời gian này trước khi ném `NoSuchElementException`.
+
+```csharp
+// C# – WinAppDriver: chờ tối đa 10 giây cho MỌI lệnh tìm phần tử
+driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+```
+
+- **Ưu điểm:** cấu hình một dòng, áp dụng cho mọi locator, script gọn.
+- **Nhược điểm:** không phân biệt được “phần tử chưa xuất hiện” với “phần tử không bao giờ xuất hiện” → test chậm và khó chẩn đoán; không kiểm tra được điều kiện phức tạp (text đã đổi chưa, nút đã Enabled chưa). Khi một phần tử thật sự không tồn tại, mỗi lần tìm đều phải chờ hết timeout.
+
+### 9.3 Explicit Wait
+
+**Explicit Wait** chờ **một điều kiện cụ thể** trên **một phần tử cụ thể**, với timeout riêng cho từng bước. Đây là cách được khuyến nghị.
+
+```csharp
+// C# – WinAppDriver: chờ cửa sổ Calculator xuất hiện (tối đa 10 giây)
+var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+wait.Until(d => d.FindElementByAccessibilityId("winMain").Displayed);
+
+// Chờ nhãn kết quả có nội dung mong đợi
+var result = wait.Until(d =>
+{
+    var text = d.FindElementByAccessibilityId("lblResult").Text;
+    return text == "Ket qua: 5 + 7 = 12" ? text : null;
+});
+```
+
+```groovy
+// Katalon Studio (Windows Desktop) – chờ cửa sổ và phần tử
+Windows.waitForElementPresent(
+    findWindowsObject('Object Repository/MiniSum/Calculator/winMain'), 10)
+Windows.switchToWindowTitle('MiniSum - Tinh tong')
+Windows.waitForElementPresent(
+    findWindowsObject('Object Repository/MiniSum/Calculator/lblResult'), 10)
+```
+
+- **Ưu điểm:** rõ ràng về mặt ý định, chỉ chờ đúng nơi cần, timeout ngắn và dễ chẩn đoán khi FAIL, có thể chờ điều kiện phức tạp.
+- **Nhược điểm:** phải viết thêm code; nếu quên ở một bước vẫn có thể flaky.
+
+### 9.4 Fluent Wait
+
+**Fluent Wait** là dạng mở rộng của Explicit Wait, cho phép cấu hình **tần suất kiểm tra (polling interval)** và **danh sách exception được bỏ qua** trong lúc chờ.
+
+```csharp
+var fluentWait = new DefaultWait<WindowsDriver<WindowsElement>>(driver)
+{
+    Timeout = TimeSpan.FromSeconds(15),
+    PollingInterval = TimeSpan.FromMilliseconds(500)
+};
+fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+
+string message = fluentWait.Until(d =>
+{
+    var el = d.FindElementByAccessibilityId("lblMessage");
+    return string.IsNullOrWhiteSpace(el.Text) ? null : el.Text;
+});
+```
+
+- **Ưu điểm:** kiểm soát chi tiết nhịp kiểm tra, bỏ qua các lỗi tạm thời (phần tử bị dựng lại → `StaleElementReference`), phù hợp với ứng dụng khởi động chậm hoặc có animation dài.
+- **Nhược điểm:** cấu hình phức tạp, dễ lạm dụng thành “chờ vô tội vạ” làm test chậm.
+
+### 9.5 So sánh và cách chọn
+
+| Tiêu chí | Implicit Wait | Explicit Wait | Fluent Wait |
+|---|---|---|---|
+| Phạm vi | Toàn bộ driver | Từng bước | Từng bước |
+| Điều kiện chờ | Chỉ “tìm thấy phần tử” | Mọi điều kiện tự định nghĩa | Mọi điều kiện + polling + ignore exception |
+| Cấu hình | Một lần | Mỗi lần gọi | Mỗi lần gọi, nhiều tham số |
+| Khả năng chẩn đoán khi FAIL | Thấp (chỉ biết timeout) | Cao | Cao |
+| Khuyến nghị | Chỉ dùng làm lưới an toàn, timeout nhỏ (3–5s) | **Mặc định nên dùng** | Khi cần kiểm soát chi tiết |
+
+**Nguyên tắc thực hành:**
+- **Không dùng `Thread.Sleep`/`delay` cố định** làm cơ chế chờ chính: máy nhanh thì lãng phí, máy chậm vẫn flaky. Chỉ dùng khi thật sự cần (ví dụ chờ animation ngắn) và phải ghi chú lý do.
+- Mỗi bước chờ nên gắn với **một điều kiện nghiệp vụ** (“cửa sổ Calculator đã mở”, “lblResult đã có nội dung”) thay vì “chờ 2 giây”.
+- Đặt timeout theo **thời gian phản hồi thực tế đo được × 2–3**, không đặt quá lớn.
+- Tránh trộn Implicit Wait với Explicit Wait trong cùng session vì thời gian chờ thực tế sẽ khó dự đoán.
+
+> **Áp dụng cho MiniSum:** sau khi đăng nhập thành công, ứng dụng giữ màn hình Login 1 giây rồi mới mở Calculator. Script nên dùng `waitForElementPresent(winMain, 10)` / `WebDriverWait` thay vì `Thread.Sleep(1000)`; cách này vừa nhanh hơn khi máy khoẻ, vừa không flaky khi máy chậm.
 
 ---
 

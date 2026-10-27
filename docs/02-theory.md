@@ -44,6 +44,11 @@
    - 9.3 [Explicit Wait](#93-explicit-wait)
    - 9.4 [Fluent Wait](#94-fluent-wait)
    - 9.5 [So sánh và cách chọn](#95-so-sánh-và-cách-chọn)
+10. [Test Oracle](#10-test-oracle)
+   - 10.1 [Khái niệm](#101-khái-niệm)
+   - 10.2 [Phân loại Test Oracle](#102-phân-loại-test-oracle)
+   - 10.3 [Test Oracle trong kiểm thử tự động](#103-test-oracle-trong-kiểm-thử-tự-động)
+   - 10.4 [Bài toán Oracle và giới hạn](#104-bài-toán-oracle-và-giới-hạn)
 12. [Fully vs Semi-Automated](#12-fully-vs-semi-automated)
    - 12.1 [Fully Automated](#121-fully-automated)
    - 12.2 [Semi-Automated](#122-semi-automated)
@@ -548,6 +553,80 @@ string message = fluentWait.Until(d =>
 - Tránh trộn Implicit Wait với Explicit Wait trong cùng session vì thời gian chờ thực tế sẽ khó dự đoán.
 
 > **Áp dụng cho MiniSum:** sau khi đăng nhập thành công, ứng dụng giữ màn hình Login 1 giây rồi mới mở Calculator. Script nên dùng `waitForElementPresent(winMain, 10)` / `WebDriverWait` thay vì `Thread.Sleep(1000)`; cách này vừa nhanh hơn khi máy khoẻ, vừa không flaky khi máy chậm.
+
+---
+
+## 10. Test Oracle
+
+### 10.1 Khái niệm
+
+**Test Oracle** là **cơ chế hoặc nguồn thông tin dùng để xác định một kết quả kiểm thử là ĐÚNG hay SAI**. Nói cách khác, oracle trả lời câu hỏi: *“Làm sao biết giá trị ứng dụng trả về là chấp nhận được?”*
+
+Một test case không có oracle chỉ là chuỗi thao tác mô phỏng người dùng; nó không thể kết luận PASS/FAIL. Oracle tồn tại **độc lập với công cụ kiểm thử**: Katalon, WinAppDriver hoặc một script PowerShell đều chỉ là phương tiện thực thi, còn tính đúng/sai do oracle quyết định.
+
+```
+Test Case: nhập A = 5, B = 7, nhấn TINH TONG
+                     │
+                     ▼
+        Giá trị thực tế: lblResult = "Ket qua: 5 + 7 = 12"
+                     │
+        ┌────────────┴─────────────┐
+        ▼                          ▼
+   Oracle: đặc tả quy tắc      So sánh
+   "lblResult = Ket qua: A + B = A+B"
+        │
+        ▼
+   Khớp → PASS  |  Không khớp → FAIL
+```
+
+### 10.2 Phân loại Test Oracle
+
+| Loại oracle | Nguồn xác định kết quả đúng | Ví dụ trên MiniSum |
+|---|---|---|
+| **Specified oracle** (theo đặc tả) | Yêu cầu/tài liệu đặc tả của hệ thống | Đặc tả ghi: đăng nhập sai phải hiển thị `Sai tai khoan hoac mat khau` |
+| **Derived oracle** (suy dẫn) | Tính toán từ công thức, bảng quyết định, giá trị biên | Với A = -99, B = 99 → kỳ vọng `Ket qua: -99 + 99 = 0` |
+| **Implicit oracle** (ngầm định) | Kỳ vọng hiển nhiên: không crash, không treo, không rò rỉ | Sau khi nhấn TINH TONG, ứng dụng vẫn phản hồi và không hiện hộp thoại lỗi .NET |
+| **Consistency oracle** (nhất quán) | So sánh giữa hai lần chạy / hai phiên bản / hai môi trường | Cùng bộ dữ liệu BVA, kết quả của v1 và v3 phải giống nhau ở miền hợp lệ |
+| **Human oracle** (con người) | Chuyên gia/người dùng đánh giá bằng mắt | Kiểm tra bố cục, màu sắc, thông báo lỗi có dễ hiểu không |
+| **Metamorphic oracle** (biến đổi) | So sánh quan hệ giữa các lần chạy có dữ liệu biến đổi | Đổi chỗ A và B thì tổng không đổi: `f(a,b) = f(b,a)` |
+
+### 10.3 Test Oracle trong kiểm thử tự động
+
+Trong automation, oracle được **hiện thực hoá bằng checkpoint/assertion**. Mỗi assertion cần trả lời rõ ba câu hỏi:
+
+1. **Kiểm tra cái gì?** – phần tử nào, thuộc tính nào (`lblResult.Text`, `btnLogin.Enabled`…).
+2. **Giá trị kỳ vọng là bao nhiêu?** – lấy từ nguồn oracle nào (đặc tả, công thức, dữ liệu chuẩn).
+3. **Khi lệch thì kết luận gì?** – FAIL kèm thông điệp chứa Actual và Expected để điều tra.
+
+```csharp
+// Oracle dạng specified/derived: công thức A + B và định dạng chuỗi theo đặc tả
+int a = 5, b = 7;
+string expected = $"Ket qua: {a} + {b} = {a + b}";
+string actual = calculatorPage.Result;
+
+Assert.AreEqual(expected, actual,
+    $"Sai ket qua hien thi. Expected='{expected}', Actual='{actual}'");
+```
+
+**Lưu ý chất lượng oracle:**
+- Oracle **quá yếu** (“chỉ cần không crash”) sẽ cho PASS giả, không phát hiện lỗi nghiệp vụ.
+- Oracle **quá chặt** vào chi tiết giao diện (toạ độ, font, màu) sẽ FAIL oan mỗi khi đổi UI.
+- Kỳ vọng phải được tính **độc lập với cách ứng dụng tính** — nếu lấy chính kết quả của app làm kỳ vọng thì test không có giá trị.
+
+### 10.4 Bài toán Oracle và giới hạn
+
+**Oracle problem** là tình huống rất khó hoặc rất tốn kém để xác định đâu là kết quả đúng, ví dụ:
+
+- Giao diện phức tạp, kết quả là hình ảnh/đồ thị → khó so sánh tự động.
+- Ứng dụng có nhiều kết quả “đúng” tương đương (thứ tự hiển thị không quan trọng).
+- Không có đặc tả rõ ràng, hoặc đặc tả lỗi thời.
+
+**Cách giảm nhẹ:**
+- Ưu tiên dữ liệu kiểm thử có **kỳ vọng tính được bằng công thức** (BVA, bảng quyết định) như bộ 12 ca của MiniSum.
+- Kết hợp nhiều loại oracle (specified + implicit + consistency) trong cùng một test.
+- Với phần giao diện khó so sánh, dùng **human oracle** hoặc **bitmap checkpoint** có ngưỡng sai lệch hợp lý.
+
+> **Liên hệ MiniSum:** bộ dữ liệu BVA gồm 12 ca là ví dụ của **derived oracle** – kỳ vọng được tính từ quy tắc `A + B` và miền giá trị `[-99, 99]`, hoàn toàn độc lập với cách ứng dụng hiển thị.
 
 ---
 

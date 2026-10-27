@@ -33,6 +33,11 @@
    - 7.2 [Ví dụ trên MiniSum](#72-ví-dụ-trên-minisum)
    - 7.3 [POM trong Katalon Studio và WinAppDriver](#73-pom-trong-katalon-studio-và-winappdriver)
    - 7.4 [Ưu điểm, nhược điểm và nguyên tắc áp dụng](#74-ưu-điểm-nhược-điểm-và-nguyên-tắc-áp-dụng)
+8. [Flaky Test](#8-flaky-test)
+   - 8.1 [Khái niệm và biểu hiện](#81-khái-niệm-và-biểu-hiện)
+   - 8.2 [Nguyên nhân gốc rễ](#82-nguyên-nhân-gốc-rễ)
+   - 8.3 [Cách phát hiện](#83-cách-phát-hiện)
+   - 8.4 [Cách xử lý](#84-cách-xử-lý)
 12. [Fully vs Semi-Automated](#12-fully-vs-semi-automated)
    - 12.1 [Fully Automated](#121-fully-automated)
    - 12.2 [Semi-Automated](#122-semi-automated)
@@ -383,6 +388,69 @@ Khi bản **v2** đổi `btnSum` thành `btnCalculate`, chỉ `CalculatorPage` p
 - Một page object tương ứng một màn hình (hoặc một thành phần tái sử dụng như dialog, toolbar).
 - Phương thức nên diễn đạt **ý định nghiệp vụ** (`Login`, `Calculate`, `OpenHistory`) thay vì `ClickButton1`.
 - Trả về page object tiếp theo khi hành động làm chuyển màn hình (`Login()` trả về `CalculatorPage`) để test case mô tả đúng luồng.
+
+---
+
+## 8. Flaky Test
+
+### 8.1 Khái niệm và biểu hiện
+
+**Flaky Test** là kịch bản kiểm thử cho kết quả **không ổn định giữa các lần chạy dù mã nguồn ứng dụng và mã kiểm thử không thay đổi**: lần chạy PASS, lần chạy FAIL, có khi FAIL rồi PASS khi chạy lại ngay lập tức.
+
+Flaky test là vấn đề nghiêm trọng hơn việc “không có test”, vì:
+
+- Đội phát triển **mất niềm tin** vào bộ kiểm thử: khi test báo FAIL, không ai biết là ứng dụng lỗi thật hay test lỗi.
+- Tốn thời gian điều tra lại các lỗi “ma”, làm chậm pipeline CI/CD.
+- Che giấu lỗi thật: một khi nhóm đã quen với việc “chạy lại là PASS”, lỗi thật sẽ bị bỏ qua.
+
+**Biểu hiện thường gặp trên desktop automation:**
+
+| Biểu hiện | Ví dụ với MiniSum |
+|---|---|
+| PASS/FAIL xen kẽ trên cùng máy | `TC03_BVA` lúc đọc được `lblResult`, lúc đọc được chuỗi rỗng |
+| Chỉ FAIL trên máy CI hoặc máy chậm hơn | Máy yếu nên cửa sổ Calculator xuất hiện sau khi script đã tìm control |
+| Phụ thuộc thứ tự chạy | Chạy riêng thì PASS, chạy cả suite thì FAIL do cửa sổ cũ còn mở |
+| FAIL khi màn hình bị khoá / đổi độ phân giải | Toạ độ click sai khi scale 125% hoặc khi RDP |
+
+### 8.2 Nguyên nhân gốc rễ
+
+| Nhóm nguyên nhân | Mô tả | Ví dụ |
+|---|---|---|
+| **Timing / bất đồng bộ** | Script chạy nhanh hơn tốc độ ứng dụng phản hồi | Đọc `lblMessage` trước khi ứng dụng kịp cập nhật sau khi click |
+| **Locator không ổn định** | Dùng locator sinh động (XPath theo index, toạ độ) | `//Button[3]` đổi vị trí khi thêm nút mới |
+| **Trạng thái dùng chung** | Test này để lại dữ liệu/cửa sổ ảnh hưởng test khác | Test trước không đóng app, test sau mở thêm instance |
+| **Dữ liệu test không cô lập** | Dùng chung file Excel/DB, không reset trước mỗi lần chạy | Lịch sử tính toán (v2) tích luỹ qua nhiều test |
+| **Môi trường** | DPI, độ phân giải, ngôn ngữ, focus, phần mềm diệt virus | Windows scale 150% làm toạ độ click lệch |
+| **Tài nguyên / session** | WinAppDriver session chết, port 4723 bị chiếm | Chạy song song nhiều test trên cùng session |
+
+### 8.3 Cách phát hiện
+
+1. **Chạy lặp**: thực thi cùng test N lần (ví dụ 10–20 lần) và thống kê tỉ lệ PASS. Test có tỉ lệ PASS < 100% là flaky.
+2. **Ghi log đầy đủ**: timestamp từng bước, ảnh chụp màn hình tại thời điểm FAIL, giá trị Actual/Expected.
+3. **Đo “flaky rate”** theo từng test case để ưu tiên sửa: test FAIL 1/20 lần vẫn phải xử lý.
+4. **Chạy trên nhiều cấu hình**: máy nhanh/chậm, độ phân giải khác nhau, có/không có màn hình phụ.
+
+### 8.4 Cách xử lý
+
+| Biện pháp | Cách làm | Lưu ý |
+|---|---|---|
+| **Chờ tường minh (Explicit Wait)** | Chờ *điều kiện* cụ thể thay vì chờ cố định: `waitForElementPresent`, `WebDriverWait.Until(...)` | Ưu tiên số 1, xem mục 9 – Wait Strategy |
+| **Locator ổn định** | Dùng `AutomationId` do đội phát triển đặt, tránh XPath theo index/toạ độ | MiniSum đặt sẵn `txtUser`, `btnLogin`, `lblResult`… |
+| **Cô lập test** | Mỗi test tự chuẩn bị trạng thái đầu vào và dọn dẹp ở `finally`/`TearDown` | Không phụ thuộc test chạy trước |
+| **Dữ liệu riêng** | Sinh dữ liệu cho từng lần chạy hoặc reset file test data | Tránh ghi đè chéo giữa các test |
+| **Retry có kiểm soát** | Chỉ retry test đã được xác định là flaky, có ghi log số lần retry | Không dùng retry để “che” lỗi thật |
+| **Quarantine** | Tách test flaky khỏi suite chính, theo dõi riêng cho tới khi sửa xong | Giữ suite chính luôn “xanh” và đáng tin |
+
+**Phân biệt flaky test và lỗi thật:**
+
+| Tiêu chí | Flaky Test | Lỗi thật của ứng dụng |
+|---|---|---|
+| Chạy lại nhiều lần | Kết quả thay đổi | Luôn FAIL |
+| Thay đổi môi trường | Có thể PASS/FAIL khác nhau | FAIL ở mọi môi trường |
+| Log/ảnh chụp | Thường cho thấy script thao tác sai thời điểm | Cho thấy giá trị thực tế sai so với đặc tả |
+| Hành động | Sửa script (wait, locator, isolation) | Báo lỗi cho đội phát triển |
+
+> **Liên hệ MiniSum:** sau khi đăng nhập thành công, ứng dụng cố ý **giữ màn hình Login thêm 1 giây** trước khi mở cửa sổ Calculator. Nếu script không chờ mà đọc `lblMessage` hoặc tìm `winMain` ngay lập tức, test sẽ flaky. Đây là tình huống được dùng để minh hoạ wait strategy ở mục tiếp theo.
 
 ---
 

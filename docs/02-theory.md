@@ -3,7 +3,7 @@
 
 > **Seminar – Phụ trách:** Tín  
 > **Nội dung:** Khái niệm cốt lõi · Kỹ thuật tự động hóa · Thách thức đặc thù · Thuật ngữ  
-> **Cập nhật lần cuối:** 02/10/2026  
+> **Cập nhật lần cuối:** 27/10/2026 (bổ sung Lần 2: POM, Flaky Test, Wait, Test Oracle, Recovery Testing)  
 > **Trạng thái:** Hoàn thành  
 
 ---
@@ -28,13 +28,18 @@
    - 6.1 [Khái niệm](#61-khái-niệm)
    - 6.2 [Phân loại Checkpoint](#62-phân-loại-checkpoint)
    - 6.3 [Kiến trúc Assertion](#63-kiến-trúc-assertion)
-7. [Fully vs Semi-Automated](#7-fully-vs-semi-automated)
-   - 7.1 [Fully Automated](#71-fully-automated)
-   - 7.2 [Semi-Automated](#72-semi-automated)
-   - 7.3 [So sánh chi tiết](#73-so-sánh-chi-tiết)
-8. [Ưu điểm & Nhược điểm của Automation Testing](#8-ưu-điểm--nhược-điểm-của-automation-testing)
-9. [Khi nào nên dùng Automation Testing?](#9-khi-nào-nên-dùng-automation-testing)
-10. [Bảng thuật ngữ chuyên ngành](#10-bảng-thuật-ngữ-chuyên-ngành)
+7. [Page Object Model (POM)](#7-page-object-model-pom)
+   - 7.1 [Khái niệm](#71-khái-niệm)
+   - 7.2 [Ví dụ trên MiniSum](#72-ví-dụ-trên-minisum)
+   - 7.3 [POM trong Katalon Studio và WinAppDriver](#73-pom-trong-katalon-studio-và-winappdriver)
+   - 7.4 [Ưu điểm, nhược điểm và nguyên tắc áp dụng](#74-ưu-điểm-nhược-điểm-và-nguyên-tắc-áp-dụng)
+12. [Fully vs Semi-Automated](#12-fully-vs-semi-automated)
+   - 12.1 [Fully Automated](#121-fully-automated)
+   - 12.2 [Semi-Automated](#122-semi-automated)
+   - 12.3 [So sánh chi tiết](#123-so-sánh-chi-tiết)
+13. [Ưu điểm & Nhược điểm của Automation Testing](#13-ưu-điểm--nhược-điểm-của-automation-testing)
+14. [Khi nào nên dùng Automation Testing?](#14-khi-nào-nên-dùng-automation-testing)
+15. [Bảng thuật ngữ chuyên ngành](#15-bảng-thuật-ngữ-chuyên-ngành)
 
 ---
 
@@ -278,9 +283,112 @@ Bảng dữ liệu đầu vào (tập tin `login_dataset.xlsx`):
 
 ---
 
-## 7. Fully vs Semi-Automated
+## 7. Page Object Model (POM)
 
-### 7.1 Fully Automated
+### 7.1 Khái niệm
+
+**Page Object Model (POM)** là mẫu thiết kế (design pattern) trong kiểm thử tự động, trong đó **mỗi màn hình hoặc cửa sổ của ứng dụng được biểu diễn bằng một lớp (class) riêng**. Lớp này đóng gói ba thành phần:
+
+1. **Locator** – định danh các phần tử giao diện (`AutomationId`, `Name`, `XPath`…).
+2. **Hành động** – các thao tác người dùng thực hiện được trên màn hình (nhập liệu, nhấn nút, chuyển màn hình).
+3. **Truy vấn trạng thái** – các hàm đọc dữ liệu phục vụ checkpoint (lấy nội dung nhãn, kiểm tra nút đang Enabled hay Disabled).
+
+Kịch bản kiểm thử **không thao tác trực tiếp lên control**, mà gọi các phương thức nghiệp vụ do page object cung cấp. Nhờ vậy khi giao diện thay đổi, chỉ cần sửa **một chỗ** trong page object thay vì sửa toàn bộ kịch bản.
+
+```
+        Không dùng POM                        Dùng POM
+┌───────────────────────────┐        ┌───────────────────────────┐
+│ TC01_Login                │        │ TC01_Login                │
+│  find("txtUser").sendKeys│        │  loginPage.Login(u, p)    │
+│  find("txtPass").sendKeys│        │  Assert(lblMessage)       │
+│  find("btnLogin").click  │        └─────────────┬─────────────┘
+│  find("lblMessage")...   │                      │ gọi
+└───────────────────────────┘        ┌─────────────▼─────────────┐
+   Locator rải khắp test case        │ LoginPage                 │
+   → đổi UI phải sửa nhiều nơi       │  locator + Login()        │
+                                     └───────────────────────────┘
+                                        Locator tập trung một nơi
+```
+
+### 7.2 Ví dụ trên MiniSum
+
+Giả sử cần kiểm thử màn hình đăng nhập của `MiniSum.exe`. Cách viết **không có POM** lặp lại locator trong từng test case:
+
+```csharp
+// TC01 - lặp locator ngay trong test
+driver.FindElementByAccessibilityId("txtUser").SendKeys("admin");
+driver.FindElementByAccessibilityId("txtPass").SendKeys("1234");
+driver.FindElementByAccessibilityId("btnLogin").Click();
+Assert.AreEqual("Dang nhap thanh cong",
+    driver.FindElementByAccessibilityId("lblMessage").Text);
+```
+
+Cách viết **có POM** – tách thành `LoginPage` và `CalculatorPage`:
+
+```csharp
+// PageObjects/LoginPage.cs
+public class LoginPage
+{
+    private readonly WindowsDriver<WindowsElement> driver;
+
+    public LoginPage(WindowsDriver<WindowsElement> driver) => this.driver = driver;
+
+    private WindowsElement TxtUser => driver.FindElementByAccessibilityId("txtUser");
+    private WindowsElement TxtPass => driver.FindElementByAccessibilityId("txtPass");
+    private WindowsElement BtnLogin => driver.FindElementByAccessibilityId("btnLogin");
+    private WindowsElement LblMessage => driver.FindElementByAccessibilityId("lblMessage");
+
+    public void Login(string user, string pass)
+    {
+        TxtUser.Clear();
+        TxtUser.SendKeys(user);
+        TxtPass.SendKeys(pass);
+        BtnLogin.Click();
+    }
+
+    public string Message => LblMessage.Text;
+}
+```
+
+```csharp
+// TC01_Login_Success.cs - test case chỉ còn nghiệp vụ
+var loginPage = new LoginPage(driver);
+loginPage.Login("admin", "1234");
+
+Assert.AreEqual("Dang nhap thanh cong", loginPage.Message);
+var calculatorPage = new CalculatorPage(driver);
+Assert.IsTrue(calculatorPage.IsDisplayed());
+```
+
+Khi bản **v2** đổi `btnSum` thành `btnCalculate`, chỉ `CalculatorPage` phải sửa; toàn bộ test case dùng lại vẫn giữ nguyên. Đây chính là kịch bản **maintenance & self-healing** được demo trong seminar.
+
+### 7.3 POM trong Katalon Studio và WinAppDriver
+
+| Công cụ | Cách hiện thực POM | Ghi chú |
+|---|---|---|
+| **Katalon Studio** | **Object Repository** đóng vai trò kho locator dùng chung; mỗi màn hình là một thư mục (`MiniSum/Login`, `MiniSum/Calculator`). Test case tham chiếu `findWindowsObject('Object Repository/...')` thay vì khai báo locator trực tiếp. Có thể bọc thêm **Custom Keyword** để tạo lớp hành vi (`LoginKeyword.login()`) | POM ở mức “locator tập trung”, chưa phải class đầy đủ |
+| **WinAppDriver + C# NUnit** | Tạo thư mục `PageObjects/` với `LoginPage.cs`, `CalculatorPage.cs`; test case chỉ gọi phương thức | POM đầy đủ theo hướng lập trình hướng đối tượng |
+
+### 7.4 Ưu điểm, nhược điểm và nguyên tắc áp dụng
+
+| Ưu điểm | Nhược điểm |
+|---|---|
+| Locator tập trung → bảo trì nhanh khi UI đổi | Tốn công thiết kế ban đầu, nhiều file hơn |
+| Test case đọc như tài liệu nghiệp vụ, giảm trùng lặp | Với ứng dụng rất nhỏ, POM có thể là over-engineering |
+| Tái sử dụng hành động giữa nhiều test case | Dễ phình to nếu nhồi cả logic kiểm thử vào page object |
+| Hỗ trợ phân công: người viết page object và người viết test case độc lập | Cần kỷ luật đặt tên, nếu không sẽ thành “God class” |
+
+**Nguyên tắc áp dụng:**
+- Page object **chỉ mô tả giao diện**, **không chứa assertion**; assertion thuộc về test case.
+- Một page object tương ứng một màn hình (hoặc một thành phần tái sử dụng như dialog, toolbar).
+- Phương thức nên diễn đạt **ý định nghiệp vụ** (`Login`, `Calculate`, `OpenHistory`) thay vì `ClickButton1`.
+- Trả về page object tiếp theo khi hành động làm chuyển màn hình (`Login()` trả về `CalculatorPage`) để test case mô tả đúng luồng.
+
+---
+
+## 12. Fully vs Semi-Automated
+
+### 12.1 Fully Automated
 
 Toàn bộ quy trình kiểm thử từ khâu thiết lập môi trường, chuẩn bị dữ liệu, mở ứng dụng, thực thi các bước, kiểm tra kết quả cho tới khâu xuất báo cáo và dọn dẹp môi trường đều diễn ra tự động hoàn toàn mà không cần sự can thiệp của con người.
 
@@ -295,7 +403,7 @@ Kích hoạt CI/CD ──► Biên dịch mã ──► Triển khai build ─�
 - Kiểm thử Smoke Test nhanh sau mỗi bản build mới
 - Kịch bản chạy theo lịch định kỳ ban đêm (Nightly Builds)
 
-### 7.2 Semi-Automated
+### 12.2 Semi-Automated
 
 Kết hợp giữa công cụ tự động và thao tác thủ công của kiểm thử viên. Công cụ sẽ đảm nhận các bước lặp lại tốn thời gian (như tạo tài khoản hàng loạt, nhập form dài, điều hướng đến màn hình cần kiểm tra), sau đó nhường quyền cho con người quan sát, đánh giá trực quan hoặc can thiệp các bước đặc biệt.
 
@@ -315,7 +423,7 @@ Quy trình bán tự động (Semi-Automated Flow):
 - Kiểm thử khám phá (Exploratory Testing) cần công cụ hỗ trợ chuẩn bị dữ liệu
 - Các trường hợp kiểm thử liên quan đến thiết bị phần cứng đặc biệt cần cắm/rút thủ công
 
-### 7.3 So sánh chi tiết
+### 12.3 So sánh chi tiết
 
 | Tiêu chí | Fully Automated | Semi-Automated |
 |---|---|---|
@@ -327,7 +435,7 @@ Quy trình bán tự động (Semi-Automated Flow):
 
 ---
 
-## 8. Ưu điểm & Nhược điểm của Automation Testing
+## 13. Ưu điểm & Nhược điểm của Automation Testing
 
 ### Ưu điểm
 
@@ -354,7 +462,7 @@ Quy trình bán tự động (Semi-Automated Flow):
 
 ---
 
-## 9. Khi nào nên dùng Automation Testing?
+## 14. Khi nào nên dùng Automation Testing?
 
 ```
 BẢNG QUYẾT ĐỊNH ÁP DỤNG KIỂM THỬ TỰ ĐỘNG
@@ -373,7 +481,7 @@ NÊN ÁP DỤNG AUTOMATION                      KHÔNG NÊN ÁP DỤNG AUTOMATIO
 
 ---
 
-## 10. Bảng thuật ngữ chuyên ngành
+## 15. Bảng thuật ngữ chuyên ngành
 
 | Thuật ngữ tiếng Anh | Viết tắt | Định nghĩa và giải thích ý nghĩa |
 |---|---|---|

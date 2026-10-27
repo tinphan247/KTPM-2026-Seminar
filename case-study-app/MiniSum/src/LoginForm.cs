@@ -8,6 +8,9 @@ namespace MiniSum
     /// Màn hình 1: Đăng nhập.
     /// Tài khoản hợp lệ: admin / 1234 (theo đặc tả T03 trong ke_hoach_lan2.md).
     /// AutomationId: winLogin, txtUser, txtPass, btnLogin, lblMessage.
+    ///
+    /// Giao diện theo phong cách Fluent Light (xem Theme.cs). Chỉ phần trình bày thay đổi,
+    /// toàn bộ AutomationId / loại control / chuỗi thông điệp giữ nguyên cho automation.
     /// </summary>
     public class LoginForm : Form
     {
@@ -27,83 +30,136 @@ namespace MiniSum
         {
             Name = "winLogin";
             Text = "MiniSum - Dang nhap";
-            ClientSize = new Size(400, 300);
+            ClientSize = new Size(460, 518);
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Font = new Font("Segoe UI", 10F);
-            BackColor = Color.White;
+            Font = Theme.Body();
+            BackColor = Theme.Canvas;
+            DoubleBuffered = true;
+
+            // ----- Phần trang trí (không mang AutomationId, không ảnh hưởng locator) -----
+            var accent = Theme.CreateAccentStrip(ClientSize.Width);
+            var brandMark = Theme.CreateBrandMark();
+            brandMark.Location = new Point(40, 32);
 
             var lblTitle = new Label
             {
                 Name = "lblTitle",
-                Text = "MiniSum - Dang nhap",
-                Font = new Font("Segoe UI", 14F, FontStyle.Bold),
-                ForeColor = Color.Black,
+                Text = "MiniSum",
                 AutoSize = true,
-                Location = new Point(30, 20)
+                Font = Theme.Title(22F),
+                ForeColor = Theme.TextPrimary,
+                BackColor = Theme.Canvas,
+                Location = new Point(102, 38)
             };
 
-            var lblUser = new Label
+            var lblSubtitle = new Label
             {
-                Name = "lblUser",
-                Text = "Tai khoan:",
+                Name = "lblSubtitle",
+                Text = "Automation Testing Demo",
                 AutoSize = true,
-                Location = new Point(30, 72)
+                Font = Theme.Body(9.5F),
+                ForeColor = Theme.TextSecondary,
+                BackColor = Theme.Canvas,
+                Location = new Point(104, 74)
             };
 
-            txtUser = new TextBox
-            {
-                Name = "txtUser",
-                Location = new Point(140, 69),
-                Size = new Size(210, 25)
-            };
+            // ----- Card trắng chứa form đăng nhập -----
+            var card = Theme.CreateCard(14);
+            card.Location = new Point(24, 118);
+            card.Size = new Size(412, 320);
 
-            var lblPass = new Label
-            {
-                Name = "lblPass",
-                Text = "Mat khau:",
-                AutoSize = true,
-                Location = new Point(30, 112)
-            };
+            var lblUser = Theme.CreateCaption("TÀI KHOẢN");
+            lblUser.Name = "lblUser";
+            lblUser.Location = new Point(24, 24);
+
+            txtUser = new TextBox { Name = "txtUser" };
+            txtUser.AccessibleName = "Tai khoan:";
+            var userShell = Theme.CreateInputShell(txtUser);
+            userShell.Location = new Point(24, 52);
+            userShell.Size = new Size(364, 44);
+            userShell.TabIndex = 0;
+
+            var lblPass = Theme.CreateCaption("MẬT KHẨU");
+            lblPass.Name = "lblPass";
+            lblPass.Location = new Point(24, 112);
 
             txtPass = new TextBox
             {
                 Name = "txtPass",
-                Location = new Point(140, 109),
-                Size = new Size(210, 25),
                 UseSystemPasswordChar = true
             };
+            txtPass.AccessibleName = "Mat khau:";
+            var passShell = Theme.CreateInputShell(txtPass);
+            passShell.Location = new Point(24, 140);
+            passShell.Size = new Size(364, 44);
+            passShell.TabIndex = 1;
 
             btnLogin = new Button
             {
                 Name = "btnLogin",
                 Text = "DANG NHAP",
-                Location = new Point(140, 152),
-                Size = new Size(210, 36),
-                BackColor = Color.FromArgb(0, 120, 215),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat
+                Location = new Point(24, 204),
+                Size = new Size(364, 46),
+                TabIndex = 2
             };
+            Theme.StylePrimaryButton(btnLogin);
             btnLogin.Click += BtnLogin_Click;
 
             lblMessage = new Label
             {
                 Name = "lblMessage",
                 Text = string.Empty,
-                ForeColor = Color.DarkOrange,
-                Location = new Point(30, 205),
-                Size = new Size(340, 50)
+                ForeColor = Theme.Danger,
+                BackColor = Theme.Surface,
+                Location = new Point(24, 258),
+                Size = new Size(364, 38),
+                Font = Theme.Body(10F),
+                TextAlign = ContentAlignment.TopLeft,
+                TabIndex = 3
+            };
+
+            card.Controls.Add(lblUser);
+            card.Controls.Add(userShell);
+            card.Controls.Add(lblPass);
+            card.Controls.Add(passShell);
+            card.Controls.Add(btnLogin);
+            card.Controls.Add(lblMessage);
+
+            // ----- Chân trang -----
+            var lblBuild = new Label
+            {
+                Name = "lblBuild",
+                Text = Theme.BuildLabel,
+                AutoSize = true,
+                Font = Theme.Body(9F),
+                ForeColor = Theme.TextMuted,
+                BackColor = Theme.Canvas,
+                Location = new Point(40, 464)
+            };
+
+            var lblHint = new Label
+            {
+                Name = "lblHint",
+                Text = "Tai khoan demo: admin / 1234",
+                AutoSize = false,
+                Size = new Size(240, 18),
+                TextAlign = ContentAlignment.MiddleRight,
+                Font = Theme.Body(9F),
+                ForeColor = Theme.TextMuted,
+                BackColor = Theme.Canvas,
+                Location = new Point(172, 464)
             };
 
             AcceptButton = btnLogin;
+            Controls.Add(accent);
+            Controls.Add(brandMark);
             Controls.Add(lblTitle);
-            Controls.Add(lblUser);
-            Controls.Add(txtUser);
-            Controls.Add(lblPass);
-            Controls.Add(txtPass);
-            Controls.Add(btnLogin);
-            Controls.Add(lblMessage);
+            Controls.Add(lblSubtitle);
+            Controls.Add(card);
+            Controls.Add(lblBuild);
+            Controls.Add(lblHint);
 
             Shown += (sender, e) => txtUser.Focus();
         }
@@ -152,7 +208,7 @@ namespace MiniSum
 
             if (user == ValidUser && pass == ValidPass)
             {
-                lblMessage.ForeColor = Color.Green;
+                lblMessage.ForeColor = Theme.Success;
                 lblMessage.Text = "Dang nhap thanh cong";
                 btnLogin.Enabled = false;
                 StartTransition();
@@ -165,7 +221,7 @@ namespace MiniSum
 
         private void ShowError(string message)
         {
-            lblMessage.ForeColor = Color.DarkOrange;
+            lblMessage.ForeColor = Theme.Danger;
             lblMessage.Text = message;
         }
 

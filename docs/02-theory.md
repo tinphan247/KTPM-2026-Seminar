@@ -49,6 +49,11 @@
    - 10.2 [Phân loại Test Oracle](#102-phân-loại-test-oracle)
    - 10.3 [Test Oracle trong kiểm thử tự động](#103-test-oracle-trong-kiểm-thử-tự-động)
    - 10.4 [Bài toán Oracle và giới hạn](#104-bài-toán-oracle-và-giới-hạn)
+11. [Recovery Testing](#11-recovery-testing)
+   - 11.1 [Khái niệm](#111-khái-niệm)
+   - 11.2 [Kịch bản sự cố thường gặp](#112-kịch-bản-sự-cố-thường-gặp)
+   - 11.3 [Cơ chế phục hồi trong automation](#113-cơ-chế-phục-hồi-trong-automation)
+   - 11.4 [Checklist kiểm tra khả năng phục hồi](#114-checklist-kiểm-tra-khả-năng-phục-hồi)
 12. [Fully vs Semi-Automated](#12-fully-vs-semi-automated)
    - 12.1 [Fully Automated](#121-fully-automated)
    - 12.2 [Semi-Automated](#122-semi-automated)
@@ -627,6 +632,128 @@ Assert.AreEqual(expected, actual,
 - Với phần giao diện khó so sánh, dùng **human oracle** hoặc **bitmap checkpoint** có ngưỡng sai lệch hợp lý.
 
 > **Liên hệ MiniSum:** bộ dữ liệu BVA gồm 12 ca là ví dụ của **derived oracle** – kỳ vọng được tính từ quy tắc `A + B` và miền giá trị `[-99, 99]`, hoàn toàn độc lập với cách ứng dụng hiển thị.
+
+---
+
+## 11. Recovery Testing
+
+### 11.1 Khái niệm
+
+**Recovery Testing** (kiểm thử phục hồi) là loại kiểm thử đánh giá khả năng của hệ thống **tự phục hồi sau sự cố** và **tiếp tục hoạt động đúng**: ứng dụng bị treo/crash, mất kết nối, tiến trình bị kill, dữ liệu bị hỏng hoặc tài nguyên bị chiếm dụng.
+
+Trong bối cảnh automation, khái niệm này có hai tầng:
+
+1. **Kiểm thử khả năng phục hồi của AUT** – AUT có tự khôi phục trạng thái, có báo lỗi rõ ràng, có giữ dữ liệu đã nhập không?
+2. **Cơ chế tự phục hồi của bộ test** – khi một test hoặc session automation gặp sự cố, suite có dọn dẹp đúng cách và tiếp tục chạy các test còn lại không?
+
+Tầng thứ hai đặc biệt quan trọng với desktop automation vì WinAppDriver/Katalon **giữ session gắn với tiến trình ứng dụng**: chỉ cần một cửa sổ “ma” còn sót lại là các test sau có thể FAIL hàng loạt.
+
+### 11.2 Kịch bản sự cố thường gặp
+
+| Sự cố | Hậu quả nếu không xử lý | Cách phát hiện |
+|---|---|---|
+| Ứng dụng crash giữa chừng | Script treo tới hết timeout, các test sau FAIL dây chuyền | Tiến trình biến mất, `NoSuchWindowException` |
+| Ứng dụng treo (Not Responding) | Lệnh click chờ vô hạn, suite bị block | Cửa sổ không phản hồi, timeout liên tiếp |
+| Session WinAppDriver chết / port bị chiếm | Không mở được app ở test kế tiếp | `WebDriverException`, lỗi kết nối `127.0.0.1:4723` |
+| Popup/dialog bất ngờ | Click trúng sai phần tử, kết quả sai | Ảnh chụp màn hình cho thấy dialog lạ |
+| Cửa sổ cũ còn mở | Mở thêm instance, đọc nhầm window | Nhiều cửa sổ cùng title trong danh sách |
+| Dữ liệu bẩn từ lần chạy trước | Kết quả phụ thuộc lịch sử (ví dụ danh sách lịch sử v2) | Kết quả khác nhau giữa lần chạy đầu và lần sau |
+
+### 11.3 Cơ chế phục hồi trong automation
+
+**a) Dọn dẹp trong `TearDown` / `finally` (bắt buộc)**
+
+```csharp
+[TestFixture]
+public class MiniSumTests
+{
+    private WindowsDriver<WindowsElement> driver;
+
+    [SetUp]
+    public void StartApp()
+    {
+        var options = new AppiumOptions();
+        options.AddAdditionalCapability("app", MiniSumPath);
+        driver = new WindowsDriver<WindowsElement>(new Uri("http://127.0.0.1:4723"), options);
+    }
+
+    [TearDown]
+    public void CloseApp()
+    {
+        try
+        {
+            if (driver != null)
+            {
+                // Nếu test FAIL, chụp ảnh trước khi đóng để còn bằng chứng
+                if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
+                {
+                    ScreenshotHelper.Capture(driver, TestContext.CurrentContext.Test.Name);
+                }
+                driver.Quit();
+            }
+        }
+        catch (Exception ex)
+        {
+            // Không để lỗi dọn dẹp che mất kết quả test
+            TestContext.Progress.WriteLine($"Cleanup warning: {ex.Message}");
+        }
+        finally
+        {
+            driver = null;
+        }
+    }
+}
+```
+
+**b) Khởi tạo lại session khi session chết**
+
+```csharp
+private void EnsureSessionAlive()
+{
+    try
+    {
+        _ = driver.SessionId;          // truy cập nhẹ để kiểm tra session
+    }
+    catch (WebDriverException)
+    {
+        driver = CreateDriver();       // tạo session mới thay vì bỏ cả suite
+    }
+}
+```
+
+**c) Test Listener của Katalon Studio**
+
+Katalon cho phép can thiệp vào vòng đời test qua **Test Listener**, ví dụ `ScreenshotOnFailure` đã dùng trong dự án:
+
+```groovy
+class ScreenshotOnFailure {
+    @AfterTestCase
+    def afterTestCase(TestCaseContext testCaseContext) {
+        if (testCaseContext.getTestCaseStatus() == 'FAILED') {
+            WebUI.takeScreenshot("Reports/screenshots/${testCaseContext.getTestCaseId()}.png")
+        }
+        // Dọn dẹp: đóng ứng dụng nếu còn mở
+        Windows.closeApplication()
+    }
+}
+```
+
+**d) Nguyên tắc chung**
+- Mỗi test phải để hệ thống ở trạng thái sạch khi kết thúc, **kể cả khi test FAIL**.
+- Không “nuốt” exception trong `catch` mà không ghi log.
+- Chụp ảnh + log ngay tại thời điểm lỗi, trước khi dọn dẹp.
+- Với suite chạy dài, tách **test độc lập** để một test hỏng không kéo theo cả suite.
+
+### 11.4 Checklist kiểm tra khả năng phục hồi
+
+- [ ] Ứng dụng bị kill giữa lúc chạy test → suite vẫn tiếp tục được test kế tiếp.
+- [ ] Sau mỗi test, không còn tiến trình `MiniSum*.exe` hay cửa sổ nào sót lại.
+- [ ] Test FAIL có ảnh chụp màn hình và log giá trị Actual/Expected.
+- [ ] Session WinAppDriver được tạo mới nếu kết nối cũ không còn.
+- [ ] Dữ liệu test (file Excel, lịch sử trong bộ nhớ) được reset trước mỗi lần chạy.
+- [ ] Khi AUT báo lỗi nghiệp vụ (ví dụ `lblError`), test kết luận FAIL/PASS đúng chứ không crash.
+
+> **Liên hệ MiniSum:** ứng dụng không lưu dữ liệu xuống đĩa, lịch sử tính toán (v2) chỉ nằm trong bộ nhớ nên mỗi lần khởi động lại là trạng thái sạch. Tuy vậy, script vẫn phải đóng ứng dụng trong `TearDown`; nếu để sót cửa sổ, lần chạy sau sẽ mở thêm instance và test sẽ đọc nhầm cửa sổ cũ.
 
 ---
 

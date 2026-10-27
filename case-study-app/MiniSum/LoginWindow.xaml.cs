@@ -43,10 +43,14 @@ namespace MiniSum
                 lblMessage.Text = "Dang nhap thanh cong";
                 lblMessage.Foreground = System.Windows.Media.Brushes.Green;
 
-                // Mo cua so Calculator va dong cua so Login
+                // Mo cua so Calculator va dong cua so Login sau 1s de Test Runner (Katalon/WinAppDriver) doc duoc checkpoint lblMessage
                 var main = new MainWindow();
                 main.Show();
-                this.Close();
+                Dispatcher.InvokeAsync(async () =>
+                {
+                    await System.Threading.Tasks.Task.Delay(1000);
+                    this.Close();
+                });
             }
             else
             {

@@ -169,6 +169,74 @@ Qua quá trình triển khai automation thực tế trên ứng dụng WPF `Mini
 2. **Bẫy tương tác nút bấm (Mouse Click Miss vs. Keyboard Activation):** Trong một số layout WPF (như `StackPanel`), lệnh click chuột ảo `Windows.click(btn)` có thể bị trượt tọa độ do sai lệch tỉ lệ co giãn màn hình (DPI Scaling). Giải pháp tối ưu là bổ sung `IsDefault="True"` cho Button trong XAML và gửi kèm phím `ENTER` (`Keys.chord(Keys.ENTER)`) qua `Windows.sendKeys` để kích hoạt sự kiện chắc chắn 100%.
 3. **Bẫy chuyển ngữ cảnh cửa sổ (Window Switching):** Khi ứng dụng đóng cửa sổ cha (`LoginWindow.Close()`) để mở cửa sổ con (`MainWindow.Show()`), session của WinAppDriver bị mất ngữ cảnh cũ. Cần sử dụng lệnh `Windows.switchToWindowTitle('Tiêu đề cửa sổ mới')` để cập nhật handle trước khi thao tác tiếp.
 
+### 2.3 Trình soi phần tử giao diện (Windows Object Spy) và Kỹ thuật Bắt Element
+
+#### 2.3.1 Bản chất và Vai trò của Windows Object Spy
+* **Khái niệm:** Windows Object Spy là công cụ tích hợp sẵn trong Katalon Studio cho phép tester trực tiếp kiểm tra, phân tích và giải mã cấu trúc cây phân cấp UI Automation (UIA Element Tree) của một ứng dụng Windows đang chạy trong thời gian thực.
+* **Vai trò trong quy trình kiểm thử tự động:**
+  * **Trích xuất thuộc tính định danh:** Tự động khám phá toàn bộ các thuộc tính quan trọng của điều khiển (`AutomationId`, `Name`, `ClassName`, `ControlType`, `BoundingRectangle`,...).
+  * **Kiểm tra thử nghiệm locator (Live Highlight / Verify):** Cho phép tester xác minh xem một locator strategy hoặc XPath có định vị chính xác và duy nhất phần tử trên màn hình hay không trước khi đưa vào kịch bản kiểm thử.
+  * **Tự động sinh Test Object chuẩn:** Tự động tạo và lưu trữ các Test Object định dạng `.wrs` (`WindowsElementEntity`) vào đúng thư mục mong muốn trong Object Repository.
+  * **Lưu ảnh minh họa trực quan (Element Screenshot):** Hỗ trợ chụp lại hình ảnh thực tế của phần tử giao diện và lưu kèm vào metadata của Test Object, hỗ trợ việc bàn giao và bảo trì kịch bản giữa các thành viên trong nhóm.
+
+#### 2.3.2 Quy trình từng bước sử dụng Windows Object Spy (Step-by-Step Workflow)
+
+```
+┌────────────────────────┐      ┌────────────────────────┐      ┌────────────────────────┐
+│ Bước 1: Khởi động      │ ───> │ Bước 2: Mở Spy & Chọn  │ ───> │ Bước 3: Bắt Element    │
+│ WinAppDriver (Port 4723)│      │ Ứng dụng (AUT)         │      │ bằng phím tắt <Alt + `>│
+└────────────────────────┘      └────────────────────────┘      └───────────┬────────────┘
+                                                                            │
+┌────────────────────────┐      ┌────────────────────────┐                  │
+│ Bước 6: Lưu Object vào │ <─── │ Bước 5: Chụp ảnh &     │ <────────────────┘
+│ Object Repository      │      │ Verify Highlight       │
+└────────────────────────┘      └────────────────────────┘
+```
+
+1. **Bước 1: Khởi động dịch vụ WinAppDriver**
+   * Đảm bảo `WinAppDriver.exe` đang chạy tại địa chỉ `http://127.0.0.1:4723`. Nếu dịch vụ chưa bật, Object Spy sẽ không thể gửi các lệnh WebDriver để quét cây giao diện.
+2. **Bước 2: Mở giao diện Windows Object Spy trong Katalon Studio**
+   * Trên thanh công cụ chính (Main Toolbar), nhấp vào biểu tượng chiếc kính lúp **Spy Windows Objects** (hoặc dùng phím tắt/menu `Action -> Spy -> Spy Windows Objects`).
+3. **Bước 3: Cấu hình ứng dụng mục tiêu (Configurations & Application Under Test)**
+   * Trong cửa sổ Spy, chọn một trong hai hình thức kết nối:
+     * *Application File:* Trỏ đường dẫn đến file thực thi `.exe` (ví dụ: `D:\...\MiniSum.exe`).
+     * *Running Application:* Gắn trực tiếp vào một cửa sổ đang mở sẵn trên màn hình Desktop (rất hữu ích cho các ứng dụng .NET 6+ hoặc cửa sổ con sau khi đăng nhập).
+   * Nhấp nút **Start** để WinAppDriver kết nối và hiển thị cấu trúc cửa sổ.
+4. **Bước 4: Bắt phần tử giao diện (Capture Object)**
+   * Di chuyển con trỏ chuột đến phần tử cần bắt trên ứng dụng (ví dụ: ô `txtUser`, `btnSubmit`, `lblMessage`).
+   * Nhấn tổ hợp phím tắt chuẩn của Katalon Desktop: **`<Alt> + <`** (hoặc `Ctrl + \` tùy phiên bản cấu hình) để khóa và bắt đối tượng (Capture Object).
+   * Phần tử được chọn sẽ lập tức xuất hiện trên bảng **All Objects** và cây phân cấp **Element Tree**.
+5. **Bước 5: Tinh chỉnh thuộc tính & Kiểm tra độ tin cậy (Locator Selection & Highlight)**
+   * Quan sát bảng **Object Properties**:
+     * Chọn chiến lược định vị tối ưu nhất (`ACCESSIBILITY_ID` nếu có `AutomationId`, hoặc `NAME`).
+     * Tích chọn thuộc tính duy nhất và bỏ tích các thuộc tính động dễ thay đổi (như tọa độ `BoundingRectangle`, hoặc các thuộc tính không ổn định).
+   * Nhấn nút **Highlight** hoặc **Verify**: Katalon sẽ gửi lệnh qua WinAppDriver để vẽ một đường viền đỏ xung quanh phần tử trên ứng dụng thực tế $\rightarrow$ xác nhận locator đã hoạt động 100%.
+6. **Bước 6: Chụp ảnh phần tử (Element Screenshot)**
+   * Trong giao diện Object Spy, nhấp vào tính năng **Capture Screenshot** để chụp lại vùng hiển thị trực quan của phần tử. Ảnh này sẽ được gắn kèm vào Test Object giúp các thành viên khác trong nhóm dễ dàng nhận biết phần tử khi bảo trì kịch bản.
+7. **Bước 7: Lưu vào Object Repository**
+   * Nhấp nút **Add to Object Repository**.
+   * Chọn thư mục đích trong cấu trúc phân cấp (ví dụ: `Object Repository/MiniSum/Login` hoặc `Object Repository/MiniSum/Calculator`).
+   * Nhấp **OK** để Katalon tự động sinh file `.wrs` tương ứng.
+
+#### 2.3.3 So sánh Windows Object Spy với các công cụ bắt Element độc lập
+
+| Tiêu chí | Katalon Windows Object Spy | Microsoft Inspect.exe (Windows SDK) | Accessibility Insights for Windows |
+|---|---|---|---|
+| **Môi trường hoạt động** | Tích hợp sâu trong Katalon Studio IDE | Công cụ độc lập (Win32 trong Windows SDK) | Công cụ độc lập nguồn mở của Microsoft (WPF) |
+| **Giao diện & Trải nghiệm** | Hiện đại, trực quan, thao tác theo luồng kiểm thử | Cổ điển (dạng cây Win32), nhiều thông số kỹ thuật | Hiện đại, có giao diện đồ họa đẹp, hỗ trợ kiểm toán tự động |
+| **Tự động sinh Test Object** | **Có (Lưu trực tiếp thành file `.wrs`)** | Không (Phải chép tay thuộc tính rồi tự tạo object) | Không (Phải chép tay `AutomationId`/`Name`) |
+| **Chụp ảnh Element kèm Object** | **Có (Tích hợp chụp và lưu ảnh)** | Không | Có (Chụp ảnh màn hình kiểm toán) |
+| **Kiểm tra tức thời (Live Highlight)** | **Có (Gọi trực tiếp WinAppDriver để test locator)** | Có (Highlight theo chuột) | Có (Highlight theo chuột) |
+| **Phù hợp sử dụng** | Tester xây dựng kịch bản automation nhanh chóng trong Katalon | Điều tra chuyên sâu cấp hệ thống COM UIA khi Object Spy bị nghẽn | Kiểm tra độ tuân thủ tiêu chuẩn trợ năng (Accessibility) và UI Control |
+
+#### 2.3.4 Những lưu ý & Kinh nghiệm thực chiến khi dùng Windows Object Spy
+1. **Tránh bẫy bắt đối tượng cha (Container Selection):**
+   * Trong WPF, các điều khiển thường được lồng trong nhiều lớp bố cục như `<Grid>`, `<Border>`, `<StackPanel>`. Khi di chuột và nhấn phím tắt, hãy chú ý nhìn vào cây phân cấp để chắc chắn bạn đang chọn đúng nút bấm (`Button`) hoặc ô nhập (`TextBox`), thay vì chọn nhầm thẻ bọc bên ngoài (`Border` hay `StackPanel`).
+2. **Kỹ thuật bắt các cửa sổ độc lập / Dialog con:**
+   * Khi ứng dụng mở ra một hộp thoại (Dialog) hoặc cửa sổ mới (như thông báo Popup), hãy chuyển chế độ sang *Running Application* trên Object Spy và trỏ trực tiếp vào cửa sổ con để làm mới cây phân cấp UIA.
+3. **Kiểm tra độ duy nhất của Locator:**
+   * Luôn sử dụng tính năng **Verify / Highlight** trước khi bấm lưu. Nếu trình soi báo tìm thấy nhiều hơn 1 phần tử (*Multiple elements found*), cần bổ sung thêm điều kiện lọc hoặc ưu tiên chuyển sang `ACCESSIBILITY_ID` để đảm bảo tính tất định khi chạy tự động.
+
 ---
 
 ## 3. Ba Năng Lực Cốt Lõi (Theo Lý Thuyết Kiểm Thử)

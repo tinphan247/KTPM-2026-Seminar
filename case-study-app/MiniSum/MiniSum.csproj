@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>MiniSum</RootNamespace>
+    <AssemblyName>MiniSum</AssemblyName>
+    <Version>1.0.0</Version>
+    <Product>MiniSum - Demo App for Katalon Studio Seminar</Product>
+  </PropertyGroup>
+
+</Project>

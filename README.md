@@ -20,11 +20,21 @@
 
 ---
 
+## 📌 Tài liệu quản lý & Kế hoạch
+- 📋 **Kế hoạch chi tiết Lần 2:** [ke_hoach_lan2.md](ke_hoach_lan2.md) (Chi tiết 94 tasks, timeline 4 ngày)
+- 📊 **Bảng theo dõi Task (Excel):** [Group02_Task_List.xlsx](Group02_Task_List.xlsx) (Dashboard phân bổ giờ & checklist)
+- 📜 **Nội quy & Quy tắc làm việc nhóm:** [QUY_TAC_LAM_VIEC_NHOM.md](QUY_TAC_LAM_VIEC_NHOM.md) (Quy ước Git, daily check-in, % đóng góp)
+
+---
+
 ## 📁 Cấu trúc thư mục dự án
 
 ```text
 KTPM-2026-Seminar/
 ├── README.md                           # Giới thiệu tổng quan & hướng dẫn
+├── QUY_TAC_LAM_VIEC_NHOM.md            # Nội quy & văn hóa làm việc nhóm
+├── ke_hoach_lan2.md                    # Bản kế hoạch 94 tasks chi tiết
+├── Group02_Task_List.xlsx              # Bảng phân công task & dashboard Excel
 ├── .gitignore                          # Quy tắc bỏ qua file rác (.NET, Katalon, OS, Temp)
 ├── docs/                               # Toàn bộ tài liệu báo cáo Markdown
 │   ├── 01-introduction.md              # 1. Giới thiệu tổng quan kiểm thử Desktop

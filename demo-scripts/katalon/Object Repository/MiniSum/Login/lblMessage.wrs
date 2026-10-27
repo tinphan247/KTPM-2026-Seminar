@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindowsElementEntity>
+   <description>Thông báo kết quả Đăng nhập</description>
+   <name>lblMessage</name>
+   <tag></tag>
+   <locator>lblMessage</locator>
+   <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+   <properties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>AutomationId</name>
+      <type>Main</type>
+      <value>lblMessage</value>
+      <webElementGuid></webElementGuid>
+   </properties>
+</WindowsElementEntity>

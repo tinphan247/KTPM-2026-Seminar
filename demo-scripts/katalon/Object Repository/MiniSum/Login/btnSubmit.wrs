@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindowsElementEntity>
+   <description>Nút Đăng nhập</description>
+   <name>btnSubmit</name>
+   <tag></tag>
+   <locator>btnSubmit</locator>
+   <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+   <properties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>AutomationId</name>
+      <type>Main</type>
+      <value>btnSubmit</value>
+      <webElementGuid></webElementGuid>
+   </properties>
+</WindowsElementEntity>

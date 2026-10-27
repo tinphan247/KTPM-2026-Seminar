@@ -58,14 +58,55 @@ Katalon Studio kiểm thử ứng dụng Desktop Windows thông qua kiến trúc
 3. **Tương tác:** Hệ điều hành Windows tương tác trực tiếp lên các thành phần giao diện (nhấp chuột, nhập văn bản, đọc giá trị).
 4. **Phản hồi:** Trạng thái thực thi và dữ liệu giao diện được trả ngược về Katalon để đánh giá kết quả (Pass/Fail).
 
-### 2.2 Nhận diện phần tử giao diện (Object Recognition)
-* **Windows Object Spy:** Cho phép trỏ chuột vào phần tử giao diện để bóc tách các thuộc tính nhận dạng do Windows UIA cung cấp.
-* **Object Repository:** Nơi lưu trữ tập trung các phần tử (Object). Mỗi test step chỉ tham chiếu đến Object này, giúp giảm chi phí bảo trì khi giao diện thay đổi (chỉ cần sửa locator tại một nơi duy nhất).
-* **Độ ưu tiên của thuộc tính định vị (Locator):**
-  1. `AutomationId`: Định danh duy nhất do lập trình viên gắn, độc lập với ngôn ngữ giao diện $\rightarrow$ **Ưu tiên số 1**.
-  2. `Name`: Nhãn hiển thị của control $\rightarrow$ Dễ bị gãy kịch bản nếu ứng dụng đổi text hoặc đổi ngôn ngữ hiển thị.
-  3. `ClassName` / `ControlType`: Loại phần tử giao diện $\rightarrow$ Kết hợp khi phần tử thiếu định danh duy nhất.
-  4. `XPath`: Cấu trúc phân cấp cây giao diện $\rightarrow$ Thường dài và dễ vỡ khi bố cục màn hình cập nhật.
+### 2.2 Cơ chế Object Repository và Nhận diện Locator (Object Recognition)
+
+#### 2.2.1 Khái niệm và Vai trò của Object Repository
+* **Bản chất:** Object Repository (OR) là kho lưu trữ tập trung toàn bộ các định danh phần tử giao diện (Test Objects). Thay vì gắn cứng locator (hard-coding) trực tiếp trong từng dòng lệnh kiểm thử, kịch bản chỉ gọi đối tượng qua từ khóa tham chiếu:
+  ```groovy
+  findWindowsObject('Object Repository/MiniSum/Login/txtUser')
+  ```
+* **Ý nghĩa thực tế đối với chi phí bảo trì (Maintenance Cost):**
+  * Trong vòng đời phần mềm, giao diện người dùng (UI) biến đổi liên tục (đổi ID, tái cấu trúc layout, thay nhãn hiển thị). Nếu gắn cứng locator trong script, tester phải rà soát và sửa hàng chục đến hàng trăm test case riêng lẻ (hiện tượng *Kịch bản dễ gãy - Flaky Tests*).
+  * Với Object Repository, tester chỉ cần cập nhật locator tại một file duy nhất trong kho lưu trữ, toàn bộ các Test Case liên quan sẽ tự động nhận diện theo thông số mới. Đây là sự hiện thực hóa triết lý **Page Object Model (POM)** ở mức công cụ không mã nguồn (Codeless/Low-code), giúp hạn chế nguyên lý *"Nghịch lý thuốc trừ sâu" (Pesticide Paradox)* khi kiểm thử tự động dài hạn.
+
+#### 2.2.2 Cấu trúc lưu trữ nội bộ của Object Repository trên Desktop (.wrs)
+Khác với kiểm thử Web sử dụng định dạng file `.rs` (`WebElementEntity`), kiểm thử Windows Desktop trong Katalon Studio quy định cấu trúc đối tượng nghiêm ngặt:
+* **Định dạng file:** Mỗi đối tượng kiểm thử Desktop được lưu dưới dạng một file XML có đuôi mở rộng là **`.wrs`** (`WindowsElementEntity`).
+* **Cấu trúc XML chuẩn:**
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <WindowsElementEntity>
+     <description>Ô nhập tài khoản</description>
+     <name>txtUser</name>
+     <tag></tag>
+     <locator>txtUser</locator>
+     <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+     <properties>
+        <isSelected>true</isSelected>
+        <matchCondition>equals</matchCondition>
+        <name>AutomationId</name>
+        <type>Main</type>
+        <value>txtUser</value>
+     </properties>
+  </WindowsElementEntity>
+  ```
+* **Lưu ý kỹ thuật quan trọng:** Nếu tạo nhầm file định dạng Web (`.rs`) hoặc đường dẫn không đúng, hàm `findWindowsObject()` sẽ trả về `null` trong thời gian chạy, gây ra lỗi ngoại lệ `java.lang.IllegalArgumentException: Test object cannot be null`.
+
+#### 2.2.3 Các chiến lược nhận diện Locator (Locator Strategies) trên Windows Desktop
+Katalon Studio phối hợp với WinAppDriver để phân giải các thuộc tính UI Automation thành 4 chiến lược định vị chính theo thứ bậc ưu tiên:
+
+| Chiến lược (Locator Strategy) | Thuộc tính UIA tương ứng | Độ ưu tiên | Đặc điểm kỹ thuật & Đánh giá |
+|---|---|:---:|---|
+| **ACCESSIBILITY_ID** | `AutomationProperties.AutomationId` (WPF) / `AccessibleName` (WinForms) | **Số 1 (Khuyên dùng)** | Định danh bất biến do lập trình viên gắn trong mã nguồn. Hoàn toàn độc lập với ngôn ngữ hiển thị (Localization) và nội dung text. Tốc độ tìm kiếm nhanh nhất. |
+| **NAME** | `Name` attribute (Tiêu đề, Text hiển thị của Control) | **Số 2** | Dễ đọc, nhận diện trực quan theo mắt người dùng. Tuy nhiên rất dễ gãy kịch bản khi ứng dụng hỗ trợ đa ngôn ngữ (i18n) hoặc nội dung nhãn thay đổi. |
+| **CLASS_NAME / CONTROL_TYPE** | `ClassName` (WPF/Win32) / `ControlType` (`Button`, `Edit`, `Text`) | **Số 3** | Thường không mang tính duy nhất trên màn hình; chỉ dùng làm điều kiện lọc kết hợp khi phần tử thiếu `AutomationId`. |
+| **XPATH** | Vị trí cây phân cấp UIA (e.g., `//Window/Grid/StackPanel/Button[1]`) | **Số 4 (Hạn chế)** | Chuỗi XPath trên Windows Desktop rất phức tạp, tốc độ phân giải qua WinAppDriver chậm gấp 3-5 lần; cực kỳ dễ gãy khi lập trình viên thay đổi cấu trúc thẻ bố cục (Grid, StackPanel). |
+
+#### 2.2.4 Các bẫy kỹ thuật thực tế đúc kết từ quá trình thực nghiệm
+Qua quá trình triển khai automation thực tế trên ứng dụng WPF `MiniSum.exe`, nhóm đúc kết được 3 bài học kỹ thuật đặc thù:
+1. **Bẫy đọc Text trên thẻ WPF `<TextBlock>`:** Thẻ hiển thị văn bản tĩnh `<TextBlock>` trong WPF không hỗ trợ mẫu thuộc tính `ValuePattern`. Khi gọi lệnh `Windows.getText(object)`, WinAppDriver sẽ trả về chuỗi rỗng `""`. Cách xử lý chuẩn là truy xuất thông qua thuộc tính UIA `Name`: `Windows.getAttribute(object, 'Name')`.
+2. **Bẫy tương tác nút bấm (Mouse Click Miss vs. Keyboard Activation):** Trong một số layout WPF (như `StackPanel`), lệnh click chuột ảo `Windows.click(btn)` có thể bị trượt tọa độ do sai lệch tỉ lệ co giãn màn hình (DPI Scaling). Giải pháp tối ưu là bổ sung `IsDefault="True"` cho Button trong XAML và gửi kèm phím `ENTER` (`Keys.chord(Keys.ENTER)`) qua `Windows.sendKeys` để kích hoạt sự kiện chắc chắn 100%.
+3. **Bẫy chuyển ngữ cảnh cửa sổ (Window Switching):** Khi ứng dụng đóng cửa sổ cha (`LoginWindow.Close()`) để mở cửa sổ con (`MainWindow.Show()`), session của WinAppDriver bị mất ngữ cảnh cũ. Cần sử dụng lệnh `Windows.switchToWindowTitle('Tiêu đề cửa sổ mới')` để cập nhật handle trước khi thao tác tiếp.
 
 ---
 
@@ -83,9 +124,9 @@ Katalon Studio kiểm thử ứng dụng Desktop Windows thông qua kiến trúc
 ### 3.2 Checkpoints & Assertions (Điểm kiểm tra kết quả)
 * **Khái niệm:** Điểm so sánh giữa kết quả thực tế (**Actual Result**) và kết quả kỳ vọng (**Expected Result**) nhằm tự động hóa vai trò của Test Oracle. Kịch bản không có Checkpoint chỉ là bot thao tác tự động, không thể coi là kịch bản kiểm thử.
 * **Bộ từ khóa Verify trong Katalon:**
-  * `Verify Element Text`: Kiểm tra nội dung chuỗi (ví dụ: thông báo lỗi, nhãn kết quả).
-  * `Verify Element Attribute Value`: Kiểm tra trạng thái thuộc tính (ví dụ: nút bấm chuyển sang Disabled, ô nhập bị khóa).
-  * `Verify Element Present`: Kiểm tra sự xuất hiện của cửa sổ mới, popup cảnh báo.
+  * `Kiểm tra văn bản (Text Verification)`: Trên WebUI, Katalon cung cấp `WebUI.verifyElementText()`. Riêng trên nền tảng **Windows Desktop**, do đặc thù WinAppDriver, việc xác minh văn bản được thực hiện tối ưu qua `Windows.getAttribute(object, 'Name')` hoặc `Windows.getText(object)` kết hợp với lệnh `assert` của ngôn ngữ Groovy.
+  * `Windows.verifyElementAttributeValue`: Kiểm tra trạng thái thuộc tính (ví dụ: nút bấm chuyển sang Disabled, ô nhập bị khóa).
+  * `Windows.verifyElementPresent`: Kiểm tra sự xuất hiện của cửa sổ mới, popup cảnh báo (hỗ trợ chỉ định timeout).
 * **Cơ chế bắt lỗi:** Khi giá trị thực tế không khớp với giá trị kỳ vọng, kịch bản tự động dừng hoặc tiếp tục tùy cấu hình, chụp ảnh màn hình tại thời điểm lỗi và ghi log phục vụ báo cáo lỗi (Bug Report).
 
 ### 3.3 Data-Driven Testing (Kiểm thử hướng dữ liệu)

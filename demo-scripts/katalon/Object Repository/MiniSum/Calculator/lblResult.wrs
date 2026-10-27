@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindowsElementEntity>
+   <description>Nhãn hiển thị kết quả tính tổng</description>
+   <name>lblResult</name>
+   <tag></tag>
+   <locator>lblResult</locator>
+   <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+   <properties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>AutomationId</name>
+      <type>Main</type>
+      <value>lblResult</value>
+      <webElementGuid></webElementGuid>
+   </properties>
+</WindowsElementEntity>

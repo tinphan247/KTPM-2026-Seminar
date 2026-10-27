@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestSuiteEntity>
+   <description>BVA Test Suite — 12 ca kiểm thử giá trị biên cho bài toán MiniSum (A + B). Test Suite này bind dữ liệu từ file Excel BVA_TestData.xlsx và chạy TC03_BVA_Calculation với mỗi dòng dữ liệu.</description>
+   <name>BVA_TestSuite</name>
+   <tag></tag>
+   <testCaseId>Test Cases/TC03_BVA_Calculation</testCaseId>
+   <dataDrivenData>
+      <testDataId>Data Files/BVA_TestData</testDataId>
+      <testDataColumn>A</testDataColumn>
+      <testDataColumn>B</testDataColumn>
+      <testDataColumn>Expected</testDataColumn>
+   </dataDrivenData>
+   <variables>
+      <defaultValue>
+         <variableId>var_A</variableId>
+         <dataColumn>A</dataColumn>
+      </defaultValue>
+      <defaultValue>
+         <variableId>var_B</variableId>
+         <dataColumn>B</dataColumn>
+      </defaultValue>
+      <defaultValue>
+         <variableId>var_Expected</variableId>
+         <dataColumn>Expected</dataColumn>
+      </defaultValue>
+   </variables>
+</TestSuiteEntity>

@@ -9,13 +9,14 @@
 
 ## 👥 Danh sách thành viên nhóm
 
-| STT | Họ và Tên | MSSV | Vai trò chính | Branch Git |
-|:---:|---|:---:|---|---|
-| M1 | **Phan Trung Tín** *(Leader)* | 23120372 | Trưởng nhóm, Build `MiniSum.exe`, Lý thuyết, Tích hợp báo cáo, Đóng gói | `feature/tin-setup-report` |
-| M2 | **Nguyễn Lê Quang Kan** | 23120279 | Nghiên cứu & Demo thực hành **Katalon Studio** | `feature/kan-katalon` |
-| M3 | **Bùi Quang Tùng** | 20120397 | Nghiên cứu & Demo thực hành **WinAppDriver** + C# NUnit | `feature/tung-winappdriver` |
-| M4 | **Trần Vũ Quang** | 23120346 | Nghiên cứu **AI in Test Automation** + So sánh số liệu thực | `feature/quang-ai-comparison` |
-| M5 | **Phạm Tấn Phát** | 20120636 | Thiết kế Slide PowerPoint toàn bộ (8 phần) | `feature/phat-slide` |
+| STT | Họ và Tên | MSSV | Vai trò chính | Branch Git | Tasks | Giờ ước tính | % Gợi ý |
+|:---:|---|:---:|---|---|:---:|:---:|:---:|
+| M1 | **Phan Trung Tín** *(Leader)* | 23120372 | Trưởng nhóm, Build `MiniSum.exe`, Lý thuyết, Tích hợp báo cáo, Đóng gói | `feature/tin-setup-report` | 22 | **24.0h** | **20%** |
+| M2 | **Nguyễn Lê Quang Kan** | 23120279 | Nghiên cứu & Demo thực hành **Katalon Studio** | `feature/kan-katalon` | 18 | **24.0h** | **20%** |
+| M3 | **Bùi Quang Tùng** | 20120397 | Nghiên cứu & Demo thực hành **WinAppDriver** + C# NUnit | `feature/tung-winappdriver` | 21 | **24.0h** | **20%** |
+| M4 | **Trần Vũ Quang** | 23120346 | Nghiên cứu **AI in Test Automation** + So sánh số liệu thực | `feature/quang-ai-comparison` | 17 | **24.0h** | **20%** |
+| M5 | **Phạm Tấn Phát** | 20120636 | Thiết kế Slide PowerPoint toàn bộ (8 phần) | `feature/phat-slide` | 16 | **24.0h** | **20%** |
+| **Tổng** | | | | | **94** | **120.0h** | **100%** |
 
 ---
 

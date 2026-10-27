@@ -26,37 +26,98 @@
 
 ## 2. Nguyên lý hoạt động trên Desktop App
 
-### 2.1 Kiến trúc thực thi
-Katalon Studio kiểm thử ứng dụng Desktop Windows thông qua kiến trúc phân tầng chuẩn WebDriver:
+### 2.1 Kiến trúc thực thi chi tiết (Execution Architecture Deep Dive)
 
-```
-┌──────────────────────────────────────────────┐
-│  Katalon Studio (IDE / Test Engine)          │
-│  - Test Cases, Object Repository, Test Data  │
-└──────────────────────┬───────────────────────┘
-                       │ HTTP / WebDriver Protocol (Port 4723)
-                       ▼
-┌──────────────────────────────────────────────┐
-│  Microsoft WinAppDriver                      │
-│  (Windows Application Driver Service)        │
-└──────────────────────┬───────────────────────┘
-                       │ Native API Calls
-                       ▼
-┌──────────────────────────────────────────────┐
-│  Windows UI Automation (UIA) Engine          │
-└──────────────────────┬───────────────────────┘
-                       │ Điều khiển trực tiếp
-                       ▼
-┌──────────────────────────────────────────────┐
-│  Application Under Test (AUT)                │
-│  (WPF, WinForms, UWP, Win32)                 │
-└──────────────────────────────────────────────┘
+Katalon Studio kiểm thử ứng dụng Desktop Windows thông qua kiến trúc phân tầng chuẩn hóa dựa trên giao thức WebDriver. Luồng thực thi diễn ra tuần tự từ kịch bản kiểm thử, qua tầng trung gian WinAppDriver, tới tầng lõi Windows UI Automation và trực tiếp tác động lên ứng dụng đang kiểm thử (AUT).
+
+#### 2.1.1 Sơ đồ kiến trúc phân tầng (Session → Katalon Engine → WinAppDriver → AUT)
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Tester as Kịch bản Kiểm thử (Groovy/Java)
+    participant KE as Katalon Test Engine (Appium Client)
+    participant WAD as Microsoft WinAppDriver (Port 4723)
+    participant UIA as Windows UI Automation (UIA)
+    participant AUT as Ứng dụng Desktop (WPF/MiniSum.exe)
+
+    Note over Tester,AUT: 1. Khởi tạo phiên kiểm thử (Session Initialization)
+    Tester->>KE: startApplicationWithTitle(appPath, title)
+    KE->>WAD: HTTP POST /session (DesiredCapabilities: app, platformName)
+    WAD->>AUT: Kích hoạt tiến trình (Process Launch)
+    WAD->>UIA: Quét tìm Top-Level Window có Name = title (HWND)
+    UIA-->>WAD: Trả về Window Handle (HWND)
+    WAD-->>KE: HTTP 200 OK (Session ID: GUID)
+    
+    Note over Tester,AUT: 2. Tương tác & Định vị phần tử (Element Interaction)
+    Tester->>KE: sendKeys(findWindowsObject('txtUser'), 'admin')
+    KE->>WAD: HTTP POST /session/{id}/element (using: accessibility id, value: txtUser)
+    WAD->>UIA: FindFirst(TreeScope_Descendants, AutomationId == "txtUser")
+    UIA-->>WAD: UIA Element Reference
+    WAD-->>KE: HTTP 200 OK (Element ID)
+    KE->>WAD: HTTP POST /session/{id}/element/{elId}/value (Keys: 'admin')
+    WAD->>UIA: SetValue / SendInput (Gửi bàn phím ảo)
+    UIA->>AUT: Cập nhật văn bản trong ô txtUser
+    
+    Note over Tester,AUT: 3. Kiểm tra trạng thái & Đóng phiên (Verification & Teardown)
+    Tester->>KE: getAttribute(findWindowsObject('lblMessage'), 'Name')
+    KE->>WAD: HTTP GET /session/{id}/element/{elId}/attribute/Name
+    WAD->>UIA: GetCurrentPropertyValue(UIA_NamePropertyId)
+    UIA-->>WAD: "Đăng nhập thành công!"
+    WAD-->>KE: HTTP 200 OK (Value)
+    Tester->>KE: closeApplication()
+    KE->>WAD: HTTP DELETE /session/{id}
+    WAD->>AUT: Hủy tiến trình / Giải phóng Window Handle
+    WAD-->>KE: HTTP 200 OK
 ```
 
-1. **Gửi lệnh:** Kịch bản kiểm thử trong Katalon sinh ra các yêu cầu HTTP theo chuẩn JSON Wire / W3C WebDriver.
-2. **Thông dịch:** WinAppDriver (dịch vụ chạy nền ở cổng `4723`) tiếp nhận yêu cầu và chuyển đổi thành lời gọi hàm của Windows UI Automation (UIA).
-3. **Tương tác:** Hệ điều hành Windows tương tác trực tiếp lên các thành phần giao diện (nhấp chuột, nhập văn bản, đọc giá trị).
-4. **Phản hồi:** Trạng thái thực thi và dữ liệu giao diện được trả ngược về Katalon để đánh giá kết quả (Pass/Fail).
+#### 2.1.2 Phân tích chi tiết 4 tầng kiến trúc
+1. **Tầng 1: Katalon Studio Test Engine (Client Layer)**
+   * **Bản chất:** Đóng vai trò là một WebDriver Client. Dưới tầng mã nguồn, Katalon sử dụng thư viện `io.appium.java_client.windows.WindowsDriver` (dựa trên Appium Java Client) để trừu tượng hóa các thao tác giao diện thành bộ từ khóa bậc cao `WindowsBuiltinKeywords` (`Windows.startApplication`, `Windows.setText`, `Windows.click`, `Windows.getAttribute`).
+   * **Xử lý đối tượng:** Khi gọi `findWindowsObject('path')`, Katalon đọc file cấu hình `.wrs`, trích xuất `locatorStrategy` và chuỗi `locator`, sau đó đóng gói thành các đối tượng `By` tương ứng (`By.name()`, `By.xpath()`, `By.id()` hoặc custom Accessibility ID) để gửi đi.
+
+2. **Tầng 2: Giao thức giao tiếp WebDriver (Transport / API Layer)**
+   * **Cổng mặc định:** `http://127.0.0.1:4723`.
+   * **Chuẩn giao tiếp:** Tuân theo đặc tả W3C WebDriver Protocol / JSON Wire Protocol qua giao thức HTTP RESTful. Mọi tương tác đều là các HTTP Request với payload JSON tiêu chuẩn:
+     * `POST /session`: Khởi tạo phiên kiểm thử và nhận về chuỗi nhận diện duy nhất `sessionId`.
+     * `POST /session/{id}/element`: Tìm kiếm phần tử trên cây giao diện UIA.
+     * `POST /session/{id}/element/{elementId}/value`: Gửi chuỗi ký tự hoặc mã phím ảo vào điều khiển.
+     * `POST /session/{id}/element/{elementId}/click`: Gửi sự kiện nhấp chuột theo tọa độ tâm phần tử.
+     * `GET /session/{id}/element/{elementId}/attribute/{name}`: Truy xuất thuộc tính UIA (như `Name`, `ClassName`, `IsEnabled`).
+     * `DELETE /session/{id}`: Hủy phiên làm việc và giải phóng tài nguyên.
+
+3. **Tầng 3: Microsoft WinAppDriver (Translation Layer / REST Server)**
+   * **Bản chất:** WinAppDriver là một dịch vụ Windows độc lập (chạy dưới dạng console service hoặc background service) do chính Microsoft phát triển.
+   * **Nhiệm vụ thông dịch:** Đóng vai trò như một "Adapter" chuyển dịch các yêu cầu REST/HTTP từ Katalon thành các lệnh gọi hàm Win32 API và COM API của hệ điều hành Windows. WinAppDriver quản lý bảng ánh xạ giữa `Session ID` $\leftrightarrow$ `Process ID (PID)` và `Window Handle (HWND)`.
+
+4. **Tầng 4: Windows UI Automation (UIA) & Ứng dụng kiểm thử (AUT Layer)**
+   * **Hạ tầng UIA:** Là framework trợ năng (Accessibility Framework) tích hợp sẵn trong hệ điều hành Windows từ Windows 7 trở lên. UIA tổ chức toàn bộ giao diện màn hình thành một cấu trúc cây thứ bậc (*UI Automation Tree*), bắt đầu từ Desktop Root Window.
+   * **Cơ chế Control Patterns:** Mỗi điều khiển trên AUT (WPF, WinForms, Win32) liên kết với một UI Automation Provider. Tùy thuộc vào loại phần tử, nhà phát triển cung cấp các Pattern tương ứng:
+     * `ValuePattern`: Dành cho ô nhập liệu cho phép đọc/ghi giá trị (`TextBox`).
+     * `InvokePattern`: Dành cho điều khiển có thể kích hoạt hành động (`Button`).
+     * `TextPattern`: Hỗ trợ định dạng và duyệt qua các khối văn bản phức tạp.
+     * *Lưu ý:* Thẻ `<TextBlock>` trong WPF không thực thi `ValuePattern`, dẫn đến việc WinAppDriver không đọc được qua `getText()` mà bắt buộc phải đọc qua thuộc tính UIA `NamePropertyId`.
+
+#### 2.1.3 Vòng đời Session và Cơ chế quản lý ngữ cảnh (Session Lifecycle)
+Một kịch bản kiểm thử Desktop thành công phụ thuộc vào việc duy trì tính toàn vẹn của Session:
+* **Khởi tạo (Session Creation):** Khi Katalon gửi yêu cầu `POST /session`, WinAppDriver kích hoạt ứng dụng qua tham số `app` trong `DesiredCapabilities`. WinAppDriver theo dõi tiến trình và gắn kết `Session ID` vào `HWND` của cửa sổ chính được render đầu tiên.
+* **Chuyển ngữ cảnh cửa sổ (Window Switching):** Trong các ứng dụng nhiều màn hình (ví dụ: màn hình Login đóng lại bằng `this.Close()` để mở màn hình Calculator bằng `new MainWindow().Show()`), `HWND` ban đầu bị hủy. WinAppDriver sẽ mất quyền kiểm soát (gây lỗi `NoSuchWindowException`). Tester bắt buộc phải chuyển ngữ cảnh sang cửa sổ mới bằng từ khóa:
+  ```groovy
+  Windows.switchToWindowTitle('MiniSum - Tinh tong')
+  ```
+  Lệnh này gửi request điều hướng session đính kèm vào `HWND` mới trên cây Desktop.
+* **Hủy phiên (Session Teardown):** Lệnh `Windows.closeApplication()` gửi yêu cầu `DELETE /session/{id}` để đóng ứng dụng và hủy socket lắng nghe, tránh rò rỉ bộ nhớ hoặc xung đột port cho các lần chạy kế tiếp.
+
+#### 2.1.4 Điểm nghẽn kiến trúc thực tế: Bẫy Launcher Process trong .NET Core / .NET 6+
+Trong quá trình triển khai thực tế trên ứng dụng mẫu WPF `MiniSum.exe`, nhóm phát hiện một điểm nghẽn kiến trúc kinh điển giữa WinAppDriver và các ứng dụng .NET hiện đại:
+* **Bản chất vấn đề:** Ứng dụng biên dịch trên .NET 6+ tạo ra một tập tin thực thi nhị phân dạng *AppHost Launcher*. Khi chạy, tiến trình Launcher (PID 1) chỉ có nhiệm vụ khởi động .NET Runtime, tải các file assembly `.dll`, rồi tạo ra một tiến trình thực thi giao diện thực sự (PID 2) và tự kết thúc (exit) sau chưa đầy 1 giây.
+* **Hậu quả kiến trúc:** Khi dùng lệnh khởi động mặc định `Windows.startApplication(appPath)`, WinAppDriver theo dõi PID 1. Do PID 1 đã đóng, WinAppDriver không thể tìm thấy bất kỳ cửa sổ nào thuộc về PID này trong thời gian chờ (timeout 7.5 giây) và ném ra lỗi ngoại lệ:
+  ```text
+  SessionNotCreatedException: Failed to locate opened application window with appId: ... and processId: 21592
+  ```
+* **Giải pháp khắc phục:** 
+  * Sử dụng từ khóa **`Windows.startApplicationWithTitle(appPath, 'Tiêu đề cửa sổ')`**. 
+  * Cơ chế: Thay vì neo cứng vào PID của launcher, Katalon hướng dẫn WinAppDriver duyệt qua cây UIA Desktop Root để tìm cửa sổ có thuộc tính `Name` khớp với tiêu đề được chỉ định. Sau khi phát hiện, WinAppDriver sẽ lấy trực tiếp `HWND` của cửa sổ thực tế và khởi tạo Session thành công 100%.
 
 ### 2.2 Cơ chế Object Repository và Nhận diện Locator (Object Recognition)
 

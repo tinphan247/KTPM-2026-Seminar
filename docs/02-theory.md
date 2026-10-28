@@ -3,7 +3,7 @@
 
 > **Seminar – Phụ trách:** Tín  
 > **Nội dung:** Khái niệm cốt lõi · Kỹ thuật tự động hóa · Thách thức đặc thù · Thuật ngữ  
-> **Cập nhật lần cuối:** 02/10/2026  
+> **Cập nhật lần cuối:** 27/10/2026 (bổ sung Lần 2: POM, Flaky Test, Wait, Test Oracle, Recovery Testing)  
 > **Trạng thái:** Hoàn thành  
 
 ---
@@ -28,13 +28,39 @@
    - 6.1 [Khái niệm](#61-khái-niệm)
    - 6.2 [Phân loại Checkpoint](#62-phân-loại-checkpoint)
    - 6.3 [Kiến trúc Assertion](#63-kiến-trúc-assertion)
-7. [Fully vs Semi-Automated](#7-fully-vs-semi-automated)
-   - 7.1 [Fully Automated](#71-fully-automated)
-   - 7.2 [Semi-Automated](#72-semi-automated)
-   - 7.3 [So sánh chi tiết](#73-so-sánh-chi-tiết)
-8. [Ưu điểm & Nhược điểm của Automation Testing](#8-ưu-điểm--nhược-điểm-của-automation-testing)
-9. [Khi nào nên dùng Automation Testing?](#9-khi-nào-nên-dùng-automation-testing)
-10. [Bảng thuật ngữ chuyên ngành](#10-bảng-thuật-ngữ-chuyên-ngành)
+7. [Page Object Model (POM)](#7-page-object-model-pom)
+   - 7.1 [Khái niệm](#71-khái-niệm)
+   - 7.2 [Ví dụ trên MiniSum](#72-ví-dụ-trên-minisum)
+   - 7.3 [POM trong Katalon Studio và WinAppDriver](#73-pom-trong-katalon-studio-và-winappdriver)
+   - 7.4 [Ưu điểm, nhược điểm và nguyên tắc áp dụng](#74-ưu-điểm-nhược-điểm-và-nguyên-tắc-áp-dụng)
+8. [Flaky Test](#8-flaky-test)
+   - 8.1 [Khái niệm và biểu hiện](#81-khái-niệm-và-biểu-hiện)
+   - 8.2 [Nguyên nhân gốc rễ](#82-nguyên-nhân-gốc-rễ)
+   - 8.3 [Cách phát hiện](#83-cách-phát-hiện)
+   - 8.4 [Cách xử lý](#84-cách-xử-lý)
+9. [Wait Strategy – Implicit, Explicit và Fluent Wait](#9-wait-strategy--implicit-explicit-và-fluent-wait)
+   - 9.1 [Vì sao phải chờ](#91-vì-sao-phải-chờ)
+   - 9.2 [Implicit Wait](#92-implicit-wait)
+   - 9.3 [Explicit Wait](#93-explicit-wait)
+   - 9.4 [Fluent Wait](#94-fluent-wait)
+   - 9.5 [So sánh và cách chọn](#95-so-sánh-và-cách-chọn)
+10. [Test Oracle](#10-test-oracle)
+   - 10.1 [Khái niệm](#101-khái-niệm)
+   - 10.2 [Phân loại Test Oracle](#102-phân-loại-test-oracle)
+   - 10.3 [Test Oracle trong kiểm thử tự động](#103-test-oracle-trong-kiểm-thử-tự-động)
+   - 10.4 [Bài toán Oracle và giới hạn](#104-bài-toán-oracle-và-giới-hạn)
+11. [Recovery Testing](#11-recovery-testing)
+   - 11.1 [Khái niệm](#111-khái-niệm)
+   - 11.2 [Kịch bản sự cố thường gặp](#112-kịch-bản-sự-cố-thường-gặp)
+   - 11.3 [Cơ chế phục hồi trong automation](#113-cơ-chế-phục-hồi-trong-automation)
+   - 11.4 [Checklist kiểm tra khả năng phục hồi](#114-checklist-kiểm-tra-khả-năng-phục-hồi)
+12. [Fully vs Semi-Automated](#12-fully-vs-semi-automated)
+   - 12.1 [Fully Automated](#121-fully-automated)
+   - 12.2 [Semi-Automated](#122-semi-automated)
+   - 12.3 [So sánh chi tiết](#123-so-sánh-chi-tiết)
+13. [Ưu điểm & Nhược điểm của Automation Testing](#13-ưu-điểm--nhược-điểm-của-automation-testing)
+14. [Khi nào nên dùng Automation Testing?](#14-khi-nào-nên-dùng-automation-testing)
+15. [Bảng thuật ngữ chuyên ngành](#15-bảng-thuật-ngữ-chuyên-ngành)
 
 ---
 
@@ -278,9 +304,462 @@ Bảng dữ liệu đầu vào (tập tin `login_dataset.xlsx`):
 
 ---
 
-## 7. Fully vs Semi-Automated
+## 7. Page Object Model (POM)
 
-### 7.1 Fully Automated
+### 7.1 Khái niệm
+
+**Page Object Model (POM)** là mẫu thiết kế (design pattern) trong kiểm thử tự động, trong đó **mỗi màn hình hoặc cửa sổ của ứng dụng được biểu diễn bằng một lớp (class) riêng**. Lớp này đóng gói ba thành phần:
+
+1. **Locator** – định danh các phần tử giao diện (`AutomationId`, `Name`, `XPath`…).
+2. **Hành động** – các thao tác người dùng thực hiện được trên màn hình (nhập liệu, nhấn nút, chuyển màn hình).
+3. **Truy vấn trạng thái** – các hàm đọc dữ liệu phục vụ checkpoint (lấy nội dung nhãn, kiểm tra nút đang Enabled hay Disabled).
+
+Kịch bản kiểm thử **không thao tác trực tiếp lên control**, mà gọi các phương thức nghiệp vụ do page object cung cấp. Nhờ vậy khi giao diện thay đổi, chỉ cần sửa **một chỗ** trong page object thay vì sửa toàn bộ kịch bản.
+
+```
+        Không dùng POM                        Dùng POM
+┌───────────────────────────┐        ┌───────────────────────────┐
+│ TC01_Login                │        │ TC01_Login                │
+│  find("txtUser").sendKeys│        │  loginPage.Login(u, p)    │
+│  find("txtPass").sendKeys│        │  Assert(lblMessage)       │
+│  find("btnLogin").click  │        └─────────────┬─────────────┘
+│  find("lblMessage")...   │                      │ gọi
+└───────────────────────────┘        ┌─────────────▼─────────────┐
+   Locator rải khắp test case        │ LoginPage                 │
+   → đổi UI phải sửa nhiều nơi       │  locator + Login()        │
+                                     └───────────────────────────┘
+                                        Locator tập trung một nơi
+```
+
+### 7.2 Ví dụ trên MiniSum
+
+Giả sử cần kiểm thử màn hình đăng nhập của `MiniSum.exe`. Cách viết **không có POM** lặp lại locator trong từng test case:
+
+```csharp
+// TC01 - lặp locator ngay trong test
+driver.FindElementByAccessibilityId("txtUser").SendKeys("admin");
+driver.FindElementByAccessibilityId("txtPass").SendKeys("1234");
+driver.FindElementByAccessibilityId("btnLogin").Click();
+Assert.AreEqual("Dang nhap thanh cong",
+    driver.FindElementByAccessibilityId("lblMessage").Text);
+```
+
+Cách viết **có POM** – tách thành `LoginPage` và `CalculatorPage`:
+
+```csharp
+// PageObjects/LoginPage.cs
+public class LoginPage
+{
+    private readonly WindowsDriver<WindowsElement> driver;
+
+    public LoginPage(WindowsDriver<WindowsElement> driver) => this.driver = driver;
+
+    private WindowsElement TxtUser => driver.FindElementByAccessibilityId("txtUser");
+    private WindowsElement TxtPass => driver.FindElementByAccessibilityId("txtPass");
+    private WindowsElement BtnLogin => driver.FindElementByAccessibilityId("btnLogin");
+    private WindowsElement LblMessage => driver.FindElementByAccessibilityId("lblMessage");
+
+    public void Login(string user, string pass)
+    {
+        TxtUser.Clear();
+        TxtUser.SendKeys(user);
+        TxtPass.SendKeys(pass);
+        BtnLogin.Click();
+    }
+
+    public string Message => LblMessage.Text;
+}
+```
+
+```csharp
+// TC01_Login_Success.cs - test case chỉ còn nghiệp vụ
+var loginPage = new LoginPage(driver);
+loginPage.Login("admin", "1234");
+
+Assert.AreEqual("Dang nhap thanh cong", loginPage.Message);
+var calculatorPage = new CalculatorPage(driver);
+Assert.IsTrue(calculatorPage.IsDisplayed());
+```
+
+Khi bản **v2** đổi `btnSum` thành `btnCalculate`, chỉ `CalculatorPage` phải sửa; toàn bộ test case dùng lại vẫn giữ nguyên. Đây chính là kịch bản **maintenance & self-healing** được demo trong seminar.
+
+### 7.3 POM trong Katalon Studio và WinAppDriver
+
+| Công cụ | Cách hiện thực POM | Ghi chú |
+|---|---|---|
+| **Katalon Studio** | **Object Repository** đóng vai trò kho locator dùng chung; mỗi màn hình là một thư mục (`MiniSum/Login`, `MiniSum/Calculator`). Test case tham chiếu `findWindowsObject('Object Repository/...')` thay vì khai báo locator trực tiếp. Có thể bọc thêm **Custom Keyword** để tạo lớp hành vi (`LoginKeyword.login()`) | POM ở mức “locator tập trung”, chưa phải class đầy đủ |
+| **WinAppDriver + C# NUnit** | Tạo thư mục `PageObjects/` với `LoginPage.cs`, `CalculatorPage.cs`; test case chỉ gọi phương thức | POM đầy đủ theo hướng lập trình hướng đối tượng |
+
+### 7.4 Ưu điểm, nhược điểm và nguyên tắc áp dụng
+
+| Ưu điểm | Nhược điểm |
+|---|---|
+| Locator tập trung → bảo trì nhanh khi UI đổi | Tốn công thiết kế ban đầu, nhiều file hơn |
+| Test case đọc như tài liệu nghiệp vụ, giảm trùng lặp | Với ứng dụng rất nhỏ, POM có thể là over-engineering |
+| Tái sử dụng hành động giữa nhiều test case | Dễ phình to nếu nhồi cả logic kiểm thử vào page object |
+| Hỗ trợ phân công: người viết page object và người viết test case độc lập | Cần kỷ luật đặt tên, nếu không sẽ thành “God class” |
+
+**Nguyên tắc áp dụng:**
+- Page object **chỉ mô tả giao diện**, **không chứa assertion**; assertion thuộc về test case.
+- Một page object tương ứng một màn hình (hoặc một thành phần tái sử dụng như dialog, toolbar).
+- Phương thức nên diễn đạt **ý định nghiệp vụ** (`Login`, `Calculate`, `OpenHistory`) thay vì `ClickButton1`.
+- Trả về page object tiếp theo khi hành động làm chuyển màn hình (`Login()` trả về `CalculatorPage`) để test case mô tả đúng luồng.
+
+---
+
+## 8. Flaky Test
+
+### 8.1 Khái niệm và biểu hiện
+
+**Flaky Test** là kịch bản kiểm thử cho kết quả **không ổn định giữa các lần chạy dù mã nguồn ứng dụng và mã kiểm thử không thay đổi**: lần chạy PASS, lần chạy FAIL, có khi FAIL rồi PASS khi chạy lại ngay lập tức.
+
+Flaky test là vấn đề nghiêm trọng hơn việc “không có test”, vì:
+
+- Đội phát triển **mất niềm tin** vào bộ kiểm thử: khi test báo FAIL, không ai biết là ứng dụng lỗi thật hay test lỗi.
+- Tốn thời gian điều tra lại các lỗi “ma”, làm chậm pipeline CI/CD.
+- Che giấu lỗi thật: một khi nhóm đã quen với việc “chạy lại là PASS”, lỗi thật sẽ bị bỏ qua.
+
+**Biểu hiện thường gặp trên desktop automation:**
+
+| Biểu hiện | Ví dụ với MiniSum |
+|---|---|
+| PASS/FAIL xen kẽ trên cùng máy | `TC03_BVA` lúc đọc được `lblResult`, lúc đọc được chuỗi rỗng |
+| Chỉ FAIL trên máy CI hoặc máy chậm hơn | Máy yếu nên cửa sổ Calculator xuất hiện sau khi script đã tìm control |
+| Phụ thuộc thứ tự chạy | Chạy riêng thì PASS, chạy cả suite thì FAIL do cửa sổ cũ còn mở |
+| FAIL khi màn hình bị khoá / đổi độ phân giải | Toạ độ click sai khi scale 125% hoặc khi RDP |
+
+### 8.2 Nguyên nhân gốc rễ
+
+| Nhóm nguyên nhân | Mô tả | Ví dụ |
+|---|---|---|
+| **Timing / bất đồng bộ** | Script chạy nhanh hơn tốc độ ứng dụng phản hồi | Đọc `lblMessage` trước khi ứng dụng kịp cập nhật sau khi click |
+| **Locator không ổn định** | Dùng locator sinh động (XPath theo index, toạ độ) | `//Button[3]` đổi vị trí khi thêm nút mới |
+| **Trạng thái dùng chung** | Test này để lại dữ liệu/cửa sổ ảnh hưởng test khác | Test trước không đóng app, test sau mở thêm instance |
+| **Dữ liệu test không cô lập** | Dùng chung file Excel/DB, không reset trước mỗi lần chạy | Lịch sử tính toán (v2) tích luỹ qua nhiều test |
+| **Môi trường** | DPI, độ phân giải, ngôn ngữ, focus, phần mềm diệt virus | Windows scale 150% làm toạ độ click lệch |
+| **Tài nguyên / session** | WinAppDriver session chết, port 4723 bị chiếm | Chạy song song nhiều test trên cùng session |
+
+### 8.3 Cách phát hiện
+
+1. **Chạy lặp**: thực thi cùng test N lần (ví dụ 10–20 lần) và thống kê tỉ lệ PASS. Test có tỉ lệ PASS < 100% là flaky.
+2. **Ghi log đầy đủ**: timestamp từng bước, ảnh chụp màn hình tại thời điểm FAIL, giá trị Actual/Expected.
+3. **Đo “flaky rate”** theo từng test case để ưu tiên sửa: test FAIL 1/20 lần vẫn phải xử lý.
+4. **Chạy trên nhiều cấu hình**: máy nhanh/chậm, độ phân giải khác nhau, có/không có màn hình phụ.
+
+### 8.4 Cách xử lý
+
+| Biện pháp | Cách làm | Lưu ý |
+|---|---|---|
+| **Chờ tường minh (Explicit Wait)** | Chờ *điều kiện* cụ thể thay vì chờ cố định: `waitForElementPresent`, `WebDriverWait.Until(...)` | Ưu tiên số 1, xem mục 9 – Wait Strategy |
+| **Locator ổn định** | Dùng `AutomationId` do đội phát triển đặt, tránh XPath theo index/toạ độ | MiniSum đặt sẵn `txtUser`, `btnLogin`, `lblResult`… |
+| **Cô lập test** | Mỗi test tự chuẩn bị trạng thái đầu vào và dọn dẹp ở `finally`/`TearDown` | Không phụ thuộc test chạy trước |
+| **Dữ liệu riêng** | Sinh dữ liệu cho từng lần chạy hoặc reset file test data | Tránh ghi đè chéo giữa các test |
+| **Retry có kiểm soát** | Chỉ retry test đã được xác định là flaky, có ghi log số lần retry | Không dùng retry để “che” lỗi thật |
+| **Quarantine** | Tách test flaky khỏi suite chính, theo dõi riêng cho tới khi sửa xong | Giữ suite chính luôn “xanh” và đáng tin |
+
+**Phân biệt flaky test và lỗi thật:**
+
+| Tiêu chí | Flaky Test | Lỗi thật của ứng dụng |
+|---|---|---|
+| Chạy lại nhiều lần | Kết quả thay đổi | Luôn FAIL |
+| Thay đổi môi trường | Có thể PASS/FAIL khác nhau | FAIL ở mọi môi trường |
+| Log/ảnh chụp | Thường cho thấy script thao tác sai thời điểm | Cho thấy giá trị thực tế sai so với đặc tả |
+| Hành động | Sửa script (wait, locator, isolation) | Báo lỗi cho đội phát triển |
+
+> **Liên hệ MiniSum:** sau khi đăng nhập thành công, ứng dụng cố ý **giữ màn hình Login thêm 1 giây** trước khi mở cửa sổ Calculator. Nếu script không chờ mà đọc `lblMessage` hoặc tìm `winMain` ngay lập tức, test sẽ flaky. Đây là tình huống được dùng để minh hoạ wait strategy ở mục tiếp theo.
+
+---
+
+## 9. Wait Strategy – Implicit, Explicit và Fluent Wait
+
+### 9.1 Vì sao phải chờ
+
+Trong desktop app, giao diện **không cập nhật đồng bộ với thao tác của script**: cửa sổ cần thời gian khởi tạo handle, hiệu ứng chuyển màn hình có animation, xử lý nghiệp vụ chạy trên UI thread, dữ liệu được tải từ đĩa/dịch vụ. Nếu script tìm control hoặc đọc giá trị ngay sau khi click, nó có thể chạy *trước* khi ứng dụng kịp phản hồi → sinh ra flaky test.
+
+Có ba cơ chế chờ phổ biến trong automation desktop, đều được hỗ trợ bởi WinAppDriver/Appium và Katalon Studio.
+
+### 9.2 Implicit Wait
+
+**Implicit Wait** là thời gian chờ mặc định được cấu hình **một lần cho toàn bộ driver**. Mỗi khi gọi tìm phần tử, driver sẽ thử lại liên tục trong khoảng thời gian này trước khi ném `NoSuchElementException`.
+
+```csharp
+// C# – WinAppDriver: chờ tối đa 10 giây cho MỌI lệnh tìm phần tử
+driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+```
+
+- **Ưu điểm:** cấu hình một dòng, áp dụng cho mọi locator, script gọn.
+- **Nhược điểm:** không phân biệt được “phần tử chưa xuất hiện” với “phần tử không bao giờ xuất hiện” → test chậm và khó chẩn đoán; không kiểm tra được điều kiện phức tạp (text đã đổi chưa, nút đã Enabled chưa). Khi một phần tử thật sự không tồn tại, mỗi lần tìm đều phải chờ hết timeout.
+
+### 9.3 Explicit Wait
+
+**Explicit Wait** chờ **một điều kiện cụ thể** trên **một phần tử cụ thể**, với timeout riêng cho từng bước. Đây là cách được khuyến nghị.
+
+```csharp
+// C# – WinAppDriver: chờ cửa sổ Calculator xuất hiện (tối đa 10 giây)
+var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+wait.Until(d => d.FindElementByAccessibilityId("winMain").Displayed);
+
+// Chờ nhãn kết quả có nội dung mong đợi
+var result = wait.Until(d =>
+{
+    var text = d.FindElementByAccessibilityId("lblResult").Text;
+    return text == "Ket qua: 5 + 7 = 12" ? text : null;
+});
+```
+
+```groovy
+// Katalon Studio (Windows Desktop) – chờ cửa sổ và phần tử
+Windows.waitForElementPresent(
+    findWindowsObject('Object Repository/MiniSum/Calculator/winMain'), 10)
+Windows.switchToWindowTitle('MiniSum - Tinh tong')
+Windows.waitForElementPresent(
+    findWindowsObject('Object Repository/MiniSum/Calculator/lblResult'), 10)
+```
+
+- **Ưu điểm:** rõ ràng về mặt ý định, chỉ chờ đúng nơi cần, timeout ngắn và dễ chẩn đoán khi FAIL, có thể chờ điều kiện phức tạp.
+- **Nhược điểm:** phải viết thêm code; nếu quên ở một bước vẫn có thể flaky.
+
+### 9.4 Fluent Wait
+
+**Fluent Wait** là dạng mở rộng của Explicit Wait, cho phép cấu hình **tần suất kiểm tra (polling interval)** và **danh sách exception được bỏ qua** trong lúc chờ.
+
+```csharp
+var fluentWait = new DefaultWait<WindowsDriver<WindowsElement>>(driver)
+{
+    Timeout = TimeSpan.FromSeconds(15),
+    PollingInterval = TimeSpan.FromMilliseconds(500)
+};
+fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+
+string message = fluentWait.Until(d =>
+{
+    var el = d.FindElementByAccessibilityId("lblMessage");
+    return string.IsNullOrWhiteSpace(el.Text) ? null : el.Text;
+});
+```
+
+- **Ưu điểm:** kiểm soát chi tiết nhịp kiểm tra, bỏ qua các lỗi tạm thời (phần tử bị dựng lại → `StaleElementReference`), phù hợp với ứng dụng khởi động chậm hoặc có animation dài.
+- **Nhược điểm:** cấu hình phức tạp, dễ lạm dụng thành “chờ vô tội vạ” làm test chậm.
+
+### 9.5 So sánh và cách chọn
+
+| Tiêu chí | Implicit Wait | Explicit Wait | Fluent Wait |
+|---|---|---|---|
+| Phạm vi | Toàn bộ driver | Từng bước | Từng bước |
+| Điều kiện chờ | Chỉ “tìm thấy phần tử” | Mọi điều kiện tự định nghĩa | Mọi điều kiện + polling + ignore exception |
+| Cấu hình | Một lần | Mỗi lần gọi | Mỗi lần gọi, nhiều tham số |
+| Khả năng chẩn đoán khi FAIL | Thấp (chỉ biết timeout) | Cao | Cao |
+| Khuyến nghị | Chỉ dùng làm lưới an toàn, timeout nhỏ (3–5s) | **Mặc định nên dùng** | Khi cần kiểm soát chi tiết |
+
+**Nguyên tắc thực hành:**
+- **Không dùng `Thread.Sleep`/`delay` cố định** làm cơ chế chờ chính: máy nhanh thì lãng phí, máy chậm vẫn flaky. Chỉ dùng khi thật sự cần (ví dụ chờ animation ngắn) và phải ghi chú lý do.
+- Mỗi bước chờ nên gắn với **một điều kiện nghiệp vụ** (“cửa sổ Calculator đã mở”, “lblResult đã có nội dung”) thay vì “chờ 2 giây”.
+- Đặt timeout theo **thời gian phản hồi thực tế đo được × 2–3**, không đặt quá lớn.
+- Tránh trộn Implicit Wait với Explicit Wait trong cùng session vì thời gian chờ thực tế sẽ khó dự đoán.
+
+> **Áp dụng cho MiniSum:** sau khi đăng nhập thành công, ứng dụng giữ màn hình Login 1 giây rồi mới mở Calculator. Script nên dùng `waitForElementPresent(winMain, 10)` / `WebDriverWait` thay vì `Thread.Sleep(1000)`; cách này vừa nhanh hơn khi máy khoẻ, vừa không flaky khi máy chậm.
+
+---
+
+## 10. Test Oracle
+
+### 10.1 Khái niệm
+
+**Test Oracle** là **cơ chế hoặc nguồn thông tin dùng để xác định một kết quả kiểm thử là ĐÚNG hay SAI**. Nói cách khác, oracle trả lời câu hỏi: *“Làm sao biết giá trị ứng dụng trả về là chấp nhận được?”*
+
+Một test case không có oracle chỉ là chuỗi thao tác mô phỏng người dùng; nó không thể kết luận PASS/FAIL. Oracle tồn tại **độc lập với công cụ kiểm thử**: Katalon, WinAppDriver hoặc một script PowerShell đều chỉ là phương tiện thực thi, còn tính đúng/sai do oracle quyết định.
+
+```
+Test Case: nhập A = 5, B = 7, nhấn TINH TONG
+                     │
+                     ▼
+        Giá trị thực tế: lblResult = "Ket qua: 5 + 7 = 12"
+                     │
+        ┌────────────┴─────────────┐
+        ▼                          ▼
+   Oracle: đặc tả quy tắc      So sánh
+   "lblResult = Ket qua: A + B = A+B"
+        │
+        ▼
+   Khớp → PASS  |  Không khớp → FAIL
+```
+
+### 10.2 Phân loại Test Oracle
+
+| Loại oracle | Nguồn xác định kết quả đúng | Ví dụ trên MiniSum |
+|---|---|---|
+| **Specified oracle** (theo đặc tả) | Yêu cầu/tài liệu đặc tả của hệ thống | Đặc tả ghi: đăng nhập sai phải hiển thị `Sai tai khoan hoac mat khau` |
+| **Derived oracle** (suy dẫn) | Tính toán từ công thức, bảng quyết định, giá trị biên | Với A = -99, B = 99 → kỳ vọng `Ket qua: -99 + 99 = 0` |
+| **Implicit oracle** (ngầm định) | Kỳ vọng hiển nhiên: không crash, không treo, không rò rỉ | Sau khi nhấn TINH TONG, ứng dụng vẫn phản hồi và không hiện hộp thoại lỗi .NET |
+| **Consistency oracle** (nhất quán) | So sánh giữa hai lần chạy / hai phiên bản / hai môi trường | Cùng bộ dữ liệu BVA, kết quả của v1 và v3 phải giống nhau ở miền hợp lệ |
+| **Human oracle** (con người) | Chuyên gia/người dùng đánh giá bằng mắt | Kiểm tra bố cục, màu sắc, thông báo lỗi có dễ hiểu không |
+| **Metamorphic oracle** (biến đổi) | So sánh quan hệ giữa các lần chạy có dữ liệu biến đổi | Đổi chỗ A và B thì tổng không đổi: `f(a,b) = f(b,a)` |
+
+### 10.3 Test Oracle trong kiểm thử tự động
+
+Trong automation, oracle được **hiện thực hoá bằng checkpoint/assertion**. Mỗi assertion cần trả lời rõ ba câu hỏi:
+
+1. **Kiểm tra cái gì?** – phần tử nào, thuộc tính nào (`lblResult.Text`, `btnLogin.Enabled`…).
+2. **Giá trị kỳ vọng là bao nhiêu?** – lấy từ nguồn oracle nào (đặc tả, công thức, dữ liệu chuẩn).
+3. **Khi lệch thì kết luận gì?** – FAIL kèm thông điệp chứa Actual và Expected để điều tra.
+
+```csharp
+// Oracle dạng specified/derived: công thức A + B và định dạng chuỗi theo đặc tả
+int a = 5, b = 7;
+string expected = $"Ket qua: {a} + {b} = {a + b}";
+string actual = calculatorPage.Result;
+
+Assert.AreEqual(expected, actual,
+    $"Sai ket qua hien thi. Expected='{expected}', Actual='{actual}'");
+```
+
+**Lưu ý chất lượng oracle:**
+- Oracle **quá yếu** (“chỉ cần không crash”) sẽ cho PASS giả, không phát hiện lỗi nghiệp vụ.
+- Oracle **quá chặt** vào chi tiết giao diện (toạ độ, font, màu) sẽ FAIL oan mỗi khi đổi UI.
+- Kỳ vọng phải được tính **độc lập với cách ứng dụng tính** — nếu lấy chính kết quả của app làm kỳ vọng thì test không có giá trị.
+
+### 10.4 Bài toán Oracle và giới hạn
+
+**Oracle problem** là tình huống rất khó hoặc rất tốn kém để xác định đâu là kết quả đúng, ví dụ:
+
+- Giao diện phức tạp, kết quả là hình ảnh/đồ thị → khó so sánh tự động.
+- Ứng dụng có nhiều kết quả “đúng” tương đương (thứ tự hiển thị không quan trọng).
+- Không có đặc tả rõ ràng, hoặc đặc tả lỗi thời.
+
+**Cách giảm nhẹ:**
+- Ưu tiên dữ liệu kiểm thử có **kỳ vọng tính được bằng công thức** (BVA, bảng quyết định) như bộ 12 ca của MiniSum.
+- Kết hợp nhiều loại oracle (specified + implicit + consistency) trong cùng một test.
+- Với phần giao diện khó so sánh, dùng **human oracle** hoặc **bitmap checkpoint** có ngưỡng sai lệch hợp lý.
+
+> **Liên hệ MiniSum:** bộ dữ liệu BVA gồm 12 ca là ví dụ của **derived oracle** – kỳ vọng được tính từ quy tắc `A + B` và miền giá trị `[-99, 99]`, hoàn toàn độc lập với cách ứng dụng hiển thị.
+
+---
+
+## 11. Recovery Testing
+
+### 11.1 Khái niệm
+
+**Recovery Testing** (kiểm thử phục hồi) là loại kiểm thử đánh giá khả năng của hệ thống **tự phục hồi sau sự cố** và **tiếp tục hoạt động đúng**: ứng dụng bị treo/crash, mất kết nối, tiến trình bị kill, dữ liệu bị hỏng hoặc tài nguyên bị chiếm dụng.
+
+Trong bối cảnh automation, khái niệm này có hai tầng:
+
+1. **Kiểm thử khả năng phục hồi của AUT** – AUT có tự khôi phục trạng thái, có báo lỗi rõ ràng, có giữ dữ liệu đã nhập không?
+2. **Cơ chế tự phục hồi của bộ test** – khi một test hoặc session automation gặp sự cố, suite có dọn dẹp đúng cách và tiếp tục chạy các test còn lại không?
+
+Tầng thứ hai đặc biệt quan trọng với desktop automation vì WinAppDriver/Katalon **giữ session gắn với tiến trình ứng dụng**: chỉ cần một cửa sổ “ma” còn sót lại là các test sau có thể FAIL hàng loạt.
+
+### 11.2 Kịch bản sự cố thường gặp
+
+| Sự cố | Hậu quả nếu không xử lý | Cách phát hiện |
+|---|---|---|
+| Ứng dụng crash giữa chừng | Script treo tới hết timeout, các test sau FAIL dây chuyền | Tiến trình biến mất, `NoSuchWindowException` |
+| Ứng dụng treo (Not Responding) | Lệnh click chờ vô hạn, suite bị block | Cửa sổ không phản hồi, timeout liên tiếp |
+| Session WinAppDriver chết / port bị chiếm | Không mở được app ở test kế tiếp | `WebDriverException`, lỗi kết nối `127.0.0.1:4723` |
+| Popup/dialog bất ngờ | Click trúng sai phần tử, kết quả sai | Ảnh chụp màn hình cho thấy dialog lạ |
+| Cửa sổ cũ còn mở | Mở thêm instance, đọc nhầm window | Nhiều cửa sổ cùng title trong danh sách |
+| Dữ liệu bẩn từ lần chạy trước | Kết quả phụ thuộc lịch sử (ví dụ danh sách lịch sử v2) | Kết quả khác nhau giữa lần chạy đầu và lần sau |
+
+### 11.3 Cơ chế phục hồi trong automation
+
+**a) Dọn dẹp trong `TearDown` / `finally` (bắt buộc)**
+
+```csharp
+[TestFixture]
+public class MiniSumTests
+{
+    private WindowsDriver<WindowsElement> driver;
+
+    [SetUp]
+    public void StartApp()
+    {
+        var options = new AppiumOptions();
+        options.AddAdditionalCapability("app", MiniSumPath);
+        driver = new WindowsDriver<WindowsElement>(new Uri("http://127.0.0.1:4723"), options);
+    }
+
+    [TearDown]
+    public void CloseApp()
+    {
+        try
+        {
+            if (driver != null)
+            {
+                // Nếu test FAIL, chụp ảnh trước khi đóng để còn bằng chứng
+                if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
+                {
+                    ScreenshotHelper.Capture(driver, TestContext.CurrentContext.Test.Name);
+                }
+                driver.Quit();
+            }
+        }
+        catch (Exception ex)
+        {
+            // Không để lỗi dọn dẹp che mất kết quả test
+            TestContext.Progress.WriteLine($"Cleanup warning: {ex.Message}");
+        }
+        finally
+        {
+            driver = null;
+        }
+    }
+}
+```
+
+**b) Khởi tạo lại session khi session chết**
+
+```csharp
+private void EnsureSessionAlive()
+{
+    try
+    {
+        _ = driver.SessionId;          // truy cập nhẹ để kiểm tra session
+    }
+    catch (WebDriverException)
+    {
+        driver = CreateDriver();       // tạo session mới thay vì bỏ cả suite
+    }
+}
+```
+
+**c) Test Listener của Katalon Studio**
+
+Katalon cho phép can thiệp vào vòng đời test qua **Test Listener**, ví dụ `ScreenshotOnFailure` đã dùng trong dự án:
+
+```groovy
+class ScreenshotOnFailure {
+    @AfterTestCase
+    def afterTestCase(TestCaseContext testCaseContext) {
+        if (testCaseContext.getTestCaseStatus() == 'FAILED') {
+            WebUI.takeScreenshot("Reports/screenshots/${testCaseContext.getTestCaseId()}.png")
+        }
+        // Dọn dẹp: đóng ứng dụng nếu còn mở
+        Windows.closeApplication()
+    }
+}
+```
+
+**d) Nguyên tắc chung**
+- Mỗi test phải để hệ thống ở trạng thái sạch khi kết thúc, **kể cả khi test FAIL**.
+- Không “nuốt” exception trong `catch` mà không ghi log.
+- Chụp ảnh + log ngay tại thời điểm lỗi, trước khi dọn dẹp.
+- Với suite chạy dài, tách **test độc lập** để một test hỏng không kéo theo cả suite.
+
+### 11.4 Checklist kiểm tra khả năng phục hồi
+
+- [ ] Ứng dụng bị kill giữa lúc chạy test → suite vẫn tiếp tục được test kế tiếp.
+- [ ] Sau mỗi test, không còn tiến trình `MiniSum*.exe` hay cửa sổ nào sót lại.
+- [ ] Test FAIL có ảnh chụp màn hình và log giá trị Actual/Expected.
+- [ ] Session WinAppDriver được tạo mới nếu kết nối cũ không còn.
+- [ ] Dữ liệu test (file Excel, lịch sử trong bộ nhớ) được reset trước mỗi lần chạy.
+- [ ] Khi AUT báo lỗi nghiệp vụ (ví dụ `lblError`), test kết luận FAIL/PASS đúng chứ không crash.
+
+> **Liên hệ MiniSum:** ứng dụng không lưu dữ liệu xuống đĩa, lịch sử tính toán (v2) chỉ nằm trong bộ nhớ nên mỗi lần khởi động lại là trạng thái sạch. Tuy vậy, script vẫn phải đóng ứng dụng trong `TearDown`; nếu để sót cửa sổ, lần chạy sau sẽ mở thêm instance và test sẽ đọc nhầm cửa sổ cũ.
+
+---
+
+## 12. Fully vs Semi-Automated
+
+### 12.1 Fully Automated
 
 Toàn bộ quy trình kiểm thử từ khâu thiết lập môi trường, chuẩn bị dữ liệu, mở ứng dụng, thực thi các bước, kiểm tra kết quả cho tới khâu xuất báo cáo và dọn dẹp môi trường đều diễn ra tự động hoàn toàn mà không cần sự can thiệp của con người.
 
@@ -295,7 +774,7 @@ Kích hoạt CI/CD ──► Biên dịch mã ──► Triển khai build ─�
 - Kiểm thử Smoke Test nhanh sau mỗi bản build mới
 - Kịch bản chạy theo lịch định kỳ ban đêm (Nightly Builds)
 
-### 7.2 Semi-Automated
+### 12.2 Semi-Automated
 
 Kết hợp giữa công cụ tự động và thao tác thủ công của kiểm thử viên. Công cụ sẽ đảm nhận các bước lặp lại tốn thời gian (như tạo tài khoản hàng loạt, nhập form dài, điều hướng đến màn hình cần kiểm tra), sau đó nhường quyền cho con người quan sát, đánh giá trực quan hoặc can thiệp các bước đặc biệt.
 
@@ -315,7 +794,7 @@ Quy trình bán tự động (Semi-Automated Flow):
 - Kiểm thử khám phá (Exploratory Testing) cần công cụ hỗ trợ chuẩn bị dữ liệu
 - Các trường hợp kiểm thử liên quan đến thiết bị phần cứng đặc biệt cần cắm/rút thủ công
 
-### 7.3 So sánh chi tiết
+### 12.3 So sánh chi tiết
 
 | Tiêu chí | Fully Automated | Semi-Automated |
 |---|---|---|
@@ -327,7 +806,7 @@ Quy trình bán tự động (Semi-Automated Flow):
 
 ---
 
-## 8. Ưu điểm & Nhược điểm của Automation Testing
+## 13. Ưu điểm & Nhược điểm của Automation Testing
 
 ### Ưu điểm
 
@@ -354,7 +833,7 @@ Quy trình bán tự động (Semi-Automated Flow):
 
 ---
 
-## 9. Khi nào nên dùng Automation Testing?
+## 14. Khi nào nên dùng Automation Testing?
 
 ```
 BẢNG QUYẾT ĐỊNH ÁP DỤNG KIỂM THỬ TỰ ĐỘNG
@@ -373,7 +852,7 @@ NÊN ÁP DỤNG AUTOMATION                      KHÔNG NÊN ÁP DỤNG AUTOMATIO
 
 ---
 
-## 10. Bảng thuật ngữ chuyên ngành
+## 15. Bảng thuật ngữ chuyên ngành
 
 | Thuật ngữ tiếng Anh | Viết tắt | Định nghĩa và giải thích ý nghĩa |
 |---|---|---|

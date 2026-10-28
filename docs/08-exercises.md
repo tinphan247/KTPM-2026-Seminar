@@ -17,19 +17,21 @@ Hệ thống bài tập được thiết kế tuân thủ 3 nguyên tắc sư ph
 
 ## 2. Thông Tin Ứng Dụng Mẫu (MiniSum)
 
-Sinh viên tải file thực thi `MiniSum.exe` từ kho lưu trữ của nhóm. Các thuộc tính định danh chính được cung cấp sẵn:
+Sinh viên tải các file thực thi trong thư mục `case-study-app/` của kho lưu trữ nhóm. Các thuộc tính định danh chính được cung cấp sẵn:
 * **Màn hình Đăng nhập (Login Window):**
-  * Ô nhập tài khoản: `txtUser` (Tài khoản hợp lệ: `abc`)
-  * Ô nhập mật khẩu: `txtPass` (Mật khẩu hợp lệ: `123`)
-  * Nút đăng nhập: `btnSubmit`
+  * Ô nhập tài khoản: `txtUser` (Tài khoản hợp lệ: `admin`)
+  * Ô nhập mật khẩu: `txtPass` (Mật khẩu hợp lệ: `1234`)
+  * Nút đăng nhập: `btnLogin`
   * Nhãn thông báo trạng thái: `lblMessage`
 * **Màn hình Tính toán (Main Window):**
   * Ô nhập số A: `txtA` (Giới hạn số nguyên $A \in [-99, 99]$)
   * Ô nhập số B: `txtB` (Giới hạn số nguyên $B \in [-99, 99]$)
-  * Nút tính tổng: `btnSum`
+  * Nút tính tổng: `btnSum` (bản v1, v3) hoặc `btnCalculate` (bản v2)
   * Nhãn kết quả hợp lệ: `lblResult`
-  * Nhãn thông báo lỗi: `lblError`
+  * Nhãn thông báo lỗi: `lblError` (chỉ có ở bản v3)
   * Nút đăng xuất: `btnLogout`
+
+> **Chọn đúng file theo bài tập:** Bài 1 dùng `MiniSum.exe` (v1); Bài 2 dùng `MiniSum_v3.exe` vì chỉ bản này có `lblError`; Bài 3 dùng `MiniSum_v2.exe`. Mọi thông điệp của ứng dụng đều là **ASCII không dấu** (ví dụ `Dang nhap thanh cong`), nên checkpoint phải so sánh đúng từng ký tự.
 
 ---
 
@@ -40,9 +42,10 @@ Sinh viên tải file thực thi `MiniSum.exe` từ kho lưu trữ của nhóm. 
 * **Mục tiêu:** Làm quen với cơ chế nhận diện phần tử (`AutomationId`), ghi thao tác (Record) hoặc viết mã kịch bản cơ bản, và thiết lập điểm kiểm tra kết quả kỳ vọng (Test Oracle).
 * **Nội dung yêu cầu:**
   1. Khởi động ứng dụng `MiniSum.exe`.
-  2. Thực hiện kịch bản kiểm thử ca hợp lệ: Nhập `txtUser = "abc"`, `txtPass = "123"`, nhấp chuột vào nút `btnSubmit`.
-  3. Thêm một **Checkpoint (Assertion)** để xác minh nhãn `lblMessage` hiển thị đúng nội dung: `"Đăng nhập thành công"`.
-  4. Tạo tiếp một ca kiểm thử phụ cho trường hợp đăng nhập thất bại (nhập sai mật khẩu) và xác minh nhãn hiển thị `"Sai tài khoản hoặc mật khẩu"`.
+  2. Thực hiện kịch bản kiểm thử ca hợp lệ: Nhập `txtUser = "admin"`, `txtPass = "1234"`, nhấp chuột vào nút `btnLogin`.
+  3. Thêm một **Checkpoint (Assertion)** để xác minh nhãn `lblMessage` hiển thị đúng nội dung: `Dang nhap thanh cong`.
+  4. Tạo tiếp một ca kiểm thử phụ cho trường hợp đăng nhập thất bại (nhập sai mật khẩu) và xác minh nhãn hiển thị `Sai tai khoan hoac mat khau`.
+  5. Lưu ý: sau khi đăng nhập thành công, ứng dụng giữ màn hình Login thêm **1 giây** rồi mới chuyển sang màn hình Tính toán — cần dùng explicit wait thay vì `sleep` cứng khi chuyển màn hình.
 * **Yêu cầu nộp:**
   * File kịch bản kiểm thử (Test Case của Katalon hoặc file mã nguồn C#/Python).
   * Ảnh chụp màn hình kết quả chạy thực thi (Execution Report) thể hiện trạng thái PASS.
@@ -53,14 +56,14 @@ Sinh viên tải file thực thi `MiniSum.exe` từ kho lưu trữ của nhóm. 
 * **Thời lượng ước tính:** 30 – 45 phút.
 * **Mục tiêu:** Vận dụng lý thuyết phân tích giá trị biên (BVA) để xây dựng bộ dữ liệu kiểm thử và áp dụng kỹ thuật Data-Driven Testing để kiểm thử tự động hàng loạt.
 * **Nội dung yêu cầu:**
-  1. **Thiết kế dữ liệu:** Tạo một file Excel (`BVA_TestData.xlsx`) chứa ít nhất **6 ca kiểm thử** cho chức năng tính tổng hai số nguyên $A, B \in [-99, 99]$:
+  1. **Thiết kế dữ liệu:** Trên `MiniSum_v3.exe` (bản duy nhất có `lblError`), tạo một file Excel (`BVA_TestData.xlsx`) chứa ít nhất **6 ca kiểm thử** cho chức năng tính tổng hai số nguyên $A, B \in [-99, 99]$:
      * 2 ca giá trị biên hợp lệ (ví dụ: $A = -99, B = 9 \rightarrow \text{Tổng} = -90$; $A = 99, B = 9 \rightarrow \text{Tổng} = 108$).
-     * 2 ca giá trị ngoài biên dưới và trên (ví dụ: $A = -100, B = 9$; $A = 100, B = 9 \rightarrow$ Kỳ vọng xuất hiện `"Thông báo lỗi"`).
-     * 1 ca giá trị không hợp lệ về kiểu dữ liệu (ví dụ: $A = \text{"xyz"}, B = 10 \rightarrow$ Kỳ vọng xuất hiện `"Thông báo lỗi"`).
+     * 2 ca giá trị ngoài biên dưới và trên (ví dụ: $A = -100, B = 9$; $A = 100, B = 9 \rightarrow$ Kỳ vọng `lblError` = `A ngoai mien [-99, 99]`).
+     * 1 ca giá trị không hợp lệ về kiểu dữ liệu (ví dụ: $A = \text{"xyz"}, B = 10 \rightarrow$ Kỳ vọng `lblError` = `Gia tri khong hop le: phai la so nguyen`).
      * 1 ca biên của toán tử thứ hai ($B = -99$).
   2. **Xây dựng kịch bản Data-Driven:**
      * Tham số hóa kịch bản tính tổng để nhận giá trị `${A}`, `${B}`, `${Expected}` từ file Excel.
-     * Cấu hình logic kiểm tra: Nếu `${Expected}` là giá trị số thì kiểm tra nhãn `lblResult`; nếu `${Expected}` là `"LOI"` thì kiểm tra nhãn `lblError`.
+     * Cấu hình logic kiểm tra: Nếu `${Expected}` là giá trị số thì kiểm tra nhãn `lblResult`; nếu `${Expected}` là `"LOI"` thì kiểm tra nhãn `lblError` và so sánh đúng nội dung thông điệp lỗi.
   3. Thực thi toàn bộ bộ dữ liệu trong một phiên chạy tự động.
 * **Yêu cầu nộp:**
   * File dữ liệu `BVA_TestData.xlsx`.
@@ -73,7 +76,7 @@ Sinh viên tải file thực thi `MiniSum.exe` từ kho lưu trữ của nhóm. 
 * **Thời lượng ước tính:** Bài tập về nhà / Nghiên cứu chuyên sâu.
 * **Mục tiêu:** Rèn luyện tư duy thiết kế kịch bản bền vững và kỹ năng bảo trì — giải quyết bài toán "kịch bản dễ gãy" (fragile tests) khi phần mềm nâng cấp giao diện.
 * **Tình huống giả định:** 
-  * Nhà phát triển phát hành phiên bản cập nhật `MiniSum_v2.exe`. Trong phiên bản này, để chuẩn hóa mã nguồn, định danh của nút bấm tính tổng được đổi từ `btnSum` thành `btnCalculate`, đồng thời nhãn hiển thị chuyển từ `"Tổng"` sang `"Tính toán"`.
+  * Nhà phát triển phát hành phiên bản cập nhật `MiniSum_v2.exe`. Trong phiên bản này, để chuẩn hóa mã nguồn, định danh (`AutomationId`) của nút bấm tính tổng được đổi từ `btnSum` thành `btnCalculate` (nhãn hiển thị trên nút vẫn là `TINH TONG`), đồng thời bổ sung màn hình Lịch sử.
   * Hậu quả: Toàn bộ kịch bản kiểm thử xây dựng ở Bài tập 2 khi chạy trên bản v2 đều bị FAIL hàng loạt do lỗi không tìm thấy phần tử (*ElementNotFoundException*).
 * **Nội dung yêu cầu:**
   1. Chạy kịch bản cũ trên bản v2, chụp lại log lỗi thực thi và phân tích nguyên nhân gốc của lỗi (Root Cause).

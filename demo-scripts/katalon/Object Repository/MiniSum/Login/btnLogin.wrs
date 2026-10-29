@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindowsElementEntity>
+   <description>Nút Đăng nhập (MiniSum v3 - AutomationId: btnLogin)</description>
+   <name>btnLogin</name>
+   <tag></tag>
+   <locator>btnLogin</locator>
+   <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+   <properties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>AutomationId</name>
+      <type>Main</type>
+      <value>btnLogin</value>
+      <webElementGuid></webElementGuid>
+   </properties>
+</WindowsElementEntity>
+

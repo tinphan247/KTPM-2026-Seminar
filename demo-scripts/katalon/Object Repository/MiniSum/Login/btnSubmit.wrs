@@ -3,14 +3,14 @@
    <description>Nút Đăng nhập</description>
    <name>btnSubmit</name>
    <tag></tag>
-   <locator>btnSubmit</locator>
+   <locator>btnLogin</locator>
    <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
    <properties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>AutomationId</name>
       <type>Main</type>
-      <value>btnSubmit</value>
+      <value>btnLogin</value>
       <webElementGuid></webElementGuid>
    </properties>
 </WindowsElementEntity>

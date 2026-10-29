@@ -1,0 +1,78 @@
+<Window x:Class="MiniSum.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MiniSum - Tinh tong" Height="380" Width="440"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        Background="#F5F5F5"
+        AutomationProperties.AutomationId="winMain">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="16"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="16"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="MINISUM - TINH TONG A + B"
+                   FontSize="18" FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   AutomationProperties.AutomationId="lblMainTitle"/>
+
+        <TextBlock Grid.Row="2" Text="So A (-99..99):" FontSize="14"
+                   AutomationProperties.AutomationId="lblA"/>
+        <TextBox Grid.Row="4" x:Name="txtA"
+                 AutomationProperties.AutomationId="txtA"
+                 FontSize="14" Padding="6,4"
+                 VerticalContentAlignment="Center"/>
+
+        <TextBlock Grid.Row="6" Text="So B (-99..99):" FontSize="14"
+                   AutomationProperties.AutomationId="lblB"/>
+        <TextBox Grid.Row="8" x:Name="txtB"
+                 AutomationProperties.AutomationId="txtB"
+                 FontSize="14" Padding="6,4"
+                 VerticalContentAlignment="Center"/>
+
+        <StackPanel Grid.Row="10" Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button x:Name="btnSum"
+                    AutomationProperties.AutomationId="btnSum"
+                    Content="TINH TONG"
+                    Width="140" Height="36"
+                    FontSize="14" FontWeight="Bold"
+                    Margin="0,0,12,0"
+                    Click="BtnSum_Click"/>
+            <Button x:Name="btnLogout"
+                    AutomationProperties.AutomationId="btnLogout"
+                    Content="DANG XUAT"
+                    Width="120" Height="36"
+                    FontSize="14"
+                    Click="BtnLogout_Click"/>
+        </StackPanel>
+
+        <TextBlock Grid.Row="12" x:Name="lblResult"
+                   AutomationProperties.AutomationId="lblResult"
+                   FontSize="16" FontWeight="Bold"
+                   Foreground="Green"
+                   HorizontalAlignment="Center"
+                   TextWrapping="Wrap"/>
+
+        <TextBlock Grid.Row="14" x:Name="lblError"
+                   AutomationProperties.AutomationId="lblError"
+                   FontSize="14" FontWeight="SemiBold"
+                   Foreground="Red"
+                   HorizontalAlignment="Center"
+                   TextWrapping="Wrap"/>
+    </Grid>
+</Window>

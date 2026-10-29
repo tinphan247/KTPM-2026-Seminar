@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- MiniSum v3 - Demo negative test: them validation (rong / khong phai so / ngoai mien -99..99) -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>MiniSum_v3</AssemblyName>
+    <RootNamespace>MiniSum</RootNamespace>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DebugType>none</DebugType>
+    <Version>3.0.0</Version>
+    <Product>MiniSum v3</Product>
+    <DefineConstants>$(DefineConstants);V3</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\src\**\*.cs" Exclude="..\src\HistoryForm.cs;..\src\CalculationHistory.cs" LinkBase="src" />
+  </ItemGroup>
+
+</Project>

@@ -259,3 +259,13 @@ Accessibility Insights soi MiniSum.exe
 ![alt text](<../demo-scripts/winappdriver/screen short/Tinh_Tong.png>)
 
 
+
+Kết quả thực thi Test Pass trên Terminal:
+![alt text](<../demo-scripts\winappdriver\screen short\test_pass_terminal.png>)
+
+Kết quả thực thi Fail Pass trên Terminal:
+
+![alt text](<../demo-scripts\winappdriver\screen short\image.png>)
+
+
+

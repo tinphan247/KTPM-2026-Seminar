@@ -13,7 +13,7 @@
    <testSuiteGuid>e8a7b9c1-4567-4e67-89ab-cdef01234567</testSuiteGuid>
    <testCaseLink>
       <guid>f9b8c0d2-5678-4f78-9abc-def012345678</guid>
-      <isReuseDriver>false</isReuseDriver>
+      <isReuseDriver>true</isReuseDriver>
       <isRun>true</isRun>
       <testCaseId>Test Cases/TC03_BVA_Calculation</testCaseId>
       <testDataLink>

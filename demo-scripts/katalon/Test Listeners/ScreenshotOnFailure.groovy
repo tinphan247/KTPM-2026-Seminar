@@ -18,6 +18,7 @@
 
 import com.kms.katalon.core.annotation.AfterTestCase
 import com.kms.katalon.core.annotation.BeforeTestCase
+import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.context.TestCaseContext
 import com.kms.katalon.core.util.KeywordUtil
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
@@ -27,32 +28,79 @@ class ScreenshotOnFailure {
     @BeforeTestCase
     def beforeTestCase(TestCaseContext testCaseContext) {
         KeywordUtil.logInfo("▶ Bắt đầu Test Case: ${testCaseContext.getTestCaseId()}")
+        
+        // Cấu hình URL WinAppDriver vào RunConfiguration (khắc phục lỗi MalformedURLException: spec is null trên Katalon v11+)
+        try {
+            Map winPref = ['desktopDriverUrl': 'http://127.0.0.1:4723', 'winAppDriverUrl': 'http://127.0.0.1:4723']
+            Map execution = RunConfiguration.getExecutionProperties() ?: [:]
+            Map drivers = execution.get('drivers') instanceof Map ? execution.get('drivers') : [:]
+            Map preferences = drivers.get('preferences') instanceof Map ? drivers.get('preferences') : [:]
+            preferences.put('Windows', winPref)
+            drivers.put('preferences', preferences)
+            execution.put('drivers', drivers)
+            RunConfiguration.setExecutionSetting(['execution': execution])
+        } catch (Throwable ignored) {
+        }
+
         try {
             new java.net.Socket("127.0.0.1", 4723).close()
         } catch (Exception e) {
-            KeywordUtil.logInfo("⚡ WinAppDriver chưa bật trên cổng 4723, đang tự động khởi động...")
+            KeywordUtil.logInfo("⚡ FlaUI.WebDriver chưa bật trên cổng 4723, đang tự động khởi động...")
             try {
-                new ProcessBuilder("powershell.exe", "-WindowStyle", "Hidden", "-Command", "Start-Process 'C:\\Program Files\\Windows Application Driver\\WinAppDriver.exe' -ArgumentList '4723' -Verb RunAs").start()
-                Thread.sleep(3000)
-                KeywordUtil.logInfo("✔ WinAppDriver đã được khởi động tự động với quyền Administrator.")
+                String flauiPath = "C:\\Users\\Admin\\.katalon\\packages\\KS-11.7.0\\configuration\\resources\\extensions\\FlaUIWebDriver\\FlaUI.WebDriver.exe"
+                new ProcessBuilder(flauiPath, "--urls=http://127.0.0.1:4723").start()
+                Thread.sleep(2000)
+                KeywordUtil.logInfo("✔ FlaUI.WebDriver đã được khởi động trên cổng 4723.")
             } catch (Exception ex) {
-                KeywordUtil.logWarning("Không thể khởi động WinAppDriver tự động: " + ex.getMessage())
+                KeywordUtil.logWarning("Không thể khởi động FlaUI.WebDriver tự động: " + ex.getMessage())
             }
         }
     }
 
     @AfterTestCase
     def afterTestCase(TestCaseContext testCaseContext) {
-        if (testCaseContext.getTestStatus() == TestCaseContext.FAILED) {
+        // Tương thích cả Katalon mới (getTestCaseStatus) và bản cũ (getTestStatus)
+        String testStatus = ''
+        try {
+            testStatus = testCaseContext.getTestCaseStatus()
+        } catch (Throwable t) {
             try {
-                String timestamp = new Date().format('yyyyMMdd_HHmmss')
-                String screenshotName = "FAIL_${testCaseContext.getTestCaseId().replaceAll('[^a-zA-Z0-9]', '_')}_${timestamp}.png"
-                Windows.takeScreenshot(screenshotName)
-                KeywordUtil.logInfo("📸 Đã chụp ảnh lỗi: ${screenshotName}")
-            } catch (Exception e) {
-                KeywordUtil.logInfo("Không thể chụp ảnh (có thể app đã đóng): ${e.message}")
+                testStatus = testCaseContext.getTestStatus()
+            } catch (Throwable t2) {
+                testStatus = testCaseContext.toString()
             }
         }
-        KeywordUtil.logInfo("■ Kết thúc Test Case: ${testCaseContext.getTestCaseId()} — Status: ${testCaseContext.getTestStatus()}")
+
+        if ('FAILED'.equalsIgnoreCase(testStatus) || 'ERROR'.equalsIgnoreCase(testStatus)) {
+            try {
+                if (com.kms.katalon.core.windows.driver.WindowsDriverFactory.getWindowsSession() != null &&
+                    com.kms.katalon.core.windows.driver.WindowsDriverFactory.getWindowsDriver() != null) {
+                    String timestamp = new Date().format('yyyyMMdd_HHmmss')
+                    String cleanCaseId = testCaseContext.getTestCaseId().replaceAll('[^a-zA-Z0-9]', '_')
+                    String screenshotName = "FAIL_${cleanCaseId}_${timestamp}.png"
+
+                    // Xác định thư mục lưu ảnh:
+                    // 1. Nếu chạy qua Test Suite: lưu trực tiếp vào thư mục Report của Test Suite đó
+                    // 2. Nếu chạy Test Case đơn lẻ: lưu vào Reports/Screenshots để gom gọn, tránh làm bẩn thư mục gốc
+                    String reportFolder = RunConfiguration.getReportFolder()
+                    File targetDir
+                    if (reportFolder != null && !reportFolder.trim().isEmpty() && new File(reportFolder).exists()) {
+                        targetDir = new File(reportFolder)
+                    } else {
+                        targetDir = new File(RunConfiguration.getProjectDir() + File.separator + 'Reports' + File.separator + 'Screenshots')
+                        if (!targetDir.exists()) {
+                            targetDir.mkdirs()
+                        }
+                    }
+
+                    String fullScreenshotPath = new File(targetDir, screenshotName).getAbsolutePath()
+                    Windows.takeScreenshot(fullScreenshotPath)
+                    KeywordUtil.logInfo("📸 Đã lưu ảnh chụp lỗi tại: ${fullScreenshotPath}")
+                }
+            } catch (Throwable e) {
+                KeywordUtil.logWarning("Không thể chụp ảnh: ${e.message}")
+            }
+        }
+        KeywordUtil.logInfo("■ Kết thúc Test Case: ${testCaseContext.getTestCaseId()} — Status: ${testStatus}")
     }
 }

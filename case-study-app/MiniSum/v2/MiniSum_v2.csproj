@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- MiniSum v2 - Demo maintenance: doi btnSum -> btnCalculate, them man hinh Lich su -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>MiniSum_v2</AssemblyName>
+    <RootNamespace>MiniSum</RootNamespace>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DebugType>none</DebugType>
+    <Version>2.0.0</Version>
+    <Product>MiniSum v2</Product>
+    <DefineConstants>$(DefineConstants);V2</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\src\**\*.cs" LinkBase="src" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindowsElementEntity>
+   <description>Ô nhập số A</description>
+   <name>txtA</name>
+   <tag></tag>
+   <locator>txtA</locator>
+   <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+   <properties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>AutomationId</name>
+      <type>Main</type>
+      <value>txtA</value>
+      <webElementGuid></webElementGuid>
+   </properties>
+</WindowsElementEntity>

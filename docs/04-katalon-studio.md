@@ -26,46 +26,310 @@
 
 ## 2. Nguyên lý hoạt động trên Desktop App
 
-### 2.1 Kiến trúc thực thi
-Katalon Studio kiểm thử ứng dụng Desktop Windows thông qua kiến trúc phân tầng chuẩn WebDriver:
+### 2.1 Kiến trúc thực thi chi tiết (Execution Architecture Deep Dive)
+
+Katalon Studio kiểm thử ứng dụng Desktop Windows thông qua kiến trúc phân tầng chuẩn hóa dựa trên giao thức WebDriver. Luồng thực thi diễn ra tuần tự từ kịch bản kiểm thử, qua tầng trung gian WinAppDriver, tới tầng lõi Windows UI Automation và trực tiếp tác động lên ứng dụng đang kiểm thử (AUT).
+
+#### 2.1.1 Sơ đồ kiến trúc phân tầng (Session → Katalon Engine → WinAppDriver → AUT)
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Tester as Kịch bản Kiểm thử (Groovy/Java)
+    participant KE as Katalon Test Engine (Appium Client)
+    participant WAD as Microsoft WinAppDriver (Port 4723)
+    participant UIA as Windows UI Automation (UIA)
+    participant AUT as Ứng dụng Desktop (WPF/MiniSum.exe)
+
+    Note over Tester,AUT: 1. Khởi tạo phiên kiểm thử (Session Initialization)
+    Tester->>KE: startApplicationWithTitle(appPath, title)
+    KE->>WAD: HTTP POST /session (DesiredCapabilities: app, platformName)
+    WAD->>AUT: Kích hoạt tiến trình (Process Launch)
+    WAD->>UIA: Quét tìm Top-Level Window có Name = title (HWND)
+    UIA-->>WAD: Trả về Window Handle (HWND)
+    WAD-->>KE: HTTP 200 OK (Session ID: GUID)
+    
+    Note over Tester,AUT: 2. Tương tác & Định vị phần tử (Element Interaction)
+    Tester->>KE: sendKeys(findWindowsObject('txtUser'), 'admin')
+    KE->>WAD: HTTP POST /session/{id}/element (using: accessibility id, value: txtUser)
+    WAD->>UIA: FindFirst(TreeScope_Descendants, AutomationId == "txtUser")
+    UIA-->>WAD: UIA Element Reference
+    WAD-->>KE: HTTP 200 OK (Element ID)
+    KE->>WAD: HTTP POST /session/{id}/element/{elId}/value (Keys: 'admin')
+    WAD->>UIA: SetValue / SendInput (Gửi bàn phím ảo)
+    UIA->>AUT: Cập nhật văn bản trong ô txtUser
+    
+    Note over Tester,AUT: 3. Kiểm tra trạng thái & Đóng phiên (Verification & Teardown)
+    Tester->>KE: getAttribute(findWindowsObject('lblMessage'), 'Name')
+    KE->>WAD: HTTP GET /session/{id}/element/{elId}/attribute/Name
+    WAD->>UIA: GetCurrentPropertyValue(UIA_NamePropertyId)
+    UIA-->>WAD: "Đăng nhập thành công!"
+    WAD-->>KE: HTTP 200 OK (Value)
+    Tester->>KE: closeApplication()
+    KE->>WAD: HTTP DELETE /session/{id}
+    WAD->>AUT: Hủy tiến trình / Giải phóng Window Handle
+    WAD-->>KE: HTTP 200 OK
+```
+
+#### 2.1.2 Phân tích chi tiết 4 tầng kiến trúc
+1. **Tầng 1: Katalon Studio Test Engine (Client Layer)**
+   * **Bản chất:** Đóng vai trò là một WebDriver Client. Dưới tầng mã nguồn, Katalon sử dụng thư viện `io.appium.java_client.windows.WindowsDriver` (dựa trên Appium Java Client) để trừu tượng hóa các thao tác giao diện thành bộ từ khóa bậc cao `WindowsBuiltinKeywords` (`Windows.startApplication`, `Windows.setText`, `Windows.click`, `Windows.getAttribute`).
+   * **Xử lý đối tượng:** Khi gọi `findWindowsObject('path')`, Katalon đọc file cấu hình `.wrs`, trích xuất `locatorStrategy` và chuỗi `locator`, sau đó đóng gói thành các đối tượng `By` tương ứng (`By.name()`, `By.xpath()`, `By.id()` hoặc custom Accessibility ID) để gửi đi.
+
+2. **Tầng 2: Giao thức giao tiếp WebDriver (Transport / API Layer)**
+   * **Cổng mặc định:** `http://127.0.0.1:4723`.
+   * **Chuẩn giao tiếp:** Tuân theo đặc tả W3C WebDriver Protocol / JSON Wire Protocol qua giao thức HTTP RESTful. Mọi tương tác đều là các HTTP Request với payload JSON tiêu chuẩn:
+     * `POST /session`: Khởi tạo phiên kiểm thử và nhận về chuỗi nhận diện duy nhất `sessionId`.
+     * `POST /session/{id}/element`: Tìm kiếm phần tử trên cây giao diện UIA.
+     * `POST /session/{id}/element/{elementId}/value`: Gửi chuỗi ký tự hoặc mã phím ảo vào điều khiển.
+     * `POST /session/{id}/element/{elementId}/click`: Gửi sự kiện nhấp chuột theo tọa độ tâm phần tử.
+     * `GET /session/{id}/element/{elementId}/attribute/{name}`: Truy xuất thuộc tính UIA (như `Name`, `ClassName`, `IsEnabled`).
+     * `DELETE /session/{id}`: Hủy phiên làm việc và giải phóng tài nguyên.
+
+3. **Tầng 3: Microsoft WinAppDriver (Translation Layer / REST Server)**
+   * **Bản chất:** WinAppDriver là một dịch vụ Windows độc lập (chạy dưới dạng console service hoặc background service) do chính Microsoft phát triển.
+   * **Nhiệm vụ thông dịch:** Đóng vai trò như một "Adapter" chuyển dịch các yêu cầu REST/HTTP từ Katalon thành các lệnh gọi hàm Win32 API và COM API của hệ điều hành Windows. WinAppDriver quản lý bảng ánh xạ giữa `Session ID` $\leftrightarrow$ `Process ID (PID)` và `Window Handle (HWND)`.
+
+4. **Tầng 4: Windows UI Automation (UIA) & Ứng dụng kiểm thử (AUT Layer)**
+   * **Hạ tầng UIA:** Là framework trợ năng (Accessibility Framework) tích hợp sẵn trong hệ điều hành Windows từ Windows 7 trở lên. UIA tổ chức toàn bộ giao diện màn hình thành một cấu trúc cây thứ bậc (*UI Automation Tree*), bắt đầu từ Desktop Root Window.
+   * **Cơ chế Control Patterns:** Mỗi điều khiển trên AUT (WPF, WinForms, Win32) liên kết với một UI Automation Provider. Tùy thuộc vào loại phần tử, nhà phát triển cung cấp các Pattern tương ứng:
+     * `ValuePattern`: Dành cho ô nhập liệu cho phép đọc/ghi giá trị (`TextBox`).
+     * `InvokePattern`: Dành cho điều khiển có thể kích hoạt hành động (`Button`).
+     * `TextPattern`: Hỗ trợ định dạng và duyệt qua các khối văn bản phức tạp.
+     * *Lưu ý:* Thẻ `<TextBlock>` trong WPF không thực thi `ValuePattern`, dẫn đến việc WinAppDriver không đọc được qua `getText()` mà bắt buộc phải đọc qua thuộc tính UIA `NamePropertyId`.
+
+#### 2.1.3 Vòng đời Session và Cơ chế quản lý ngữ cảnh (Session Lifecycle)
+Một kịch bản kiểm thử Desktop thành công phụ thuộc vào việc duy trì tính toàn vẹn của Session:
+* **Khởi tạo (Session Creation):** Khi Katalon gửi yêu cầu `POST /session`, WinAppDriver kích hoạt ứng dụng qua tham số `app` trong `DesiredCapabilities`. WinAppDriver theo dõi tiến trình và gắn kết `Session ID` vào `HWND` của cửa sổ chính được render đầu tiên.
+* **Chuyển ngữ cảnh cửa sổ (Window Switching):** Trong các ứng dụng nhiều màn hình (ví dụ: màn hình Login đóng lại bằng `this.Close()` để mở màn hình Calculator bằng `new MainWindow().Show()`), `HWND` ban đầu bị hủy. WinAppDriver sẽ mất quyền kiểm soát (gây lỗi `NoSuchWindowException`). Tester bắt buộc phải chuyển ngữ cảnh sang cửa sổ mới bằng từ khóa:
+  ```groovy
+  Windows.switchToWindowTitle('MiniSum - Tinh tong')
+  ```
+  Lệnh này gửi request điều hướng session đính kèm vào `HWND` mới trên cây Desktop.
+* **Hủy phiên (Session Teardown):** Lệnh `Windows.closeApplication()` gửi yêu cầu `DELETE /session/{id}` để đóng ứng dụng và hủy socket lắng nghe, tránh rò rỉ bộ nhớ hoặc xung đột port cho các lần chạy kế tiếp.
+
+#### 2.1.4 Điểm nghẽn kiến trúc thực tế: Bẫy Launcher Process trong .NET Core / .NET 6+
+Trong quá trình triển khai thực tế trên ứng dụng mẫu WPF `MiniSum.exe`, nhóm phát hiện một điểm nghẽn kiến trúc kinh điển giữa WinAppDriver và các ứng dụng .NET hiện đại:
+* **Bản chất vấn đề:** Ứng dụng biên dịch trên .NET 6+ tạo ra một tập tin thực thi nhị phân dạng *AppHost Launcher*. Khi chạy, tiến trình Launcher (PID 1) chỉ có nhiệm vụ khởi động .NET Runtime, tải các file assembly `.dll`, rồi tạo ra một tiến trình thực thi giao diện thực sự (PID 2) và tự kết thúc (exit) sau chưa đầy 1 giây.
+* **Hậu quả kiến trúc:** Khi dùng lệnh khởi động mặc định `Windows.startApplication(appPath)`, WinAppDriver theo dõi PID 1. Do PID 1 đã đóng, WinAppDriver không thể tìm thấy bất kỳ cửa sổ nào thuộc về PID này trong thời gian chờ (timeout 7.5 giây) và ném ra lỗi ngoại lệ:
+  ```text
+  SessionNotCreatedException: Failed to locate opened application window with appId: ... and processId: 21592
+  ```
+* **Giải pháp khắc phục:** 
+  * Sử dụng từ khóa **`Windows.startApplicationWithTitle(appPath, 'Tiêu đề cửa sổ')`**. 
+  * Cơ chế: Thay vì neo cứng vào PID của launcher, Katalon hướng dẫn WinAppDriver duyệt qua cây UIA Desktop Root để tìm cửa sổ có thuộc tính `Name` khớp với tiêu đề được chỉ định. Sau khi phát hiện, WinAppDriver sẽ lấy trực tiếp `HWND` của cửa sổ thực tế và khởi tạo Session thành công 100%.
+
+### 2.2 Cơ chế Object Repository và Nhận diện Locator (Object Recognition)
+
+#### 2.2.1 Khái niệm và Vai trò của Object Repository
+* **Bản chất:** Object Repository (OR) là kho lưu trữ tập trung toàn bộ các định danh phần tử giao diện (Test Objects). Thay vì gắn cứng locator (hard-coding) trực tiếp trong từng dòng lệnh kiểm thử, kịch bản chỉ gọi đối tượng qua từ khóa tham chiếu:
+  ```groovy
+  findWindowsObject('Object Repository/MiniSum/Login/txtUser')
+  ```
+* **Ý nghĩa thực tế đối với chi phí bảo trì (Maintenance Cost):**
+  * Trong vòng đời phần mềm, giao diện người dùng (UI) biến đổi liên tục (đổi ID, tái cấu trúc layout, thay nhãn hiển thị). Nếu gắn cứng locator trong script, tester phải rà soát và sửa hàng chục đến hàng trăm test case riêng lẻ (hiện tượng *Kịch bản dễ gãy - Flaky Tests*).
+  * Với Object Repository, tester chỉ cần cập nhật locator tại một file duy nhất trong kho lưu trữ, toàn bộ các Test Case liên quan sẽ tự động nhận diện theo thông số mới. Đây là sự hiện thực hóa triết lý **Page Object Model (POM)** ở mức công cụ không mã nguồn (Codeless/Low-code), giúp hạn chế nguyên lý *"Nghịch lý thuốc trừ sâu" (Pesticide Paradox)* khi kiểm thử tự động dài hạn.
+
+#### 2.2.2 Cấu trúc lưu trữ nội bộ của Object Repository trên Desktop (.wrs)
+Khác với kiểm thử Web sử dụng định dạng file `.rs` (`WebElementEntity`), kiểm thử Windows Desktop trong Katalon Studio quy định cấu trúc đối tượng nghiêm ngặt:
+* **Định dạng file:** Mỗi đối tượng kiểm thử Desktop được lưu dưới dạng một file XML có đuôi mở rộng là **`.wrs`** (`WindowsElementEntity`).
+* **Cấu trúc XML chuẩn:**
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <WindowsElementEntity>
+     <description>Ô nhập tài khoản</description>
+     <name>txtUser</name>
+     <tag></tag>
+     <locator>txtUser</locator>
+     <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+     <properties>
+        <isSelected>true</isSelected>
+        <matchCondition>equals</matchCondition>
+        <name>AutomationId</name>
+        <type>Main</type>
+        <value>txtUser</value>
+     </properties>
+  </WindowsElementEntity>
+  ```
+* **Lưu ý kỹ thuật quan trọng:** Nếu tạo nhầm file định dạng Web (`.rs`) hoặc đường dẫn không đúng, hàm `findWindowsObject()` sẽ trả về `null` trong thời gian chạy, gây ra lỗi ngoại lệ `java.lang.IllegalArgumentException: Test object cannot be null`.
+
+#### 2.2.3 Các chiến lược nhận diện Locator (Locator Strategies) trên Windows Desktop
+Katalon Studio phối hợp với WinAppDriver để phân giải các thuộc tính UI Automation thành 4 chiến lược định vị chính theo thứ bậc ưu tiên:
+
+| Chiến lược (Locator Strategy) | Thuộc tính UIA tương ứng | Độ ưu tiên | Đặc điểm kỹ thuật & Đánh giá |
+|---|---|:---:|---|
+| **ACCESSIBILITY_ID** | `AutomationProperties.AutomationId` (WPF) / `AccessibleName` (WinForms) | **Số 1 (Khuyên dùng)** | Định danh bất biến do lập trình viên gắn trong mã nguồn. Hoàn toàn độc lập với ngôn ngữ hiển thị (Localization) và nội dung text. Tốc độ tìm kiếm nhanh nhất. |
+| **NAME** | `Name` attribute (Tiêu đề, Text hiển thị của Control) | **Số 2** | Dễ đọc, nhận diện trực quan theo mắt người dùng. Tuy nhiên rất dễ gãy kịch bản khi ứng dụng hỗ trợ đa ngôn ngữ (i18n) hoặc nội dung nhãn thay đổi. |
+| **CLASS_NAME / CONTROL_TYPE** | `ClassName` (WPF/Win32) / `ControlType` (`Button`, `Edit`, `Text`) | **Số 3** | Thường không mang tính duy nhất trên màn hình; chỉ dùng làm điều kiện lọc kết hợp khi phần tử thiếu `AutomationId`. |
+| **XPATH** | Vị trí cây phân cấp UIA (e.g., `//Window/Grid/StackPanel/Button[1]`) | **Số 4 (Hạn chế)** | Chuỗi XPath trên Windows Desktop rất phức tạp, tốc độ phân giải qua WinAppDriver chậm gấp 3-5 lần; cực kỳ dễ gãy khi lập trình viên thay đổi cấu trúc thẻ bố cục (Grid, StackPanel). |
+
+#### 2.2.4 Các bẫy kỹ thuật thực tế đúc kết từ quá trình thực nghiệm
+Qua quá trình triển khai automation thực tế trên ứng dụng WPF `MiniSum.exe`, nhóm đúc kết được 3 bài học kỹ thuật đặc thù:
+1. **Bẫy đọc Text trên thẻ WPF `<TextBlock>`:** Thẻ hiển thị văn bản tĩnh `<TextBlock>` trong WPF không hỗ trợ mẫu thuộc tính `ValuePattern`. Khi gọi lệnh `Windows.getText(object)`, WinAppDriver sẽ trả về chuỗi rỗng `""`. Cách xử lý chuẩn là truy xuất thông qua thuộc tính UIA `Name`: `Windows.getAttribute(object, 'Name')`.
+2. **Bẫy tương tác nút bấm (Mouse Click Miss vs. Keyboard Activation):** Trong một số layout WPF (như `StackPanel`), lệnh click chuột ảo `Windows.click(btn)` có thể bị trượt tọa độ do sai lệch tỉ lệ co giãn màn hình (DPI Scaling). Giải pháp tối ưu là bổ sung `IsDefault="True"` cho Button trong XAML và gửi kèm phím `ENTER` (`Keys.chord(Keys.ENTER)`) qua `Windows.sendKeys` để kích hoạt sự kiện chắc chắn 100%.
+3. **Bẫy chuyển ngữ cảnh cửa sổ (Window Switching):** Khi ứng dụng đóng cửa sổ cha (`LoginWindow.Close()`) để mở cửa sổ con (`MainWindow.Show()`), session của WinAppDriver bị mất ngữ cảnh cũ. Cần sử dụng lệnh `Windows.switchToWindowTitle('Tiêu đề cửa sổ mới')` để cập nhật handle trước khi thao tác tiếp.
+
+### 2.3 Trình soi phần tử giao diện (Windows Object Spy) và Kỹ thuật Bắt Element
+
+#### 2.3.1 Bản chất và Vai trò của Windows Object Spy
+* **Khái niệm:** Windows Object Spy là công cụ tích hợp sẵn trong Katalon Studio cho phép tester trực tiếp kiểm tra, phân tích và giải mã cấu trúc cây phân cấp UI Automation (UIA Element Tree) của một ứng dụng Windows đang chạy trong thời gian thực.
+* **Vai trò trong quy trình kiểm thử tự động:**
+  * **Trích xuất thuộc tính định danh:** Tự động khám phá toàn bộ các thuộc tính quan trọng của điều khiển (`AutomationId`, `Name`, `ClassName`, `ControlType`, `BoundingRectangle`,...).
+  * **Kiểm tra thử nghiệm locator (Live Highlight / Verify):** Cho phép tester xác minh xem một locator strategy hoặc XPath có định vị chính xác và duy nhất phần tử trên màn hình hay không trước khi đưa vào kịch bản kiểm thử.
+  * **Tự động sinh Test Object chuẩn:** Tự động tạo và lưu trữ các Test Object định dạng `.wrs` (`WindowsElementEntity`) vào đúng thư mục mong muốn trong Object Repository.
+  * **Lưu ảnh minh họa trực quan (Element Screenshot):** Hỗ trợ chụp lại hình ảnh thực tế của phần tử giao diện và lưu kèm vào metadata của Test Object, hỗ trợ việc bàn giao và bảo trì kịch bản giữa các thành viên trong nhóm.
+
+#### 2.3.2 Quy trình từng bước sử dụng Windows Object Spy (Step-by-Step Workflow)
 
 ```
-┌──────────────────────────────────────────────┐
-│  Katalon Studio (IDE / Test Engine)          │
-│  - Test Cases, Object Repository, Test Data  │
-└──────────────────────┬───────────────────────┘
-                       │ HTTP / WebDriver Protocol (Port 4723)
-                       ▼
-┌──────────────────────────────────────────────┐
-│  Microsoft WinAppDriver                      │
-│  (Windows Application Driver Service)        │
-└──────────────────────┬───────────────────────┘
-                       │ Native API Calls
-                       ▼
-┌──────────────────────────────────────────────┐
-│  Windows UI Automation (UIA) Engine          │
-└──────────────────────┬───────────────────────┘
-                       │ Điều khiển trực tiếp
-                       ▼
-┌──────────────────────────────────────────────┐
-│  Application Under Test (AUT)                │
-│  (WPF, WinForms, UWP, Win32)                 │
-└──────────────────────────────────────────────┘
+┌────────────────────────┐      ┌────────────────────────┐      ┌────────────────────────┐
+│ Bước 1: Khởi động      │ ───> │ Bước 2: Mở Spy & Chọn  │ ───> │ Bước 3: Bắt Element    │
+│ WinAppDriver (Port 4723)│      │ Ứng dụng (AUT)         │      │ bằng phím tắt <Alt + `>│
+└────────────────────────┘      └────────────────────────┘      └───────────┬────────────┘
+                                                                            │
+┌────────────────────────┐      ┌────────────────────────┐                  │
+│ Bước 6: Lưu Object vào │ <─── │ Bước 5: Chụp ảnh &     │ <────────────────┘
+│ Object Repository      │      │ Verify Highlight       │
+└────────────────────────┘      └────────────────────────┘
 ```
 
-1. **Gửi lệnh:** Kịch bản kiểm thử trong Katalon sinh ra các yêu cầu HTTP theo chuẩn JSON Wire / W3C WebDriver.
-2. **Thông dịch:** WinAppDriver (dịch vụ chạy nền ở cổng `4723`) tiếp nhận yêu cầu và chuyển đổi thành lời gọi hàm của Windows UI Automation (UIA).
-3. **Tương tác:** Hệ điều hành Windows tương tác trực tiếp lên các thành phần giao diện (nhấp chuột, nhập văn bản, đọc giá trị).
-4. **Phản hồi:** Trạng thái thực thi và dữ liệu giao diện được trả ngược về Katalon để đánh giá kết quả (Pass/Fail).
+1. **Bước 1: Khởi động dịch vụ WinAppDriver**
+   * Đảm bảo `WinAppDriver.exe` đang chạy tại địa chỉ `http://127.0.0.1:4723`. Nếu dịch vụ chưa bật, Object Spy sẽ không thể gửi các lệnh WebDriver để quét cây giao diện.
+2. **Bước 2: Mở giao diện Windows Object Spy trong Katalon Studio**
+   * Trên thanh công cụ chính (Main Toolbar), nhấp vào biểu tượng chiếc kính lúp **Spy Windows Objects** (hoặc dùng phím tắt/menu `Action -> Spy -> Spy Windows Objects`).
+3. **Bước 3: Cấu hình ứng dụng mục tiêu (Configurations & Application Under Test)**
+   * Trong cửa sổ Spy, chọn một trong hai hình thức kết nối:
+     * *Application File:* Trỏ đường dẫn đến file thực thi `.exe` (ví dụ: `D:\...\MiniSum.exe`).
+     * *Running Application:* Gắn trực tiếp vào một cửa sổ đang mở sẵn trên màn hình Desktop (rất hữu ích cho các ứng dụng .NET 6+ hoặc cửa sổ con sau khi đăng nhập).
+   * Nhấp nút **Start** để WinAppDriver kết nối và hiển thị cấu trúc cửa sổ.
+4. **Bước 4: Bắt phần tử giao diện (Capture Object)**
+   * Di chuyển con trỏ chuột đến phần tử cần bắt trên ứng dụng (ví dụ: ô `txtUser`, `btnSubmit`, `lblMessage`).
+   * Nhấn tổ hợp phím tắt chuẩn của Katalon Desktop: **`<Alt> + <`** (hoặc `Ctrl + \` tùy phiên bản cấu hình) để khóa và bắt đối tượng (Capture Object).
+   * Phần tử được chọn sẽ lập tức xuất hiện trên bảng **All Objects** và cây phân cấp **Element Tree**.
+5. **Bước 5: Tinh chỉnh thuộc tính & Kiểm tra độ tin cậy (Locator Selection & Highlight)**
+   * Quan sát bảng **Object Properties**:
+     * Chọn chiến lược định vị tối ưu nhất (`ACCESSIBILITY_ID` nếu có `AutomationId`, hoặc `NAME`).
+     * Tích chọn thuộc tính duy nhất và bỏ tích các thuộc tính động dễ thay đổi (như tọa độ `BoundingRectangle`, hoặc các thuộc tính không ổn định).
+   * Nhấn nút **Highlight** hoặc **Verify**: Katalon sẽ gửi lệnh qua WinAppDriver để vẽ một đường viền đỏ xung quanh phần tử trên ứng dụng thực tế $\rightarrow$ xác nhận locator đã hoạt động 100%.
+6. **Bước 6: Chụp ảnh phần tử (Element Screenshot)**
+   * Trong giao diện Object Spy, nhấp vào tính năng **Capture Screenshot** để chụp lại vùng hiển thị trực quan của phần tử. Ảnh này sẽ được gắn kèm vào Test Object giúp các thành viên khác trong nhóm dễ dàng nhận biết phần tử khi bảo trì kịch bản.
+7. **Bước 7: Lưu vào Object Repository**
+   * Nhấp nút **Add to Object Repository**.
+   * Chọn thư mục đích trong cấu trúc phân cấp (ví dụ: `Object Repository/MiniSum/Login` hoặc `Object Repository/MiniSum/Calculator`).
+   * Nhấp **OK** để Katalon tự động sinh file `.wrs` tương ứng.
 
-### 2.2 Nhận diện phần tử giao diện (Object Recognition)
-* **Windows Object Spy:** Cho phép trỏ chuột vào phần tử giao diện để bóc tách các thuộc tính nhận dạng do Windows UIA cung cấp.
-* **Object Repository:** Nơi lưu trữ tập trung các phần tử (Object). Mỗi test step chỉ tham chiếu đến Object này, giúp giảm chi phí bảo trì khi giao diện thay đổi (chỉ cần sửa locator tại một nơi duy nhất).
-* **Độ ưu tiên của thuộc tính định vị (Locator):**
-  1. `AutomationId`: Định danh duy nhất do lập trình viên gắn, độc lập với ngôn ngữ giao diện $\rightarrow$ **Ưu tiên số 1**.
-  2. `Name`: Nhãn hiển thị của control $\rightarrow$ Dễ bị gãy kịch bản nếu ứng dụng đổi text hoặc đổi ngôn ngữ hiển thị.
-  3. `ClassName` / `ControlType`: Loại phần tử giao diện $\rightarrow$ Kết hợp khi phần tử thiếu định danh duy nhất.
-  4. `XPath`: Cấu trúc phân cấp cây giao diện $\rightarrow$ Thường dài và dễ vỡ khi bố cục màn hình cập nhật.
+#### 2.3.3 So sánh Windows Object Spy với các công cụ bắt Element độc lập
+
+| Tiêu chí | Katalon Windows Object Spy | Microsoft Inspect.exe (Windows SDK) | Accessibility Insights for Windows |
+|---|---|---|---|
+| **Môi trường hoạt động** | Tích hợp sâu trong Katalon Studio IDE | Công cụ độc lập (Win32 trong Windows SDK) | Công cụ độc lập nguồn mở của Microsoft (WPF) |
+| **Giao diện & Trải nghiệm** | Hiện đại, trực quan, thao tác theo luồng kiểm thử | Cổ điển (dạng cây Win32), nhiều thông số kỹ thuật | Hiện đại, có giao diện đồ họa đẹp, hỗ trợ kiểm toán tự động |
+| **Tự động sinh Test Object** | **Có (Lưu trực tiếp thành file `.wrs`)** | Không (Phải chép tay thuộc tính rồi tự tạo object) | Không (Phải chép tay `AutomationId`/`Name`) |
+| **Chụp ảnh Element kèm Object** | **Có (Tích hợp chụp và lưu ảnh)** | Không | Có (Chụp ảnh màn hình kiểm toán) |
+| **Kiểm tra tức thời (Live Highlight)** | **Có (Gọi trực tiếp WinAppDriver để test locator)** | Có (Highlight theo chuột) | Có (Highlight theo chuột) |
+| **Phù hợp sử dụng** | Tester xây dựng kịch bản automation nhanh chóng trong Katalon | Điều tra chuyên sâu cấp hệ thống COM UIA khi Object Spy bị nghẽn | Kiểm tra độ tuân thủ tiêu chuẩn trợ năng (Accessibility) và UI Control |
+
+#### 2.3.4 Những lưu ý & Kinh nghiệm thực chiến khi dùng Windows Object Spy
+1. **Tránh bẫy bắt đối tượng cha (Container Selection):**
+   * Trong WPF, các điều khiển thường được lồng trong nhiều lớp bố cục như `<Grid>`, `<Border>`, `<StackPanel>`. Khi di chuột và nhấn phím tắt, hãy chú ý nhìn vào cây phân cấp để chắc chắn bạn đang chọn đúng nút bấm (`Button`) hoặc ô nhập (`TextBox`), thay vì chọn nhầm thẻ bọc bên ngoài (`Border` hay `StackPanel`).
+2. **Kỹ thuật bắt các cửa sổ độc lập / Dialog con:**
+   * Khi ứng dụng mở ra một hộp thoại (Dialog) hoặc cửa sổ mới (như thông báo Popup), hãy chuyển chế độ sang *Running Application* trên Object Spy và trỏ trực tiếp vào cửa sổ con để làm mới cây phân cấp UIA.
+3. **Kiểm tra độ duy nhất của Locator:**
+   * Luôn sử dụng tính năng **Verify / Highlight** trước khi bấm lưu. Nếu trình soi báo tìm thấy nhiều hơn 1 phần tử (*Multiple elements found*), cần bổ sung thêm điều kiện lọc hoặc ưu tiên chuyển sang `ACCESSIBILITY_ID` để đảm bảo tính tất định khi chạy tự động.
+
+### 2.4 Cấu trúc Dự án và Tổ chức Thực thi: Test Case, Test Suite và Test Listener
+
+Katalon Studio tổ chức các thành phần kiểm thử theo mô hình phân cấp chặt chẽ từ mức độ chi tiết (nguyên tử) đến mức độ điều phối kịch bản quy mô lớn. Việc nắm vững cấu trúc này giúp tester xây dựng các bộ kịch bản có khả năng mở rộng (scalability), dễ bảo trì và tích hợp mượt mà vào luồng CI/CD.
+
+#### 2.4.1 Mô hình phân cấp kiểm thử (Hierarchy Model)
+
+```mermaid
+graph TD
+    TSC["Test Suite Collection (Điều phối đa môi trường, Chạy song song/Tuần tự)"]
+    TS1["Test Suite: Smoke / BVA Test (Data Binding, Iteration)"]
+    TS2["Test Suite: Regression Test"]
+    TL["Test Listener (Hook AOP: @Before, @After, Auto Screenshot)"]
+    TC1["Test Case 1: Login Success (.groovy + .tc)"]
+    TC2["Test Case 2: Login Failed (.groovy + .tc)"]
+    TC3["Test Case 3: BVA Calculation (.groovy + .tc)"]
+    OR["Object Repository (.wrs)"]
+    TD["Test Data (Excel / CSV)"]
+
+    TSC --> TS1
+    TSC --> TS2
+    TS1 --> TC1
+    TS1 --> TC2
+    TS1 --> TC3
+    TS2 --> TC1
+    TD -.->|Data Binding| TS1
+    TC1 --> OR
+    TC2 --> OR
+    TC3 --> OR
+    TL -.->|Lắng nghe & Can thiệp sự kiện| TS1
+    TL -.->|Lắng nghe & Can thiệp sự kiện| TS2
+    TL -.->|Lắng nghe & Can thiệp sự kiện| TC1
+```
+
+#### 2.4.2 Chi tiết các thành phần cốt lõi
+
+##### 1. Test Case (Đơn vị kiểm thử cơ sở - Atomic Test Unit)
+* **Khái niệm:** Là đơn vị kiểm thử nhỏ nhất, độc lập, thực hiện một chuỗi thao tác nghiệp vụ và xác minh kết quả (Checkpoint/Assertion).
+* **Cấu trúc lưu trữ nội bộ:** Mỗi Test Case trong Katalon được tạo thành bởi 2 tập tin:
+  * `[TênTestCase].groovy`: Chứa toàn bộ mã nguồn kiểm thử thực thi bằng ngôn ngữ Groovy (gọi các từ khóa `Windows.*`, xử lý luồng logic `if/else`, vòng lặp, `assert`).
+  * `[TênTestCase].tc`: Tập tin XML lưu trữ thông tin định danh (UUID), mô tả, các thẻ phân loại (Tags), và đặc biệt là **bảng khai báo biến nội bộ** (`<variableLinks>`).
+* **Test Case Variables (Biến tham số hóa):**
+  * Định nghĩa trong tab *Variables* của Test Case.
+  * Đóng vai trò là các tham số đầu vào (ví dụ: `var_A`, `var_B`, `var_Expected`). Khi chạy đơn lẻ, biến nhận giá trị mặc định (Default Value); khi chạy trong Test Suite, giá trị này sẽ được ghi đè tự động bởi các dòng dữ liệu từ file Excel/CSV.
+
+##### 2. Test Suite & Test Suite Collection (Tổ chức & Điều phối kịch bản)
+* **Test Suite (`.ts` / `.tss`):**
+  * **Mục đích:** Nhóm các Test Case có chung mục tiêu kiểm thử (ví dụ: Sanity Suite, Regression Suite, hoặc Data-Driven BVA Suite).
+  * **Cơ chế Data Binding (Ràng buộc dữ liệu):** Test Suite là trung gian kết nối giữa **Test Data** (file Excel `BVA_TestData.xlsx`) và **Test Case Variables**. Tester thiết lập ánh xạ (Variable Mapping) theo cột dữ liệu. Khi chạy Suite, Katalon sẽ tự động lặp lại Test Case $N$ lần tương ứng với $N$ dòng dữ liệu (đã thực chứng chạy 12 kịch bản biên BVA trong `BVA_TestSuite`).
+  * **Tùy chọn thực thi:** Hỗ trợ chạy lại ca kiểm thử bị lỗi (*Retry on Failure*) giúp giảm thiểu sai số do môi trường.
+* **Test Suite Collection (`.tsc`):**
+  * Nhóm nhiều Test Suite lại với nhau để thực thi trong các đợt phát hành lớn.
+  * Hỗ trợ 2 chế độ điều phối:
+    * *Sequential:* Chạy lần lượt từng Test Suite.
+    * *Parallel:* Phân bổ chạy song song nhiều Test Suite trên nhiều luồng hoặc môi trường khác nhau để rút ngắn thời gian phản hồi kiểm thử.
+
+##### 3. Test Listener (Cơ chế Hook can thiệp vòng đời kiểm thử theo AOP)
+* **Bản chất kỹ thuật:** Test Listener áp dụng nguyên lý **Lập trình hướng khía cạnh (Aspect-Oriented Programming - AOP)**. Nó cho phép tester chèn các đoạn mã xử lý xuyên suốt (cross-cutting concerns) vào các mốc thời gian của vòng đời kiểm thử mà không làm biến đổi hay phụ thuộc vào mã nguồn của từng Test Case riêng lẻ.
+* **4 Annotation vòng đời cốt lõi (Lifecycle Hooks):**
+
+| Annotation | Thời điểm kích hoạt | Ứng dụng thực tế tiêu biểu |
+|---|---|---|
+| **`@BeforeTestSuite`** | 1 lần duy nhất ngay trước khi Test Suite bắt đầu chạy | Khởi động tiến trình WinAppDriver, dọn dẹp thư mục báo cáo cũ, chuẩn bị dữ liệu mẫu vào cơ sở dữ liệu. |
+| **`@BeforeTestCase`** | Trước mỗi Test Case được gọi | Đảm bảo ứng dụng Desktop sạch trạng thái (kill tiến trình treo cũ), ghi nhận thời gian bắt đầu chạy. |
+| **`@AfterTestCase`** | Ngay sau khi mỗi Test Case kết thúc | Dọn dẹp session, đóng ứng dụng kiểm thử, **chụp ảnh màn hình tự động nếu Test Case bị FAIL/ERROR**. |
+| **`@AfterTestSuite`** | 1 lần duy nhất sau khi toàn bộ Suite hoàn tất | Đóng WinAppDriver, tổng hợp báo cáo HTML/PDF, kích hoạt Webhook gửi thông báo kết quả vào Slack/Email. |
+
+* **Minh chứng triển khai thực tế trong đồ án (`ScreenshotOnFailure.groovy`):**
+  Nhóm đã xây dựng Test Listener chuyên trách chụp ảnh màn hình lỗi, tự động lưu vào thư mục `Reports/Screenshots/` khi có assert thất bại:
+  ```groovy
+  class ScreenshotOnFailure {
+      @AfterTestCase
+      def captureOnFailure(TestCaseContext testCaseContext) {
+          if (testCaseContext.getTestCaseStatus() == 'FAILED' || testCaseContext.getTestCaseStatus() == 'ERROR') {
+              String timestamp = new SimpleDateFormat('yyyyMMdd_HHmmss').format(new Date())
+              String tcName = testCaseContext.getTestCaseId().replace('/', '_')
+              String screenshotPath = "Reports/Screenshots/FAIL_${tcName}_${timestamp}.png"
+              
+              Windows.takeScreenshot(screenshotPath)
+              println ">>> [TEST LISTENER] Đã tự động chụp ảnh màn hình lỗi: ${screenshotPath}"
+          }
+      }
+  }
+  ```
+  *Ý nghĩa thực tiễn:* Giúp tester và lập trình viên có ngay bằng chứng trực quan (Visual Evidence) để điều tra lỗi (Root Cause Analysis) mà không cần phải nhồi nhét mã lệnh `try-catch` vào từng Test Case.
+
+#### 2.4.3 Bảng so sánh phạm vi và trách nhiệm (Scope & Responsibility Matrix)
+
+| Tiêu chí | Test Case | Test Suite | Test Listener |
+|---|---|---|---|
+| **Định dạng tập tin** | `.groovy` (script) + `.tc` (XML) | `.ts` (XML) + `.tss` (snapshot) + `.groovy` | `.groovy` (chứa các hook annotations) |
+| **Phạm vi tác động (Scope)** | Cục bộ trong 1 kịch bản kiểm thử | Cụm kịch bản được liên kết trong Suite | Toàn cục xuyên suốt các Suite và Case |
+| **Trách nhiệm chính** | Thực hiện các bước thao tác và kiểm tra kết quả nghiệp vụ (Action & Assertion) | Điều phối luồng chạy, ràng buộc dữ liệu Data-Driven, cấu hình Retry | Giám sát trạng thái, thiết lập/dọn dẹp môi trường (Setup/Teardown), chụp ảnh lỗi tự động |
+| **Khả năng tái sử dụng** | Có thể được gọi độc lập hoặc gọi lồng nhau qua `callTestCase()` | Tái sử dụng để lập lịch chạy định kỳ hoặc đưa vào CI/CD pipeline | Tự động áp dụng cho mọi kịch bản mà không cần gọi tường minh |
 
 ---
 
@@ -83,9 +347,9 @@ Katalon Studio kiểm thử ứng dụng Desktop Windows thông qua kiến trúc
 ### 3.2 Checkpoints & Assertions (Điểm kiểm tra kết quả)
 * **Khái niệm:** Điểm so sánh giữa kết quả thực tế (**Actual Result**) và kết quả kỳ vọng (**Expected Result**) nhằm tự động hóa vai trò của Test Oracle. Kịch bản không có Checkpoint chỉ là bot thao tác tự động, không thể coi là kịch bản kiểm thử.
 * **Bộ từ khóa Verify trong Katalon:**
-  * `Verify Element Text`: Kiểm tra nội dung chuỗi (ví dụ: thông báo lỗi, nhãn kết quả).
-  * `Verify Element Attribute Value`: Kiểm tra trạng thái thuộc tính (ví dụ: nút bấm chuyển sang Disabled, ô nhập bị khóa).
-  * `Verify Element Present`: Kiểm tra sự xuất hiện của cửa sổ mới, popup cảnh báo.
+  * `Kiểm tra văn bản (Text Verification)`: Trên WebUI, Katalon cung cấp `WebUI.verifyElementText()`. Riêng trên nền tảng **Windows Desktop**, do đặc thù WinAppDriver, việc xác minh văn bản được thực hiện tối ưu qua `Windows.getAttribute(object, 'Name')` hoặc `Windows.getText(object)` kết hợp với lệnh `assert` của ngôn ngữ Groovy.
+  * `Windows.verifyElementAttributeValue`: Kiểm tra trạng thái thuộc tính (ví dụ: nút bấm chuyển sang Disabled, ô nhập bị khóa).
+  * `Windows.verifyElementPresent`: Kiểm tra sự xuất hiện của cửa sổ mới, popup cảnh báo (hỗ trợ chỉ định timeout).
 * **Cơ chế bắt lỗi:** Khi giá trị thực tế không khớp với giá trị kỳ vọng, kịch bản tự động dừng hoặc tiếp tục tùy cấu hình, chụp ảnh màn hình tại thời điểm lỗi và ghi log phục vụ báo cáo lỗi (Bug Report).
 
 ### 3.3 Data-Driven Testing (Kiểm thử hướng dữ liệu)

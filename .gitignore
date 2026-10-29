@@ -15,6 +15,9 @@
 TestResults/
 *.trx
 
+# MiniSum publish output (sinh ra boi build.ps1)
+case-study-app/MiniSum/out/
+
 # Katalon Studio
 .cache/
 Libs/

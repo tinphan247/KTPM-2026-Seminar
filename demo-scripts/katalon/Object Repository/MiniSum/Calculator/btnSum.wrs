@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindowsElementEntity>
+   <description>Nút Tính tổng</description>
+   <name>btnSum</name>
+   <tag></tag>
+   <locator>btnSum</locator>
+   <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+   <properties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>AutomationId</name>
+      <type>Main</type>
+      <value>btnSum</value>
+      <webElementGuid></webElementGuid>
+   </properties>
+</WindowsElementEntity>

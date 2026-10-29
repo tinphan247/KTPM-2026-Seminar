@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindowsElementEntity>
+   <description>Ô nhập Mật khẩu</description>
+   <name>txtPass</name>
+   <tag></tag>
+   <locator>txtPass</locator>
+   <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+   <properties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>AutomationId</name>
+      <type>Main</type>
+      <value>txtPass</value>
+      <webElementGuid></webElementGuid>
+   </properties>
+</WindowsElementEntity>

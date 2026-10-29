@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindowsElementEntity>
+   <description>Nút Đăng xuất</description>
+   <name>btnLogout</name>
+   <tag></tag>
+   <locator>btnLogout</locator>
+   <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+   <properties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>AutomationId</name>
+      <type>Main</type>
+      <value>btnLogout</value>
+      <webElementGuid></webElementGuid>
+   </properties>
+</WindowsElementEntity>

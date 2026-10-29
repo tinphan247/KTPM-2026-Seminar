@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindowsElementEntity>
+   <description>Cửa sổ chính của màn hình Đăng nhập</description>
+   <name>winLogin</name>
+   <tag></tag>
+   <locator>winLogin</locator>
+   <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+   <properties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>AutomationId</name>
+      <type>Main</type>
+      <value>winLogin</value>
+      <webElementGuid></webElementGuid>
+   </properties>
+</WindowsElementEntity>

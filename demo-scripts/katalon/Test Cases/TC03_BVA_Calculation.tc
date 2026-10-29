@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description>Demo DATA-DRIVEN TESTING với 12 ca kiểm thử giá trị biên (BVA)</description>
+   <name>TC03_BVA_Calculation</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>0c9d1e3f-4567-4089-abcd-ef0123456789</testCaseGuid>
+   <variable>
+      <defaultValue>'0'</defaultValue>
+      <description>Số A</description>
+      <id>var_A</id>
+      <masked>false</masked>
+      <name>A</name>
+   </variable>
+   <variable>
+      <defaultValue>'0'</defaultValue>
+      <description>Số B</description>
+      <id>var_B</id>
+      <masked>false</masked>
+      <name>B</name>
+   </variable>
+   <variable>
+      <defaultValue>'0'</defaultValue>
+      <description>Kết quả kỳ vọng</description>
+      <id>var_Expected</id>
+      <masked>false</masked>
+      <name>Expected</name>
+   </variable>
+</TestCaseEntity>

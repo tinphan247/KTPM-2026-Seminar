@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindowsElementEntity>
+   <description>Cửa sổ chính của màn hình Tính tổng</description>
+   <name>winMain</name>
+   <tag></tag>
+   <locator>winMain</locator>
+   <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+   <properties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>AutomationId</name>
+      <type>Main</type>
+      <value>winMain</value>
+      <webElementGuid></webElementGuid>
+   </properties>
+</WindowsElementEntity>

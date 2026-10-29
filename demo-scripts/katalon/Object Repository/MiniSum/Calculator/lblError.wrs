@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindowsElementEntity>
+   <description>Nhãn hiển thị thông báo lỗi tính tổng</description>
+   <name>lblError</name>
+   <tag></tag>
+   <locator>lblError</locator>
+   <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+   <properties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>AutomationId</name>
+      <type>Main</type>
+      <value>lblError</value>
+      <webElementGuid></webElementGuid>
+   </properties>
+</WindowsElementEntity>

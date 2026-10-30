@@ -57,6 +57,12 @@ WinAppDriver hoạt động như một REST API Server độc lập đóng vai t
 3. **Thông dịch UIA:** WinAppDriver tiếp nhận HTTP request và gọi trực tiếp các API của Windows UI Automation.
 4. **Thực thi và phản hồi:** Windows thực thi thao tác trên ứng dụng đích và WinAppDriver đóng gói kết quả phản hồi (JSON) trả về cho Test Script.
 
+### 2.1.1 Cơ chế phân giải lệnh (Command Mapping) qua Port 4723
+* **Giao thức:** Client (C# NUnit) giao tiếp với WinAppDriver thông qua JSON Wire Protocol / W3C WebDriver specification bằng các HTTP Request chuẩn (POST, GET, DELETE).
+* **Quá trình thực thi nội tại của WinAppDriver.exe:**
+  1. Khi nhận lệnh `POST /session/{id}/element` kèm body `{"using": "name", "value": "ĐĂNG NHẬP"}`, WinAppDriver gọi hàm C++ của giao tiếp `IUIAutomation::CreatePropertyCondition(UIA_NamePropertyId, ...)` để duyệt cây UI Automation dựa trên tên hiển thị (Name) của control.
+  2. Khi nhận lệnh click hoặc phím, nó gọi trực tiếp `IUIAutomationInvokePattern::Invoke()` hoặc `IUIAutomationValuePattern::SetValue()` của Windows OS, đảm bảo độ trễ gần như bằng 0 so với việc giả lập chuột ảo.
+
 ### 2.2 Nhận diện phần tử giao diện (Object Recognition)
 Do WinAppDriver không có giao diện đồ họa riêng, việc định danh phần tử dựa trên các công cụ inspect độc lập của Microsoft:
 * **Công cụ hỗ trợ inspect:**
@@ -67,6 +73,46 @@ Do WinAppDriver không có giao diện đồ họa riêng, việc định danh p
   * `Name`: Tìm theo nhãn hiển thị hoặc tiêu đề nút bấm.
   * `ClassName`: Tìm theo loại control (ví dụ: `TextBox`, `Button`).
   * `XPath`: Tìm theo đường dẫn phân cấp trong cây UI $\rightarrow$ Tốc độ tìm kiếm qua XPath trên WinAppDriver tương đối chậm, nên hạn chế dùng trừ khi không có ID.
+
+
+### 2.3 Quản lý Vòng đời Session (Session Lifecycle) với AppiumOptions
+
+Trong C# NUnit, vòng đời của một phiên kiểm thử tự động với WinAppDriver được quản lý chặt chẽ qua cấu trúc Setup - Test - TearDown:
+
+```c#
+[TestFixture]
+public class BaseTest
+{
+    protected WindowsDriver<WindowsElement> driver;
+    private const string WinAppDriverUrl = "[http://127.0.0.1:4723](http://127.0.0.1:4723)";
+    private const string AppPath = @"C:\Path\To\case-study-app\MiniSum\MiniSum.exe";
+
+    [SetUp]
+    public void InitializeSession()
+    {
+        AppiumOptions options = new AppiumOptions();
+        options.AddAdditionalCapability("app", AppPath);
+        options.AddAdditionalCapability("deviceName", "WindowsPC");
+        options.AddAdditionalCapability("platformName", "Windows");
+        
+        // Khởi tạo phiên làm việc mới trên cổng 4723
+        driver = new WindowsDriver<WindowsElement>(new Uri(WinAppDriverUrl), options);
+        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+    }
+
+    [TearDown]
+    public void CleanupSession()
+    {
+        // Giải phóng tài nguyên và đóng ứng dụng sau khi chạy xong
+        if (driver != null)
+        {
+            driver.CloseApp();
+            driver.Quit();
+            driver.Dispose();
+        }
+    }
+}
+
 
 ---
 
@@ -89,6 +135,39 @@ Do WinAppDriver không có giao diện đồ họa riêng, việc định danh p
   * *Ví dụ kiểm tra trạng thái:* `Assert.IsTrue(btnSubmit.Enabled);`
 * **Xử lý chụp ảnh màn hình khi lỗi:**
   * Khi Assertion thất bại, framework cho phép bắt ngoại lệ và gọi hàm `driver.GetScreenshot().SaveAsFile(...)` để lưu bằng chứng lỗi phục vụ lập Bug Report.
+
+
+```c#
+[TearDown]
+public void CaptureScreenOnFailure()
+{
+    // Kiểm tra trạng thái hoàn thành của Test Case
+    var testStatus = TestContext.CurrentContext.Result.Outcome.Status;
+    
+    if (testStatus == NUnit.Framework.Interfaces.TestStatus.Failed)
+    {
+        string testName = TestContext.CurrentContext.Test.Name;
+        string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        string directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots");
+        
+        if (!Directory.Exists(directory))
+            Directory.CreateDirectory(directory);
+
+        string filePath = Path.Combine(directory, $"{testName}_FAIL_{timestamp}.png");
+
+        // Chụp và lưu ảnh màn hình
+        Screenshot screenshot = driver.GetScreenshot();
+        screenshot.SaveAsFile(filePath, ScreenshotImageFormat.Png);
+        
+        // Đính kèm bằng chứng vào TestContext của NUnit
+        TestContext.AddTestAttachment(filePath, "Screenshot khi kiểm thử thất bại");
+    }
+
+    driver?.Quit();
+}
+
+
+
 
 ### 3.3 Data-Driven Testing (Kiểm thử hướng dữ liệu)
 * **Cơ chế thực hiện:**
@@ -162,3 +241,31 @@ Do WinAppDriver không có giao diện đồ họa riêng, việc định danh p
 | Muốn tự do hoàn toàn trong việc thiết kế framework kiểm thử (áp dụng POM, Screenplay). | Cần một giải pháp trọn gói (All-in-one) có sẵn Object Repository và hệ thống báo cáo hoàn chỉnh ngay khi cài đặt. |
 | Dự án yêu cầu 100% phần mềm mã nguồn mở, không có ngân sách mua license thương mại. | Cần một công cụ đang được nhà sản xuất cam kết hỗ trợ kỹ thuật dài hạn và cập nhật tính năng mới liên tục. |
 | Muốn tích hợp sâu vào quy trình CI/CD nội bộ của nhóm phát triển phần mềm qua Git. | Dự án cần triển khai gấp trong thời gian ngắn mà không có thời gian lập trình khung framework. |
+
+
+** 7. Thực Nghiệm Kịch Bản Demo
+
+khởi chạy winappdriver 
+![alt text](<../demo-scripts/winappdriver/screen short/winappdriver.png>)
+
+Accessibility Insights soi MiniSum.exe
+![alt text](<../demo-scripts/winappdriver/screen short/DANG_NHAP.png>)
+![alt text](<../demo-scripts/winappdriver/screen short/DANG_XUAT.png>)
+![alt text](<../demo-scripts/winappdriver/screen short/ketqua.png>)
+![alt text](<../demo-scripts/winappdriver/screen short/Mat_Khau.png>) 
+![alt text](<../demo-scripts/winappdriver/screen short/Sai_tai_khoan_hoac_mat_khau.png>) ![alt text](<../demo-scripts/winappdriver/screen short/So_A.png>) 
+![alt text](<../demo-scripts/winappdriver/screen short/So_B.png>) 
+![alt text](<../demo-scripts/winappdriver/screen short/Tai_Khoan.png>) 
+![alt text](<../demo-scripts/winappdriver/screen short/Tinh_Tong.png>)
+
+
+
+Kết quả thực thi Test Pass trên Terminal:
+![alt text](<../demo-scripts\winappdriver\screen short\test_pass_terminal.png>)
+
+Kết quả thực thi Fail Pass trên Terminal:
+
+![alt text](<../demo-scripts\winappdriver\screen short\image.png>)
+
+
+

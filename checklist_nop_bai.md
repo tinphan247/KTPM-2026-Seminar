@@ -36,17 +36,17 @@
 - [x] **Tài liệu hướng dẫn:** [`case-study-app/README.md`](case-study-app/README.md) (bảng AutomationId mapping, kiến trúc Fluent Light).
 
 ## 7. TÀI LIỆU QUẢN LÝ & MINH CHỨNG
-- [x] **Nhật ký Git Commit:** [`git-commit-log.md`](git-commit-log.md) (57 commits minh bạch trên GitHub).
+- [x] **Nhật ký Git Commit:** [`git-commit-log.md`](git-commit-log.md) (58 commits minh bạch trên GitHub).
 - [x] **Kê khai sử dụng AI:** [`ai-usage-declaration.md`](ai-usage-declaration.md) (kê khai đầy đủ theo quy định môn học).
 
 ## 8. ĐÁNH GIÁ ĐÓNG GÓP (% CONTRIBUTION)
 - [x] **Bảng đánh giá chính thức theo mẫu khoa:** [`2026-2027-HK1-Group02-Project Contribution.xlsx`](2026-2027-HK1-Group02-Project Contribution.xlsx)
-  - **Phan Trung Tín:** **50.0%** (Lead, MiniSum, Theory, Slide, AI, Report, Packaging)
-  - **Nguyễn Lê Quang Kan:** **50.0%** (Katalon Studio trọn gói, Keyword, DDT, Video YouTube)
-  - **Bùi Quang Tùng:** **0.0%** (Không đạt tiến độ)
+  - **Phan Trung Tín:** **35.0%** (Lead, MiniSum, Theory, Slide, AI, Report, Packaging)
+  - **Nguyễn Lê Quang Kan:** **35.0%** (Katalon Studio trọn gói, Keyword, DDT, Video YouTube)
+  - **Bùi Quang Tùng:** **30.0%** (WinAppDriver + C# NUnit, Page Object Model, DDT)
   - **Trần Vũ Quang:** **0.0%** (Không đạt tiến độ)
   - **Phạm Tấn Phát:** **0.0%** (Không đạt tiến độ)
-- [x] **Bảng theo dõi nội bộ:** [`Group02_Task_List.xlsx`](Group02_Task_List.xlsx) (đồng bộ 50/50).
+- [x] **Bảng theo dõi nội bộ:** [`Group02_Task_List.xlsx`](Group02_Task_List.xlsx) (đồng bộ 35/35/30).
 
 ## 9. ĐÓNG GÓI SẢN PHẨM (ZIP PACKAGE)
 - [x] **Tên file nén:** `Group02_ZipTool_Lan2.zip` (chứa đúng tiền tố ZipTool theo quy định).

@@ -14,12 +14,12 @@
 
 | STT | Họ và Tên | MSSV | Vai trò chính Lần 2 | Đóng góp thực tế | % Chốt | Trạng thái |
 |:---:|---|:---:|---|---|:---:|:---:|
-| 1 | **Phan Trung Tín** | 23120372 | **Trưởng nhóm (Team Lead)**<br>Phát triển 3 bản `MiniSum.exe`, viết lý thuyết POM/Flaky/Wait/Oracle, slide PPTX, thực nghiệm AI, tích hợp & đóng gói | 60.0h (22 tasks) | **50.0%** | Hoàn thành xuất sắc |
-| 2 | **Nguyễn Lê Quang Kan** | 23120279 | **Chuyên trách Katalon Studio**<br>Thực nghiệm 3 demo Katalon, viết Custom Keyword `LoginKeyword.groovy`, Data-Driven BVA, 16 ảnh thực nghiệm, video YouTube | 60.0h (18 tasks) | **50.0%** | Hoàn thành xuất sắc |
-| 3 | **Bùi Quang Tùng** | 20120397 | Thành viên nhóm | 0.0h | **0.0%** | Không đạt tiến độ |
-| 4 | **Trần Vũ Quang** | 23120346 | Thành viên nhóm | 0.0h | **0.0%** | Không đạt tiến độ |
-| 5 | **Phạm Tấn Phát** | 20120636 | Thành viên nhóm | 0.0h | **0.0%** | Không đạt tiến độ |
-| **Tổng** | | | | **120.0h (40 tasks)** | **100.0%** | |
+| 1 | **Phan Trung Tín** | 23120372 | **Trưởng nhóm (Team Lead)**<br>Phát triển 3 bản `MiniSum.exe`, viết lý thuyết POM/Flaky/Wait/Oracle, slide PPTX, thực nghiệm AI, tích hợp & đóng gói | 42.0h (22 tasks) | **35.0%** | Hoàn thành xuất sắc |
+| 2 | **Nguyễn Lê Quang Kan** | 23120279 | **Chuyên trách Katalon Studio**<br>Thực nghiệm 3 demo Katalon, viết Custom Keyword `LoginKeyword.groovy`, Data-Driven BVA, 16 ảnh thực nghiệm, video YouTube | 42.0h (18 tasks) | **35.0%** | Hoàn thành xuất sắc |
+| 3 | **Bùi Quang Tùng** | 20120397 | **Chuyên trách WinAppDriver**<br>Thực nghiệm WinAppDriver + C# NUnit, cài đặt Page Object Model (POM), DDT 12 ca BVA, chụp ảnh kiểm thử | 36.0h (21 tasks) | **30.0%** | Hoàn thành tốt |
+| 4 | **Trần Vũ Quang** | 23120346 | Thành viên nhóm | 0.0h (0 tasks) | **0.0%** | Không đạt tiến độ |
+| 5 | **Phạm Tấn Phát** | 20120636 | Thành viên nhóm | 0.0h (0 tasks) | **0.0%** | Không đạt tiến độ |
+| **Tổng** | | | | **120.0h (61 tasks)** | **100.0%** | |
 
 ---
 
@@ -2278,8 +2278,9 @@ Sinh viên tải các file thực thi trong thư mục `case-study-app/` của k
 ## 9.2 Nhật ký đóng góp trên Git Commit Log
 - Hệ thống kho lưu trữ GitHub: `https://github.com/tinphan247/KTPM-2026-Seminar.git`
 - Toàn bộ quá trình làm việc, giải quyết lỗi, phát triển ứng dụng mẫu và tài liệu đều được commit liên tục, minh bạch:
-  - **Phan Trung Tín:** 26 commits chính thức trên Git log.
+  - **Phan Trung Tín:** 27 commits chính thức trên Git log.
   - **Nguyễn Lê Quang Kan:** 14 commits chính thức trên Git log.
+  - **Bùi Quang Tùng:** 4 commits chính thức trên Git log.
   - Toàn bộ lịch sử commit chi tiết xem tại file `git-commit-log.md`.
 
 ## 9.3 Kê khai sử dụng Trí tuệ Nhân tạo (AI Usage Declaration)

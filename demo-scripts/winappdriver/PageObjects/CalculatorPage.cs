@@ -50,7 +50,14 @@ namespace MiniSumTests.PageObjects
             TxtB.Clear();
             TxtB.SendKeys(b);
 
-            BtnSum.Click();
+            try
+            {
+                BtnSum.Click();
+            }
+            catch
+            {
+            }
+            TxtB.SendKeys(Keys.Enter);
         }
 
         /// <summary>
@@ -73,6 +80,11 @@ namespace MiniSumTests.PageObjects
                 return parts[1].Trim(); // Trả về "15"
             }
             return fullText.Trim();
+        }
+
+        public string GetResult()
+        {
+            return GetCalculatedValueOnly();
         }
     }
 }

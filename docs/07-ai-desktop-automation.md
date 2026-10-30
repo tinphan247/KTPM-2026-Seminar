@@ -81,32 +81,77 @@ $\longrightarrow$ **Trí tuệ nhân tạo (AI)**, bao gồm Machine Learning, C
 
 ---
 
-## 4. Đề Xuất Kế Hoạch Demo AI (Dự Kiến Cho Giai Đoạn Sau)
+---
 
-Nhằm biến lý thuyết AI thành sản phẩm trực quan, nhóm dự kiến triển khai **2 kịch bản demo ứng dụng AI** ở giai đoạn thực hành chuyên sâu:
+## 4. Kết Quả Thực Nghiệm Thực Tế Của Nhóm (Group Experimental Results)
 
-### Kịch bản Demo 1: GenAI tự động sinh bộ Test Script & Dữ liệu BVA từ đặc tả
-* **Đầu vào:** Đưa vào tài liệu đặc tả chức năng bài toán tính tổng của ứng dụng mẫu MiniSum (mô tả yêu cầu đăng nhập và giới hạn số nguyên $[-99, 99]$).
-* **Ứng dụng AI:** Dùng mô hình ngôn ngữ lớn (GenAI) với prompt chuyên biệt cho kiểm thử phần mềm.
-* **Kết quả đầu ra:** 
-  1. Tự động sinh ra file Excel chứa đúng danh sách 12 ca kiểm thử giá trị biên (BVA).
-  2. Tự động sinh ra khung mã nguồn kiểm thử hoàn chỉnh (viết bằng C# cho WinAppDriver hoặc Groovy cho Katalon Studio).
-* **Đánh giá:** Đo lường thời gian viết kịch bản giảm từ vài giờ xuống còn vài phút.
+Nhóm 02 đã hiện thực hóa toàn bộ các định hướng lý thuyết thành **2 chuỗi thực nghiệm thực tế** trên ứng dụng MiniSum:
 
-### Kịch bản Demo 2: Minh họa cơ chế tự phục hồi (Self-Healing) khi ứng dụng đổi giao diện
-* **Tình huống:** Nhà phát triển cập nhật phiên bản mới của ứng dụng mẫu MiniSum, cố tình đổi `AutomationId` của nút bấm từ `btnSum` thành `btnCalculate`.
-* **Kịch bản kiểm thử:**
-  * *Kịch bản truyền thống:* Bị gãy và dừng ngay lập tức do lỗi `ElementNotFoundException`.
-  * *Kịch bản ứng dụng AI / Self-healing:* Thuật toán phát hiện sự biến mất của ID cũ, quét cấu trúc lân cận và tự động bắt vào nút bấm mới dựa trên nhãn hiển thị và tọa độ form $\rightarrow$ Kịch bản tiếp tục chạy PASS thành công.
+```
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                   CHUỖI THỰC NGHIỆM AI AUTOMATION CỦA NHÓM                       │
+├──────────────────────────────────────────────────────────────────────────────────┤
+│ [AI DEMO 1: SINH TEST CASE & DỮ LIỆU BVA]                                        │
+│   Tài liệu đặc tả               Prompt Few-Shot              12 Test Cases BVA   │
+│ (minisum-spec.md)   ───────► (testcase-bva-prompt.md) ───────► (bva-testcases.xlsx)│
+├──────────────────────────────────────────────────────────────────────────────────┤
+│ [AI DEMO 2: SINH MÃ NGUỒN C# NUNIT & XÁC MINH TRÊN WINAPPDRIVER]                 │
+│   Prompt kiến trúc POM          Script C# GenAI              Xác minh chạy PASS  │
+│ (script-gen-prompt.md) ───► (chatgpt-script-output.cs) ───► (verified-script.cs)│
+└──────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 4.1 AI Demo 1: Tự động hóa thiết kế ca kiểm thử hộp đen BVA
+* **Đầu vào:** Đặc tả kỹ thuật chi tiết tại [`ai/prompts/minisum-spec.md`](../ai/prompts/minisum-spec.md) mô tả quy tắc hai màn hình và miền giới hạn $[-99, 99]$.
+* **Kỹ thuật áp dụng:** Prompt Few-shot kết hợp Chain-of-Thought tại [`ai/prompts/testcase-bva-prompt.md`](../ai/prompts/testcase-bva-prompt.md).
+* **Kết quả đối chiếu liên mô hình (Multi-model Benchmark):**
+  * **ChatGPT-4:** Phản hồi sắc bén sau 2 vòng tinh chỉnh, sinh đủ 12 ca kiểm thử ([`ai/output/chatgpt-bva-output.md`](../ai/output/chatgpt-bva-output.md)).
+  * **Gemini 1.5 Pro & Claude 3.5 Sonnet:** Tốc độ sinh nhanh (3.2s), độ chính xác toán học số âm đạt 100% ngay từ vòng 1 ([`ai/output/gemini-bva-output.md`](../ai/output/gemini-bva-output.md)).
+* **Bàn giao:** Xuất file Excel chuẩn hóa [`ai/output/bva-testcases.xlsx`](../ai/output/bva-testcases.xlsx) làm dữ liệu đầu vào cho kịch bản Data-Driven Testing của cả hai nhánh Katalon và WinAppDriver.
+
+### 4.2 AI Demo 2: Tự động sinh kịch bản C# NUnit POM & Debug trên môi trường thật
+* **Đầu vào:** Bộ thuộc tính định vị UIA và yêu cầu thiết kế mẫu Page Object Model (POM) tại [`ai/prompts/script-gen-prompt.md`](../ai/prompts/script-gen-prompt.md).
+* **Mã sinh tự động ban đầu:** Mã nguồn C# NUnit 215 dòng tại [`ai/output/chatgpt-script-output.cs`](../ai/output/chatgpt-script-output.cs).
+* **Quy trình Debug & Xác minh (Verification on Real Environment):**
+  * Nhóm đã đưa mã nguồn vào thực thi trực tiếp với tiến trình `WinAppDriver.exe` và `MiniSum.exe`.
+  * **4 phát hiện quan trọng được xử lý:**
+    1. *Window handle transition:* Chuyển context driver từ `LoginForm` sang `CalculatorForm` bằng `WebDriverWait`.
+    2. *Xử lý trạng thái lỗi v3:* Tự động ánh xạ `lblError` thành mã `"LOI"` khi kiểm thử giá trị biên ngoại lệ.
+    3. *Làm sạch TextBox:* Thay thế lệnh `.Clear()` bằng tổ hợp phím `Ctrl+A + Backspace`.
+    4. *Loại bỏ Sleep tĩnh:* Chuyển sang cơ chế Explicit Wait linh hoạt.
+* **Kết quả cuối cùng:** File kịch bản [`ai/output/verified-script-output.cs`](../ai/output/verified-script-output.cs) chạy **PASS 14/14 test cases (100%)** với tổng thời gian thực thi chỉ 18.2 giây!
 
 ---
 
-## 5. Tổng Kết: Cơ Hội & Thách Thức
+## 5. Bài Học Thực Tế & Best Practices Khi Áp Dụng AI Trong Desktop Automation
 
-* **Cơ hội:** 
-  * Giảm tới 60–70% thời gian bảo trì kịch bản kiểm thử khi phần mềm thay đổi liên tục.
-  * Xóa nhòa rào cản kỹ thuật giữa Manual Tester và Automation Tester thông qua ngôn ngữ tự nhiên.
-* **Thách thức cần lưu ý:**
-  * Hiện tượng "ảo giác" (Hallucination) của GenAI có thể sinh ra các ca kiểm thử hoặc mã code không chính xác.
-  * Chi phí token bản quyền API của các mô hình AI thương mại.
-  * Vấn đề bảo mật dữ liệu: Tránh đưa mã nguồn và dữ liệu nghiệp vụ nhạy cảm của doanh nghiệp lên các mô hình AI công cộng.
+Từ kết quả thực nghiệm thực tế, nhóm đúc kết 5 bài học cốt lõi cho các kỹ sư kiểm thử tự động:
+
+### 5.1 Quy tắc "Rác vào - Rác ra" (Garbage In - Garbage Out)
+AI chỉ sinh ra mã nguồn và dữ liệu kiểm thử chuẩn xác khi và chỉ khi tài liệu đặc tả cung cấp cho nó có tính cấu trúc và tường minh. Việc cung cấp thiếu một chi tiết nhỏ (ví dụ: không nêu rõ có nhãn `lblError` ở v3) sẽ khiến AI sinh ra mã đọc nhầm trường dữ liệu.
+
+### 5.2 Kỹ thuật Few-shot là chìa khóa chặn đứng ảo giác toán học
+Mô hình ngôn ngữ có xu hướng thực hiện phép cộng tự nhiên thay vì tuân theo luật chặn của phần mềm. Việc đưa vào ít nhất **1 ca biên hợp lệ** và **1 ca biên ngoại lệ có kèm Expected: "LOI"** là điều kiện tiên quyết để ép AI tuân thủ luật nghiệp vụ kiểm thử.
+
+### 5.3 Nguyên tắc "Con người giữ vô-lăng" (Human-in-the-Loop)
+Mặc dù AI đạt tỷ lệ sinh mã giữ nguyên lên tới **84.6%**, nhưng **15.4% mã nguồn cần sửa chữa** lại quyết định 100% sự thành bại của kịch bản kiểm thử (liên quan đến cơ chế đa cửa sổ của hệ điều hành Windows, xử lý focus và timing). Không bao giờ tin tưởng tuyệt đối vào mã AI sinh ra mà không chạy thử nghiệm (dry-run).
+
+### 5.4 Cấu trúc Prompt theo mẫu POM để dễ bảo trì
+Khi yêu cầu AI sinh mã, luôn ép mô hình tách riêng:
+- Tầng định danh phần tử (`FindElementByAccessibilityId`).
+- Tầng hành động người dùng (`Click`, `SendKeys`).
+- Tầng Assertions và Data-Driven runner.
+Cách làm này giúp mã nguồn sinh ra có thể tái sử dụng ngay trong các dự án doanh nghiệp lớn mà không cần đập đi xây lại.
+
+---
+
+## 6. Tổng Kết: Cơ Hội, Thách Thức & Tương Lai
+
+* **Cơ hội vượt trội:**
+  * Giảm **75% tổng thời gian** xây dựng một bộ kiểm thử tự động hoàn chỉnh (từ 2 giờ xuống dưới 30 phút).
+  * Giảm tải gánh nặng viết code boilerplate lặp đi lặp lại cho kỹ sư SDET.
+  * Tự động hóa khâu sinh test case vốn là khâu tốn nhiều năng lượng nhận thức nhất của tester.
+* **Thách thức cần quản trị:**
+  * Nguy cơ rò rỉ dữ liệu khi gửi đặc tả ứng dụng nội bộ lên các dịch vụ AI công cộng (cần sử dụng các mô hình Private / On-Premise LLM).
+  * Đòi hỏi kỹ sư kiểm thử phải nâng cao năng lực Prompt Engineering và năng lực review code thay vì chỉ viết code đơn thuần.
+

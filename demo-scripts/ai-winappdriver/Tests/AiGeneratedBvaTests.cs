@@ -27,7 +27,7 @@ namespace MiniSum.AiTests.Tests
         public void TC01_Login_Success()
         {
             loginPage.Login("admin", "1234");
-            Thread.Sleep(1200);
+            SwitchToCalculatorWindow();
 
             Assert.DoesNotThrow(() =>
             {
@@ -66,7 +66,7 @@ namespace MiniSum.AiTests.Tests
         public void TC03_Core_Bva_Tests(string a, string b, string expected)
         {
             loginPage.Login("admin", "1234");
-            Thread.Sleep(1200);
+            SwitchToCalculatorWindow();
 
             calculatorPage.Calculate(a, b);
             Thread.Sleep(300);
@@ -87,7 +87,7 @@ namespace MiniSum.AiTests.Tests
         public void TC04_Ai_Exploratory_Robustness_Tests(string a, string b, string expected)
         {
             loginPage.Login("admin", "1234");
-            Thread.Sleep(1200);
+            SwitchToCalculatorWindow();
 
             calculatorPage.Calculate(a, b);
             Thread.Sleep(300);

@@ -37,6 +37,14 @@ namespace MiniSumTests.Tests
             var loginPage = new LoginPage(driver);
             loginPage.Login("admin", "1234");
 
+            // Chờ chuyển cảnh LoginForm -> CalculatorForm và switch window
+            System.Threading.Thread.Sleep(1500);
+            var handles = driver.WindowHandles;
+            if (handles != null && handles.Count > 0)
+            {
+                driver.SwitchTo().Window(handles[0]);
+            }
+
             // 2. Nhập A, B và tính tổng qua Page Object CalculatorPage
             var calcPage = new CalculatorPage(driver);
             calcPage.CalculateSum(a, b);

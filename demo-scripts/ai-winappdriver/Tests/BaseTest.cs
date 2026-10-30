@@ -40,6 +40,34 @@ namespace MiniSum.AiTests.Tests
             Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
         }
 
+        public void SwitchToCalculatorWindow()
+        {
+            // Chờ 1.5s để timer chuyển cảnh LoginForm hoàn tất
+            System.Threading.Thread.Sleep(1500);
+
+            var handles = Driver.WindowHandles;
+            if (handles != null && handles.Count > 0)
+            {
+                for (int i = handles.Count - 1; i >= 0; i--)
+                {
+                    try
+                    {
+                        Driver.SwitchTo().Window(handles[i]);
+                        // Xác nhận window này có thể thao tác được
+                        if (Driver.Title.Contains("Tinh tong") || Driver.Title.Contains("MiniSum"))
+                        {
+                            return;
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+                // Fallback nếu Title không match
+                try { Driver.SwitchTo().Window(handles[0]); } catch { }
+            }
+        }
+
         [TearDown]
         public virtual void TearDown()
         {
@@ -54,10 +82,32 @@ namespace MiniSum.AiTests.Tests
                 }
                 finally
                 {
-                    Driver.Quit();
-                    Driver.Dispose();
+                    try
+                    {
+                        Driver.Quit();
+                        Driver.Dispose();
+                    }
+                    catch
+                    {
+                    }
                     Driver = null;
                 }
+            }
+
+            // Dọn dẹp triệt để mọi tiến trình MiniSum mồ côi
+            try
+            {
+                foreach (var p in System.Diagnostics.Process.GetProcessesByName("MiniSum_v3"))
+                {
+                    try { p.Kill(); } catch { }
+                }
+                foreach (var p in System.Diagnostics.Process.GetProcessesByName("MiniSum"))
+                {
+                    try { p.Kill(); } catch { }
+                }
+            }
+            catch
+            {
             }
         }
     }

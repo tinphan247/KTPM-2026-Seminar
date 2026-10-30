@@ -5,6 +5,10 @@ using MiniSum.AiTests.PageObjects;
 
 namespace MiniSum.AiTests.Tests
 {
+    /// <summary>
+    /// Test Suite tự động hóa kiểm thử BVA sinh bởi AI (Gemini / Claude / ChatGPT).
+    /// Kế thừa BaseTest để quản lý vòng đời Session WinAppDriver và chuyển đổi cửa sổ.
+    /// </summary>
     [TestFixture]
     public class AiGeneratedBvaTests : BaseTest
     {
@@ -20,10 +24,11 @@ namespace MiniSum.AiTests.Tests
         }
 
         // ======================================================================
-        // PHẦN 1: SMOKE & FUNCTIONAL LOGIN TESTS
+        // 1. SMOKE TESTS: KIỂM TRA ĐĂNG NHẬP VÀ ĐIỀU HƯỚNG CỬA SỔ
         // ======================================================================
         [Test]
         [Category("Smoke")]
+        [Description("Kiểm tra đăng nhập thành công và chuyển cảnh sang màn hình Tính tổng")]
         public void TC01_Login_Success()
         {
             loginPage.Login("admin", "1234");
@@ -32,12 +37,13 @@ namespace MiniSum.AiTests.Tests
             Assert.DoesNotThrow(() =>
             {
                 var sumBtn = calculatorPage.BtnSum;
-                Assert.IsNotNull(sumBtn, "Cửa sổ Tính tổng không hiển thị sau khi đăng nhập thành công!");
+                Assert.IsNotNull(sumBtn, "Cửa sổ CalculatorForm không xuất hiện sau khi Login!");
             });
         }
 
         [Test]
         [Category("Negative")]
+        [Description("Kiểm tra đăng nhập thất bại khi sai mật khẩu")]
         public void TC02_Login_Failed()
         {
             loginPage.Login("admin", "wrong_password");
@@ -48,8 +54,8 @@ namespace MiniSum.AiTests.Tests
         }
 
         // ======================================================================
-        // PHẦN 2: BỘ 12 CA KIỂM THỬ GIÁ TRỊ BIÊN CỐT LÕI (CORE 12 BVA CASES)
-        // Đồng bộ dữ liệu với file Excel bva-testcases.xlsx dùng cho cả nhóm
+        // 2. DATA-DRIVEN BVA TESTS: BỘ 12 CA KIỂM THỬ GIÁ TRỊ BIÊN CỐT LÕI
+        // Tự động chuyển hóa trực tiếp từ Bảng Markdown ở Bước 1
         // ======================================================================
         [TestCase("-99", "9", "-90", TestName = "BVA_01_MinLowerA")]
         [TestCase("99", "9", "108", TestName = "BVA_02_MaxUpperA")]
@@ -65,26 +71,30 @@ namespace MiniSum.AiTests.Tests
         [TestCase("99", "99", "198", TestName = "BVA_12_ExtremeDualMax")]
         public void TC03_Core_Bva_Tests(string a, string b, string expected)
         {
+            // 1. Đăng nhập để mở form Tính tổng
             loginPage.Login("admin", "1234");
+            
+            // 2. Chuyển context sang cửa sổ CalculatorForm
             SwitchToCalculatorWindow();
 
+            // 3. Nhập hai số A, B và kích hoạt tính toán
             calculatorPage.Calculate(a, b);
             Thread.Sleep(300);
 
+            // 4. Đọc kết quả thực tế và so sánh với kỳ vọng
             string actual = calculatorPage.GetResultOrStatus();
-            Assert.AreEqual(expected, actual, $"Lệch kết quả tại ca ({a}, {b})");
+            Assert.AreEqual(expected, actual, $"Lệch kết quả tại cặp giá trị ({a}, {b})");
         }
 
         // ======================================================================
-        // PHẦN 3: CÁC CA KIỂM THỬ MỞ RỘNG DO AI PHÁT HIỆN (AI EXPLORATORY TESTS)
-        // Minh họa khả năng phát hiện biên đặc biệt khi không bị giới hạn cứng
+        // 3. ROBUSTNESS & EXPLORATORY TESTS: CÁC CA ĐỘ BỀN VÀ BIÊN MỞ RỘNG
         // ======================================================================
-        [TestCase("", "10", "LOI", TestName = "AI_EXP_01_EmptyInputA")]
-        [TestCase("12.5", "10", "LOI", TestName = "AI_EXP_02_FloatNumberA")]
-        [TestCase("!@#", "9", "LOI", TestName = "AI_EXP_03_SpecialCharsA")]
-        [TestCase("9999999999", "9", "LOI", TestName = "AI_EXP_04_Int32OverflowA")]
-        [TestCase("98", "9", "107", TestName = "AI_EXP_05_ValidJustBelowMaxA")]
-        public void TC04_Ai_Exploratory_Robustness_Tests(string a, string b, string expected)
+        [TestCase("", "10", "LOI", TestName = "ROB_01_EmptyInputA")]
+        [TestCase("12.5", "10", "LOI", TestName = "ROB_02_FloatNumberA")]
+        [TestCase("!@#", "9", "LOI", TestName = "ROB_03_SpecialCharsA")]
+        [TestCase("9999999999", "9", "LOI", TestName = "ROB_04_Int32OverflowA")]
+        [TestCase("-99", "99", "0", TestName = "ROB_05_OppositeSymmetricEdges")]
+        public void TC04_Robustness_Tests(string a, string b, string expected)
         {
             loginPage.Login("admin", "1234");
             SwitchToCalculatorWindow();
@@ -93,7 +103,7 @@ namespace MiniSum.AiTests.Tests
             Thread.Sleep(300);
 
             string actual = calculatorPage.GetResultOrStatus();
-            Assert.AreEqual(expected, actual, $"Lệch kết quả ca mở rộng ({a}, {b})");
+            Assert.AreEqual(expected, actual, $"Lệch kết quả ca độ bền ({a}, {b})");
         }
     }
 }

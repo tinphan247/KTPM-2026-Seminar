@@ -49,18 +49,57 @@ Bảng Markdown gồm các cột: TC_ID, A, B, Expected, Description.
 
 ---
 
-## 3. Prompt 2: Kỹ Thuật Few-Shot & Chain-of-Thought (Khuyến Nghị Sử Dụng)
+---
 
-Đây là mẫu Prompt tối ưu hóa có kèm định nghĩa biên toán học và 2 ví dụ Few-shot mẫu để ép mô hình tuân thủ tuyệt đối cấu trúc dữ liệu xuất ra:
+## 3. Chiến Lược Prompt 2 Pha: Từ Khám Phá Mở Rộng Đến Chuẩn Hóa Cốt Lõi
+
+Để tận dụng tối đa trí tuệ nhân tạo mà không làm mất tính kỷ luật của dự án, quy trình thiết kế prompt được chia thành 2 pha:
+* **Pha 1 (Exploratory & Robustness Discovery):** Cho phép AI tự do "động não" (brainstorm), tìm kiếm mọi trường hợp biên đặc biệt, lỗi định dạng, tràn số và ký tự dị biệt mà con người có thể bỏ quên.
+* **Pha 2 (Core Standardization):** Lọc và chuẩn hóa **Bộ 12 ca kiểm thử trọng tâm (Core 12 BVA)** theo đúng yêu cầu Task Q07 trong `KTPM-Seminar_Tasks.xlsx` để cung cấp dữ liệu đồng bộ cho Kan (Katalon) và Tùng (WinAppDriver).
+
+---
+
+### 3.1 Prompt Pha 1: Khám Phá Biên Mở Rộng & Kiểm Thử Độ Bền (Exploratory Robustness Prompt)
+
+Dùng khi bạn muốn AI phát hiện tối đa các trường hợp góc (Corner Cases) và dị biệt:
 
 ```markdown
 [ROLE & PERSONA]
-Bạn là Lead QA Automation Engineer tại một tập đoàn công nghệ lớn. Nhiệm vụ của bạn là thiết kế bộ ca kiểm thử chuẩn xác 100% để nạp trực tiếp vào hệ thống Data-Driven Automation Testing (Katalon Studio và WinAppDriver).
+Bạn là Chuyên gia Kiểm thử Phần mềm (Security & Robustness QA Specialist).
+
+[SPECIFICATION & CONTEXT]
+Hệ thống: Desktop MiniSum Calculator (C# WinForms)
+- Đầu vào: Ô nhập A và B.
+- Miền giá trị nghiệp vụ hợp lệ: A, B là số nguyên thuộc [-99, 99].
+- Nếu A, B hợp lệ: Kết quả hiển thị A + B.
+- Bất kỳ trường hợp nào ngoài [-99, 99] hoặc không phải số nguyên: Hệ thống phải bắt lỗi (Expected = "LOI").
+
+[EXPLORATORY TASK]
+Hãy suy nghĩ như một Hacker / Phá hoại ứng dụng (Destructive Testing). Hãy liệt kê toàn diện tất cả các trường hợp biên toán học và các ca tấn công dữ liệu (Corner Cases) có thể làm ứng dụng bị crash hoặc tính sai, bao gồm:
+1. Biên hợp lệ và biên ngoại lệ của [-99, 99]
+2. Ca cực biên kép đồng thời (Worst-case combinations)
+3. Ca chuỗi rỗng (""), khoảng trắng ("   ")
+4. Ca số thực có dấu phẩy/chấm ("12.5")
+5. Ca ký tự đặc biệt, emoji, SQL injection ("!@#$", "1' OR '1'='1")
+6. Ca tràn số nguyên hệ thống 32-bit ("9999999999", "-2147483649")
+
+[OUTPUT FORMAT]
+Bảng Markdown: TC_ID | A | B | Expected | Description | Category (BVA / Edge / Robustness)
+```
+
+---
+
+### 3.2 Prompt Pha 2: Chuẩn Hóa Bộ 12 Ca Cốt Lõi (Core Regression Standardization)
+*(Dùng để chốt danh sách nạp vào file Excel `bva-testcases.xlsx` phục vụ kịch bản chạy tự động của cả nhóm theo Task Q07)*
+
+```markdown
+[ROLE & PERSONA]
+Bạn là Lead QA Automation Engineer tại một tập đoàn công nghệ lớn. Nhiệm vụ của bạn là trích xuất và chuẩn hóa bộ ca kiểm thử trọng tâm để nạp trực tiếp vào hệ thống Data-Driven Automation Testing (Katalon Studio và WinAppDriver).
 
 [SPECIFICATION & CONTEXT]
 Hệ thống: Desktop MiniSum Calculator
-- Đầu vào A: Số nguyên $[-99, 99]$
-- Đầu vào B: Số nguyên $[-99, 99]$
+- Đầu vào A: Số nguyên [-99, 99]
+- Đầu vào B: Số nguyên [-99, 99]
 - Điểm mốc biên chuẩn cho mỗi biến:
   * Biên dưới ngoài (Invalid Min-): min - 1 = -100 (Expected: LOI)
   * Biên dưới trong (Valid Min): min = -99
@@ -81,7 +120,7 @@ Dưới đây là 2 ca kiểm thử mẫu minh họa định dạng và quy tắ
 [CONSTRAINTS & RULES]
 1. Tính toán số học phải chính xác tuyệt đối: Với các ca hợp lệ, Expected phải bằng đúng A + B (chú ý số âm: ví dụ -99 + 9 = -90; -99 + (-99) = -198).
 2. Khi có giá trị vượt biên (như -100, 100) hoặc ký tự không hợp lệ, Expected PHẢI là "LOI".
-3. Thiết kế đúng 12 ca kiểm thử trọng tâm bao gồm:
+3. Trích xuất đúng 12 ca kiểm thử trọng tâm bao gồm:
    - 4 ca kiểm tra biên của biến A (khi B cố định ở nominal = 9)
    - 1 ca kiểm tra lỗi kiểu dữ liệu của A (A = "xyz", B = 10)
    - 4 ca kiểm tra biên của biến B (khi A cố định ở nominal = 10)
@@ -90,6 +129,7 @@ Dưới đây là 2 ca kiểm thử mẫu minh họa định dạng và quy tắ
 4. Tên cột bắt buộc: `TC_ID | A | B | Expected | Description`.
 5. Không xuất thêm lời giải thích rườm rà ngoài bảng Markdown.
 ```
+
 
 ---
 

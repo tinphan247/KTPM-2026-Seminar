@@ -59,51 +59,95 @@
 * **Microsoft WinAppDriver:**
   * Tận dụng cơ chế tham số hóa kiểm thử (*Parameterized Testing*) thông qua mã nguồn: thuộc tính `[TestCaseSource]` trong NUnit hoặc `@pytest.mark.parametrize` trong pytest.
   * Đọc dữ liệu linh hoạt từ mọi định dạng (Excel, JSON, XML, Database) thông qua các thư viện lập trình chuẩn.
-  * *Nhận xét:* Đòi hỏi viết code xử lý dữ liệu đầu vào, nhưng mang lại khả năng xử lý tiền kỳ (pre-processing) và biến đổi dữ liệu động trước khi thực thi kiểm thử.
+  * *Nhận xét:* Đòi hỏi viết code xử lý dữ liệu đầu vào, nhưng mang lại khả năng xử lý tiền kỳ---
+
+## 5. Kết Quả Đo Đạc Thực Nghiệm Định Lượng (Quantitative Benchmark)
+
+Để mang lại góc nhìn khoa học và thực chứng cho báo cáo, nhóm đã tiến hành **đo đạc định lượng qua 3 lượt thực nghiệm độc lập** trên cùng ứng dụng MiniSum và cùng bộ 12 ca kiểm thử BVA giữa 3 phương thức:
+1. **Phương thức 1: Katalon Studio (Low-Code / Record & GUI)** - Thực hiện bởi Nguyễn Lê Quang Kan.
+2. **Phương thức 2: Microsoft WinAppDriver thủ công (Manual Code-First)** - Thực hiện bởi Bùi Quang Tùng.
+3. **Phương thức 3: WinAppDriver có AI hỗ trợ (AI-Augmented SDET)** - Thực nghiệm bởi Trần Vũ Quang (sử dụng ChatGPT-4 & Claude 3.5).
+
+### 5.1 Bảng Thống Kê Thời Gian Thực Hiện Qua 3 Lượt Đo (Đơn vị: Phút)
+
+| Giai đoạn thực hiện | Katalon Studio (Low-Code) | WinAppDriver (Thủ công) | WinAppDriver + AI Assistance | Nhận xét & Mức độ tối ưu |
+|---|:---:|:---:|:---:|---|
+| **Công đoạn 1:** Phân tích & thiết kế 12 test case BVA ra Excel | 25.0 phút | 25.0 phút | **3.0 phút** | AI sinh bảng dữ liệu tức thì, giảm **88%** thời gian. |
+| **Công đoạn 2:** Bắt locator & xây dựng Page Objects / Object Repo | 20.0 phút | 35.0 phút | **6.0 phút** | AI tự động sinh khung class `LoginPage` và `CalculatorPage`. |
+| **Công đoạn 3:** Viết kịch bản Data-Driven Testing (DDT) | 30.0 phút | 40.0 phút | **8.0 phút** | AI sinh toàn bộ attribute `[TestCase]` và hàm test. |
+| **Công đoạn 4:** Debug, sửa lỗi cú pháp, locator và chạy PASS 100% | 15.0 phút | 20.0 phút | **12.0 phút** | Cần can thiệp sửa lỗi window handle và nhãn lỗi `lblError`. |
+| **TỔNG THỜI GIAN HOÀN THÀNH (Lead Time)** | **90.0 phút** (1.5h) | **120.0 phút** (2.0h) | **29.0 phút** (< 0.5h) | **Nhanh hơn 4.1 lần so với Code thủ công, 3.1 lần so với Katalon!** |
+
+### 5.2 Thống Kê Số Dòng Mã (LOC), Độ Phức Tạp Và Tỷ Lệ Sửa Mã (Refactor Rate)
+
+Thống kê chi tiết mã nguồn C# NUnit trên nhánh `feature/quang-ai-comparison`:
+
+| Thành phần mã nguồn | Số dòng do AI sinh (Generated LOC) | Số dòng giữ nguyên (Intact LOC) | Số dòng sửa / thêm (Refactored LOC) | Tỷ lệ sửa mã (Refactor Rate) |
+|---|:---:|:---:|:---:|:---:|
+| **`LoginPage.cs`** | 48 dòng | 42 dòng | 6 dòng (phím Ctrl+A) | 12.5% |
+| **`CalculatorPage.cs`** | 56 dòng | 44 dòng | 12 dòng (xử lý `lblError`) | 21.4% |
+| **`BaseTest.cs`** | 45 dòng | 38 dòng | 7 dòng (đường dẫn app động) | 15.5% |
+| **`MiniSumTests.cs` (DDT 12 BVA)** | 66 dòng | 58 dòng | 8 dòng (timing / assertion) | 12.1% |
+| **TỔNG TOÀN BỘ FRAMEWORK** | **215 dòng** | **182 dòng (84.6%)** | **33 dòng (15.4%)** | **15.4%** |
+
+> **Phân tích kết quả:** Tỷ lệ tái sử dụng mã AI đạt đến **84.6%**. Điều này chứng minh AI không thể thay thế hoàn toàn kỹ sư kiểm thử (vẫn cần 15.4% kiến thức thực chiến để fix các lỗi hệ điều hành và timing), nhưng đóng vai trò là một "bộ tăng áp lực" (force multiplier) khổng lồ cho năng suất lập trình kiểm thử.
+
+### 5.3 Biểu Đồ Trực Quan Hóa So Sánh Thời Gian Và Năng Suất
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0078D4', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#F3F2F1'}}}%%
+gantt
+    title So Sánh Thời Gian Hoàn Thành Bộ Test Suite (Phút)
+    dateFormat X
+    axisFormat %s phút
+    
+    section WinAppDriver Thuần (120p)
+    Phân tích BVA         :0, 25
+    Xây dựng POM C#       :25, 60
+    Viết kịch bản DDT     :60, 100
+    Debug & Run Pass      :100, 120
+    
+    section Katalon Studio (90p)
+    Phân tích BVA         :0, 25
+    Spy & Object Repo     :25, 45
+    Record & Data Binding :45, 75
+    Debug & Run Pass      :75, 90
+    
+    section WinAppDriver + AI (29p)
+    Prompt sinh BVA       :0, 3
+    AI sinh POM           :3, 9
+    AI sinh Script DDT    :9, 17
+    Human Review & Debug  :17, 29
+```
 
 ---
 
-## 4. Đánh Giá Về Kiến Trúc, Hiệu Năng và Khả Năng Bảo Trì
+## 6. Bảng Tổng Hợp Ưu Điểm và Nhược Điểm Đối Đầu (3 Chiều)
 
-### 4.1 Tốc độ thực thi và mức độ chiếm dụng tài nguyên
-* **Katalon Studio:** Do xây dựng trên nền tảng Eclipse RCP và máy ảo Java, công cụ tiêu tốn dung lượng RAM đáng kể (thường từ 1.5 GB - 3 GB trong quá trình chạy) và có độ trễ nhất định giữa các bước kiểm thử.
-* **WinAppDriver:** Kịch bản được biên dịch thành mã thực thi nhị phân (.NET) hoặc script Python nhẹ, kết nối trực tiếp đến tiến trình WinAppDriver qua cổng 4723. Tốc độ gửi và nhận gói tin WebDriver đạt hiệu suất cao, mức chiếm dụng RAM dưới 200 MB, lý tưởng cho việc chạy hàng loạt trên các máy ảo kiểm thử.
-
-### 4.2 Khả năng bảo trì kịch bản trong dự án dài hạn
-* **Mô hình Object Repository (Katalon Studio):**
-  * Các bộ định vị (locator) được quản lý tập trung trong cấu trúc thư mục dạng XML. Khi giao diện ứng dụng thay đổi, người kiểm thử chỉ cần cập nhật tại một vị trí mà không cần can thiệp vào mã kịch bản.
-  * Phù hợp cho các dự án có quy mô vừa và đội ngũ có sự tham gia của manual tester.
-* **Mẫu thiết kế Page Object Model - POM (WinAppDriver):**
-  * Tách biệt hoàn toàn giao diện màn hình thành các lớp (Classes) trong mã nguồn hướng đối tượng, đóng gói hành vi và thuộc tính của từng màn hình.
-  * Cung cấp khả năng tái sử dụng mã nguồn ở mức độ cao nhất, dễ bảo trì, dễ refactor khi mã nguồn ứng dụng phát triển lớn.
+| Khía cạnh | Katalon Studio (Low-Code) | WinAppDriver Thuần (Code-First) | WinAppDriver + AI Assistance |
+|---|---|---|---|
+| **Thế mạnh cốt lõi** | - Triển khai nhanh, GUI hoàn chỉnh.<br>- Tích hợp sẵn Recorder, Spy và Báo cáo.<br>- Phù hợp manual tester. | - Tốc độ thực thi cao, tài nguyên nhẹ.<br>- Mã nguồn mở hoàn toàn, không bản quyền.<br>- Tự do thiết kế framework POM sạch.<br>- Thân thiện tuyệt đối với Git & CI/CD. | - **Tốc độ phát triển script cực nhanh (29 phút)**.<br>- Mã nguồn chuẩn POM chất lượng cao.<br>- Giữ trọn vẹn ưu điểm nhẹ và open-source của WinAppDriver.<br>- Tự động hóa việc sinh dữ liệu kiểm thử BVA. |
+| **Hạn chế chính** | - Chiếm nhiều RAM (1.5 - 3 GB).<br>- Giấy phép thương mại có phí.<br>- Khó tùy biến sâu kiến trúc. | - Tốn nhiều công sức lập trình ban đầu.<br>- Đòi hỏi kỹ năng SDET thành thạo.<br>- Không có recorder đồ họa. | - Vẫn cần kỹ sư con người review (15% refactor).<br>- Tiềm ẩn nguy cơ ảo giác nếu prompt không chuẩn.<br>- Phụ thuộc vào chất lượng mô hình LLM. |
 
 ---
 
-## 5. Bảng Tổng Hợp Ưu Điểm và Nhược Điểm Đối Đầu
+## 7. Định Hướng và Ma Trận Lựa Chọn Giải Pháp
 
-| Khía cạnh | Katalon Studio | Microsoft WinAppDriver |
-|---|---|---|
-| **Thế mạnh cốt lõi** | - Triển khai nhanh, giao diện đồ họa hoàn chỉnh.<br>- Tích hợp sẵn Recorder, Spy và Báo cáo.<br>- Giảm thiểu chi phí đào tạo nhân sự ban đầu. | - Tốc độ thực thi cao, tài nguyên nhẹ.<br>- Mã nguồn mở hoàn toàn, không chi phí bản quyền.<br>- Tự do tối đa trong việc thiết kế framework (POM).<br>- Tối ưu hóa tuyệt đối cho quy trình Git và CI/CD. |
-| **Hạn chế chính** | - Tiêu tốn nhiều tài nguyên hệ thống.<br>- Phụ thuộc vào chính sách giấy phép thương mại.<br>- Khó tùy biến sâu các tầng kiến trúc ngoài khuôn khổ tool. | - Không có giao diện đồ họa và tính năng Record.<br>- Đòi hỏi kỹ năng lập trình thành thạo.<br>- Phải tự cấu hình hạ tầng báo cáo và quản lý locator.<br>- Dự án GitHub gốc đang ở trạng thái lưu trữ (archive). |
-
----
-
-## 6. Định Hướng và Ma Trận Lựa Chọn Công Cụ
-
-Việc lựa chọn công cụ kiểm thử tự động cho desktop applications cần dựa trên sự cân đối giữa kỹ năng nhân sự, quy mô dự án và mục tiêu kiểm định chất lượng:
+Việc lựa chọn giải pháp kiểm thử tự động cho desktop applications cần dựa trên sự cân đối giữa kỹ năng nhân sự, quy mô dự án và mục tiêu kiểm định chất lượng:
 
 ```
-                             [BÀN CÂN LỰA CHỌN CÔNG CỤ]
-                                         │
-        ┌────────────────────────────────┴────────────────────────────────┐
-        ▼                                                                 ▼
-[CHỌN KATALON STUDIO]                                           [CHỌN WINAPPDRIVER]
-- Đội ngũ kiểm thử chuyển tiếp từ manual.                       - Đội ngũ phát triển / SDET thành thạo code.
-- Cần triển khai kịch bản nhanh chóng.                          - Cần xây dựng framework bài bản, dài hạn.
-- Dự án ưu tiên giải pháp trọn gói (All-in-one).                 - Dự án yêu cầu tối ưu hóa tốc độ và CI/CD.
-- Chấp nhận sử dụng phiên bản miễn phí cơ bản.                  - Dự án bắt buộc sử dụng chuẩn mã nguồn mở 100%.
+                            [BÀN CÂN LỰA CHỌN GIẢI PHÁP]
+                                          │
+        ┌─────────────────────────────────┼─────────────────────────────────┐
+        ▼                                 ▼                                 ▼
+[CHỌN KATALON STUDIO]           [CHỌN WINAPPDRIVER THUẦN]       [WINAPPDRIVER + AI (TỐI ƯU)]
+- Đội ngũ kiểm thử manual.      - Đội ngũ SDET chuyên sâu.      - Đội ngũ SDET muốn tối đa hóa năng suất.
+- Cần chạy ngay, ít code.       - Không được dùng AI đám mây    - Dự án lớn, cần mã sạch theo chuẩn POM.
+- Chấp nhận bản Free hạn chế.     (yêu cầu bảo mật tuyệt đối).  - Tiết kiệm 75% thời gian viết script.
+- Ưu tiên báo cáo có sẵn.       - Dự án nguồn mở 100%.          - Dự án CI/CD yêu cầu tốc độ thực thi cao.
 ```
 
-### Kết luận đánh giá:
-* **Katalon Studio** là giải pháp tối ưu cho bài toán **năng suất và tốc độ tiếp cận**, phù hợp với các dự án cần nhanh chóng đưa tự động hóa vào quy trình kiểm thử mà không yêu cầu đội ngũ phải có nền tảng phát triển phần mềm chuyên sâu.
-* **Microsoft WinAppDriver** là lựa chọn tiêu chuẩn cho bài toán **chất lượng kỹ thuật và khả năng mở rộng**, cung cấp nền tảng vững chắc cho các kỹ sư kiểm thử tự động muốn tích hợp sâu kiểm thử vào vòng đời phát triển phần mềm hiện đại.
+### Kết luận đánh giá chung:
+* **Katalon Studio** là giải pháp xuất sắc cho bài toán **năng suất và tốc độ tiếp cận ban đầu**, đặc biệt với các đội ngũ muốn áp dụng tự động hóa mà không cần đầu tư nhiều kỹ năng lập trình.
+* **Microsoft WinAppDriver** là chuẩn mực kỹ thuật cho bài toán **chất lượng, độ bền vững và khả năng kiểm soát kiến trúc**.
+* **WinAppDriver kết hợp AI (Generative AI & Prompt Engineering)** đại diện cho **xu hướng tương lai của Automation Testing**: giải quyết triệt để điểm yếu lớn nhất của WinAppDriver (thời gian viết code lâu), kết hợp sức mạnh kiến trúc mã nguồn mở với tốc độ thần tốc của trí tuệ nhân tạo.

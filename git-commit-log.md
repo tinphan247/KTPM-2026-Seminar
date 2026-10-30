@@ -1,11 +1,13 @@
 # NHẬT KÝ COMMIT LỊCH SỬ DỰ ÁN (GIT COMMIT LOG)
 
-- **Tổng số commits:** 58
+- **Tổng số commits:** 60
 - **Kho lưu trữ:** https://github.com/tinphan247/KTPM-2026-Seminar.git
 - **Ngày trích xuất:** 30/10/2026
 
 | Mã Hash | Người thực hiện | Thời gian | Thông điệp commit (Conventional Commits) |
 |:---:|---|:---:|---|
+| 6adfd15 | **tinphan247** | 2026-10-30 17:22 | docs(tin): update contribution split to Tin 35%, Kan 35%, Tung 30% |
+| 7d4355b | **tinphan247** | 2026-10-30 17:16 | docs(tin): update git-commit-log.md with final 58 commits |
 | e4790ef | **tinphan247** | 2026-10-30 17:16 | docs(tin): update final deliverables - report PDF, 50-50 contribution, slides, and AI output |
 | 28c8ff2 | **tvquang0511** | 2026-10-30 16:56 | chore(quang): quan ly luu tru thu muc ai va cap nhat task tracking Hoan thanh (Tasks Q16, Q17) |
 | 3c9ec83 | **tvquang0511** | 2026-10-30 16:56 | docs(quang): viet kich ban quay video demo thuc nghiem AI trong desktop automation (Task Q15) |

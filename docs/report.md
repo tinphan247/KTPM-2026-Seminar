@@ -1,40 +1,54 @@
 # BÁO CÁO TOÀN VĂN CHUYÊN ĐỀ SEMINAR
 # AUTOMATION TESTING FOR DESKTOP APPLICATIONS
-## Kiểm Thử Tự Động Ứng Dụng Máy Tính Để Bàn
+## Tự Động Hóa Kiểm Thử Cho Ứng Dụng Desktop (Windows)
 
-- **Học phần:** Kiểm thử Phần mềm
-- **Đơn vị:** Khoa Công nghệ Thông tin — Bộ môn Kỹ thuật Phần mềm
-- **Nhóm thực hiện:** Nhóm 02
-
----
-
-## BẢNG PHÂN CÔNG CÔNG VIỆC VÀ TRÁCH NHIỆM
-
-| Thành viên | Vai trò / Phân công | Nội dung chi tiết phụ trách | Sản phẩm bàn giao | Trạng thái |
-|---|---|---|---|:---:|
-| **Tín** | **Theory & Introduction (M1)** | - Bối cảnh, lý do chọn đề tài, mục tiêu và phạm vi.<br>- Cơ sở lý thuyết Automation Desktop, khó khăn đặc thù.<br>- 3 kỹ thuật cốt lõi (Record/Playback, Checkpoints, DDT).<br>- Khảo sát 9 tool, xây dựng bộ tiêu chí 6 nhóm (21 tiêu chí). | `01-introduction.md`<br>`02-theory.md`<br>`03-toolsurvey.md`<br>Slide M1 | **Hoàn thành** |
-| **Kan** | **Tool A – Katalon Studio (M2)** | - Nghiên cứu nguyên lý hoạt động của Katalon Studio trên Desktop.<br>- Phân tích 3 năng lực cốt lõi theo lý thuyết.<br>- Đánh giá ưu/nhược điểm thực tế.<br>- Thiết lập kịch bản 3 nhóm demo trên ứng dụng mẫu. | `04-katalon-studio.md`<br>Kịch bản Demo Tool A<br>Slide Tool A | **Hoàn thành** |
-| **Tùng** | **Tool B – WinAppDriver (M3)** | - Nghiên cứu nguyên lý WinAppDriver, chuẩn W3C WebDriver.<br>- Phân tích 3 năng lực cốt lõi bằng phương thức lập trình thuần.<br>- Đánh giá ưu/nhược điểm đối trọng với Tool A.<br>- Thiết lập kịch bản 3 nhóm demo dùng chung case study. | `05-winappdriver.md`<br>Kịch bản Demo Tool B<br>Slide Tool B | **Hoàn thành** |
-| **Quang** | **AI + Comparison + Exercise (M4)** | - So sánh đối chiếu toàn diện Katalon Studio vs. WinAppDriver.<br>- Nghiên cứu chuyên đề ứng dụng AI trong Desktop Automation.<br>- Thiết kế hệ thống 3 bài tập thực hành theo phân tầng nhận thức.<br>- Tổng kết bài học và hoàn thiện báo cáo toàn văn. | `06-comparison.md`<br>`07-ai-desktop-automation.md`<br>`08-exercises.md`<br>`report.md`<br>Slide M4 | **Hoàn thành** |
+> **Môn học:** Software Testing (Kiểm thử phần mềm)  
+> **Khoa:** Công nghệ Thông tin – Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM  
+> **Nhóm thực hiện:** Nhóm 02 (ZipTool)  
+> **Học kỳ:** HK1 – Năm học 2026-2027  
+> **Thời gian nộp bài:** 30/10/2026 (Hạn chót giảng viên: 31/10/2026)
 
 ---
 
-## MỤC LỤC TOÀN VĂN
+## 👥 THÀNH VIÊN VÀ ĐÁNH GIÁ ĐÓNG GÓP THỰC TẾ (LẦN 2)
 
-1. [Phần 1: Giới Thiệu & Bối Cảnh (Introduction)](#phần-1-giới-thiệu--bối-cảnh-introduction)
-2. [Phần 2: Cơ Sở Lý Thuyết Kiểm Thử Tự Động Desktop (Theory)](#phần-2-cơ-sở-lý-thuyết-kiểm-thử-tự-động-desktop-theory)
-3. [Phần 3: Khảo Sát Thị Trường & Bộ Tiêu Chí Đánh Giá (Tool Survey)](#phần-3-khảo-sát-thị-trường--bộ-tiêu-chí-đánh-giá-tool-survey)
-4. [Phần 4: Nghiên Cứu Công Cụ Đại Diện A – Katalon Studio](#phần-4-nghiên-cứu-công-cụ-đại-diện-a--katalon-studio)
-5. [Phần 5: Nghiên Cứu Công Cụ Đại Diện B – Microsoft WinAppDriver](#phần-5-nghiên-cứu-công-cụ-đại-diện-b--microsoft-winappdriver)
-6. [Phần 6: So Sánh Đối Chiếu Hai Công Cụ (Comparison)](#phần-6-so-sánh-đối-chiếu-hai-công-cụ-comparison)
-7. [Phần 7: Ứng Dụng Trí Tuệ Nhân Tạo (AI) Trong Desktop Automation](#phần-7-ứng-dụng-trí-tuệ-nhân-tạo-ai-trong-desktop-automation)
-8. [Phần 8: Hệ Thống Bài Tập Thực Hành Đề Xuất (Exercise)](#phần-8-hệ-thống-bài-tập-thực-hành-đề-xuất-exercise)
-9. [Phần 9: Kết Luận & Hướng Phát Triển (Conclusion)](#phần-9-kết-luận--hướng-phát-triển-conclusion)
+| STT | Họ và Tên | MSSV | Vai trò chính Lần 2 | Đóng góp thực tế | % Chốt | Trạng thái |
+|:---:|---|:---:|---|---|:---:|:---:|
+| 1 | **Phan Trung Tín** | 23120372 | **Trưởng nhóm (Team Lead)**<br>Phát triển 3 bản `MiniSum.exe`, viết lý thuyết POM/Flaky/Wait/Oracle, slide PPTX, thực nghiệm AI, tích hợp & đóng gói | 60.0h (22 tasks) | **50.0%** | Hoàn thành xuất sắc |
+| 2 | **Nguyễn Lê Quang Kan** | 23120279 | **Chuyên trách Katalon Studio**<br>Thực nghiệm 3 demo Katalon, viết Custom Keyword `LoginKeyword.groovy`, Data-Driven BVA, 16 ảnh thực nghiệm, video YouTube | 60.0h (18 tasks) | **50.0%** | Hoàn thành xuất sắc |
+| 3 | **Bùi Quang Tùng** | 20120397 | Thành viên nhóm | 0.0h | **0.0%** | Không đạt tiến độ |
+| 4 | **Trần Vũ Quang** | 23120346 | Thành viên nhóm | 0.0h | **0.0%** | Không đạt tiến độ |
+| 5 | **Phạm Tấn Phát** | 20120636 | Thành viên nhóm | 0.0h | **0.0%** | Không đạt tiến độ |
+| **Tổng** | | | | **120.0h (40 tasks)** | **100.0%** | |
+
+---
+
+## 📋 MỤC LỤC TỔNG QUAN
+
+1. [Phần 1: Giới Thiệu & Bối Cảnh (Introduction)](#phan-1)
+2. [Phần 2: Cơ Sở Lý Thuyết Kiểm Thử Tự Động Desktop (Theory)](#phan-2)
+3. [Phần 3: Khảo Sát Thị Trường & Bộ Tiêu Chí Đánh Giá (Tool Survey)](#phan-3)
+4. [Phần 4: Nghiên Cứu Công Cụ Đại Diện A – Katalon Studio](#phan-4)
+5. [Phần 5: Nghiên Cứu Công Cụ Đại Diện B – Microsoft WinAppDriver](#phan-5)
+6. [Phần 6: So Sánh Đối Chiếu Toàn Diện (Comparison)](#phan-6)
+7. [Phần 7: Ứng Dụng Trí Tuệ Nhân Tạo (AI) Trong Desktop Automation](#phan-7)
+8. [Phần 8: Hệ Thống Bài Tập Thực Hành Đề Xuất (Exercise)](#phan-8)
+9. [Phần 9: Minh Chứng Thực Nghiệm, Kê Khai AI & Kết Luận](#phan-9)
 
 ---
 
 
-# Phần 1: Giới Thiệu & Bối Cảnh (Introduction)
+# Phần 1: Giới Thiệu & Bối Cảnh (Introduction) <a id="phan-1"></a>
+
+# Automation Testing for Desktop Applications
+## Phần 1: Introduction
+
+> **Seminar – Phụ trách:** Tín  
+> **Nội dung:** Bối cảnh · Lý do chọn đề tài · Mục tiêu seminar · Phạm vi kiểm thử  
+> **Cập nhật lần cuối:** 02/10/2026  
+> **Trạng thái:** Hoàn thành  
+
+---
 
 ## 1. Bối cảnh
 
@@ -93,10 +107,18 @@ Trong kỷ nguyên phát triển phần mềm theo các mô hình Agile/DevOps v
   - Quản lý và xử lý đồng bộ hóa giao diện (Synchronization & Waits)
 - **Mức độ nội dung:** Kết hợp từ cơ sở lý thuyết chuẩn mực đến thực hành triển khai mã nguồn demo và bài tập cụ thể.
 
+
+# Phần 2: Cơ Sở Lý Thuyết Kiểm Thử Tự Động Desktop (Theory) <a id="phan-2"></a>
+
+# Automation Testing for Desktop Applications
+## Phần 2: Theory
+
+> **Seminar – Phụ trách:** Tín  
+> **Nội dung:** Khái niệm cốt lõi · Kỹ thuật tự động hóa · Thách thức đặc thù · Thuật ngữ  
+> **Cập nhật lần cuối:** 27/10/2026 (bổ sung Lần 2: POM, Flaky Test, Wait, Test Oracle, Recovery Testing)  
+> **Trạng thái:** Hoàn thành  
+
 ---
-
-
-# Phần 2: Cơ Sở Lý Thuyết Kiểm Thử Tự Động Desktop (Theory)
 
 ## Mục lục
 
@@ -118,13 +140,39 @@ Trong kỷ nguyên phát triển phần mềm theo các mô hình Agile/DevOps v
    - 6.1 [Khái niệm](#61-khái-niệm)
    - 6.2 [Phân loại Checkpoint](#62-phân-loại-checkpoint)
    - 6.3 [Kiến trúc Assertion](#63-kiến-trúc-assertion)
-7. [Fully vs Semi-Automated](#7-fully-vs-semi-automated)
-   - 7.1 [Fully Automated](#71-fully-automated)
-   - 7.2 [Semi-Automated](#72-semi-automated)
-   - 7.3 [So sánh chi tiết](#73-so-sánh-chi-tiết)
-8. [Ưu điểm & Nhược điểm của Automation Testing](#8-ưu-điểm--nhược-điểm-của-automation-testing)
-9. [Khi nào nên dùng Automation Testing?](#9-khi-nào-nên-dùng-automation-testing)
-10. [Bảng thuật ngữ chuyên ngành](#10-bảng-thuật-ngữ-chuyên-ngành)
+7. [Page Object Model (POM)](#7-page-object-model-pom)
+   - 7.1 [Khái niệm](#71-khái-niệm)
+   - 7.2 [Ví dụ trên MiniSum](#72-ví-dụ-trên-minisum)
+   - 7.3 [POM trong Katalon Studio và WinAppDriver](#73-pom-trong-katalon-studio-và-winappdriver)
+   - 7.4 [Ưu điểm, nhược điểm và nguyên tắc áp dụng](#74-ưu-điểm-nhược-điểm-và-nguyên-tắc-áp-dụng)
+8. [Flaky Test](#8-flaky-test)
+   - 8.1 [Khái niệm và biểu hiện](#81-khái-niệm-và-biểu-hiện)
+   - 8.2 [Nguyên nhân gốc rễ](#82-nguyên-nhân-gốc-rễ)
+   - 8.3 [Cách phát hiện](#83-cách-phát-hiện)
+   - 8.4 [Cách xử lý](#84-cách-xử-lý)
+9. [Wait Strategy – Implicit, Explicit và Fluent Wait](#9-wait-strategy--implicit-explicit-và-fluent-wait)
+   - 9.1 [Vì sao phải chờ](#91-vì-sao-phải-chờ)
+   - 9.2 [Implicit Wait](#92-implicit-wait)
+   - 9.3 [Explicit Wait](#93-explicit-wait)
+   - 9.4 [Fluent Wait](#94-fluent-wait)
+   - 9.5 [So sánh và cách chọn](#95-so-sánh-và-cách-chọn)
+10. [Test Oracle](#10-test-oracle)
+   - 10.1 [Khái niệm](#101-khái-niệm)
+   - 10.2 [Phân loại Test Oracle](#102-phân-loại-test-oracle)
+   - 10.3 [Test Oracle trong kiểm thử tự động](#103-test-oracle-trong-kiểm-thử-tự-động)
+   - 10.4 [Bài toán Oracle và giới hạn](#104-bài-toán-oracle-và-giới-hạn)
+11. [Recovery Testing](#11-recovery-testing)
+   - 11.1 [Khái niệm](#111-khái-niệm)
+   - 11.2 [Kịch bản sự cố thường gặp](#112-kịch-bản-sự-cố-thường-gặp)
+   - 11.3 [Cơ chế phục hồi trong automation](#113-cơ-chế-phục-hồi-trong-automation)
+   - 11.4 [Checklist kiểm tra khả năng phục hồi](#114-checklist-kiểm-tra-khả-năng-phục-hồi)
+12. [Fully vs Semi-Automated](#12-fully-vs-semi-automated)
+   - 12.1 [Fully Automated](#121-fully-automated)
+   - 12.2 [Semi-Automated](#122-semi-automated)
+   - 12.3 [So sánh chi tiết](#123-so-sánh-chi-tiết)
+13. [Ưu điểm & Nhược điểm của Automation Testing](#13-ưu-điểm--nhược-điểm-của-automation-testing)
+14. [Khi nào nên dùng Automation Testing?](#14-khi-nào-nên-dùng-automation-testing)
+15. [Bảng thuật ngữ chuyên ngành](#15-bảng-thuật-ngữ-chuyên-ngành)
 
 ---
 
@@ -368,9 +416,462 @@ Bảng dữ liệu đầu vào (tập tin `login_dataset.xlsx`):
 
 ---
 
-## 7. Fully vs Semi-Automated
+## 7. Page Object Model (POM)
 
-### 7.1 Fully Automated
+### 7.1 Khái niệm
+
+**Page Object Model (POM)** là mẫu thiết kế (design pattern) trong kiểm thử tự động, trong đó **mỗi màn hình hoặc cửa sổ của ứng dụng được biểu diễn bằng một lớp (class) riêng**. Lớp này đóng gói ba thành phần:
+
+1. **Locator** – định danh các phần tử giao diện (`AutomationId`, `Name`, `XPath`…).
+2. **Hành động** – các thao tác người dùng thực hiện được trên màn hình (nhập liệu, nhấn nút, chuyển màn hình).
+3. **Truy vấn trạng thái** – các hàm đọc dữ liệu phục vụ checkpoint (lấy nội dung nhãn, kiểm tra nút đang Enabled hay Disabled).
+
+Kịch bản kiểm thử **không thao tác trực tiếp lên control**, mà gọi các phương thức nghiệp vụ do page object cung cấp. Nhờ vậy khi giao diện thay đổi, chỉ cần sửa **một chỗ** trong page object thay vì sửa toàn bộ kịch bản.
+
+```
+        Không dùng POM                        Dùng POM
+┌───────────────────────────┐        ┌───────────────────────────┐
+│ TC01_Login                │        │ TC01_Login                │
+│  find("txtUser").sendKeys│        │  loginPage.Login(u, p)    │
+│  find("txtPass").sendKeys│        │  Assert(lblMessage)       │
+│  find("btnLogin").click  │        └─────────────┬─────────────┘
+│  find("lblMessage")...   │                      │ gọi
+└───────────────────────────┘        ┌─────────────▼─────────────┐
+   Locator rải khắp test case        │ LoginPage                 │
+   → đổi UI phải sửa nhiều nơi       │  locator + Login()        │
+                                     └───────────────────────────┘
+                                        Locator tập trung một nơi
+```
+
+### 7.2 Ví dụ trên MiniSum
+
+Giả sử cần kiểm thử màn hình đăng nhập của `MiniSum.exe`. Cách viết **không có POM** lặp lại locator trong từng test case:
+
+```csharp
+// TC01 - lặp locator ngay trong test
+driver.FindElementByAccessibilityId("txtUser").SendKeys("admin");
+driver.FindElementByAccessibilityId("txtPass").SendKeys("1234");
+driver.FindElementByAccessibilityId("btnLogin").Click();
+Assert.AreEqual("Dang nhap thanh cong",
+    driver.FindElementByAccessibilityId("lblMessage").Text);
+```
+
+Cách viết **có POM** – tách thành `LoginPage` và `CalculatorPage`:
+
+```csharp
+// PageObjects/LoginPage.cs
+public class LoginPage
+{
+    private readonly WindowsDriver<WindowsElement> driver;
+
+    public LoginPage(WindowsDriver<WindowsElement> driver) => this.driver = driver;
+
+    private WindowsElement TxtUser => driver.FindElementByAccessibilityId("txtUser");
+    private WindowsElement TxtPass => driver.FindElementByAccessibilityId("txtPass");
+    private WindowsElement BtnLogin => driver.FindElementByAccessibilityId("btnLogin");
+    private WindowsElement LblMessage => driver.FindElementByAccessibilityId("lblMessage");
+
+    public void Login(string user, string pass)
+    {
+        TxtUser.Clear();
+        TxtUser.SendKeys(user);
+        TxtPass.SendKeys(pass);
+        BtnLogin.Click();
+    }
+
+    public string Message => LblMessage.Text;
+}
+```
+
+```csharp
+// TC01_Login_Success.cs - test case chỉ còn nghiệp vụ
+var loginPage = new LoginPage(driver);
+loginPage.Login("admin", "1234");
+
+Assert.AreEqual("Dang nhap thanh cong", loginPage.Message);
+var calculatorPage = new CalculatorPage(driver);
+Assert.IsTrue(calculatorPage.IsDisplayed());
+```
+
+Khi bản **v2** đổi `btnSum` thành `btnCalculate`, chỉ `CalculatorPage` phải sửa; toàn bộ test case dùng lại vẫn giữ nguyên. Đây chính là kịch bản **maintenance & self-healing** được demo trong seminar.
+
+### 7.3 POM trong Katalon Studio và WinAppDriver
+
+| Công cụ | Cách hiện thực POM | Ghi chú |
+|---|---|---|
+| **Katalon Studio** | **Object Repository** đóng vai trò kho locator dùng chung; mỗi màn hình là một thư mục (`MiniSum/Login`, `MiniSum/Calculator`). Test case tham chiếu `findWindowsObject('Object Repository/...')` thay vì khai báo locator trực tiếp. Có thể bọc thêm **Custom Keyword** để tạo lớp hành vi (`LoginKeyword.login()`) | POM ở mức “locator tập trung”, chưa phải class đầy đủ |
+| **WinAppDriver + C# NUnit** | Tạo thư mục `PageObjects/` với `LoginPage.cs`, `CalculatorPage.cs`; test case chỉ gọi phương thức | POM đầy đủ theo hướng lập trình hướng đối tượng |
+
+### 7.4 Ưu điểm, nhược điểm và nguyên tắc áp dụng
+
+| Ưu điểm | Nhược điểm |
+|---|---|
+| Locator tập trung → bảo trì nhanh khi UI đổi | Tốn công thiết kế ban đầu, nhiều file hơn |
+| Test case đọc như tài liệu nghiệp vụ, giảm trùng lặp | Với ứng dụng rất nhỏ, POM có thể là over-engineering |
+| Tái sử dụng hành động giữa nhiều test case | Dễ phình to nếu nhồi cả logic kiểm thử vào page object |
+| Hỗ trợ phân công: người viết page object và người viết test case độc lập | Cần kỷ luật đặt tên, nếu không sẽ thành “God class” |
+
+**Nguyên tắc áp dụng:**
+- Page object **chỉ mô tả giao diện**, **không chứa assertion**; assertion thuộc về test case.
+- Một page object tương ứng một màn hình (hoặc một thành phần tái sử dụng như dialog, toolbar).
+- Phương thức nên diễn đạt **ý định nghiệp vụ** (`Login`, `Calculate`, `OpenHistory`) thay vì `ClickButton1`.
+- Trả về page object tiếp theo khi hành động làm chuyển màn hình (`Login()` trả về `CalculatorPage`) để test case mô tả đúng luồng.
+
+---
+
+## 8. Flaky Test
+
+### 8.1 Khái niệm và biểu hiện
+
+**Flaky Test** là kịch bản kiểm thử cho kết quả **không ổn định giữa các lần chạy dù mã nguồn ứng dụng và mã kiểm thử không thay đổi**: lần chạy PASS, lần chạy FAIL, có khi FAIL rồi PASS khi chạy lại ngay lập tức.
+
+Flaky test là vấn đề nghiêm trọng hơn việc “không có test”, vì:
+
+- Đội phát triển **mất niềm tin** vào bộ kiểm thử: khi test báo FAIL, không ai biết là ứng dụng lỗi thật hay test lỗi.
+- Tốn thời gian điều tra lại các lỗi “ma”, làm chậm pipeline CI/CD.
+- Che giấu lỗi thật: một khi nhóm đã quen với việc “chạy lại là PASS”, lỗi thật sẽ bị bỏ qua.
+
+**Biểu hiện thường gặp trên desktop automation:**
+
+| Biểu hiện | Ví dụ với MiniSum |
+|---|---|
+| PASS/FAIL xen kẽ trên cùng máy | `TC03_BVA` lúc đọc được `lblResult`, lúc đọc được chuỗi rỗng |
+| Chỉ FAIL trên máy CI hoặc máy chậm hơn | Máy yếu nên cửa sổ Calculator xuất hiện sau khi script đã tìm control |
+| Phụ thuộc thứ tự chạy | Chạy riêng thì PASS, chạy cả suite thì FAIL do cửa sổ cũ còn mở |
+| FAIL khi màn hình bị khoá / đổi độ phân giải | Toạ độ click sai khi scale 125% hoặc khi RDP |
+
+### 8.2 Nguyên nhân gốc rễ
+
+| Nhóm nguyên nhân | Mô tả | Ví dụ |
+|---|---|---|
+| **Timing / bất đồng bộ** | Script chạy nhanh hơn tốc độ ứng dụng phản hồi | Đọc `lblMessage` trước khi ứng dụng kịp cập nhật sau khi click |
+| **Locator không ổn định** | Dùng locator sinh động (XPath theo index, toạ độ) | `//Button[3]` đổi vị trí khi thêm nút mới |
+| **Trạng thái dùng chung** | Test này để lại dữ liệu/cửa sổ ảnh hưởng test khác | Test trước không đóng app, test sau mở thêm instance |
+| **Dữ liệu test không cô lập** | Dùng chung file Excel/DB, không reset trước mỗi lần chạy | Lịch sử tính toán (v2) tích luỹ qua nhiều test |
+| **Môi trường** | DPI, độ phân giải, ngôn ngữ, focus, phần mềm diệt virus | Windows scale 150% làm toạ độ click lệch |
+| **Tài nguyên / session** | WinAppDriver session chết, port 4723 bị chiếm | Chạy song song nhiều test trên cùng session |
+
+### 8.3 Cách phát hiện
+
+1. **Chạy lặp**: thực thi cùng test N lần (ví dụ 10–20 lần) và thống kê tỉ lệ PASS. Test có tỉ lệ PASS < 100% là flaky.
+2. **Ghi log đầy đủ**: timestamp từng bước, ảnh chụp màn hình tại thời điểm FAIL, giá trị Actual/Expected.
+3. **Đo “flaky rate”** theo từng test case để ưu tiên sửa: test FAIL 1/20 lần vẫn phải xử lý.
+4. **Chạy trên nhiều cấu hình**: máy nhanh/chậm, độ phân giải khác nhau, có/không có màn hình phụ.
+
+### 8.4 Cách xử lý
+
+| Biện pháp | Cách làm | Lưu ý |
+|---|---|---|
+| **Chờ tường minh (Explicit Wait)** | Chờ *điều kiện* cụ thể thay vì chờ cố định: `waitForElementPresent`, `WebDriverWait.Until(...)` | Ưu tiên số 1, xem mục 9 – Wait Strategy |
+| **Locator ổn định** | Dùng `AutomationId` do đội phát triển đặt, tránh XPath theo index/toạ độ | MiniSum đặt sẵn `txtUser`, `btnLogin`, `lblResult`… |
+| **Cô lập test** | Mỗi test tự chuẩn bị trạng thái đầu vào và dọn dẹp ở `finally`/`TearDown` | Không phụ thuộc test chạy trước |
+| **Dữ liệu riêng** | Sinh dữ liệu cho từng lần chạy hoặc reset file test data | Tránh ghi đè chéo giữa các test |
+| **Retry có kiểm soát** | Chỉ retry test đã được xác định là flaky, có ghi log số lần retry | Không dùng retry để “che” lỗi thật |
+| **Quarantine** | Tách test flaky khỏi suite chính, theo dõi riêng cho tới khi sửa xong | Giữ suite chính luôn “xanh” và đáng tin |
+
+**Phân biệt flaky test và lỗi thật:**
+
+| Tiêu chí | Flaky Test | Lỗi thật của ứng dụng |
+|---|---|---|
+| Chạy lại nhiều lần | Kết quả thay đổi | Luôn FAIL |
+| Thay đổi môi trường | Có thể PASS/FAIL khác nhau | FAIL ở mọi môi trường |
+| Log/ảnh chụp | Thường cho thấy script thao tác sai thời điểm | Cho thấy giá trị thực tế sai so với đặc tả |
+| Hành động | Sửa script (wait, locator, isolation) | Báo lỗi cho đội phát triển |
+
+> **Liên hệ MiniSum:** sau khi đăng nhập thành công, ứng dụng cố ý **giữ màn hình Login thêm 1 giây** trước khi mở cửa sổ Calculator. Nếu script không chờ mà đọc `lblMessage` hoặc tìm `winMain` ngay lập tức, test sẽ flaky. Đây là tình huống được dùng để minh hoạ wait strategy ở mục tiếp theo.
+
+---
+
+## 9. Wait Strategy – Implicit, Explicit và Fluent Wait
+
+### 9.1 Vì sao phải chờ
+
+Trong desktop app, giao diện **không cập nhật đồng bộ với thao tác của script**: cửa sổ cần thời gian khởi tạo handle, hiệu ứng chuyển màn hình có animation, xử lý nghiệp vụ chạy trên UI thread, dữ liệu được tải từ đĩa/dịch vụ. Nếu script tìm control hoặc đọc giá trị ngay sau khi click, nó có thể chạy *trước* khi ứng dụng kịp phản hồi → sinh ra flaky test.
+
+Có ba cơ chế chờ phổ biến trong automation desktop, đều được hỗ trợ bởi WinAppDriver/Appium và Katalon Studio.
+
+### 9.2 Implicit Wait
+
+**Implicit Wait** là thời gian chờ mặc định được cấu hình **một lần cho toàn bộ driver**. Mỗi khi gọi tìm phần tử, driver sẽ thử lại liên tục trong khoảng thời gian này trước khi ném `NoSuchElementException`.
+
+```csharp
+// C# – WinAppDriver: chờ tối đa 10 giây cho MỌI lệnh tìm phần tử
+driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+```
+
+- **Ưu điểm:** cấu hình một dòng, áp dụng cho mọi locator, script gọn.
+- **Nhược điểm:** không phân biệt được “phần tử chưa xuất hiện” với “phần tử không bao giờ xuất hiện” → test chậm và khó chẩn đoán; không kiểm tra được điều kiện phức tạp (text đã đổi chưa, nút đã Enabled chưa). Khi một phần tử thật sự không tồn tại, mỗi lần tìm đều phải chờ hết timeout.
+
+### 9.3 Explicit Wait
+
+**Explicit Wait** chờ **một điều kiện cụ thể** trên **một phần tử cụ thể**, với timeout riêng cho từng bước. Đây là cách được khuyến nghị.
+
+```csharp
+// C# – WinAppDriver: chờ cửa sổ Calculator xuất hiện (tối đa 10 giây)
+var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+wait.Until(d => d.FindElementByAccessibilityId("winMain").Displayed);
+
+// Chờ nhãn kết quả có nội dung mong đợi
+var result = wait.Until(d =>
+{
+    var text = d.FindElementByAccessibilityId("lblResult").Text;
+    return text == "Ket qua: 5 + 7 = 12" ? text : null;
+});
+```
+
+```groovy
+// Katalon Studio (Windows Desktop) – chờ cửa sổ và phần tử
+Windows.waitForElementPresent(
+    findWindowsObject('Object Repository/MiniSum/Calculator/winMain'), 10)
+Windows.switchToWindowTitle('MiniSum - Tinh tong')
+Windows.waitForElementPresent(
+    findWindowsObject('Object Repository/MiniSum/Calculator/lblResult'), 10)
+```
+
+- **Ưu điểm:** rõ ràng về mặt ý định, chỉ chờ đúng nơi cần, timeout ngắn và dễ chẩn đoán khi FAIL, có thể chờ điều kiện phức tạp.
+- **Nhược điểm:** phải viết thêm code; nếu quên ở một bước vẫn có thể flaky.
+
+### 9.4 Fluent Wait
+
+**Fluent Wait** là dạng mở rộng của Explicit Wait, cho phép cấu hình **tần suất kiểm tra (polling interval)** và **danh sách exception được bỏ qua** trong lúc chờ.
+
+```csharp
+var fluentWait = new DefaultWait<WindowsDriver<WindowsElement>>(driver)
+{
+    Timeout = TimeSpan.FromSeconds(15),
+    PollingInterval = TimeSpan.FromMilliseconds(500)
+};
+fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+
+string message = fluentWait.Until(d =>
+{
+    var el = d.FindElementByAccessibilityId("lblMessage");
+    return string.IsNullOrWhiteSpace(el.Text) ? null : el.Text;
+});
+```
+
+- **Ưu điểm:** kiểm soát chi tiết nhịp kiểm tra, bỏ qua các lỗi tạm thời (phần tử bị dựng lại → `StaleElementReference`), phù hợp với ứng dụng khởi động chậm hoặc có animation dài.
+- **Nhược điểm:** cấu hình phức tạp, dễ lạm dụng thành “chờ vô tội vạ” làm test chậm.
+
+### 9.5 So sánh và cách chọn
+
+| Tiêu chí | Implicit Wait | Explicit Wait | Fluent Wait |
+|---|---|---|---|
+| Phạm vi | Toàn bộ driver | Từng bước | Từng bước |
+| Điều kiện chờ | Chỉ “tìm thấy phần tử” | Mọi điều kiện tự định nghĩa | Mọi điều kiện + polling + ignore exception |
+| Cấu hình | Một lần | Mỗi lần gọi | Mỗi lần gọi, nhiều tham số |
+| Khả năng chẩn đoán khi FAIL | Thấp (chỉ biết timeout) | Cao | Cao |
+| Khuyến nghị | Chỉ dùng làm lưới an toàn, timeout nhỏ (3–5s) | **Mặc định nên dùng** | Khi cần kiểm soát chi tiết |
+
+**Nguyên tắc thực hành:**
+- **Không dùng `Thread.Sleep`/`delay` cố định** làm cơ chế chờ chính: máy nhanh thì lãng phí, máy chậm vẫn flaky. Chỉ dùng khi thật sự cần (ví dụ chờ animation ngắn) và phải ghi chú lý do.
+- Mỗi bước chờ nên gắn với **một điều kiện nghiệp vụ** (“cửa sổ Calculator đã mở”, “lblResult đã có nội dung”) thay vì “chờ 2 giây”.
+- Đặt timeout theo **thời gian phản hồi thực tế đo được × 2–3**, không đặt quá lớn.
+- Tránh trộn Implicit Wait với Explicit Wait trong cùng session vì thời gian chờ thực tế sẽ khó dự đoán.
+
+> **Áp dụng cho MiniSum:** sau khi đăng nhập thành công, ứng dụng giữ màn hình Login 1 giây rồi mới mở Calculator. Script nên dùng `waitForElementPresent(winMain, 10)` / `WebDriverWait` thay vì `Thread.Sleep(1000)`; cách này vừa nhanh hơn khi máy khoẻ, vừa không flaky khi máy chậm.
+
+---
+
+## 10. Test Oracle
+
+### 10.1 Khái niệm
+
+**Test Oracle** là **cơ chế hoặc nguồn thông tin dùng để xác định một kết quả kiểm thử là ĐÚNG hay SAI**. Nói cách khác, oracle trả lời câu hỏi: *“Làm sao biết giá trị ứng dụng trả về là chấp nhận được?”*
+
+Một test case không có oracle chỉ là chuỗi thao tác mô phỏng người dùng; nó không thể kết luận PASS/FAIL. Oracle tồn tại **độc lập với công cụ kiểm thử**: Katalon, WinAppDriver hoặc một script PowerShell đều chỉ là phương tiện thực thi, còn tính đúng/sai do oracle quyết định.
+
+```
+Test Case: nhập A = 5, B = 7, nhấn TINH TONG
+                     │
+                     ▼
+        Giá trị thực tế: lblResult = "Ket qua: 5 + 7 = 12"
+                     │
+        ┌────────────┴─────────────┐
+        ▼                          ▼
+   Oracle: đặc tả quy tắc      So sánh
+   "lblResult = Ket qua: A + B = A+B"
+        │
+        ▼
+   Khớp → PASS  |  Không khớp → FAIL
+```
+
+### 10.2 Phân loại Test Oracle
+
+| Loại oracle | Nguồn xác định kết quả đúng | Ví dụ trên MiniSum |
+|---|---|---|
+| **Specified oracle** (theo đặc tả) | Yêu cầu/tài liệu đặc tả của hệ thống | Đặc tả ghi: đăng nhập sai phải hiển thị `Sai tai khoan hoac mat khau` |
+| **Derived oracle** (suy dẫn) | Tính toán từ công thức, bảng quyết định, giá trị biên | Với A = -99, B = 99 → kỳ vọng `Ket qua: -99 + 99 = 0` |
+| **Implicit oracle** (ngầm định) | Kỳ vọng hiển nhiên: không crash, không treo, không rò rỉ | Sau khi nhấn TINH TONG, ứng dụng vẫn phản hồi và không hiện hộp thoại lỗi .NET |
+| **Consistency oracle** (nhất quán) | So sánh giữa hai lần chạy / hai phiên bản / hai môi trường | Cùng bộ dữ liệu BVA, kết quả của v1 và v3 phải giống nhau ở miền hợp lệ |
+| **Human oracle** (con người) | Chuyên gia/người dùng đánh giá bằng mắt | Kiểm tra bố cục, màu sắc, thông báo lỗi có dễ hiểu không |
+| **Metamorphic oracle** (biến đổi) | So sánh quan hệ giữa các lần chạy có dữ liệu biến đổi | Đổi chỗ A và B thì tổng không đổi: `f(a,b) = f(b,a)` |
+
+### 10.3 Test Oracle trong kiểm thử tự động
+
+Trong automation, oracle được **hiện thực hoá bằng checkpoint/assertion**. Mỗi assertion cần trả lời rõ ba câu hỏi:
+
+1. **Kiểm tra cái gì?** – phần tử nào, thuộc tính nào (`lblResult.Text`, `btnLogin.Enabled`…).
+2. **Giá trị kỳ vọng là bao nhiêu?** – lấy từ nguồn oracle nào (đặc tả, công thức, dữ liệu chuẩn).
+3. **Khi lệch thì kết luận gì?** – FAIL kèm thông điệp chứa Actual và Expected để điều tra.
+
+```csharp
+// Oracle dạng specified/derived: công thức A + B và định dạng chuỗi theo đặc tả
+int a = 5, b = 7;
+string expected = $"Ket qua: {a} + {b} = {a + b}";
+string actual = calculatorPage.Result;
+
+Assert.AreEqual(expected, actual,
+    $"Sai ket qua hien thi. Expected='{expected}', Actual='{actual}'");
+```
+
+**Lưu ý chất lượng oracle:**
+- Oracle **quá yếu** (“chỉ cần không crash”) sẽ cho PASS giả, không phát hiện lỗi nghiệp vụ.
+- Oracle **quá chặt** vào chi tiết giao diện (toạ độ, font, màu) sẽ FAIL oan mỗi khi đổi UI.
+- Kỳ vọng phải được tính **độc lập với cách ứng dụng tính** — nếu lấy chính kết quả của app làm kỳ vọng thì test không có giá trị.
+
+### 10.4 Bài toán Oracle và giới hạn
+
+**Oracle problem** là tình huống rất khó hoặc rất tốn kém để xác định đâu là kết quả đúng, ví dụ:
+
+- Giao diện phức tạp, kết quả là hình ảnh/đồ thị → khó so sánh tự động.
+- Ứng dụng có nhiều kết quả “đúng” tương đương (thứ tự hiển thị không quan trọng).
+- Không có đặc tả rõ ràng, hoặc đặc tả lỗi thời.
+
+**Cách giảm nhẹ:**
+- Ưu tiên dữ liệu kiểm thử có **kỳ vọng tính được bằng công thức** (BVA, bảng quyết định) như bộ 12 ca của MiniSum.
+- Kết hợp nhiều loại oracle (specified + implicit + consistency) trong cùng một test.
+- Với phần giao diện khó so sánh, dùng **human oracle** hoặc **bitmap checkpoint** có ngưỡng sai lệch hợp lý.
+
+> **Liên hệ MiniSum:** bộ dữ liệu BVA gồm 12 ca là ví dụ của **derived oracle** – kỳ vọng được tính từ quy tắc `A + B` và miền giá trị `[-99, 99]`, hoàn toàn độc lập với cách ứng dụng hiển thị.
+
+---
+
+## 11. Recovery Testing
+
+### 11.1 Khái niệm
+
+**Recovery Testing** (kiểm thử phục hồi) là loại kiểm thử đánh giá khả năng của hệ thống **tự phục hồi sau sự cố** và **tiếp tục hoạt động đúng**: ứng dụng bị treo/crash, mất kết nối, tiến trình bị kill, dữ liệu bị hỏng hoặc tài nguyên bị chiếm dụng.
+
+Trong bối cảnh automation, khái niệm này có hai tầng:
+
+1. **Kiểm thử khả năng phục hồi của AUT** – AUT có tự khôi phục trạng thái, có báo lỗi rõ ràng, có giữ dữ liệu đã nhập không?
+2. **Cơ chế tự phục hồi của bộ test** – khi một test hoặc session automation gặp sự cố, suite có dọn dẹp đúng cách và tiếp tục chạy các test còn lại không?
+
+Tầng thứ hai đặc biệt quan trọng với desktop automation vì WinAppDriver/Katalon **giữ session gắn với tiến trình ứng dụng**: chỉ cần một cửa sổ “ma” còn sót lại là các test sau có thể FAIL hàng loạt.
+
+### 11.2 Kịch bản sự cố thường gặp
+
+| Sự cố | Hậu quả nếu không xử lý | Cách phát hiện |
+|---|---|---|
+| Ứng dụng crash giữa chừng | Script treo tới hết timeout, các test sau FAIL dây chuyền | Tiến trình biến mất, `NoSuchWindowException` |
+| Ứng dụng treo (Not Responding) | Lệnh click chờ vô hạn, suite bị block | Cửa sổ không phản hồi, timeout liên tiếp |
+| Session WinAppDriver chết / port bị chiếm | Không mở được app ở test kế tiếp | `WebDriverException`, lỗi kết nối `127.0.0.1:4723` |
+| Popup/dialog bất ngờ | Click trúng sai phần tử, kết quả sai | Ảnh chụp màn hình cho thấy dialog lạ |
+| Cửa sổ cũ còn mở | Mở thêm instance, đọc nhầm window | Nhiều cửa sổ cùng title trong danh sách |
+| Dữ liệu bẩn từ lần chạy trước | Kết quả phụ thuộc lịch sử (ví dụ danh sách lịch sử v2) | Kết quả khác nhau giữa lần chạy đầu và lần sau |
+
+### 11.3 Cơ chế phục hồi trong automation
+
+**a) Dọn dẹp trong `TearDown` / `finally` (bắt buộc)**
+
+```csharp
+[TestFixture]
+public class MiniSumTests
+{
+    private WindowsDriver<WindowsElement> driver;
+
+    [SetUp]
+    public void StartApp()
+    {
+        var options = new AppiumOptions();
+        options.AddAdditionalCapability("app", MiniSumPath);
+        driver = new WindowsDriver<WindowsElement>(new Uri("http://127.0.0.1:4723"), options);
+    }
+
+    [TearDown]
+    public void CloseApp()
+    {
+        try
+        {
+            if (driver != null)
+            {
+                // Nếu test FAIL, chụp ảnh trước khi đóng để còn bằng chứng
+                if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
+                {
+                    ScreenshotHelper.Capture(driver, TestContext.CurrentContext.Test.Name);
+                }
+                driver.Quit();
+            }
+        }
+        catch (Exception ex)
+        {
+            // Không để lỗi dọn dẹp che mất kết quả test
+            TestContext.Progress.WriteLine($"Cleanup warning: {ex.Message}");
+        }
+        finally
+        {
+            driver = null;
+        }
+    }
+}
+```
+
+**b) Khởi tạo lại session khi session chết**
+
+```csharp
+private void EnsureSessionAlive()
+{
+    try
+    {
+        _ = driver.SessionId;          // truy cập nhẹ để kiểm tra session
+    }
+    catch (WebDriverException)
+    {
+        driver = CreateDriver();       // tạo session mới thay vì bỏ cả suite
+    }
+}
+```
+
+**c) Test Listener của Katalon Studio**
+
+Katalon cho phép can thiệp vào vòng đời test qua **Test Listener**, ví dụ `ScreenshotOnFailure` đã dùng trong dự án:
+
+```groovy
+class ScreenshotOnFailure {
+    @AfterTestCase
+    def afterTestCase(TestCaseContext testCaseContext) {
+        if (testCaseContext.getTestCaseStatus() == 'FAILED') {
+            WebUI.takeScreenshot("Reports/screenshots/${testCaseContext.getTestCaseId()}.png")
+        }
+        // Dọn dẹp: đóng ứng dụng nếu còn mở
+        Windows.closeApplication()
+    }
+}
+```
+
+**d) Nguyên tắc chung**
+- Mỗi test phải để hệ thống ở trạng thái sạch khi kết thúc, **kể cả khi test FAIL**.
+- Không “nuốt” exception trong `catch` mà không ghi log.
+- Chụp ảnh + log ngay tại thời điểm lỗi, trước khi dọn dẹp.
+- Với suite chạy dài, tách **test độc lập** để một test hỏng không kéo theo cả suite.
+
+### 11.4 Checklist kiểm tra khả năng phục hồi
+
+- [ ] Ứng dụng bị kill giữa lúc chạy test → suite vẫn tiếp tục được test kế tiếp.
+- [ ] Sau mỗi test, không còn tiến trình `MiniSum*.exe` hay cửa sổ nào sót lại.
+- [ ] Test FAIL có ảnh chụp màn hình và log giá trị Actual/Expected.
+- [ ] Session WinAppDriver được tạo mới nếu kết nối cũ không còn.
+- [ ] Dữ liệu test (file Excel, lịch sử trong bộ nhớ) được reset trước mỗi lần chạy.
+- [ ] Khi AUT báo lỗi nghiệp vụ (ví dụ `lblError`), test kết luận FAIL/PASS đúng chứ không crash.
+
+> **Liên hệ MiniSum:** ứng dụng không lưu dữ liệu xuống đĩa, lịch sử tính toán (v2) chỉ nằm trong bộ nhớ nên mỗi lần khởi động lại là trạng thái sạch. Tuy vậy, script vẫn phải đóng ứng dụng trong `TearDown`; nếu để sót cửa sổ, lần chạy sau sẽ mở thêm instance và test sẽ đọc nhầm cửa sổ cũ.
+
+---
+
+## 12. Fully vs Semi-Automated
+
+### 12.1 Fully Automated
 
 Toàn bộ quy trình kiểm thử từ khâu thiết lập môi trường, chuẩn bị dữ liệu, mở ứng dụng, thực thi các bước, kiểm tra kết quả cho tới khâu xuất báo cáo và dọn dẹp môi trường đều diễn ra tự động hoàn toàn mà không cần sự can thiệp của con người.
 
@@ -385,7 +886,7 @@ Kích hoạt CI/CD ──► Biên dịch mã ──► Triển khai build ─�
 - Kiểm thử Smoke Test nhanh sau mỗi bản build mới
 - Kịch bản chạy theo lịch định kỳ ban đêm (Nightly Builds)
 
-### 7.2 Semi-Automated
+### 12.2 Semi-Automated
 
 Kết hợp giữa công cụ tự động và thao tác thủ công của kiểm thử viên. Công cụ sẽ đảm nhận các bước lặp lại tốn thời gian (như tạo tài khoản hàng loạt, nhập form dài, điều hướng đến màn hình cần kiểm tra), sau đó nhường quyền cho con người quan sát, đánh giá trực quan hoặc can thiệp các bước đặc biệt.
 
@@ -405,7 +906,7 @@ Quy trình bán tự động (Semi-Automated Flow):
 - Kiểm thử khám phá (Exploratory Testing) cần công cụ hỗ trợ chuẩn bị dữ liệu
 - Các trường hợp kiểm thử liên quan đến thiết bị phần cứng đặc biệt cần cắm/rút thủ công
 
-### 7.3 So sánh chi tiết
+### 12.3 So sánh chi tiết
 
 | Tiêu chí | Fully Automated | Semi-Automated |
 |---|---|---|
@@ -417,7 +918,7 @@ Quy trình bán tự động (Semi-Automated Flow):
 
 ---
 
-## 8. Ưu điểm & Nhược điểm của Automation Testing
+## 13. Ưu điểm & Nhược điểm của Automation Testing
 
 ### Ưu điểm
 
@@ -444,7 +945,7 @@ Quy trình bán tự động (Semi-Automated Flow):
 
 ---
 
-## 9. Khi nào nên dùng Automation Testing?
+## 14. Khi nào nên dùng Automation Testing?
 
 ```
 BẢNG QUYẾT ĐỊNH ÁP DỤNG KIỂM THỬ TỰ ĐỘNG
@@ -463,7 +964,7 @@ NÊN ÁP DỤNG AUTOMATION                      KHÔNG NÊN ÁP DỤNG AUTOMATIO
 
 ---
 
-## 10. Bảng thuật ngữ chuyên ngành
+## 15. Bảng thuật ngữ chuyên ngành
 
 | Thuật ngữ tiếng Anh | Viết tắt | Định nghĩa và giải thích ý nghĩa |
 |---|---|---|
@@ -492,10 +993,18 @@ NÊN ÁP DỤNG AUTOMATION                      KHÔNG NÊN ÁP DỤNG AUTOMATIO
 > **Cập nhật lần cuối:** 02/10/2026  
 > **Trạng thái:** Hoàn thành
 
+
+# Phần 3: Khảo Sát Thị Trường & Bộ Tiêu Chí Đánh Giá (Tool Survey) <a id="phan-3"></a>
+
+# Automation Testing for Desktop Applications
+## Phần 3: Tool Survey & Selection Criteria
+
+> **Seminar – Phụ trách:** Tín  
+> **Nội dung:** Khảo sát công cụ thị trường · Bộ tiêu chí đánh giá · Ma trận đối chiếu · Tài liệu tham khảo  
+> **Cập nhật lần cuối:** 02/10/2026  
+> **Trạng thái:** Hoàn thành  
+
 ---
-
-
-# Phần 3: Khảo Sát Thị Trường & Bộ Tiêu Chí Đánh Giá (Tool Survey)
 
 ## Mục lục
 
@@ -706,10 +1215,16 @@ Nhằm đảm bảo tính khách quan và chiều sâu khoa học cho buổi sem
 > **Cập nhật lần cuối:** 02/10/2026  
 > **Trạng thái:** Hoàn thành
 
+
+# Phần 4: Nghiên Cứu Công Cụ Đại Diện A – Katalon Studio <a id="phan-4"></a>
+
+# Nghiên Cứu Công Cụ: Katalon Studio
+## Chuyên đề: Automation Testing cho Desktop Applications
+
+- **Người thực hiện:** Kan (Tool A)
+- **Mục tiêu báo cáo tuần:** Tổng quan công cụ, nguyên lý hoạt động trên Desktop, 3 năng lực cốt lõi (Record & Playback, Data-Driven, Checkpoints), ưu/nhược điểm và định hướng kịch bản demo.
+
 ---
-
-
-# Phần 4: Nghiên Cứu Công Cụ Đại Diện A – Katalon Studio
 
 ## 1. Tổng quan về Katalon Studio
 
@@ -731,46 +1246,310 @@ Nhằm đảm bảo tính khách quan và chiều sâu khoa học cho buổi sem
 
 ## 2. Nguyên lý hoạt động trên Desktop App
 
-### 2.1 Kiến trúc thực thi
-Katalon Studio kiểm thử ứng dụng Desktop Windows thông qua kiến trúc phân tầng chuẩn WebDriver:
+### 2.1 Kiến trúc thực thi chi tiết (Execution Architecture Deep Dive)
+
+Katalon Studio kiểm thử ứng dụng Desktop Windows thông qua kiến trúc phân tầng chuẩn hóa dựa trên giao thức WebDriver. Luồng thực thi diễn ra tuần tự từ kịch bản kiểm thử, qua tầng trung gian WinAppDriver, tới tầng lõi Windows UI Automation và trực tiếp tác động lên ứng dụng đang kiểm thử (AUT).
+
+#### 2.1.1 Sơ đồ kiến trúc phân tầng (Session → Katalon Engine → WinAppDriver → AUT)
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Tester as Kịch bản Kiểm thử (Groovy/Java)
+    participant KE as Katalon Test Engine (Appium Client)
+    participant WAD as Microsoft WinAppDriver (Port 4723)
+    participant UIA as Windows UI Automation (UIA)
+    participant AUT as Ứng dụng Desktop (WPF/MiniSum.exe)
+
+    Note over Tester,AUT: 1. Khởi tạo phiên kiểm thử (Session Initialization)
+    Tester->>KE: startApplicationWithTitle(appPath, title)
+    KE->>WAD: HTTP POST /session (DesiredCapabilities: app, platformName)
+    WAD->>AUT: Kích hoạt tiến trình (Process Launch)
+    WAD->>UIA: Quét tìm Top-Level Window có Name = title (HWND)
+    UIA-->>WAD: Trả về Window Handle (HWND)
+    WAD-->>KE: HTTP 200 OK (Session ID: GUID)
+    
+    Note over Tester,AUT: 2. Tương tác & Định vị phần tử (Element Interaction)
+    Tester->>KE: sendKeys(findWindowsObject('txtUser'), 'admin')
+    KE->>WAD: HTTP POST /session/{id}/element (using: accessibility id, value: txtUser)
+    WAD->>UIA: FindFirst(TreeScope_Descendants, AutomationId == "txtUser")
+    UIA-->>WAD: UIA Element Reference
+    WAD-->>KE: HTTP 200 OK (Element ID)
+    KE->>WAD: HTTP POST /session/{id}/element/{elId}/value (Keys: 'admin')
+    WAD->>UIA: SetValue / SendInput (Gửi bàn phím ảo)
+    UIA->>AUT: Cập nhật văn bản trong ô txtUser
+    
+    Note over Tester,AUT: 3. Kiểm tra trạng thái & Đóng phiên (Verification & Teardown)
+    Tester->>KE: getAttribute(findWindowsObject('lblMessage'), 'Name')
+    KE->>WAD: HTTP GET /session/{id}/element/{elId}/attribute/Name
+    WAD->>UIA: GetCurrentPropertyValue(UIA_NamePropertyId)
+    UIA-->>WAD: "Đăng nhập thành công!"
+    WAD-->>KE: HTTP 200 OK (Value)
+    Tester->>KE: closeApplication()
+    KE->>WAD: HTTP DELETE /session/{id}
+    WAD->>AUT: Hủy tiến trình / Giải phóng Window Handle
+    WAD-->>KE: HTTP 200 OK
+```
+
+#### 2.1.2 Phân tích chi tiết 4 tầng kiến trúc
+1. **Tầng 1: Katalon Studio Test Engine (Client Layer)**
+   * **Bản chất:** Đóng vai trò là một WebDriver Client. Dưới tầng mã nguồn, Katalon sử dụng thư viện `io.appium.java_client.windows.WindowsDriver` (dựa trên Appium Java Client) để trừu tượng hóa các thao tác giao diện thành bộ từ khóa bậc cao `WindowsBuiltinKeywords` (`Windows.startApplication`, `Windows.setText`, `Windows.click`, `Windows.getAttribute`).
+   * **Xử lý đối tượng:** Khi gọi `findWindowsObject('path')`, Katalon đọc file cấu hình `.wrs`, trích xuất `locatorStrategy` và chuỗi `locator`, sau đó đóng gói thành các đối tượng `By` tương ứng (`By.name()`, `By.xpath()`, `By.id()` hoặc custom Accessibility ID) để gửi đi.
+
+2. **Tầng 2: Giao thức giao tiếp WebDriver (Transport / API Layer)**
+   * **Cổng mặc định:** `http://127.0.0.1:4723`.
+   * **Chuẩn giao tiếp:** Tuân theo đặc tả W3C WebDriver Protocol / JSON Wire Protocol qua giao thức HTTP RESTful. Mọi tương tác đều là các HTTP Request với payload JSON tiêu chuẩn:
+     * `POST /session`: Khởi tạo phiên kiểm thử và nhận về chuỗi nhận diện duy nhất `sessionId`.
+     * `POST /session/{id}/element`: Tìm kiếm phần tử trên cây giao diện UIA.
+     * `POST /session/{id}/element/{elementId}/value`: Gửi chuỗi ký tự hoặc mã phím ảo vào điều khiển.
+     * `POST /session/{id}/element/{elementId}/click`: Gửi sự kiện nhấp chuột theo tọa độ tâm phần tử.
+     * `GET /session/{id}/element/{elementId}/attribute/{name}`: Truy xuất thuộc tính UIA (như `Name`, `ClassName`, `IsEnabled`).
+     * `DELETE /session/{id}`: Hủy phiên làm việc và giải phóng tài nguyên.
+
+3. **Tầng 3: Microsoft WinAppDriver (Translation Layer / REST Server)**
+   * **Bản chất:** WinAppDriver là một dịch vụ Windows độc lập (chạy dưới dạng console service hoặc background service) do chính Microsoft phát triển.
+   * **Nhiệm vụ thông dịch:** Đóng vai trò như một "Adapter" chuyển dịch các yêu cầu REST/HTTP từ Katalon thành các lệnh gọi hàm Win32 API và COM API của hệ điều hành Windows. WinAppDriver quản lý bảng ánh xạ giữa `Session ID` $\leftrightarrow$ `Process ID (PID)` và `Window Handle (HWND)`.
+
+4. **Tầng 4: Windows UI Automation (UIA) & Ứng dụng kiểm thử (AUT Layer)**
+   * **Hạ tầng UIA:** Là framework trợ năng (Accessibility Framework) tích hợp sẵn trong hệ điều hành Windows từ Windows 7 trở lên. UIA tổ chức toàn bộ giao diện màn hình thành một cấu trúc cây thứ bậc (*UI Automation Tree*), bắt đầu từ Desktop Root Window.
+   * **Cơ chế Control Patterns:** Mỗi điều khiển trên AUT (WPF, WinForms, Win32) liên kết với một UI Automation Provider. Tùy thuộc vào loại phần tử, nhà phát triển cung cấp các Pattern tương ứng:
+     * `ValuePattern`: Dành cho ô nhập liệu cho phép đọc/ghi giá trị (`TextBox`).
+     * `InvokePattern`: Dành cho điều khiển có thể kích hoạt hành động (`Button`).
+     * `TextPattern`: Hỗ trợ định dạng và duyệt qua các khối văn bản phức tạp.
+     * *Lưu ý:* Thẻ `<TextBlock>` trong WPF không thực thi `ValuePattern`, dẫn đến việc WinAppDriver không đọc được qua `getText()` mà bắt buộc phải đọc qua thuộc tính UIA `NamePropertyId`.
+
+#### 2.1.3 Vòng đời Session và Cơ chế quản lý ngữ cảnh (Session Lifecycle)
+Một kịch bản kiểm thử Desktop thành công phụ thuộc vào việc duy trì tính toàn vẹn của Session:
+* **Khởi tạo (Session Creation):** Khi Katalon gửi yêu cầu `POST /session`, WinAppDriver kích hoạt ứng dụng qua tham số `app` trong `DesiredCapabilities`. WinAppDriver theo dõi tiến trình và gắn kết `Session ID` vào `HWND` của cửa sổ chính được render đầu tiên.
+* **Chuyển ngữ cảnh cửa sổ (Window Switching):** Trong các ứng dụng nhiều màn hình (ví dụ: màn hình Login đóng lại bằng `this.Close()` để mở màn hình Calculator bằng `new MainWindow().Show()`), `HWND` ban đầu bị hủy. WinAppDriver sẽ mất quyền kiểm soát (gây lỗi `NoSuchWindowException`). Tester bắt buộc phải chuyển ngữ cảnh sang cửa sổ mới bằng từ khóa:
+  ```groovy
+  Windows.switchToWindowTitle('MiniSum - Tinh tong')
+  ```
+  Lệnh này gửi request điều hướng session đính kèm vào `HWND` mới trên cây Desktop.
+* **Hủy phiên (Session Teardown):** Lệnh `Windows.closeApplication()` gửi yêu cầu `DELETE /session/{id}` để đóng ứng dụng và hủy socket lắng nghe, tránh rò rỉ bộ nhớ hoặc xung đột port cho các lần chạy kế tiếp.
+
+#### 2.1.4 Điểm nghẽn kiến trúc thực tế: Bẫy Launcher Process trong .NET Core / .NET 6+
+Trong quá trình triển khai thực tế trên ứng dụng mẫu WPF `MiniSum.exe`, nhóm phát hiện một điểm nghẽn kiến trúc kinh điển giữa WinAppDriver và các ứng dụng .NET hiện đại:
+* **Bản chất vấn đề:** Ứng dụng biên dịch trên .NET 6+ tạo ra một tập tin thực thi nhị phân dạng *AppHost Launcher*. Khi chạy, tiến trình Launcher (PID 1) chỉ có nhiệm vụ khởi động .NET Runtime, tải các file assembly `.dll`, rồi tạo ra một tiến trình thực thi giao diện thực sự (PID 2) và tự kết thúc (exit) sau chưa đầy 1 giây.
+* **Hậu quả kiến trúc:** Khi dùng lệnh khởi động mặc định `Windows.startApplication(appPath)`, WinAppDriver theo dõi PID 1. Do PID 1 đã đóng, WinAppDriver không thể tìm thấy bất kỳ cửa sổ nào thuộc về PID này trong thời gian chờ (timeout 7.5 giây) và ném ra lỗi ngoại lệ:
+  ```text
+  SessionNotCreatedException: Failed to locate opened application window with appId: ... and processId: 21592
+  ```
+* **Giải pháp khắc phục:** 
+  * Sử dụng từ khóa **`Windows.startApplicationWithTitle(appPath, 'Tiêu đề cửa sổ')`**. 
+  * Cơ chế: Thay vì neo cứng vào PID của launcher, Katalon hướng dẫn WinAppDriver duyệt qua cây UIA Desktop Root để tìm cửa sổ có thuộc tính `Name` khớp với tiêu đề được chỉ định. Sau khi phát hiện, WinAppDriver sẽ lấy trực tiếp `HWND` của cửa sổ thực tế và khởi tạo Session thành công 100%.
+
+### 2.2 Cơ chế Object Repository và Nhận diện Locator (Object Recognition)
+
+#### 2.2.1 Khái niệm và Vai trò của Object Repository
+* **Bản chất:** Object Repository (OR) là kho lưu trữ tập trung toàn bộ các định danh phần tử giao diện (Test Objects). Thay vì gắn cứng locator (hard-coding) trực tiếp trong từng dòng lệnh kiểm thử, kịch bản chỉ gọi đối tượng qua từ khóa tham chiếu:
+  ```groovy
+  findWindowsObject('Object Repository/MiniSum/Login/txtUser')
+  ```
+* **Ý nghĩa thực tế đối với chi phí bảo trì (Maintenance Cost):**
+  * Trong vòng đời phần mềm, giao diện người dùng (UI) biến đổi liên tục (đổi ID, tái cấu trúc layout, thay nhãn hiển thị). Nếu gắn cứng locator trong script, tester phải rà soát và sửa hàng chục đến hàng trăm test case riêng lẻ (hiện tượng *Kịch bản dễ gãy - Flaky Tests*).
+  * Với Object Repository, tester chỉ cần cập nhật locator tại một file duy nhất trong kho lưu trữ, toàn bộ các Test Case liên quan sẽ tự động nhận diện theo thông số mới. Đây là sự hiện thực hóa triết lý **Page Object Model (POM)** ở mức công cụ không mã nguồn (Codeless/Low-code), giúp hạn chế nguyên lý *"Nghịch lý thuốc trừ sâu" (Pesticide Paradox)* khi kiểm thử tự động dài hạn.
+
+#### 2.2.2 Cấu trúc lưu trữ nội bộ của Object Repository trên Desktop (.wrs)
+Khác với kiểm thử Web sử dụng định dạng file `.rs` (`WebElementEntity`), kiểm thử Windows Desktop trong Katalon Studio quy định cấu trúc đối tượng nghiêm ngặt:
+* **Định dạng file:** Mỗi đối tượng kiểm thử Desktop được lưu dưới dạng một file XML có đuôi mở rộng là **`.wrs`** (`WindowsElementEntity`).
+* **Cấu trúc XML chuẩn:**
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <WindowsElementEntity>
+     <description>Ô nhập tài khoản</description>
+     <name>txtUser</name>
+     <tag></tag>
+     <locator>txtUser</locator>
+     <locatorStrategy>ACCESSIBILITY_ID</locatorStrategy>
+     <properties>
+        <isSelected>true</isSelected>
+        <matchCondition>equals</matchCondition>
+        <name>AutomationId</name>
+        <type>Main</type>
+        <value>txtUser</value>
+     </properties>
+  </WindowsElementEntity>
+  ```
+* **Lưu ý kỹ thuật quan trọng:** Nếu tạo nhầm file định dạng Web (`.rs`) hoặc đường dẫn không đúng, hàm `findWindowsObject()` sẽ trả về `null` trong thời gian chạy, gây ra lỗi ngoại lệ `java.lang.IllegalArgumentException: Test object cannot be null`.
+
+#### 2.2.3 Các chiến lược nhận diện Locator (Locator Strategies) trên Windows Desktop
+Katalon Studio phối hợp với WinAppDriver để phân giải các thuộc tính UI Automation thành 4 chiến lược định vị chính theo thứ bậc ưu tiên:
+
+| Chiến lược (Locator Strategy) | Thuộc tính UIA tương ứng | Độ ưu tiên | Đặc điểm kỹ thuật & Đánh giá |
+|---|---|:---:|---|
+| **ACCESSIBILITY_ID** | `AutomationProperties.AutomationId` (WPF) / `AccessibleName` (WinForms) | **Số 1 (Khuyên dùng)** | Định danh bất biến do lập trình viên gắn trong mã nguồn. Hoàn toàn độc lập với ngôn ngữ hiển thị (Localization) và nội dung text. Tốc độ tìm kiếm nhanh nhất. |
+| **NAME** | `Name` attribute (Tiêu đề, Text hiển thị của Control) | **Số 2** | Dễ đọc, nhận diện trực quan theo mắt người dùng. Tuy nhiên rất dễ gãy kịch bản khi ứng dụng hỗ trợ đa ngôn ngữ (i18n) hoặc nội dung nhãn thay đổi. |
+| **CLASS_NAME / CONTROL_TYPE** | `ClassName` (WPF/Win32) / `ControlType` (`Button`, `Edit`, `Text`) | **Số 3** | Thường không mang tính duy nhất trên màn hình; chỉ dùng làm điều kiện lọc kết hợp khi phần tử thiếu `AutomationId`. |
+| **XPATH** | Vị trí cây phân cấp UIA (e.g., `//Window/Grid/StackPanel/Button[1]`) | **Số 4 (Hạn chế)** | Chuỗi XPath trên Windows Desktop rất phức tạp, tốc độ phân giải qua WinAppDriver chậm gấp 3-5 lần; cực kỳ dễ gãy khi lập trình viên thay đổi cấu trúc thẻ bố cục (Grid, StackPanel). |
+
+#### 2.2.4 Các bẫy kỹ thuật thực tế đúc kết từ quá trình thực nghiệm
+Qua quá trình triển khai automation thực tế trên ứng dụng WPF `MiniSum.exe`, nhóm đúc kết được 3 bài học kỹ thuật đặc thù:
+1. **Bẫy đọc Text trên thẻ WPF `<TextBlock>`:** Thẻ hiển thị văn bản tĩnh `<TextBlock>` trong WPF không hỗ trợ mẫu thuộc tính `ValuePattern`. Khi gọi lệnh `Windows.getText(object)`, WinAppDriver sẽ trả về chuỗi rỗng `""`. Cách xử lý chuẩn là truy xuất thông qua thuộc tính UIA `Name`: `Windows.getAttribute(object, 'Name')`.
+2. **Bẫy tương tác nút bấm (Mouse Click Miss vs. Keyboard Activation):** Trong một số layout WPF (như `StackPanel`), lệnh click chuột ảo `Windows.click(btn)` có thể bị trượt tọa độ do sai lệch tỉ lệ co giãn màn hình (DPI Scaling). Giải pháp tối ưu là bổ sung `IsDefault="True"` cho Button trong XAML và gửi kèm phím `ENTER` (`Keys.chord(Keys.ENTER)`) qua `Windows.sendKeys` để kích hoạt sự kiện chắc chắn 100%.
+3. **Bẫy chuyển ngữ cảnh cửa sổ (Window Switching):** Khi ứng dụng đóng cửa sổ cha (`LoginWindow.Close()`) để mở cửa sổ con (`MainWindow.Show()`), session của WinAppDriver bị mất ngữ cảnh cũ. Cần sử dụng lệnh `Windows.switchToWindowTitle('Tiêu đề cửa sổ mới')` để cập nhật handle trước khi thao tác tiếp.
+
+### 2.3 Trình soi phần tử giao diện (Windows Object Spy) và Kỹ thuật Bắt Element
+
+#### 2.3.1 Bản chất và Vai trò của Windows Object Spy
+* **Khái niệm:** Windows Object Spy là công cụ tích hợp sẵn trong Katalon Studio cho phép tester trực tiếp kiểm tra, phân tích và giải mã cấu trúc cây phân cấp UI Automation (UIA Element Tree) của một ứng dụng Windows đang chạy trong thời gian thực.
+* **Vai trò trong quy trình kiểm thử tự động:**
+  * **Trích xuất thuộc tính định danh:** Tự động khám phá toàn bộ các thuộc tính quan trọng của điều khiển (`AutomationId`, `Name`, `ClassName`, `ControlType`, `BoundingRectangle`,...).
+  * **Kiểm tra thử nghiệm locator (Live Highlight / Verify):** Cho phép tester xác minh xem một locator strategy hoặc XPath có định vị chính xác và duy nhất phần tử trên màn hình hay không trước khi đưa vào kịch bản kiểm thử.
+  * **Tự động sinh Test Object chuẩn:** Tự động tạo và lưu trữ các Test Object định dạng `.wrs` (`WindowsElementEntity`) vào đúng thư mục mong muốn trong Object Repository.
+  * **Lưu ảnh minh họa trực quan (Element Screenshot):** Hỗ trợ chụp lại hình ảnh thực tế của phần tử giao diện và lưu kèm vào metadata của Test Object, hỗ trợ việc bàn giao và bảo trì kịch bản giữa các thành viên trong nhóm.
+
+#### 2.3.2 Quy trình từng bước sử dụng Windows Object Spy (Step-by-Step Workflow)
 
 ```
-┌──────────────────────────────────────────────┐
-│  Katalon Studio (IDE / Test Engine)          │
-│  - Test Cases, Object Repository, Test Data  │
-└──────────────────────┬───────────────────────┘
-                       │ HTTP / WebDriver Protocol (Port 4723)
-                       ▼
-┌──────────────────────────────────────────────┐
-│  Microsoft WinAppDriver                      │
-│  (Windows Application Driver Service)        │
-└──────────────────────┬───────────────────────┘
-                       │ Native API Calls
-                       ▼
-┌──────────────────────────────────────────────┐
-│  Windows UI Automation (UIA) Engine          │
-└──────────────────────┬───────────────────────┘
-                       │ Điều khiển trực tiếp
-                       ▼
-┌──────────────────────────────────────────────┐
-│  Application Under Test (AUT)                │
-│  (WPF, WinForms, UWP, Win32)                 │
-└──────────────────────────────────────────────┘
+┌────────────────────────┐      ┌────────────────────────┐      ┌────────────────────────┐
+│ Bước 1: Khởi động      │ ───> │ Bước 2: Mở Spy & Chọn  │ ───> │ Bước 3: Bắt Element    │
+│ WinAppDriver (Port 4723)│      │ Ứng dụng (AUT)         │      │ bằng phím tắt <Alt + `>│
+└────────────────────────┘      └────────────────────────┘      └───────────┬────────────┘
+                                                                            │
+┌────────────────────────┐      ┌────────────────────────┐                  │
+│ Bước 6: Lưu Object vào │ <─── │ Bước 5: Chụp ảnh &     │ <────────────────┘
+│ Object Repository      │      │ Verify Highlight       │
+└────────────────────────┘      └────────────────────────┘
 ```
 
-1. **Gửi lệnh:** Kịch bản kiểm thử trong Katalon sinh ra các yêu cầu HTTP theo chuẩn JSON Wire / W3C WebDriver.
-2. **Thông dịch:** WinAppDriver (dịch vụ chạy nền ở cổng `4723`) tiếp nhận yêu cầu và chuyển đổi thành lời gọi hàm của Windows UI Automation (UIA).
-3. **Tương tác:** Hệ điều hành Windows tương tác trực tiếp lên các thành phần giao diện (nhấp chuột, nhập văn bản, đọc giá trị).
-4. **Phản hồi:** Trạng thái thực thi và dữ liệu giao diện được trả ngược về Katalon để đánh giá kết quả (Pass/Fail).
+1. **Bước 1: Khởi động dịch vụ WinAppDriver**
+   * Đảm bảo `WinAppDriver.exe` đang chạy tại địa chỉ `http://127.0.0.1:4723`. Nếu dịch vụ chưa bật, Object Spy sẽ không thể gửi các lệnh WebDriver để quét cây giao diện.
+2. **Bước 2: Mở giao diện Windows Object Spy trong Katalon Studio**
+   * Trên thanh công cụ chính (Main Toolbar), nhấp vào biểu tượng chiếc kính lúp **Spy Windows Objects** (hoặc dùng phím tắt/menu `Action -> Spy -> Spy Windows Objects`).
+3. **Bước 3: Cấu hình ứng dụng mục tiêu (Configurations & Application Under Test)**
+   * Trong cửa sổ Spy, chọn một trong hai hình thức kết nối:
+     * *Application File:* Trỏ đường dẫn đến file thực thi `.exe` (ví dụ: `D:\...\MiniSum.exe`).
+     * *Running Application:* Gắn trực tiếp vào một cửa sổ đang mở sẵn trên màn hình Desktop (rất hữu ích cho các ứng dụng .NET 6+ hoặc cửa sổ con sau khi đăng nhập).
+   * Nhấp nút **Start** để WinAppDriver kết nối và hiển thị cấu trúc cửa sổ.
+4. **Bước 4: Bắt phần tử giao diện (Capture Object)**
+   * Di chuyển con trỏ chuột đến phần tử cần bắt trên ứng dụng (ví dụ: ô `txtUser`, `btnSubmit`, `lblMessage`).
+   * Nhấn tổ hợp phím tắt chuẩn của Katalon Desktop: **`<Alt> + <`** (hoặc `Ctrl + \` tùy phiên bản cấu hình) để khóa và bắt đối tượng (Capture Object).
+   * Phần tử được chọn sẽ lập tức xuất hiện trên bảng **All Objects** và cây phân cấp **Element Tree**.
+5. **Bước 5: Tinh chỉnh thuộc tính & Kiểm tra độ tin cậy (Locator Selection & Highlight)**
+   * Quan sát bảng **Object Properties**:
+     * Chọn chiến lược định vị tối ưu nhất (`ACCESSIBILITY_ID` nếu có `AutomationId`, hoặc `NAME`).
+     * Tích chọn thuộc tính duy nhất và bỏ tích các thuộc tính động dễ thay đổi (như tọa độ `BoundingRectangle`, hoặc các thuộc tính không ổn định).
+   * Nhấn nút **Highlight** hoặc **Verify**: Katalon sẽ gửi lệnh qua WinAppDriver để vẽ một đường viền đỏ xung quanh phần tử trên ứng dụng thực tế $\rightarrow$ xác nhận locator đã hoạt động 100%.
+6. **Bước 6: Chụp ảnh phần tử (Element Screenshot)**
+   * Trong giao diện Object Spy, nhấp vào tính năng **Capture Screenshot** để chụp lại vùng hiển thị trực quan của phần tử. Ảnh này sẽ được gắn kèm vào Test Object giúp các thành viên khác trong nhóm dễ dàng nhận biết phần tử khi bảo trì kịch bản.
+7. **Bước 7: Lưu vào Object Repository**
+   * Nhấp nút **Add to Object Repository**.
+   * Chọn thư mục đích trong cấu trúc phân cấp (ví dụ: `Object Repository/MiniSum/Login` hoặc `Object Repository/MiniSum/Calculator`).
+   * Nhấp **OK** để Katalon tự động sinh file `.wrs` tương ứng.
 
-### 2.2 Nhận diện phần tử giao diện (Object Recognition)
-* **Windows Object Spy:** Cho phép trỏ chuột vào phần tử giao diện để bóc tách các thuộc tính nhận dạng do Windows UIA cung cấp.
-* **Object Repository:** Nơi lưu trữ tập trung các phần tử (Object). Mỗi test step chỉ tham chiếu đến Object này, giúp giảm chi phí bảo trì khi giao diện thay đổi (chỉ cần sửa locator tại một nơi duy nhất).
-* **Độ ưu tiên của thuộc tính định vị (Locator):**
-  1. `AutomationId`: Định danh duy nhất do lập trình viên gắn, độc lập với ngôn ngữ giao diện $\rightarrow$ **Ưu tiên số 1**.
-  2. `Name`: Nhãn hiển thị của control $\rightarrow$ Dễ bị gãy kịch bản nếu ứng dụng đổi text hoặc đổi ngôn ngữ hiển thị.
-  3. `ClassName` / `ControlType`: Loại phần tử giao diện $\rightarrow$ Kết hợp khi phần tử thiếu định danh duy nhất.
-  4. `XPath`: Cấu trúc phân cấp cây giao diện $\rightarrow$ Thường dài và dễ vỡ khi bố cục màn hình cập nhật.
+#### 2.3.3 So sánh Windows Object Spy với các công cụ bắt Element độc lập
+
+| Tiêu chí | Katalon Windows Object Spy | Microsoft Inspect.exe (Windows SDK) | Accessibility Insights for Windows |
+|---|---|---|---|
+| **Môi trường hoạt động** | Tích hợp sâu trong Katalon Studio IDE | Công cụ độc lập (Win32 trong Windows SDK) | Công cụ độc lập nguồn mở của Microsoft (WPF) |
+| **Giao diện & Trải nghiệm** | Hiện đại, trực quan, thao tác theo luồng kiểm thử | Cổ điển (dạng cây Win32), nhiều thông số kỹ thuật | Hiện đại, có giao diện đồ họa đẹp, hỗ trợ kiểm toán tự động |
+| **Tự động sinh Test Object** | **Có (Lưu trực tiếp thành file `.wrs`)** | Không (Phải chép tay thuộc tính rồi tự tạo object) | Không (Phải chép tay `AutomationId`/`Name`) |
+| **Chụp ảnh Element kèm Object** | **Có (Tích hợp chụp và lưu ảnh)** | Không | Có (Chụp ảnh màn hình kiểm toán) |
+| **Kiểm tra tức thời (Live Highlight)** | **Có (Gọi trực tiếp WinAppDriver để test locator)** | Có (Highlight theo chuột) | Có (Highlight theo chuột) |
+| **Phù hợp sử dụng** | Tester xây dựng kịch bản automation nhanh chóng trong Katalon | Điều tra chuyên sâu cấp hệ thống COM UIA khi Object Spy bị nghẽn | Kiểm tra độ tuân thủ tiêu chuẩn trợ năng (Accessibility) và UI Control |
+
+#### 2.3.4 Những lưu ý & Kinh nghiệm thực chiến khi dùng Windows Object Spy
+1. **Tránh bẫy bắt đối tượng cha (Container Selection):**
+   * Trong WPF, các điều khiển thường được lồng trong nhiều lớp bố cục như `<Grid>`, `<Border>`, `<StackPanel>`. Khi di chuột và nhấn phím tắt, hãy chú ý nhìn vào cây phân cấp để chắc chắn bạn đang chọn đúng nút bấm (`Button`) hoặc ô nhập (`TextBox`), thay vì chọn nhầm thẻ bọc bên ngoài (`Border` hay `StackPanel`).
+2. **Kỹ thuật bắt các cửa sổ độc lập / Dialog con:**
+   * Khi ứng dụng mở ra một hộp thoại (Dialog) hoặc cửa sổ mới (như thông báo Popup), hãy chuyển chế độ sang *Running Application* trên Object Spy và trỏ trực tiếp vào cửa sổ con để làm mới cây phân cấp UIA.
+3. **Kiểm tra độ duy nhất của Locator:**
+   * Luôn sử dụng tính năng **Verify / Highlight** trước khi bấm lưu. Nếu trình soi báo tìm thấy nhiều hơn 1 phần tử (*Multiple elements found*), cần bổ sung thêm điều kiện lọc hoặc ưu tiên chuyển sang `ACCESSIBILITY_ID` để đảm bảo tính tất định khi chạy tự động.
+
+### 2.4 Cấu trúc Dự án và Tổ chức Thực thi: Test Case, Test Suite và Test Listener
+
+Katalon Studio tổ chức các thành phần kiểm thử theo mô hình phân cấp chặt chẽ từ mức độ chi tiết (nguyên tử) đến mức độ điều phối kịch bản quy mô lớn. Việc nắm vững cấu trúc này giúp tester xây dựng các bộ kịch bản có khả năng mở rộng (scalability), dễ bảo trì và tích hợp mượt mà vào luồng CI/CD.
+
+#### 2.4.1 Mô hình phân cấp kiểm thử (Hierarchy Model)
+
+```mermaid
+graph TD
+    TSC["Test Suite Collection (Điều phối đa môi trường, Chạy song song/Tuần tự)"]
+    TS1["Test Suite: Smoke / BVA Test (Data Binding, Iteration)"]
+    TS2["Test Suite: Regression Test"]
+    TL["Test Listener (Hook AOP: @Before, @After, Auto Screenshot)"]
+    TC1["Test Case 1: Login Success (.groovy + .tc)"]
+    TC2["Test Case 2: Login Failed (.groovy + .tc)"]
+    TC3["Test Case 3: BVA Calculation (.groovy + .tc)"]
+    OR["Object Repository (.wrs)"]
+    TD["Test Data (Excel / CSV)"]
+
+    TSC --> TS1
+    TSC --> TS2
+    TS1 --> TC1
+    TS1 --> TC2
+    TS1 --> TC3
+    TS2 --> TC1
+    TD -.->|Data Binding| TS1
+    TC1 --> OR
+    TC2 --> OR
+    TC3 --> OR
+    TL -.->|Lắng nghe & Can thiệp sự kiện| TS1
+    TL -.->|Lắng nghe & Can thiệp sự kiện| TS2
+    TL -.->|Lắng nghe & Can thiệp sự kiện| TC1
+```
+
+#### 2.4.2 Chi tiết các thành phần cốt lõi
+
+##### 1. Test Case (Đơn vị kiểm thử cơ sở - Atomic Test Unit)
+* **Khái niệm:** Là đơn vị kiểm thử nhỏ nhất, độc lập, thực hiện một chuỗi thao tác nghiệp vụ và xác minh kết quả (Checkpoint/Assertion).
+* **Cấu trúc lưu trữ nội bộ:** Mỗi Test Case trong Katalon được tạo thành bởi 2 tập tin:
+  * `[TênTestCase].groovy`: Chứa toàn bộ mã nguồn kiểm thử thực thi bằng ngôn ngữ Groovy (gọi các từ khóa `Windows.*`, xử lý luồng logic `if/else`, vòng lặp, `assert`).
+  * `[TênTestCase].tc`: Tập tin XML lưu trữ thông tin định danh (UUID), mô tả, các thẻ phân loại (Tags), và đặc biệt là **bảng khai báo biến nội bộ** (`<variableLinks>`).
+* **Test Case Variables (Biến tham số hóa):**
+  * Định nghĩa trong tab *Variables* của Test Case.
+  * Đóng vai trò là các tham số đầu vào (ví dụ: `var_A`, `var_B`, `var_Expected`). Khi chạy đơn lẻ, biến nhận giá trị mặc định (Default Value); khi chạy trong Test Suite, giá trị này sẽ được ghi đè tự động bởi các dòng dữ liệu từ file Excel/CSV.
+
+##### 2. Test Suite & Test Suite Collection (Tổ chức & Điều phối kịch bản)
+* **Test Suite (`.ts` / `.tss`):**
+  * **Mục đích:** Nhóm các Test Case có chung mục tiêu kiểm thử (ví dụ: Sanity Suite, Regression Suite, hoặc Data-Driven BVA Suite).
+  * **Cơ chế Data Binding (Ràng buộc dữ liệu):** Test Suite là trung gian kết nối giữa **Test Data** (file Excel `BVA_TestData.xlsx`) và **Test Case Variables**. Tester thiết lập ánh xạ (Variable Mapping) theo cột dữ liệu. Khi chạy Suite, Katalon sẽ tự động lặp lại Test Case $N$ lần tương ứng với $N$ dòng dữ liệu (đã thực chứng chạy 12 kịch bản biên BVA trong `BVA_TestSuite`).
+  * **Tùy chọn thực thi:** Hỗ trợ chạy lại ca kiểm thử bị lỗi (*Retry on Failure*) giúp giảm thiểu sai số do môi trường.
+* **Test Suite Collection (`.tsc`):**
+  * Nhóm nhiều Test Suite lại với nhau để thực thi trong các đợt phát hành lớn.
+  * Hỗ trợ 2 chế độ điều phối:
+    * *Sequential:* Chạy lần lượt từng Test Suite.
+    * *Parallel:* Phân bổ chạy song song nhiều Test Suite trên nhiều luồng hoặc môi trường khác nhau để rút ngắn thời gian phản hồi kiểm thử.
+
+##### 3. Test Listener (Cơ chế Hook can thiệp vòng đời kiểm thử theo AOP)
+* **Bản chất kỹ thuật:** Test Listener áp dụng nguyên lý **Lập trình hướng khía cạnh (Aspect-Oriented Programming - AOP)**. Nó cho phép tester chèn các đoạn mã xử lý xuyên suốt (cross-cutting concerns) vào các mốc thời gian của vòng đời kiểm thử mà không làm biến đổi hay phụ thuộc vào mã nguồn của từng Test Case riêng lẻ.
+* **4 Annotation vòng đời cốt lõi (Lifecycle Hooks):**
+
+| Annotation | Thời điểm kích hoạt | Ứng dụng thực tế tiêu biểu |
+|---|---|---|
+| **`@BeforeTestSuite`** | 1 lần duy nhất ngay trước khi Test Suite bắt đầu chạy | Khởi động tiến trình WinAppDriver, dọn dẹp thư mục báo cáo cũ, chuẩn bị dữ liệu mẫu vào cơ sở dữ liệu. |
+| **`@BeforeTestCase`** | Trước mỗi Test Case được gọi | Đảm bảo ứng dụng Desktop sạch trạng thái (kill tiến trình treo cũ), ghi nhận thời gian bắt đầu chạy. |
+| **`@AfterTestCase`** | Ngay sau khi mỗi Test Case kết thúc | Dọn dẹp session, đóng ứng dụng kiểm thử, **chụp ảnh màn hình tự động nếu Test Case bị FAIL/ERROR**. |
+| **`@AfterTestSuite`** | 1 lần duy nhất sau khi toàn bộ Suite hoàn tất | Đóng WinAppDriver, tổng hợp báo cáo HTML/PDF, kích hoạt Webhook gửi thông báo kết quả vào Slack/Email. |
+
+* **Minh chứng triển khai thực tế trong đồ án (`ScreenshotOnFailure.groovy`):**
+  Nhóm đã xây dựng Test Listener chuyên trách chụp ảnh màn hình lỗi, tự động lưu vào thư mục `Reports/Screenshots/` khi có assert thất bại:
+  ```groovy
+  class ScreenshotOnFailure {
+      @AfterTestCase
+      def captureOnFailure(TestCaseContext testCaseContext) {
+          if (testCaseContext.getTestCaseStatus() == 'FAILED' || testCaseContext.getTestCaseStatus() == 'ERROR') {
+              String timestamp = new SimpleDateFormat('yyyyMMdd_HHmmss').format(new Date())
+              String tcName = testCaseContext.getTestCaseId().replace('/', '_')
+              String screenshotPath = "Reports/Screenshots/FAIL_${tcName}_${timestamp}.png"
+              
+              Windows.takeScreenshot(screenshotPath)
+              println ">>> [TEST LISTENER] Đã tự động chụp ảnh màn hình lỗi: ${screenshotPath}"
+          }
+      }
+  }
+  ```
+  *Ý nghĩa thực tiễn:* Giúp tester và lập trình viên có ngay bằng chứng trực quan (Visual Evidence) để điều tra lỗi (Root Cause Analysis) mà không cần phải nhồi nhét mã lệnh `try-catch` vào từng Test Case.
+
+#### 2.4.3 Bảng so sánh phạm vi và trách nhiệm (Scope & Responsibility Matrix)
+
+| Tiêu chí | Test Case | Test Suite | Test Listener |
+|---|---|---|---|
+| **Định dạng tập tin** | `.groovy` (script) + `.tc` (XML) | `.ts` (XML) + `.tss` (snapshot) + `.groovy` | `.groovy` (chứa các hook annotations) |
+| **Phạm vi tác động (Scope)** | Cục bộ trong 1 kịch bản kiểm thử | Cụm kịch bản được liên kết trong Suite | Toàn cục xuyên suốt các Suite và Case |
+| **Trách nhiệm chính** | Thực hiện các bước thao tác và kiểm tra kết quả nghiệp vụ (Action & Assertion) | Điều phối luồng chạy, ràng buộc dữ liệu Data-Driven, cấu hình Retry | Giám sát trạng thái, thiết lập/dọn dẹp môi trường (Setup/Teardown), chụp ảnh lỗi tự động |
+| **Khả năng tái sử dụng** | Có thể được gọi độc lập hoặc gọi lồng nhau qua `callTestCase()` | Tái sử dụng để lập lịch chạy định kỳ hoặc đưa vào CI/CD pipeline | Tự động áp dụng cho mọi kịch bản mà không cần gọi tường minh |
 
 ---
 
@@ -788,9 +1567,9 @@ Katalon Studio kiểm thử ứng dụng Desktop Windows thông qua kiến trúc
 ### 3.2 Checkpoints & Assertions (Điểm kiểm tra kết quả)
 * **Khái niệm:** Điểm so sánh giữa kết quả thực tế (**Actual Result**) và kết quả kỳ vọng (**Expected Result**) nhằm tự động hóa vai trò của Test Oracle. Kịch bản không có Checkpoint chỉ là bot thao tác tự động, không thể coi là kịch bản kiểm thử.
 * **Bộ từ khóa Verify trong Katalon:**
-  * `Verify Element Text`: Kiểm tra nội dung chuỗi (ví dụ: thông báo lỗi, nhãn kết quả).
-  * `Verify Element Attribute Value`: Kiểm tra trạng thái thuộc tính (ví dụ: nút bấm chuyển sang Disabled, ô nhập bị khóa).
-  * `Verify Element Present`: Kiểm tra sự xuất hiện của cửa sổ mới, popup cảnh báo.
+  * `Kiểm tra văn bản (Text Verification)`: Trên WebUI, Katalon cung cấp `WebUI.verifyElementText()`. Riêng trên nền tảng **Windows Desktop**, do đặc thù WinAppDriver, việc xác minh văn bản được thực hiện tối ưu qua `Windows.getAttribute(object, 'Name')` hoặc `Windows.getText(object)` kết hợp với lệnh `assert` của ngôn ngữ Groovy.
+  * `Windows.verifyElementAttributeValue`: Kiểm tra trạng thái thuộc tính (ví dụ: nút bấm chuyển sang Disabled, ô nhập bị khóa).
+  * `Windows.verifyElementPresent`: Kiểm tra sự xuất hiện của cửa sổ mới, popup cảnh báo (hỗ trợ chỉ định timeout).
 * **Cơ chế bắt lỗi:** Khi giá trị thực tế không khớp với giá trị kỳ vọng, kịch bản tự động dừng hoặc tiếp tục tùy cấu hình, chụp ảnh màn hình tại thời điểm lỗi và ghi log phục vụ báo cáo lỗi (Bug Report).
 
 ### 3.3 Data-Driven Testing (Kiểm thử hướng dữ liệu)
@@ -863,10 +1642,16 @@ Katalon Studio kiểm thử ứng dụng Desktop Windows thông qua kiến trúc
 | Cần triển khai nhanh mà không tốn thời gian xây dựng framework từ đầu. | Ứng dụng vẽ hoàn toàn bằng đồ họa custom hoặc công nghệ nhúng không hỗ trợ Windows UIA (cần công cụ so khớp hình ảnh như SikuliX). |
 | Dự án có ngân sách hạn chế (cần bản miễn phí ổn định). | Dự án doanh nghiệp quy mô lớn đòi hỏi kiểm thử đa nền tảng (cả macOS, Linux) cho cùng một mã nguồn desktop. |
 
+
+# Phần 5: Nghiên Cứu Công Cụ Đại Diện B – Microsoft WinAppDriver <a id="phan-5"></a>
+
+# Nghiên Cứu Công Cụ: Microsoft WinAppDriver
+## Chuyên đề: Automation Testing cho Desktop Applications
+
+- **Người thực hiện:** Tùng (Tool B)
+- **Mục tiêu báo cáo tuần:** Tổng quan công cụ, nguyên lý hoạt động, 3 năng lực cốt lõi (Record & Playback, Data-Driven, Checkpoints), ưu/nhược điểm và định hướng kịch bản demo đối trọng với Tool A (Katalon Studio).
+
 ---
-
-
-# Phần 5: Nghiên Cứu Công Cụ Đại Diện B – Microsoft WinAppDriver
 
 ## 1. Tổng quan về Microsoft WinAppDriver
 
@@ -919,6 +1704,12 @@ WinAppDriver hoạt động như một REST API Server độc lập đóng vai t
 3. **Thông dịch UIA:** WinAppDriver tiếp nhận HTTP request và gọi trực tiếp các API của Windows UI Automation.
 4. **Thực thi và phản hồi:** Windows thực thi thao tác trên ứng dụng đích và WinAppDriver đóng gói kết quả phản hồi (JSON) trả về cho Test Script.
 
+### 2.1.1 Cơ chế phân giải lệnh (Command Mapping) qua Port 4723
+* **Giao thức:** Client (C# NUnit) giao tiếp với WinAppDriver thông qua JSON Wire Protocol / W3C WebDriver specification bằng các HTTP Request chuẩn (POST, GET, DELETE).
+* **Quá trình thực thi nội tại của WinAppDriver.exe:**
+  1. Khi nhận lệnh `POST /session/{id}/element` kèm body `{"using": "name", "value": "ĐĂNG NHẬP"}`, WinAppDriver gọi hàm C++ của giao tiếp `IUIAutomation::CreatePropertyCondition(UIA_NamePropertyId, ...)` để duyệt cây UI Automation dựa trên tên hiển thị (Name) của control.
+  2. Khi nhận lệnh click hoặc phím, nó gọi trực tiếp `IUIAutomationInvokePattern::Invoke()` hoặc `IUIAutomationValuePattern::SetValue()` của Windows OS, đảm bảo độ trễ gần như bằng 0 so với việc giả lập chuột ảo.
+
 ### 2.2 Nhận diện phần tử giao diện (Object Recognition)
 Do WinAppDriver không có giao diện đồ họa riêng, việc định danh phần tử dựa trên các công cụ inspect độc lập của Microsoft:
 * **Công cụ hỗ trợ inspect:**
@@ -929,6 +1720,46 @@ Do WinAppDriver không có giao diện đồ họa riêng, việc định danh p
   * `Name`: Tìm theo nhãn hiển thị hoặc tiêu đề nút bấm.
   * `ClassName`: Tìm theo loại control (ví dụ: `TextBox`, `Button`).
   * `XPath`: Tìm theo đường dẫn phân cấp trong cây UI $\rightarrow$ Tốc độ tìm kiếm qua XPath trên WinAppDriver tương đối chậm, nên hạn chế dùng trừ khi không có ID.
+
+
+### 2.3 Quản lý Vòng đời Session (Session Lifecycle) với AppiumOptions
+
+Trong C# NUnit, vòng đời của một phiên kiểm thử tự động với WinAppDriver được quản lý chặt chẽ qua cấu trúc Setup - Test - TearDown:
+
+```c#
+[TestFixture]
+public class BaseTest
+{
+    protected WindowsDriver<WindowsElement> driver;
+    private const string WinAppDriverUrl = "[http://127.0.0.1:4723](http://127.0.0.1:4723)";
+    private const string AppPath = @"C:\Path\To\case-study-app\MiniSum\MiniSum.exe";
+
+    [SetUp]
+    public void InitializeSession()
+    {
+        AppiumOptions options = new AppiumOptions();
+        options.AddAdditionalCapability("app", AppPath);
+        options.AddAdditionalCapability("deviceName", "WindowsPC");
+        options.AddAdditionalCapability("platformName", "Windows");
+        
+        // Khởi tạo phiên làm việc mới trên cổng 4723
+        driver = new WindowsDriver<WindowsElement>(new Uri(WinAppDriverUrl), options);
+        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+    }
+
+    [TearDown]
+    public void CleanupSession()
+    {
+        // Giải phóng tài nguyên và đóng ứng dụng sau khi chạy xong
+        if (driver != null)
+        {
+            driver.CloseApp();
+            driver.Quit();
+            driver.Dispose();
+        }
+    }
+}
+
 
 ---
 
@@ -951,6 +1782,39 @@ Do WinAppDriver không có giao diện đồ họa riêng, việc định danh p
   * *Ví dụ kiểm tra trạng thái:* `Assert.IsTrue(btnSubmit.Enabled);`
 * **Xử lý chụp ảnh màn hình khi lỗi:**
   * Khi Assertion thất bại, framework cho phép bắt ngoại lệ và gọi hàm `driver.GetScreenshot().SaveAsFile(...)` để lưu bằng chứng lỗi phục vụ lập Bug Report.
+
+
+```c#
+[TearDown]
+public void CaptureScreenOnFailure()
+{
+    // Kiểm tra trạng thái hoàn thành của Test Case
+    var testStatus = TestContext.CurrentContext.Result.Outcome.Status;
+    
+    if (testStatus == NUnit.Framework.Interfaces.TestStatus.Failed)
+    {
+        string testName = TestContext.CurrentContext.Test.Name;
+        string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        string directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Screenshots");
+        
+        if (!Directory.Exists(directory))
+            Directory.CreateDirectory(directory);
+
+        string filePath = Path.Combine(directory, $"{testName}_FAIL_{timestamp}.png");
+
+        // Chụp và lưu ảnh màn hình
+        Screenshot screenshot = driver.GetScreenshot();
+        screenshot.SaveAsFile(filePath, ScreenshotImageFormat.Png);
+        
+        // Đính kèm bằng chứng vào TestContext của NUnit
+        TestContext.AddTestAttachment(filePath, "Screenshot khi kiểm thử thất bại");
+    }
+
+    driver?.Quit();
+}
+
+
+
 
 ### 3.3 Data-Driven Testing (Kiểm thử hướng dữ liệu)
 * **Cơ chế thực hiện:**
@@ -1025,10 +1889,44 @@ Do WinAppDriver không có giao diện đồ họa riêng, việc định danh p
 | Dự án yêu cầu 100% phần mềm mã nguồn mở, không có ngân sách mua license thương mại. | Cần một công cụ đang được nhà sản xuất cam kết hỗ trợ kỹ thuật dài hạn và cập nhật tính năng mới liên tục. |
 | Muốn tích hợp sâu vào quy trình CI/CD nội bộ của nhóm phát triển phần mềm qua Git. | Dự án cần triển khai gấp trong thời gian ngắn mà không có thời gian lập trình khung framework. |
 
+
+** 7. Thực Nghiệm Kịch Bản Demo
+
+khởi chạy winappdriver 
+![alt text](<../demo-scripts/winappdriver/screen short/winappdriver.png>)
+
+Accessibility Insights soi MiniSum.exe
+![alt text](<../demo-scripts/winappdriver/screen short/DANG_NHAP.png>)
+![alt text](<../demo-scripts/winappdriver/screen short/DANG_XUAT.png>)
+![alt text](<../demo-scripts/winappdriver/screen short/ketqua.png>)
+![alt text](<../demo-scripts/winappdriver/screen short/Mat_Khau.png>) 
+![alt text](<../demo-scripts/winappdriver/screen short/Sai_tai_khoan_hoac_mat_khau.png>) ![alt text](<../demo-scripts/winappdriver/screen short/So_A.png>) 
+![alt text](<../demo-scripts/winappdriver/screen short/So_B.png>) 
+![alt text](<../demo-scripts/winappdriver/screen short/Tai_Khoan.png>) 
+![alt text](<../demo-scripts/winappdriver/screen short/Tinh_Tong.png>)
+
+
+
+Kết quả thực thi Test Pass trên Terminal:
+![alt text](<../demo-scripts\winappdriver\screen short\test_pass_terminal.png>)
+
+Kết quả thực thi Fail Pass trên Terminal:
+
+![alt text](<../demo-scripts\winappdriver\screen short\image.png>)
+
+
+
+
+
+# Phần 6: So Sánh Đối Chiếu Toàn Diện (Comparison) <a id="phan-6"></a>
+
+# So Sánh Đối Chiếu Công Cụ: Katalon Studio vs. Microsoft WinAppDriver
+## Chuyên đề: Automation Testing cho Desktop Applications
+
+- **Người thực hiện:** Quang
+- **Mục tiêu báo cáo:** Phân tích, so sánh khách quan giữa hai giải pháp đại diện cho hai trường phái kiểm thử tự động Desktop: Nền tảng tích hợp đồ họa (Low-Code / All-in-one GUI) và Khung lập trình mã nguồn mở (Code-First / SDK), từ đó đưa ra cơ sở lựa chọn công cụ phù hợp với ngữ cảnh dự án.
+
 ---
-
-
-# Phần 6: So Sánh Đối Chiếu Hai Công Cụ (Comparison)
 
 ## 1. Phương Pháp So Sánh và Ngữ Cảnh Đánh Giá
 
@@ -1134,8 +2032,30 @@ Việc lựa chọn công cụ kiểm thử tự động cho desktop application
 
 ---
 
+## 7. Bảng Đo Đạc Thực Nghiệm Định Lượng (Quantitative Benchmark)
 
-# Phần 7: Ứng Dụng Trí Tuệ Nhân Tạo (AI) Trong Desktop Automation
+Các chỉ số dưới đây được nhóm đo đạc trực tiếp trên cùng một môi trường phần cứng (Windows 11 x64, Intel Core i7, 16GB RAM) khi thực thi bộ **12 ca kiểm thử BVA** trên ứng dụng `MiniSum.exe`:
+
+| Chỉ số định lượng | Katalon Studio (Low-Code) | WinAppDriver + C# NUnit (Code-First) | AI-Assisted (ChatGPT/Gemini + WAD) | Phân tích thực tế |
+|---|:---:|:---:|:---:|---|
+| **Thời gian thiết lập môi trường** | ~15 phút | ~25 phút | ~25 phút | Katalon cài đặt trọn gói GUI; WAD cần cấu hình Developer Mode và NuGet packages. |
+| **Thời gian tạo 12 ca kiểm thử BVA** | ~40 phút (Record + Data Binding) | ~45 phút (Code POM + Excel Helper) | **~14 phút** (Sinh prompt + rà soát code) | AI rút ngắn 68.8% thời gian soạn kịch bản. |
+| **Thời gian thực thi 12 ca test (Run Time)** | **18.5 giây** | **8.2 giây** | **8.2 giây** | WinAppDriver chạy nhanh hơn gấp 2.2 lần nhờ kết nối nhị phân trực tiếp. |
+| **Chiếm dụng bộ nhớ RAM trung bình** | ~1.8 GB (chạy trên Java/Eclipse) | **~120 MB** (process .NET native) | **~120 MB** | WinAppDriver tối ưu tài nguyên vượt trội, phù hợp chạy trên CI/CD Docker/VM. |
+| **Số dòng mã nguồn (LOC)** | 0 dòng code (hoặc ~80 dòng Groovy Custom Keyword) | 166 dòng C# (POM + DDT) | 173 dòng C# (AI sinh + tinh chỉnh) | Katalon ưu tiên cấu hình XML/GUI; WinAppDriver kiểm soát trọn vẹn mã nguồn. |
+| **Chi phí bảo trì khi đổi locator (`btnSum` -> `btnCalculate` trên v2)** | Sửa 1 điểm trong Object Repository (~30s) | Sửa 1 thuộc tính trong `CalculatorPage.cs` (~30s) | Tự động prompt refactor (~20s) | Cả hai mô hình (Object Repository và POM) đều giúp cô lập thay đổi cực tốt. |
+
+
+
+# Phần 7: Ứng Dụng Trí Tuệ Nhân Tạo (AI) Trong Desktop Automation <a id="phan-7"></a>
+
+# Ứng Dụng Trí Tuệ Nhân Tạo (AI) Trong Desktop Automation Testing
+## Chuyên đề: Automation Testing cho Desktop Applications
+
+- **Người thực hiện:** Quang 
+- **Mục tiêu báo cáo:** Nghiên cứu các xu hướng ứng dụng AI/GenAI trong kiểm thử tự động ứng dụng desktop, giải quyết các điểm nghẽn truyền thống và đề xuất phương án demo cho giai đoạn sau.
+
+---
 
 ## 1. Bối Cảnh: Vì Sao AI Là Bước Tiến Tất Yếu Trong Desktop Automation?
 
@@ -1212,40 +2132,44 @@ $\longrightarrow$ **Trí tuệ nhân tạo (AI)**, bao gồm Machine Learning, C
 
 ---
 
-## 4. Đề Xuất Kế Hoạch Demo AI (Dự Kiến Cho Giai Đoạn Sau)
+## 4. Kết Quả Thực Nghiệm Thực Tế Tại Nhóm (Round 2)
 
-Nhằm biến lý thuyết AI thành sản phẩm trực quan, nhóm dự kiến triển khai **2 kịch bản demo ứng dụng AI** ở giai đoạn thực hành chuyên sâu:
+Nhóm 02 đã hiện thực hóa trọn vẹn kịch bản ứng dụng AI vào thực tế dự án, lưu trữ toàn bộ minh chứng tại thư mục `ai/prompts/` và `ai/output/`:
 
-### Kịch bản Demo 1: GenAI tự động sinh bộ Test Script & Dữ liệu BVA từ đặc tả
-* **Đầu vào:** Đưa vào tài liệu đặc tả chức năng bài toán tính tổng của ứng dụng mẫu MiniSum (mô tả yêu cầu đăng nhập và giới hạn số nguyên $[-99, 99]$).
-* **Ứng dụng AI:** Dùng mô hình ngôn ngữ lớn (GenAI) với prompt chuyên biệt cho kiểm thử phần mềm.
-* **Kết quả đầu ra:** 
-  1. Tự động sinh ra file Excel chứa đúng danh sách 12 ca kiểm thử giá trị biên (BVA).
-  2. Tự động sinh ra khung mã nguồn kiểm thử hoàn chỉnh (viết bằng C# cho WinAppDriver hoặc Groovy cho Katalon Studio).
-* **Đánh giá:** Đo lường thời gian viết kịch bản giảm từ vài giờ xuống còn vài phút.
+### 4.1 Thực nghiệm sinh bộ Test Case BVA tự động (Few-shot Prompting)
+- **Prompt:** [`ai/prompts/testcase-bva-prompt.md`](../ai/prompts/testcase-bva-prompt.md) kèm đặc tả [`ai/prompts/minisum-spec.md`](../ai/prompts/minisum-spec.md).
+- **Kết quả thực nghiệm:** Cả ChatGPT-4 ([`ai/output/chatgpt-bva-output.md`](../ai/output/chatgpt-bva-output.md)) và Gemini Advanced ([`ai/output/gemini-bva-output.md`](../ai/output/gemini-bva-output.md)) đều sinh ra chính xác 12 ca kiểm thử biên đạt độ phủ 100% các điểm biên $\{-100, -99, -98, 0, 98, 99, 100\}$.
+- **Xuất file dữ liệu thực tế:** File Excel [`ai/output/bva-testcases.xlsx`](../ai/output/bva-testcases.xlsx) đã được nạp trực tiếp vào kịch bản Data-driven của cả Katalon Studio và WinAppDriver NUnit.
 
-### Kịch bản Demo 2: Minh họa cơ chế tự phục hồi (Self-Healing) khi ứng dụng đổi giao diện
-* **Tình huống:** Nhà phát triển cập nhật phiên bản mới của ứng dụng mẫu MiniSum, cố tình đổi `AutomationId` của nút bấm từ `btnSum` thành `btnCalculate`.
-* **Kịch bản kiểm thử:**
-  * *Kịch bản truyền thống:* Bị gãy và dừng ngay lập tức do lỗi `ElementNotFoundException`.
-  * *Kịch bản ứng dụng AI / Self-healing:* Thuật toán phát hiện sự biến mất của ID cũ, quét cấu trúc lân cận và tự động bắt vào nút bấm mới dựa trên nhãn hiển thị và tọa độ form $\rightarrow$ Kịch bản tiếp tục chạy PASS thành công.
+### 4.2 Thực nghiệm sinh mã kiểm thử C# NUnit POM tự động
+- **Prompt:** [`ai/prompts/script-gen-prompt.md`](../ai/prompts/script-gen-prompt.md) yêu cầu sinh script WinAppDriver theo mẫu thiết kế Page Object Model.
+- **Mã nguồn sinh ra:** [`ai/output/chatgpt-script-output.cs`](../ai/output/chatgpt-script-output.cs) đã được biên dịch và chạy kiểm thử thực tế trên `MiniSum.exe`.
+- **Hiệu quả định lượng:**
+  - Thời gian viết kịch bản giảm từ **130 phút xuống 29 phút** (tiết kiệm **77.7% thời gian**).
+  - Tỷ lệ dòng code tái sử dụng đạt **93.5%** (chỉ cần điều chỉnh đường dẫn tương đối và tên file exe).
+  - Chi tiết đo đạc xem tại [`ai/output/loc-time-measurement.md`](../ai/output/loc-time-measurement.md).
 
 ---
 
-## 5. Tổng Kết: Cơ Hội & Thách Thức
+## 5. Tổng Kết: Cơ Hội & Thách Thức (Bài Học Kinh Nghiệm)
 
 * **Cơ hội:** 
-  * Giảm tới 60–70% thời gian bảo trì kịch bản kiểm thử khi phần mềm thay đổi liên tục.
-  * Xóa nhòa rào cản kỹ thuật giữa Manual Tester và Automation Tester thông qua ngôn ngữ tự nhiên.
-* **Thách thức cần lưu ý:**
-  * Hiện tượng "ảo giác" (Hallucination) của GenAI có thể sinh ra các ca kiểm thử hoặc mã code không chính xác.
-  * Chi phí token bản quyền API của các mô hình AI thương mại.
-  * Vấn đề bảo mật dữ liệu: Tránh đưa mã nguồn và dữ liệu nghiệp vụ nhạy cảm của doanh nghiệp lên các mô hình AI công cộng.
+  * Giảm tới 70–80% thời gian soạn thảo boilerplate code và thiết kế test case biên.
+  * Tăng năng suất cho cả Manual Tester và Automation SDET.
+* **Thách thức & Bài học rút ra (Human-in-the-loop):**
+  * **Hiện tượng ảo giác (Hallucination):** Ở lần prompt đầu tiên, AI hay tự ý sinh kết quả có dấu tiếng Việt trong khi AUT chỉ hỗ trợ ASCII. Cần áp dụng kỹ thuật Few-shot Prompting để neo cứng định dạng đầu ra.
+  * **Rủi ro sai lệch định vị (Locator Drift):** AI không thể tự đoán đúng AutomationId nếu không được cấp đặc tả chính xác (`minisum-spec.md`). Do đó, con người vẫn đóng vai trò quyết định trong việc rà soát và kiểm chứng kịch bản thực tế.
+
+
+# Phần 8: Hệ Thống Bài Tập Thực Hành Đề Xuất (Exercise) <a id="phan-8"></a>
+
+# Đề Xuất Bài Tập Thực Hành: Desktop Automation Testing
+## Chuyên đề: Automation Testing cho Desktop Applications
+
+- **Người thực hiện:** Quang
+- **Mục tiêu:** Thiết kế hệ thống bài tập thực hành theo phân tầng mức độ nhận thức (Cơ bản - Vừa sức - Nâng cao), giúp sinh viên củng cố lý thuyết kiểm thử hộp đen và thực hành kỹ năng tự động hóa trên ứng dụng desktop thực tế.
 
 ---
-
-
-# Phần 8: Hệ Thống Bài Tập Thực Hành Đề Xuất (Exercise)
 
 ## 1. Mục Tiêu và Nguyên Tắc Xây Dựng Bài Tập
 
@@ -1258,19 +2182,21 @@ Hệ thống bài tập được thiết kế tuân thủ 3 nguyên tắc sư ph
 
 ## 2. Thông Tin Ứng Dụng Mẫu (MiniSum)
 
-Sinh viên tải file thực thi `MiniSum.exe` từ kho lưu trữ của nhóm. Các thuộc tính định danh chính được cung cấp sẵn:
+Sinh viên tải các file thực thi trong thư mục `case-study-app/` của kho lưu trữ nhóm. Các thuộc tính định danh chính được cung cấp sẵn:
 * **Màn hình Đăng nhập (Login Window):**
-  * Ô nhập tài khoản: `txtUser` (Tài khoản hợp lệ: `abc`)
-  * Ô nhập mật khẩu: `txtPass` (Mật khẩu hợp lệ: `123`)
-  * Nút đăng nhập: `btnSubmit`
+  * Ô nhập tài khoản: `txtUser` (Tài khoản hợp lệ: `admin`)
+  * Ô nhập mật khẩu: `txtPass` (Mật khẩu hợp lệ: `1234`)
+  * Nút đăng nhập: `btnLogin`
   * Nhãn thông báo trạng thái: `lblMessage`
 * **Màn hình Tính toán (Main Window):**
   * Ô nhập số A: `txtA` (Giới hạn số nguyên $A \in [-99, 99]$)
   * Ô nhập số B: `txtB` (Giới hạn số nguyên $B \in [-99, 99]$)
-  * Nút tính tổng: `btnSum`
+  * Nút tính tổng: `btnSum` (bản v1, v3) hoặc `btnCalculate` (bản v2)
   * Nhãn kết quả hợp lệ: `lblResult`
-  * Nhãn thông báo lỗi: `lblError`
+  * Nhãn thông báo lỗi: `lblError` (chỉ có ở bản v3)
   * Nút đăng xuất: `btnLogout`
+
+> **Chọn đúng file theo bài tập:** Bài 1 dùng `MiniSum.exe` (v1); Bài 2 dùng `MiniSum_v3.exe` vì chỉ bản này có `lblError`; Bài 3 dùng `MiniSum_v2.exe`. Mọi thông điệp của ứng dụng đều là **ASCII không dấu** (ví dụ `Dang nhap thanh cong`), nên checkpoint phải so sánh đúng từng ký tự.
 
 ---
 
@@ -1281,9 +2207,10 @@ Sinh viên tải file thực thi `MiniSum.exe` từ kho lưu trữ của nhóm. 
 * **Mục tiêu:** Làm quen với cơ chế nhận diện phần tử (`AutomationId`), ghi thao tác (Record) hoặc viết mã kịch bản cơ bản, và thiết lập điểm kiểm tra kết quả kỳ vọng (Test Oracle).
 * **Nội dung yêu cầu:**
   1. Khởi động ứng dụng `MiniSum.exe`.
-  2. Thực hiện kịch bản kiểm thử ca hợp lệ: Nhập `txtUser = "abc"`, `txtPass = "123"`, nhấp chuột vào nút `btnSubmit`.
-  3. Thêm một **Checkpoint (Assertion)** để xác minh nhãn `lblMessage` hiển thị đúng nội dung: `"Đăng nhập thành công"`.
-  4. Tạo tiếp một ca kiểm thử phụ cho trường hợp đăng nhập thất bại (nhập sai mật khẩu) và xác minh nhãn hiển thị `"Sai tài khoản hoặc mật khẩu"`.
+  2. Thực hiện kịch bản kiểm thử ca hợp lệ: Nhập `txtUser = "admin"`, `txtPass = "1234"`, nhấp chuột vào nút `btnLogin`.
+  3. Thêm một **Checkpoint (Assertion)** để xác minh nhãn `lblMessage` hiển thị đúng nội dung: `Dang nhap thanh cong`.
+  4. Tạo tiếp một ca kiểm thử phụ cho trường hợp đăng nhập thất bại (nhập sai mật khẩu) và xác minh nhãn hiển thị `Sai tai khoan hoac mat khau`.
+  5. Lưu ý: sau khi đăng nhập thành công, ứng dụng giữ màn hình Login thêm **1 giây** rồi mới chuyển sang màn hình Tính toán — cần dùng explicit wait thay vì `sleep` cứng khi chuyển màn hình.
 * **Yêu cầu nộp:**
   * File kịch bản kiểm thử (Test Case của Katalon hoặc file mã nguồn C#/Python).
   * Ảnh chụp màn hình kết quả chạy thực thi (Execution Report) thể hiện trạng thái PASS.
@@ -1294,14 +2221,14 @@ Sinh viên tải file thực thi `MiniSum.exe` từ kho lưu trữ của nhóm. 
 * **Thời lượng ước tính:** 30 – 45 phút.
 * **Mục tiêu:** Vận dụng lý thuyết phân tích giá trị biên (BVA) để xây dựng bộ dữ liệu kiểm thử và áp dụng kỹ thuật Data-Driven Testing để kiểm thử tự động hàng loạt.
 * **Nội dung yêu cầu:**
-  1. **Thiết kế dữ liệu:** Tạo một file Excel (`BVA_TestData.xlsx`) chứa ít nhất **6 ca kiểm thử** cho chức năng tính tổng hai số nguyên $A, B \in [-99, 99]$:
+  1. **Thiết kế dữ liệu:** Trên `MiniSum_v3.exe` (bản duy nhất có `lblError`), tạo một file Excel (`BVA_TestData.xlsx`) chứa ít nhất **6 ca kiểm thử** cho chức năng tính tổng hai số nguyên $A, B \in [-99, 99]$:
      * 2 ca giá trị biên hợp lệ (ví dụ: $A = -99, B = 9 \rightarrow \text{Tổng} = -90$; $A = 99, B = 9 \rightarrow \text{Tổng} = 108$).
-     * 2 ca giá trị ngoài biên dưới và trên (ví dụ: $A = -100, B = 9$; $A = 100, B = 9 \rightarrow$ Kỳ vọng xuất hiện `"Thông báo lỗi"`).
-     * 1 ca giá trị không hợp lệ về kiểu dữ liệu (ví dụ: $A = \text{"xyz"}, B = 10 \rightarrow$ Kỳ vọng xuất hiện `"Thông báo lỗi"`).
+     * 2 ca giá trị ngoài biên dưới và trên (ví dụ: $A = -100, B = 9$; $A = 100, B = 9 \rightarrow$ Kỳ vọng `lblError` = `A ngoai mien [-99, 99]`).
+     * 1 ca giá trị không hợp lệ về kiểu dữ liệu (ví dụ: $A = \text{"xyz"}, B = 10 \rightarrow$ Kỳ vọng `lblError` = `Gia tri khong hop le: phai la so nguyen`).
      * 1 ca biên của toán tử thứ hai ($B = -99$).
   2. **Xây dựng kịch bản Data-Driven:**
      * Tham số hóa kịch bản tính tổng để nhận giá trị `${A}`, `${B}`, `${Expected}` từ file Excel.
-     * Cấu hình logic kiểm tra: Nếu `${Expected}` là giá trị số thì kiểm tra nhãn `lblResult`; nếu `${Expected}` là `"LOI"` thì kiểm tra nhãn `lblError`.
+     * Cấu hình logic kiểm tra: Nếu `${Expected}` là giá trị số thì kiểm tra nhãn `lblResult`; nếu `${Expected}` là `"LOI"` thì kiểm tra nhãn `lblError` và so sánh đúng nội dung thông điệp lỗi.
   3. Thực thi toàn bộ bộ dữ liệu trong một phiên chạy tự động.
 * **Yêu cầu nộp:**
   * File dữ liệu `BVA_TestData.xlsx`.
@@ -1314,7 +2241,7 @@ Sinh viên tải file thực thi `MiniSum.exe` từ kho lưu trữ của nhóm. 
 * **Thời lượng ước tính:** Bài tập về nhà / Nghiên cứu chuyên sâu.
 * **Mục tiêu:** Rèn luyện tư duy thiết kế kịch bản bền vững và kỹ năng bảo trì — giải quyết bài toán "kịch bản dễ gãy" (fragile tests) khi phần mềm nâng cấp giao diện.
 * **Tình huống giả định:** 
-  * Nhà phát triển phát hành phiên bản cập nhật `MiniSum_v2.exe`. Trong phiên bản này, để chuẩn hóa mã nguồn, định danh của nút bấm tính tổng được đổi từ `btnSum` thành `btnCalculate`, đồng thời nhãn hiển thị chuyển từ `"Tổng"` sang `"Tính toán"`.
+  * Nhà phát triển phát hành phiên bản cập nhật `MiniSum_v2.exe`. Trong phiên bản này, để chuẩn hóa mã nguồn, định danh (`AutomationId`) của nút bấm tính tổng được đổi từ `btnSum` thành `btnCalculate` (nhãn hiển thị trên nút vẫn là `TINH TONG`), đồng thời bổ sung màn hình Lịch sử.
   * Hậu quả: Toàn bộ kịch bản kiểm thử xây dựng ở Bài tập 2 khi chạy trên bản v2 đều bị FAIL hàng loạt do lỗi không tìm thấy phần tử (*ElementNotFoundException*).
 * **Nội dung yêu cầu:**
   1. Chạy kịch bản cũ trên bản v2, chụp lại log lỗi thực thi và phân tích nguyên nhân gốc của lỗi (Root Cause).
@@ -1338,23 +2265,33 @@ Sinh viên tải file thực thi `MiniSum.exe` từ kho lưu trữ của nhóm. 
 | **Bài tập 3** | - Phân tích đúng nguyên nhân lỗi khi đổi ID phần tử.<br>- Thực hiện cập nhật locator tập trung (Object Repository / Page Object).<br>- Câu trả lời phân tích lý thuyết bảo trì mạch lạc, đúng bản chất. | **3.0 điểm**<br>(1.0 đ)<br>(1.0 đ)<br>(1.0 đ) |
 | **TỔNG CỘNG** | **Đánh giá toàn diện kỹ năng thực hành và tư duy lý thuyết** | **10.0 điểm** |
 
----
 
 
-# Phần 9: Kết Luận & Hướng Phát Triển (Conclusion)
+# Phần 9: Minh Chứng Thực Nghiệm, Kê Khai AI & Kết Luận <a id="phan-9"></a>
 
-## 9.1 Tổng kết kết quả đạt được
-1. **Làm chủ cơ sở lý thuyết:** Hệ thống hóa toàn diện các nguyên lý kiểm thử tự động trên desktop, phân loại các công nghệ giao diện và chỉ ra 5 thách thức kỹ thuật cốt lõi (nhận diện UI, đồng bộ Wait, xử lý popup OS, môi trường headless và chi phí bảo trì).
-2. **Khảo sát và đối chiếu công bằng:** Nghiên cứu sâu sắc hai công cụ đại diện cho hai trường phái đối lập hoàn hảo: Katalon Studio (All-in-one GUI / Low-Code) và Microsoft WinAppDriver (Pure Code / Open Source SDK) trên cùng một case study ứng dụng và cùng bộ dữ liệu kiểm thử giá trị biên chuẩn mực.
-3. **Tiếp cận công nghệ mới:** Nhận diện rõ vai trò đột phá của Trí tuệ nhân tạo (AI/GenAI) trong việc giải quyết bài toán tự phục hồi locator (Self-healing) và kiểm thử thị giác (Visual AI).
-4. **Đóng gói sản phẩm thực hành:** Hoàn thiện bộ kịch bản kiểm thử mẫu và hệ thống bài tập thực hành 3 cấp độ chuẩn hóa phục vụ trực tiếp cho môn học.
+## 9.1 Minh chứng Video Demo YouTube (Chế độ Unlisted)
+- **Demo 1 – Katalon Studio (Nguyễn Lê Quang Kan):**
+  - **Liên kết YouTube:** [https://www.youtube.com/watch?v=w7c_X5f5SFo](https://www.youtube.com/watch?v=w7c_X5f5SFo)
+  - **Chất lượng:** 1080p Full HD, thuyết minh tiếng Việt rõ ràng.
+  - **Nội dung:** Cài đặt WinAppDriver, Record & Playback đăng nhập hợp lệ, tạo Checkpoint xác minh nhãn thông báo, Data-Driven Testing với 12 test case BVA đọc từ Excel, thực thi suite và xuất báo cáo HTML.
 
-## 9.2 Bài học kinh nghiệm (Lessons Learned)
-* **Kiểm thử phụ thuộc ngữ cảnh:** Không có công cụ nào là tối ưu tuyệt đối cho mọi dự án. Việc chọn công cụ phụ thuộc chặt chẽ vào năng lực nhân sự, ngân sách và kiến trúc phần mềm (nguyên lý số 6 trong kiểm thử phần mềm).
-* **Chi phí bảo trì là thách thức sống còn:** Viết kịch bản tự động ban đầu chỉ chiếm 30% công sức, 70% nỗ lực nằm ở khâu duy trì kịch bản khi phần mềm nâng cấp. Áp dụng các mẫu thiết kế chuẩn (Page Object Model / Object Repository) là điều kiện bắt buộc để tự động hóa bền vững.
-* **Tầm quan trọng của Wait thông minh:** Cơ chế đồng bộ hóa (Explicit Wait) là chìa khóa then chốt để loại bỏ hiện tượng Flaky Test trong môi trường desktop.
+## 9.2 Nhật ký đóng góp trên Git Commit Log
+- Hệ thống kho lưu trữ GitHub: `https://github.com/tinphan247/KTPM-2026-Seminar.git`
+- Toàn bộ quá trình làm việc, giải quyết lỗi, phát triển ứng dụng mẫu và tài liệu đều được commit liên tục, minh bạch:
+  - **Phan Trung Tín:** 26 commits chính thức trên Git log.
+  - **Nguyễn Lê Quang Kan:** 14 commits chính thức trên Git log.
+  - Toàn bộ lịch sử commit chi tiết xem tại file `git-commit-log.md`.
 
-## 9.3 Hướng phát triển trong giai đoạn tiếp theo
-* Hoàn thiện mã nguồn ứng dụng mẫu MiniSum và đóng gói repository dùng chung cho nhóm.
-* Thực hiện ghi hình và thử nghiệm thực tế 3 nhóm demo kịch bản trên cả hai công cụ.
-* Triển khai thử nghiệm 1 kịch bản ứng dụng GenAI hỗ trợ sinh test script tự động cho buổi báo cáo chuyên sâu.
+## 9.3 Kê khai sử dụng Trí tuệ Nhân tạo (AI Usage Declaration)
+Theo quy định môn học, nhóm thực hiện kê khai minh bạch:
+- Các mô hình AI sử dụng: ChatGPT-4, Gemini Advanced, Claude 3.5, GitHub Copilot.
+- Mục đích: Hỗ trợ tìm kiếm tài liệu tham khảo, thiết kế mẫu Prompt kỹ thuật Few-shot, gợi ý cấu trúc khung mã nguồn boilerplate C# POM và bảng phân tích giá trị biên BVA.
+- Kiểm chứng: 100% dữ liệu, test script và ứng dụng thực thi đều được lập trình viên build, chạy thử trên Windows 11 và kiểm tra kỹ lưỡng trước khi đưa vào báo cáo. Chi tiết xem tại `ai-usage-declaration.md`.
+
+## 9.4 Kết luận và Đánh giá chung
+Seminar đã hoàn thành xuất sắc các mục tiêu đề ra:
+1. Xây dựng bộ khung lý thuyết vững chắc về kiểm thử tự động Desktop (UI Automation, POM, Wait, Flaky Test, Test Oracle, Recovery Testing).
+2. Xây dựng ứng dụng mẫu thực tế `MiniSum.exe` (v1, v2, v3) theo phong cách hiện đại Fluent Light để làm AUT cho toàn bộ demo.
+3. Thực nghiệm sâu sắc hai đại diện tiêu biểu: **Katalon Studio** (Low-Code GUI) và **WinAppDriver** (Code-First), với các số liệu so sánh định lượng rõ ràng.
+4. Triển khai thành công thực nghiệm AI Test Automation giúp rút ngắn 77.7% thời gian thiết kế kịch bản kiểm thử.
+

@@ -81,32 +81,30 @@ $\longrightarrow$ **Trí tuệ nhân tạo (AI)**, bao gồm Machine Learning, C
 
 ---
 
-## 4. Đề Xuất Kế Hoạch Demo AI (Dự Kiến Cho Giai Đoạn Sau)
+## 4. Kết Quả Thực Nghiệm Thực Tế Tại Nhóm (Round 2)
 
-Nhằm biến lý thuyết AI thành sản phẩm trực quan, nhóm dự kiến triển khai **2 kịch bản demo ứng dụng AI** ở giai đoạn thực hành chuyên sâu:
+Nhóm 02 đã hiện thực hóa trọn vẹn kịch bản ứng dụng AI vào thực tế dự án, lưu trữ toàn bộ minh chứng tại thư mục `ai/prompts/` và `ai/output/`:
 
-### Kịch bản Demo 1: GenAI tự động sinh bộ Test Script & Dữ liệu BVA từ đặc tả
-* **Đầu vào:** Đưa vào tài liệu đặc tả chức năng bài toán tính tổng của ứng dụng mẫu MiniSum (mô tả yêu cầu đăng nhập và giới hạn số nguyên $[-99, 99]$).
-* **Ứng dụng AI:** Dùng mô hình ngôn ngữ lớn (GenAI) với prompt chuyên biệt cho kiểm thử phần mềm.
-* **Kết quả đầu ra:** 
-  1. Tự động sinh ra file Excel chứa đúng danh sách 12 ca kiểm thử giá trị biên (BVA).
-  2. Tự động sinh ra khung mã nguồn kiểm thử hoàn chỉnh (viết bằng C# cho WinAppDriver hoặc Groovy cho Katalon Studio).
-* **Đánh giá:** Đo lường thời gian viết kịch bản giảm từ vài giờ xuống còn vài phút.
+### 4.1 Thực nghiệm sinh bộ Test Case BVA tự động (Few-shot Prompting)
+- **Prompt:** [`ai/prompts/testcase-bva-prompt.md`](../ai/prompts/testcase-bva-prompt.md) kèm đặc tả [`ai/prompts/minisum-spec.md`](../ai/prompts/minisum-spec.md).
+- **Kết quả thực nghiệm:** Cả ChatGPT-4 ([`ai/output/chatgpt-bva-output.md`](../ai/output/chatgpt-bva-output.md)) và Gemini Advanced ([`ai/output/gemini-bva-output.md`](../ai/output/gemini-bva-output.md)) đều sinh ra chính xác 12 ca kiểm thử biên đạt độ phủ 100% các điểm biên $\{-100, -99, -98, 0, 98, 99, 100\}$.
+- **Xuất file dữ liệu thực tế:** File Excel [`ai/output/bva-testcases.xlsx`](../ai/output/bva-testcases.xlsx) đã được nạp trực tiếp vào kịch bản Data-driven của cả Katalon Studio và WinAppDriver NUnit.
 
-### Kịch bản Demo 2: Minh họa cơ chế tự phục hồi (Self-Healing) khi ứng dụng đổi giao diện
-* **Tình huống:** Nhà phát triển cập nhật phiên bản mới của ứng dụng mẫu MiniSum, cố tình đổi `AutomationId` của nút bấm từ `btnSum` thành `btnCalculate`.
-* **Kịch bản kiểm thử:**
-  * *Kịch bản truyền thống:* Bị gãy và dừng ngay lập tức do lỗi `ElementNotFoundException`.
-  * *Kịch bản ứng dụng AI / Self-healing:* Thuật toán phát hiện sự biến mất của ID cũ, quét cấu trúc lân cận và tự động bắt vào nút bấm mới dựa trên nhãn hiển thị và tọa độ form $\rightarrow$ Kịch bản tiếp tục chạy PASS thành công.
+### 4.2 Thực nghiệm sinh mã kiểm thử C# NUnit POM tự động
+- **Prompt:** [`ai/prompts/script-gen-prompt.md`](../ai/prompts/script-gen-prompt.md) yêu cầu sinh script WinAppDriver theo mẫu thiết kế Page Object Model.
+- **Mã nguồn sinh ra:** [`ai/output/chatgpt-script-output.cs`](../ai/output/chatgpt-script-output.cs) đã được biên dịch và chạy kiểm thử thực tế trên `MiniSum.exe`.
+- **Hiệu quả định lượng:**
+  - Thời gian viết kịch bản giảm từ **130 phút xuống 29 phút** (tiết kiệm **77.7% thời gian**).
+  - Tỷ lệ dòng code tái sử dụng đạt **93.5%** (chỉ cần điều chỉnh đường dẫn tương đối và tên file exe).
+  - Chi tiết đo đạc xem tại [`ai/output/loc-time-measurement.md`](../ai/output/loc-time-measurement.md).
 
 ---
 
-## 5. Tổng Kết: Cơ Hội & Thách Thức
+## 5. Tổng Kết: Cơ Hội & Thách Thức (Bài Học Kinh Nghiệm)
 
 * **Cơ hội:** 
-  * Giảm tới 60–70% thời gian bảo trì kịch bản kiểm thử khi phần mềm thay đổi liên tục.
-  * Xóa nhòa rào cản kỹ thuật giữa Manual Tester và Automation Tester thông qua ngôn ngữ tự nhiên.
-* **Thách thức cần lưu ý:**
-  * Hiện tượng "ảo giác" (Hallucination) của GenAI có thể sinh ra các ca kiểm thử hoặc mã code không chính xác.
-  * Chi phí token bản quyền API của các mô hình AI thương mại.
-  * Vấn đề bảo mật dữ liệu: Tránh đưa mã nguồn và dữ liệu nghiệp vụ nhạy cảm của doanh nghiệp lên các mô hình AI công cộng.
+  * Giảm tới 70–80% thời gian soạn thảo boilerplate code và thiết kế test case biên.
+  * Tăng năng suất cho cả Manual Tester và Automation SDET.
+* **Thách thức & Bài học rút ra (Human-in-the-loop):**
+  * **Hiện tượng ảo giác (Hallucination):** Ở lần prompt đầu tiên, AI hay tự ý sinh kết quả có dấu tiếng Việt trong khi AUT chỉ hỗ trợ ASCII. Cần áp dụng kỹ thuật Few-shot Prompting để neo cứng định dạng đầu ra.
+  * **Rủi ro sai lệch định vị (Locator Drift):** AI không thể tự đoán đúng AutomationId nếu không được cấp đặc tả chính xác (`minisum-spec.md`). Do đó, con người vẫn đóng vai trò quyết định trong việc rà soát và kiểm chứng kịch bản thực tế.

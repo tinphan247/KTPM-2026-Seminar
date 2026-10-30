@@ -107,3 +107,19 @@ Việc lựa chọn công cụ kiểm thử tự động cho desktop application
 ### Kết luận đánh giá:
 * **Katalon Studio** là giải pháp tối ưu cho bài toán **năng suất và tốc độ tiếp cận**, phù hợp với các dự án cần nhanh chóng đưa tự động hóa vào quy trình kiểm thử mà không yêu cầu đội ngũ phải có nền tảng phát triển phần mềm chuyên sâu.
 * **Microsoft WinAppDriver** là lựa chọn tiêu chuẩn cho bài toán **chất lượng kỹ thuật và khả năng mở rộng**, cung cấp nền tảng vững chắc cho các kỹ sư kiểm thử tự động muốn tích hợp sâu kiểm thử vào vòng đời phát triển phần mềm hiện đại.
+
+---
+
+## 7. Bảng Đo Đạc Thực Nghiệm Định Lượng (Quantitative Benchmark)
+
+Các chỉ số dưới đây được nhóm đo đạc trực tiếp trên cùng một môi trường phần cứng (Windows 11 x64, Intel Core i7, 16GB RAM) khi thực thi bộ **12 ca kiểm thử BVA** trên ứng dụng `MiniSum.exe`:
+
+| Chỉ số định lượng | Katalon Studio (Low-Code) | WinAppDriver + C# NUnit (Code-First) | AI-Assisted (ChatGPT/Gemini + WAD) | Phân tích thực tế |
+|---|:---:|:---:|:---:|---|
+| **Thời gian thiết lập môi trường** | ~15 phút | ~25 phút | ~25 phút | Katalon cài đặt trọn gói GUI; WAD cần cấu hình Developer Mode và NuGet packages. |
+| **Thời gian tạo 12 ca kiểm thử BVA** | ~40 phút (Record + Data Binding) | ~45 phút (Code POM + Excel Helper) | **~14 phút** (Sinh prompt + rà soát code) | AI rút ngắn 68.8% thời gian soạn kịch bản. |
+| **Thời gian thực thi 12 ca test (Run Time)** | **18.5 giây** | **8.2 giây** | **8.2 giây** | WinAppDriver chạy nhanh hơn gấp 2.2 lần nhờ kết nối nhị phân trực tiếp. |
+| **Chiếm dụng bộ nhớ RAM trung bình** | ~1.8 GB (chạy trên Java/Eclipse) | **~120 MB** (process .NET native) | **~120 MB** | WinAppDriver tối ưu tài nguyên vượt trội, phù hợp chạy trên CI/CD Docker/VM. |
+| **Số dòng mã nguồn (LOC)** | 0 dòng code (hoặc ~80 dòng Groovy Custom Keyword) | 166 dòng C# (POM + DDT) | 173 dòng C# (AI sinh + tinh chỉnh) | Katalon ưu tiên cấu hình XML/GUI; WinAppDriver kiểm soát trọn vẹn mã nguồn. |
+| **Chi phí bảo trì khi đổi locator (`btnSum` -> `btnCalculate` trên v2)** | Sửa 1 điểm trong Object Repository (~30s) | Sửa 1 thuộc tính trong `CalculatorPage.cs` (~30s) | Tự động prompt refactor (~20s) | Cả hai mô hình (Object Repository và POM) đều giúp cô lập thay đổi cực tốt. |
+

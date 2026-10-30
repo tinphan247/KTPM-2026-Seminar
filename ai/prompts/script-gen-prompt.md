@@ -82,21 +82,9 @@ Cấu trúc định vị giao diện (Inspect qua UI Automation):
    - Nút đăng xuất: AutomationId = "btnLogout"
 
 [INPUT TEST CASES TABLE]
-Dưới đây là bảng dữ liệu kiểm thử giá trị biên (BVA) cần tự động hóa:
-| TC_ID | A | B | Expected | Description |
-|---|---|---|---|---|
-| BVA_01_MinLowerA | -99 | 9 | -90 | Biên dưới A hợp lệ |
-| BVA_02_MaxUpperA | 99 | 9 | 108 | Biên trên A hợp lệ |
-| BVA_03_InvalidBelowMinA | -100 | 9 | LOI | Biên dưới A ngoài miền |
-| BVA_04_InvalidAboveMaxA | 100 | 9 | LOI | Biên trên A ngoài miền |
-| BVA_05_InvalidTypeA | xyz | 10 | LOI | Sai kiểu dữ liệu A |
-| BVA_06_MinLowerB | 10 | -99 | -89 | Biên dưới B hợp lệ |
-| BVA_07_MaxUpperB | 10 | 99 | 109 | Biên trên B hợp lệ |
-| BVA_08_InvalidBelowMinB | 10 | -100 | LOI | Biên dưới B ngoài miền |
-| BVA_09_InvalidAboveMaxB | 10 | 100 | LOI | Biên trên B ngoài miền |
-| BVA_10_NominalCenter | 0 | 0 | 0 | Giá trị danh định trung tâm |
-| BVA_11_ExtremeDualMin | -99 | -99 | -198 | Cực biên dưới đồng thời A và B |
-| BVA_12_ExtremeDualMax | 99 | 99 | 198 | Cực biên trên đồng thời A và B |
+Dưới đây là bảng dữ liệu kiểm thử giá trị biên (BVA) do AI sinh ra từ Prompt BVA ở Bước 1. Hãy đọc từng dòng trong bảng này để tự động chuyển hóa thành các attribute [TestCase] tương ứng trong mã nguồn kiểm thử C#:
+
+{{DÁN_BẢNG_MARKDOWN_TEST_CASES_TỪ_BƯỚC_1_VÀO_ĐÂY}}
 
 [ARCHITECTURAL & IMPLEMENTATION REQUIREMENTS]
 Hãy sinh toàn bộ mã nguồn C# NUnit hoàn chỉnh theo mô hình Page Object Model (POM), chia rõ các lớp:

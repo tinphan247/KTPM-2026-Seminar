@@ -17,12 +17,15 @@ Hệ thống bài tập được thiết kế tuân thủ 3 nguyên tắc sư ph
 
 ## 2. Công Cụ Và Môi Trường Thực Hành
 
+> **Hướng dẫn từng bước cho sinh viên** (từ clone repo đến khi nộp bài): [`09-huong-dan-bai-tap.md`](09-huong-dan-bai-tap.md). Mục dưới đây chỉ tóm tắt yêu cầu kỹ thuật.
+
 ### 2.1. Công cụ chính: Katalon Studio (bản Free)
 
 | Tiêu chí | Yêu cầu |
 |---|---|
 | Công cụ | Katalon Studio 11.x (bản Free) |
 | Hệ điều hành | Windows 10/11 64-bit |
+| Runtime | **.NET 8 Desktop Runtime (x64)** — bắt buộc để chạy `MiniSum*.exe` |
 | Cấu hình | RAM ≥ 8 GB, còn trống ≥ 5 GB đĩa |
 | Tài khoản | Có tài khoản Katalon (miễn phí), kích hoạt online ở lần mở đầu tiên |
 | Quyền | Không cần quyền admin, **không cần bật Developer Mode** |
@@ -50,11 +53,13 @@ Track B dùng **cùng đề bài, cùng dữ liệu, cùng thang điểm**; ph�
 
 Sinh viên hoàn tất ở nhà, **không làm trong giờ bài tập**:
 
-1. Cài Katalon Studio 11.x và đăng nhập tài khoản Katalon một lần.
-2. Tải `MiniSum.exe`, `MiniSum_v2.exe`, `MiniSum_v3.exe` từ thư mục `case-study-app/`.
-3. Tải **starter project** `demo-scripts/katalon/` và mở thử bằng Katalon.
-4. Chạy thử `TC01_Login_Success` một lần để chắc chắn môi trường hoạt động.
-5. Dùng laptop Windows; không dùng macOS/Linux (WinAppDriver và Windows Desktop Testing Engine chỉ chạy trên Windows).
+1. Cài **.NET 8 Desktop Runtime (x64)**, mở thử `MiniSum_v3.exe` để chắc chắn ứng dụng chạy được.
+2. Cài Katalon Studio 11.x và đăng nhập tài khoản Katalon một lần.
+3. Clone repo (hoặc tải ZIP) và kiểm tra đủ 3 file `.exe` trong `case-study-app/`.
+4. Tạo **project Katalon rỗng** rồi copy 7 thư mục nội dung từ `demo-scripts/katalon/` vào (repo không chứa `.project` — xem hướng dẫn mục 3).
+5. Sửa `appPath` trong `TC01`–`TC03` thành đường dẫn trên máy mình.
+6. Chạy thử `TC01_Login_Success` một lần để chắc chắn môi trường hoạt động.
+7. Dùng laptop Windows; không dùng macOS/Linux (WinAppDriver và Windows Desktop Testing Engine chỉ chạy trên Windows).
 
 > Nếu máy lab không cho cài phần mềm hoặc không có mạng để kích hoạt Katalon, sinh viên làm bài trên máy cá nhân và chỉ nộp kết quả; buổi lab dùng để chữa bài.
 
@@ -63,11 +68,11 @@ Sinh viên hoàn tất ở nhà, **không làm trong giờ bài tập**:
 | Có sẵn trong `demo-scripts/katalon/` | Sinh viên tự làm |
 |---|---|
 | Object Repository đầy đủ của MiniSum (`txtUser`, `txtPass`, `btnSubmit`, `lblMessage`, `txtA`, `txtB`, `btnSum`, `lblResult`, `lblError`, `winLogin`, `winMain`, `btnLogout`) | Thêm checkpoint và ca kiểm thử còn thiếu |
-| `TC01_Login_Success` mẫu (record + verify) | `TC02` đăng nhập thất bại |
-| Test Suite + Data Binding mẫu | File Excel 6 ca BVA và cấu hình binding |
+| `TC01_Login_Success` mẫu (record + verify) | Tự tạo `TC01_Login_<MSSV>` và `TC02_LoginFail_<MSSV>` (bản mẫu chỉ để đối chiếu) |
+| Test Suite + Data Binding mẫu | File Excel ≥ 6 ca BVA của mình và cấu hình binding |
 | Custom Keyword `LoginKeyword.groovy` | Sửa locator khi chuyển sang `MiniSum_v2` (bài 3) |
 
-Lý do phát sẵn: nếu bắt sinh viên Object Spy và record lại từ đầu, bài 1 sẽ kéo dài gấp đôi và phần lớn thời gian mất vào thao tác công cụ, không phải vào thiết kế ca kiểm thử.
+Lý do phát sẵn: nếu bắt sinh viên Object Spy và record lại từ đầu, bài 1 sẽ kéo dài gấp đôi và phần lớn thời gian mất vào thao tác công cụ, không phải vào thiết kế ca kiểm thử. Bộ `TC01`–`TC03` là **bản demo của nhóm**, không phải bài nộp.
 
 ### 2.5. Quy định nộp và chấm
 
@@ -105,12 +110,13 @@ Sinh viên tải các file thực thi trong thư mục `case-study-app/` của k
 * **Thời lượng ước tính:** 15 – 20 phút.
 * **Mục tiêu:** Làm quen với Object Repository và cơ chế nhận diện phần tử (`AutomationId`), thêm bước kiểm thử trong Manual view của Katalon, và thiết lập điểm kiểm tra kết quả kỳ vọng (Test Oracle).
 * **Nội dung yêu cầu:**
-  1. Mở **starter project** trong `demo-scripts/katalon/`, chạy thử `TC01_Login_Success` để xác nhận môi trường hoạt động.
+  1. Mở **starter project** trong `demo-scripts/katalon/`, chạy thử `TC01_Login_Success` (bản mẫu) để xác nhận môi trường hoạt động.
   2. Khởi động ứng dụng `MiniSum.exe` từ Test Case (dùng lại bước `startApplicationWithTitle` có sẵn).
   3. Thực hiện kịch bản kiểm thử ca hợp lệ: Nhập `txtUser = "admin"`, `txtPass = "1234"`, nhấp chuột vào nút `btnLogin`.
   4. Thêm một **Checkpoint (Verify Element Text)** để xác minh nhãn `lblMessage` hiển thị đúng nội dung: `Dang nhap thanh cong`.
   5. Tạo tiếp `TC02` cho trường hợp đăng nhập thất bại (nhập sai mật khẩu) và xác minh nhãn hiển thị `Sai tai khoan hoac mat khau`.
   6. Lưu ý: sau khi đăng nhập thành công, ứng dụng giữ màn hình Login thêm **1 giây** rồi mới chuyển sang màn hình Tính toán — cần dùng explicit wait thay vì `sleep` cứng khi chuyển màn hình.
+  7. Test case nộp bài phải do sinh viên tự tạo và có MSSV trong tên (`TC01_Login_<MSSV>`, `TC02_LoginFail_<MSSV>`); `TC01`–`TC03` trong starter chỉ là bản mẫu để đối chiếu.
 * **Yêu cầu nộp:**
   * Project Katalon (nén `.zip`) chứa `TC01` đã bổ sung checkpoint và `TC02` cho ca đăng nhập thất bại.
   * HTML report của lần chạy cuối, thể hiện **cả hai ca đều PASS**.
@@ -143,6 +149,7 @@ Sinh viên tải các file thực thi trong thư mục `case-study-app/` của k
 * **Tình huống giả định:** 
   * Nhà phát triển phát hành phiên bản cập nhật `MiniSum_v2.exe`. Trong phiên bản này, để chuẩn hóa mã nguồn, định danh (`AutomationId`) của nút bấm tính tổng được đổi từ `btnSum` thành `btnCalculate` (nhãn hiển thị trên nút vẫn là `TINH TONG`), đồng thời bổ sung màn hình Lịch sử.
   * Hậu quả: Toàn bộ kịch bản kiểm thử xây dựng ở Bài tập 2 khi chạy trên bản v2 đều bị FAIL hàng loạt do lỗi không tìm thấy phần tử (*ElementNotFoundException*).
+  * Lưu ý: v2 **không có** `lblError`, nên bài 3 chỉ chạy bộ dữ liệu **toàn ca hợp lệ** (ví dụ 4 ca: `-99+9`, `99+9`, `0+0`, `10+-99`). Các ca `Expected = LOI` thuộc về v3 — đây cũng là bài học: dữ liệu kiểm thử phải khớp với phiên bản AUT.
 * **Nội dung yêu cầu:**
   1. Chạy kịch bản cũ trên bản v2, chụp lại log lỗi thực thi và phân tích nguyên nhân gốc của lỗi (Root Cause).
   2. Thực hiện **bảo trì và tái cấu trúc (Refactoring)** bộ định vị theo nguyên tắc tập trung:

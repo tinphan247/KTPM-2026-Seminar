@@ -45,6 +45,7 @@ KTPM-2026-Seminar/
 │   ├── 06-comparison.md                # 6. So sánh đối chiếu toàn diện (Katalon vs WinAppDriver)
 │   ├── 07-ai-desktop-automation.md     # 7. Ứng dụng AI trong Automation Testing
 │   ├── 08-exercises.md                 # 8. Hệ thống câu hỏi & bài tập thực hành
+│   ├── 09-huong-dan-bai-tap.md         # 9. Handout: từ clone repo đến khi nộp bài (Katalon)
 │   └── report.md                       # Báo cáo toàn văn tổng hợp
 ├── case-study-app/                     # Ứng dụng mẫu phục vụ kiểm thử (MiniSum)
 │   ├── MiniSum/                        # Mã nguồn ứng dụng WinForms C# (.NET)

@@ -971,3 +971,10 @@ for target_pdf in target_pdfs:
         print(f"Successfully exported {target_pdf}! Size: {os.path.getsize(target_pdf):,} bytes")
     else:
         print(f"Failed to export {target_pdf}: {res.stderr}")
+
+try:
+    print("Exporting Word Document (.docx)...")
+    subprocess.run(['py', 'export_docx.py'], check=False)
+except Exception as e:
+    print(f"Note: Word export skipped ({e})")
+

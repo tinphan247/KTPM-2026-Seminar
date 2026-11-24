@@ -55,10 +55,10 @@ header_md = """# BÁO CÁO TOÀN VĂN CHUYÊN ĐỀ SEMINAR
 
 | STT | Họ và Tên | MSSV | Vai trò chính Lần 2 | Đóng góp thực tế | % Chốt | Trạng thái |
 |:---:|---|:---:|---|---|:---:|:---:|
-| 1 | **Phan Trung Tín** | 23120372 | **Trưởng nhóm (Team Lead)**<br>Phát triển 3 bản `MiniSum.exe`, viết lý thuyết POM/Flaky/Wait/Oracle, thiết kế toàn bộ Slide (v1+v2), Handout bài tập, tích hợp báo cáo & đóng gói | 42.0h (22 tasks) | **35.0%** | Hoàn thành xuất sắc |
+| 1 | **Phan Trung Tín** | 23120372 | **Trưởng nhóm (Team Lead)**<br>Phát triển 3 bản `MiniSum.exe`, viết lý thuyết POM/Flaky/Wait/Oracle, thiết kế toàn bộ Slide (v1+v2), Handout bài tập, tích hợp báo cáo & đóng gói | 42.0h (22 tasks) | **25.0%** | Hoàn thành xuất sắc |
 | 2 | **Nguyễn Lê Quang Kan** | 23120279 | **Chuyên trách Katalon Studio**<br>Thực nghiệm 3 demo Katalon, viết Custom Keyword `LoginKeyword.groovy`, Data-Driven BVA, 16 ảnh thực nghiệm, video YouTube | 30.0h (18 tasks) | **25.0%** | Hoàn thành xuất sắc |
-| 3 | **Bùi Quang Tùng** | 20120397 | **Chuyên trách WinAppDriver**<br>Thực nghiệm WinAppDriver + C# NUnit, cài đặt Page Object Model (POM), DDT 12 ca BVA, chụp ảnh kiểm thử | 24.0h (21 tasks) | **20.0%** | Hoàn thành tốt |
-| 4 | **Trần Vũ Quang** | 23120346 | **Chuyên trách AI & Comparison**<br>Prompt Engineering, sinh 19 ca BVA, test suite C# `ai-winappdriver`, số liệu đo đạc so sánh định lượng | 24.0h (17 tasks) | **20.0%** | Hoàn thành tốt |
+| 3 | **Bùi Quang Tùng** | 20120397 | **Chuyên trách WinAppDriver**<br>Thực nghiệm WinAppDriver + C# NUnit, cài đặt Page Object Model (POM), DDT 12 ca BVA, chụp ảnh kiểm thử | 24.0h (21 tasks) | **25.0%** | Hoàn thành tốt |
+| 4 | **Trần Vũ Quang** | 23120346 | **Chuyên trách AI & Comparison**<br>Prompt Engineering, sinh 19 ca BVA, test suite C# `ai-winappdriver`, số liệu đo đạc so sánh định lượng | 24.0h (17 tasks) | **25.0%** | Hoàn thành tốt |
 | **Tổng** | | | | **120.0h (78 tasks)** | **100.0%** | |
 
 ---
@@ -369,7 +369,7 @@ hr {{
                     <td><strong>Phan Trung Tín</strong> (Nhóm trưởng)</td>
                     <td>23120372</td>
                     <td>Lead, AUT MiniSum, Theory, Slide v1+v2, Handout, Báo cáo</td>
-                    <td><strong>35.0%</strong></td>
+                    <td><strong>25.0%</strong></td>
                 </tr>
                 <tr>
                     <td>2</td>
@@ -383,14 +383,14 @@ hr {{
                     <td><strong>Bùi Quang Tùng</strong></td>
                     <td>20120397</td>
                     <td>WinAppDriver + C# NUnit, Page Object Model, DDT NPOI</td>
-                    <td><strong>20.0%</strong></td>
+                    <td><strong>25.0%</strong></td>
                 </tr>
                 <tr>
                     <td>4</td>
                     <td><strong>Trần Vũ Quang</strong></td>
                     <td>23120346</td>
                     <td>AI Test Automation, Test Suite C# AI-WAD, Comparison</td>
-                    <td><strong>20.0%</strong></td>
+                    <td><strong>25.0%</strong></td>
                 </tr>
             </tbody>
         </table>

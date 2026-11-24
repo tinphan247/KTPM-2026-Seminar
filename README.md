@@ -11,10 +11,10 @@
 
 | STT | Họ và Tên | MSSV | Vai trò chính | Branch Git | Tasks | Giờ thực tế | % Chốt |
 |:---:|---|:---:|---|---|:---:|:---:|:---:|
-| M1 | **Phan Trung Tín** *(Leader)* | 23120372 | Trưởng nhóm, Build `MiniSum.exe`, Lý thuyết, Thiết kế Slide, Handout bài tập, Tích hợp & Đóng gói | `feature/tin-setup-report` | 22 | **42.0h** | **35%** |
+| M1 | **Phan Trung Tín** *(Leader)* | 23120372 | Trưởng nhóm, Build `MiniSum.exe`, Lý thuyết, Thiết kế Slide, Handout bài tập, Tích hợp & Đóng gói | `feature/tin-setup-report` | 22 | **42.0h** | **25%** |
 | M2 | **Nguyễn Lê Quang Kan** | 23120279 | Nghiên cứu & Demo thực hành **Katalon Studio** + Video YouTube | `feature/kan-katalon` | 18 | **30.0h** | **25%** |
-| M3 | **Bùi Quang Tùng** | 20120397 | Nghiên cứu & Demo thực hành **WinAppDriver** + C# NUnit & POM | `feature/tung-winappdriver` | 21 | **24.0h** | **20%** |
-| M4 | **Trần Vũ Quang** | 23120346 | Nghiên cứu **AI in Test Automation** + Test Suite C# & Comparison | `feature/quang-ai-comparison` | 17 | **24.0h** | **20%** |
+| M3 | **Bùi Quang Tùng** | 20120397 | Nghiên cứu & Demo thực hành **WinAppDriver** + C# NUnit & POM | `feature/tung-winappdriver` | 21 | **24.0h** | **25%** |
+| M4 | **Trần Vũ Quang** | 23120346 | Nghiên cứu **AI in Test Automation** + Test Suite C# & Comparison | `feature/quang-ai-comparison` | 17 | **24.0h** | **25%** |
 | **Tổng** | | | | | **78** | **120.0h** | **100%** |
 
 ---

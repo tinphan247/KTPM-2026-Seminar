@@ -112,7 +112,7 @@ Nhóm sẽ sản xuất **3 video demo riêng biệt** tương ứng với 3 n�
 ## 📊 7. CHÍNH SÁCH ĐÁNH GIÁ ĐÓNG GÓP (% CONTRIBUTION)
 
 ### 7.1. Mức cơ sở (Baseline)
-- Phân bổ công việc dựa trên năng lực và trách nhiệm thực tế của 4 thành viên chính thức (Phan Trung Tín, Nguyễn Lê Quang Kan, Bùi Quang Tùng, Trần Vũ Quang).
+- Phân bổ công việc dựa trên năng lực và trách nhiệm thực tế của 4 thành viên chính thức (Phan Trung Tín, Nguyễn Lê Quang Kan, Bùi Quang Tùng, Trần Vũ Quang). Mức cơ sở được thống nhất chia đều: **25.0% cho mỗi thành viên**.
 - Trưởng nhóm đảm nhận thêm nhiệm vụ thiết kế slide thuyết trình thay cho thành viên đã rời nhóm.
 
 ### 7.2. Quy tắc trừ điểm đóng góp:

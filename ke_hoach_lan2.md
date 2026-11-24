@@ -6,14 +6,14 @@
 
 ## 👥 THÔNG TIN THÀNH VIÊN & PHÂN CHIA ĐÓNG GÓP
 
-> **Chính sách phân chia:** Chia đều khối lượng công việc, mỗi thành viên đảm nhận đúng **24.0 giờ làm việc ước tính** và gợi ý mức đóng góp **20.0%** (tổng 100%).
+> **Chính sách phân chia:** Chia đều khối lượng công việc, mỗi thành viên đảm nhận mức đóng góp **25.0%** (tổng 100%).
 
 | STT | Họ và Tên | MSSV | Vai trò chính Lần 2 | Branch Git | Tasks | Giờ thực tế | % Chốt |
 |:---:|---|:---:|---|---|:---:|:---:|:---:|
-| M1 | **Phan Trung Tín** *(Leader)* | 23120372 | Project Lead, Build MiniSum.exe, Bổ sung Theory, Thiết kế Slide (toàn bộ 8 phần), Tích hợp & Đóng gói | `feature/tin-setup-report` | 38 | **42.0h** | **35%** |
+| M1 | **Phan Trung Tín** *(Leader)* | 23120372 | Project Lead, Build MiniSum.exe, Bổ sung Theory, Thiết kế Slide (toàn bộ 8 phần), Tích hợp & Đóng gói | `feature/tin-setup-report` | 38 | **42.0h** | **25%** |
 | M2 | **Nguyễn Lê Quang Kan** | 23120279 | Demo thực nghiệm Katalon Studio & Tài liệu kỹ thuật + Video YouTube | `feature/kan-katalon` | 18 | **30.0h** | **25%** |
-| M3 | **Bùi Quang Tùng** | 20120397 | Demo thực nghiệm WinAppDriver + C# NUnit & POM | `feature/tung-winappdriver` | 21 | **24.0h** | **20%** |
-| M4 | **Trần Vũ Quang** | 23120346 | Thực nghiệm AI Automation & Test Suite C# & Đo đạc Comparison | `feature/quang-ai-comparison` | 17 | **24.0h** | **20%** |
+| M3 | **Bùi Quang Tùng** | 20120397 | Demo thực nghiệm WinAppDriver + C# NUnit & POM | `feature/tung-winappdriver` | 21 | **24.0h** | **25%** |
+| M4 | **Trần Vũ Quang** | 23120346 | Thực nghiệm AI Automation & Test Suite C# & Đo đạc Comparison | `feature/quang-ai-comparison` | 17 | **24.0h** | **25%** |
 | **Tổng** | | | | | **94 tasks** | **120.0h** | **100%** |
 
 ---
@@ -326,10 +326,10 @@ Trước khi nộp, Tín kiểm tra lần lượt:
 
 | Thành viên | MSSV | Vai trò chính | Tasks | Giờ thực tế | % Chốt |
 |---|:---:|---|:---:|:---:|:---:|
-| **Phan Trung Tín** | 23120372 | Leader, Build App, Bổ sung Theory, Thiết kế Slide v1+v2, Handout bài tập, Tích hợp & Nộp | 38 | **42.0h** | **35.0%** |
+| **Phan Trung Tín** | 23120372 | Leader, Build App, Bổ sung Theory, Thiết kế Slide v1+v2, Handout bài tập, Tích hợp & Nộp | 38 | **42.0h** | **25.0%** |
 | **Nguyễn Lê Quang Kan** | 23120279 | Demo thực nghiệm Katalon Studio & Tài liệu kỹ thuật + Video YouTube | 18 | **30.0h** | **25.0%** |
-| **Bùi Quang Tùng** | 20120397 | Demo thực nghiệm WinAppDriver + C# NUnit & POM | 21 | **24.0h** | **20.0%** |
-| **Trần Vũ Quang** | 23120346 | Demo thực nghiệm AI Test Automation & Test Suite C# & Comparison | 17 | **24.0h** | **20.0%** |
+| **Bùi Quang Tùng** | 20120397 | Demo thực nghiệm WinAppDriver + C# NUnit & POM | 21 | **24.0h** | **25.0%** |
+| **Trần Vũ Quang** | 23120346 | Demo thực nghiệm AI Test Automation & Test Suite C# & Comparison | 17 | **24.0h** | **25.0%** |
 | **Tổng cộng** | | | **94 tasks** | **120.0h** | **100.0%** |
 
-> 💡 **Kết luận:** Tỷ lệ đóng góp được ghi nhận công bằng theo kết quả thực tế bàn giao: Phan Trung Tín (35%), Nguyễn Lê Quang Kan (25%), Bùi Quang Tùng (20%), Trần Vũ Quang (20%). Toàn bộ phần việc slide do Tín trực tiếp gánh vác và hoàn thiện.
+> 💡 **Kết luận:** Tỷ lệ đóng góp được chốt chia đều 25.0% cho cả 4 thành viên: Phan Trung Tín (25%), Nguyễn Lê Quang Kan (25%), Bùi Quang Tùng (25%), Trần Vũ Quang (25%). Toàn bộ phần việc slide do Tín trực tiếp gánh vác và hoàn thiện.

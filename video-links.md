@@ -10,7 +10,7 @@
   - Demo 1: Step-by-step cài đặt & mở MiniSum.exe bằng Katalon Studio
   - Demo 2: Record & Playback đăng nhập hợp lệ (admin/1234) + checkpoint xác minh `lblMessage = 'Đăng nhập thành công!'`
   - Demo 3: Data-driven testing với 12 test cases BVA từ file Excel
-- **Trạng thái:** ✅ Đã upload thành công (YouTube Unlisted)
+- **Trạng thái:**  Đã upload thành công (YouTube Unlisted)
 
 ## 2. Demo WinAppDriver – Bùi Quang Tùng
 
@@ -20,7 +20,7 @@
   - Demo 1: Khởi tạo WinAppDriver & WindowsDriver mở `MiniSum.exe`
   - Demo 2: Kiểm thử Đăng nhập theo mô hình Page Object Model (POM) + Chụp màn hình khi kết thúc test
   - Demo 3: Data-Driven Testing (DDT) với bộ dữ liệu BVA (12 test cases) sử dụng NUnit và NPOI
-- **Trạng thái:** ✅ Đã upload thành công (YouTube)
+- **Trạng thái:**  Đã upload thành công (YouTube)
 
 ## 3. Demo AI – Trần Vũ Quang
 
@@ -30,10 +30,10 @@
   - Demo 1: Thiết kế Prompt đặc tả kỹ thuật và sinh 12 ca kiểm thử BVA chuẩn hóa bằng ChatGPT-4, Gemini Advanced, Claude 3.5
   - Demo 2: Kỹ thuật Prompt 2 pha sinh mã nguồn kiểm thử tự động C# NUnit WinAppDriver theo mô hình Page Object Model (POM)
   - Demo 3: Thực thi tự động Test Suite C# `ai-winappdriver` chạy 19 ca BVA trên môi trường thực tế MiniSum, đạt tỷ lệ PASS 100%
-- **Trạng thái:** ✅ Đã upload thành công (YouTube)
+- **Trạng thái:**  Đã upload thành công (YouTube)
 
 ## 4. Tổng hợp & lưu trữ
 
-- [x] Video 1 (Katalon – Kan) – ✅ Đã nộp và kiểm tra
-- [x] Video 2 (WinAppDriver – Tùng) – ✅ Đã nộp và kiểm tra
-- [x] Video 3 (AI – Quang) – ✅ Đã nộp và kiểm tra
+- [x] Video 1 (Katalon – Kan) –  Đã nộp và kiểm tra
+- [x] Video 2 (WinAppDriver – Tùng) –  Đã nộp và kiểm tra
+- [x] Video 3 (AI – Quang) –  Đã nộp và kiểm tra

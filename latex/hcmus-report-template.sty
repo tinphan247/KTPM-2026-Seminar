@@ -1,0 +1,64 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{hcmus-report-template}[2026/10/30 HCMUS Report Template - Nhóm 02]
+
+\RequirePackage[utf8]{vietnam}
+\RequirePackage[a4paper, top=30mm, bottom=25mm, left=20mm, right=20mm]{geometry}
+\RequirePackage{fancyhdr}
+\RequirePackage{graphicx}
+\RequirePackage{hyperref}
+\RequirePackage{booktabs}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{listings}
+\RequirePackage{xcolor}
+\RequirePackage{caption}
+\RequirePackage{titlesec}
+\RequirePackage{tabularx}
+\RequirePackage{float}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+    citecolor=blue
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Code listing style
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.97,0.98,0.99}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+% Caption styling
+\captionsetup{
+    font=small,
+    labelfont=bf,
+    textfont=it,
+    justification=centering,
+    skip=6pt
+}

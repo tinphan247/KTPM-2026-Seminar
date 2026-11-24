@@ -1,6 +1,6 @@
 # Hướng Dẫn Thực Hành Katalon Studio — Bài Tập Cá Nhân 30 Phút Tại Lớp
 
-**Chuyên đề:** Automation Testing cho Desktop Applications · **Nhóm 02 (ZipTool)**  
+**Chuyên đề:** Automation Testing cho Desktop Applications · **Nhóm 02**  
 **Ứng dụng mẫu:** `MiniSum.exe` (WinForms C# .NET 8, tài khoản demo: `admin / 1234`)  
 **Công cụ:** Katalon Studio (phiên bản Free 11.x)  
 **Kho mã nguồn GitHub:** [https://github.com/tinphan247/KTPM-2026-Seminar.git](https://github.com/tinphan247/KTPM-2026-Seminar.git)
@@ -17,7 +17,10 @@
 | **27 – 30'** | Xuất báo cáo HTML / Chụp màn hình và nộp bài | Hoàn thành và nộp bài đúng hạn |
 | *(Tùy chọn)* | **Bonus:** Kiểm thử bắt lỗi ngoài biên trên `MiniSum_v3.exe` | Nhận thêm **+1.0 điểm thưởng** |
 
-> ⏱️ **Mẹo tiết kiệm thời gian (Quy tắc 3 phút):** Kho đối tượng (*Object Repository*) của `MiniSum` đã được tạo sẵn trong thư mục `demo-scripts/katalon/` của repository. Sinh viên không cần dùng Object Spy để dò lại các phần tử mà có thể tái sử dụng ngay!
+<p class="table-caption"><b>Bảng 9.1:</b> <i>Bảng phân bổ các mốc thời gian thực hiện bài tập thực hành cá nhân tại lớp</i></p>
+
+
+>  **Mẹo tiết kiệm thời gian (Quy tắc 3 phút):** Kho đối tượng (*Object Repository*) của `MiniSum` đã được tạo sẵn trong thư mục `demo-scripts/katalon/` của repository. Sinh viên không cần dùng Object Spy để dò lại các phần tử mà có thể tái sử dụng ngay!
 
 ---
 
@@ -42,7 +45,7 @@ cd KTPM-2026-Seminar
 dir case-study-app\*.exe
 ```
 
-> 💡 **Nếu máy bạn không có Git:**
+>  **Nếu máy bạn không có Git:**
 > - Truy cập trực tiếp link GitHub: [https://github.com/tinphan247/KTPM-2026-Seminar](https://github.com/tinphan247/KTPM-2026-Seminar)
 > - Bấm nút màu xanh **Code** $\to$ Chọn **Download ZIP**.
 > - Giải nén file ZIP vào thư mục không dấu (ví dụ `C:\KTPM\KTPM-2026-Seminar`).
@@ -124,7 +127,7 @@ Windows.click(findWindowsObject('Object Repository/MiniSum/Login/btnLogin'))
 // CHECKPOINT 1: Xác minh nhãn lblMessage hiển thị đúng thông báo thành công
 String msgSuccess = Windows.getAttribute(findWindowsObject('Object Repository/MiniSum/Login/lblMessage'), 'Name') ?: Windows.getText(findWindowsObject('Object Repository/MiniSum/Login/lblMessage'))
 assert msgSuccess == 'Dang nhap thanh cong' : "Kỳ vọng 'Dang nhap thanh cong', thực tế nhận: '${msgSuccess}'"
-KeywordUtil.logInfo("✔ Checkpoint Ca 1 PASS: ${msgSuccess}")
+KeywordUtil.logInfo(" Checkpoint Ca 1 PASS: ${msgSuccess}")
 
 // Đóng ứng dụng để chuẩn bị cho Ca 2
 Windows.closeApplication()
@@ -142,14 +145,14 @@ Windows.click(findWindowsObject('Object Repository/MiniSum/Login/btnLogin'))
 // CHECKPOINT 2: Xác minh nhãn lblMessage báo lỗi đăng nhập
 String msgError = Windows.getAttribute(findWindowsObject('Object Repository/MiniSum/Login/lblMessage'), 'Name') ?: Windows.getText(findWindowsObject('Object Repository/MiniSum/Login/lblMessage'))
 assert msgError == 'Sai tai khoan hoac mat khau' : "Kỳ vọng báo lỗi 'Sai tai khoan hoac mat khau', thực tế nhận: '${msgError}'"
-KeywordUtil.logInfo("✔ Checkpoint Ca 2 PASS: ${msgError}")
+KeywordUtil.logInfo(" Checkpoint Ca 2 PASS: ${msgError}")
 
 Windows.closeApplication()
-KeywordUtil.logInfo("🎉 HOÀN THÀNH BÀI 1 - TẤT CẢ CHECKPOINT ĐÃ PASS!")
+KeywordUtil.logInfo(" HOÀN THÀNH BÀI 1 - TẤT CẢ CHECKPOINT ĐÃ PASS!")
 ```
 
 ### 4.3. Chạy thử nghiệm Bài 1
-1. Nhấn nút mũi tên cạnh biểu tượng **Run ▶** trên thanh công cụ $\to$ Chọn **Windows**.
+1. Nhấn nút mũi tên cạnh biểu tượng **Run ** trên thanh công cụ $\to$ Chọn **Windows**.
 2. Quan sát ứng dụng tự động mở lên, điền `admin/1234`, kiểm tra thông báo, đóng và lặp lại với trường hợp sai mật khẩu.
 3. Tab **Log Viewer** bên dưới hiển thị màu xanh lá cây với thông báo `PASSED` $\to$ **Đạt 4.0 điểm!**
 
@@ -193,7 +196,7 @@ Windows.click(findWindowsObject('Object Repository/MiniSum/Calculator/btnSum'))
 // Checkpoint kiểm tra nhãn lblResult
 String resNominal = Windows.getAttribute(findWindowsObject('Object Repository/MiniSum/Calculator/lblResult'), 'Name') ?: Windows.getText(findWindowsObject('Object Repository/MiniSum/Calculator/lblResult'))
 assert resNominal == 'Ket qua: 15 + 25 = 40' : "Sai kết quả, thực tế: ${resNominal}"
-KeywordUtil.logInfo("✔ Ca thông thường PASS: ${resNominal}")
+KeywordUtil.logInfo(" Ca thông thường PASS: ${resNominal}")
 
 // ==========================================
 // 2. KIỂM THỬ BIÊN TRÊN (A = 99, B = 0)
@@ -204,7 +207,7 @@ Windows.click(findWindowsObject('Object Repository/MiniSum/Calculator/btnSum'))
 
 String resUpper = Windows.getAttribute(findWindowsObject('Object Repository/MiniSum/Calculator/lblResult'), 'Name') ?: Windows.getText(findWindowsObject('Object Repository/MiniSum/Calculator/lblResult'))
 assert resUpper == 'Ket qua: 99 + 0 = 99' : "Sai kết quả biên trên: ${resUpper}"
-KeywordUtil.logInfo("✔ Ca biên trên PASS: ${resUpper}")
+KeywordUtil.logInfo(" Ca biên trên PASS: ${resUpper}")
 
 // ==========================================
 // 3. KIỂM THỬ BIÊN DƯỚI (A = -99, B = 0)
@@ -215,14 +218,14 @@ Windows.click(findWindowsObject('Object Repository/MiniSum/Calculator/btnSum'))
 
 String resLower = Windows.getAttribute(findWindowsObject('Object Repository/MiniSum/Calculator/lblResult'), 'Name') ?: Windows.getText(findWindowsObject('Object Repository/MiniSum/Calculator/lblResult'))
 assert resLower == 'Ket qua: -99 + 0 = -99' : "Sai kết quả biên dưới: ${resLower}"
-KeywordUtil.logInfo("✔ Ca biên dưới PASS: ${resLower}")
+KeywordUtil.logInfo(" Ca biên dưới PASS: ${resLower}")
 
 Windows.closeApplication()
-KeywordUtil.logInfo("🎉 HOÀN THÀNH BÀI 2 - ĐẠT ĐIỂM TỐI ĐA BVA!")
+KeywordUtil.logInfo(" HOÀN THÀNH BÀI 2 - ĐẠT ĐIỂM TỐI ĐA BVA!")
 ```
 
 ### 5.3. Chạy kiểm thử Bài 2
-- Nhấn **Run ▶ (Windows)**.
+- Nhấn **Run  (Windows)**.
 - Quan sát kịch bản tự động thực thi 3 phép tính liên tiếp và xác minh các giá trị biên.
 - Log báo **PASSED** $\to$ **Đạt trọn vẹn 6.0 điểm!**
 
@@ -240,7 +243,7 @@ KeywordUtil.logInfo("🎉 HOÀN THÀNH BÀI 2 - ĐẠT ĐIỂM TỐI ĐA BVA!")
   ```groovy
   String errText = Windows.getAttribute(findWindowsObject('Object Repository/MiniSum/Calculator/lblError'), 'Name') ?: Windows.getText(findWindowsObject('Object Repository/MiniSum/Calculator/lblError'))
   assert errText == 'A ngoai mien [-99, 99]' : "Lỗi không đúng: ${errText}"
-  KeywordUtil.logInfo("✔ Bonus Checkpoint PASS: ${errText}")
+  KeywordUtil.logInfo(" Bonus Checkpoint PASS: ${errText}")
   ```
 
 ---
@@ -253,7 +256,7 @@ Sinh viên nộp minh chứng kết quả bằng 1 trong 2 cách đơn giản sa
 1. Trên giao diện Katalon Studio, mở tab **Log Viewer** sau khi chạy xong Bài 1 và Bài 2 (hiện chữ **PASSED màu xanh**).
 2. Chụp toàn bộ màn hình desktop bao gồm:
    - Cây thư mục bên trái thấy rõ tên Test Case mang MSSV của bạn (`TC_Login_<MSSV>`).
-   - Màn hình Log Viewer hiển thị các dòng `✔ Checkpoint PASS`.
+   - Màn hình Log Viewer hiển thị các dòng ` Checkpoint PASS`.
 3. Lưu ảnh với tên `<MSSV>_Katalon_Lab.png` và gửi nộp.
 
 ### Cách 2: Xuất HTML Report từ Katalon
@@ -271,3 +274,6 @@ Sinh viên nộp minh chứng kết quả bằng 1 trong 2 cách đơn giản sa
 | **Lỗi `Cannot find element...`** | Chưa copy đủ thư mục `Object Repository` hoặc tên đối tượng bị lệch. | Kiểm tra cây `Object Repository/MiniSum` trong Katalon. Đảm bảo đã copy từ `demo-scripts/katalon/Object Repository` của repo đã clone. |
 | **Ứng dụng không bật lên được** | Máy thiếu thư viện nền tảng .NET 8 Desktop Runtime. | Cài đặt nhanh **.NET 8 Desktop Runtime (x64)** từ link Microsoft mục 1.1. |
 | **Katalon báo lỗi cổng 4723** | FlaUI WebDriver đang bị kẹt tiến trình cũ trong bộ nhớ. | Mở Task Manager (Ctrl + Shift + Esc) $\to$ Tìm tiến trình `FlaUI.WebDriver.exe` hoặc `WinAppDriver.exe` $\to$ End Task $\to$ Chạy lại Katalon. |
+
+<p class="table-caption"><b>Bảng 9.2:</b> <i>Bảng tổng hợp các lỗi kỹ thuật thường gặp và hướng xử lý nhanh tại lớp</i></p>
+

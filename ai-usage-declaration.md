@@ -2,7 +2,7 @@
 
 - **Người kê khai:** **Phan Trung Tín**
 - **MSSV:** **23120372**
-- **Nhóm:** **Nhóm 02 (ZipTool)**
+- **Nhóm:** **Nhóm 02**
 - **Học kỳ:** **KTPM – 2026**
 - **Ngày:** **30/10/2026**
 
@@ -34,10 +34,10 @@ Trong giai đoạn seminar **Automation Testing for Desktop Applications – L�
 
 | Task / Nội dung | AI hỗ trợ nội dung | Công cụ | Kết quả sau khi kiểm chứng | Đánh giá |
 |---|---|---|---|---|
-| **T08–T12** (docs/02-theory.md – POM, Flaky Test, Wait Strategy, Test Oracle, Recovery Testing) | Gợi ý cấu trúc section, khái niệm, mẫu code tham khảo | ChatGPT-4 / Claude | Nội dung đã được đọc, viết và rà soát lại thủ công; chỉ giữ phần kiến thức đã hiểu và kiểm chứng | ✅ Được phép – có kiểm tra lại |
-| **T03–T06** (Build MiniSum v1/v2/v3, source code WinForms) | Gợi ý hướng đi, debug cú pháp, cấu hình project | GitHub Copilot / ChatGPT-4 | Code đã được viết, build và smoke test bằng `build.ps1` / `Verify-MiniSum.ps1` thực tế | ✅ Được phép – phải chạy thử |
-| **T16** (video-links.md) | Soạn thảo nội dung tài liệu | ChatGPT-4 | Nội dung do lập trình viên tự viết, chỉ tham khảo format | ✅ Được phép |
-| **T17** (git-commit-log.md) | – | – | Tự động sinh từ git log | ✅ Không dùng AI |
+| **T08–T12** (docs/02-theory.md – POM, Flaky Test, Wait Strategy, Test Oracle, Recovery Testing) | Gợi ý cấu trúc section, khái niệm, mẫu code tham khảo | ChatGPT-4 / Claude | Nội dung đã được đọc, viết và rà soát lại thủ công; chỉ giữ phần kiến thức đã hiểu và kiểm chứng |  Được phép – có kiểm tra lại |
+| **T03–T06** (Build MiniSum v1/v2/v3, source code WinForms) | Gợi ý hướng đi, debug cú pháp, cấu hình project | GitHub Copilot / ChatGPT-4 | Code đã được viết, build và smoke test bằng `build.ps1` / `Verify-MiniSum.ps1` thực tế |  Được phép – phải chạy thử |
+| **T16** (video-links.md) | Soạn thảo nội dung tài liệu | ChatGPT-4 | Nội dung do lập trình viên tự viết, chỉ tham khảo format |  Được phép |
+| **T17** (git-commit-log.md) | – | – | Tự động sinh từ git log |  Không dùng AI |
 
 > **Lưu ý:** Mọi kết quả do AI sinh ra (test case, script, tài liệu, config…) phải được **chạy / kiểm tra / rà soát bởi người lập trình
 > thực sự** trước khi đưa vào sản phẩm. AI chỉ là trợ lý hỗ trợ.

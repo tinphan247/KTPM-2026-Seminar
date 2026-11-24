@@ -2,12 +2,12 @@
 
 > **Khoa Công nghệ Thông tin – Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM**  
 > **Môn học:** Software Testing (Kiểm thử phần mềm)  
-> **Nhóm thực hiện:** Nhóm 02 (ZipTool)  
+> **Nhóm thực hiện:** Nhóm 02  
 > **Chủ đề:** Tự động hóa kiểm thử cho ứng dụng Desktop (Windows)
 
 ---
 
-## 👥 Danh sách thành viên nhóm
+##  Danh sách thành viên nhóm
 
 | STT | Họ và Tên | MSSV | Vai trò chính | Branch Git | Tasks | Giờ thực tế | % Chốt |
 |:---:|---|:---:|---|---|:---:|:---:|:---:|
@@ -19,14 +19,14 @@
 
 ---
 
-## 📌 Tài liệu quản lý & Kế hoạch
-- 📋 **Kế hoạch chi tiết Lần 2:** [ke_hoach_lan2.md](ke_hoach_lan2.md) (Chi tiết 94 tasks, timeline 4 ngày)
-- 📊 **Bảng theo dõi Task (Excel):** [Group02_Task_List.xlsx](Group02_Task_List.xlsx) (Dashboard phân bổ giờ & checklist)
-- 📜 **Nội quy & Quy tắc làm việc nhóm:** [QUY_TAC_LAM_VIEC_NHOM.md](QUY_TAC_LAM_VIEC_NHOM.md) (Quy ước Git, daily check-in, % đóng góp)
+##  Tài liệu quản lý & Kế hoạch
+-  **Kế hoạch chi tiết Lần 2:** [ke_hoach_lan2.md](ke_hoach_lan2.md) (Chi tiết 94 tasks, timeline 4 ngày)
+-  **Bảng theo dõi Task (Excel):** [Group02_Task_List.xlsx](Group02_Task_List.xlsx) (Dashboard phân bổ giờ & checklist)
+-  **Nội quy & Quy tắc làm việc nhóm:** [QUY_TAC_LAM_VIEC_NHOM.md](QUY_TAC_LAM_VIEC_NHOM.md) (Quy ước Git, daily check-in, % đóng góp)
 
 ---
 
-## 📁 Cấu trúc thư mục dự án
+##  Cấu trúc thư mục dự án
 
 ```text
 KTPM-2026-Seminar/
@@ -65,7 +65,7 @@ KTPM-2026-Seminar/
 
 ---
 
-## 🛠️ Công nghệ & Công cụ sử dụng
+## ️ Công nghệ & Công cụ sử dụng
 
 | Vai trò | Công cụ |
 |---|---|
@@ -77,7 +77,7 @@ KTPM-2026-Seminar/
 
 ---
 
-## 🚀 Hướng dẫn bắt đầu (Quick Start)
+##  Hướng dẫn bắt đầu (Quick Start)
 
 ### 1. Clone repository
 ```bash
@@ -106,7 +106,7 @@ git push origin feature/[branch-của-bạn]
 
 ---
 
-## 📌 Quy ước Commit (Conventional Commits)
+##  Quy ước Commit (Conventional Commits)
 
 ```
 feat(kan):     Thêm script/tài liệu Katalon mới

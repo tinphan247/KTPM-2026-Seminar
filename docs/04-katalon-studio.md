@@ -17,6 +17,9 @@
   * *Manual View:* Giao diện dạng bảng (Action - Object - Value) trực quan, cho phép xây dựng kịch bản kiểm thử mà không cần viết code.
   * *Script View:* Chế độ code Groovy thuần, cho phép tùy biến logic, xử lý điều kiện, vòng lặp phức tạp.
 
+![Không gian làm việc Katalon Studio](screenshots/katalon/01_katalon_project_explorer.jpg)
+<p class="figure-caption"><b>Hình 4.1:</b> <i>Giao diện làm việc và cấu trúc thư mục dự án kiểm thử trong Katalon Studio</i></p>
+
 ### 1.2 Lý do lựa chọn cho seminar
 1. **Chi phí 0 đồng:** Bản Free không giới hạn thời gian dùng thử (loại bỏ rủi ro hết hạn bản quyền trong quá trình học tập và báo cáo).
 2. **Tích hợp sẵn trọn bộ công cụ:** Có sẵn trình ghi kịch bản (Recorder), trình soi phần tử (Object Spy), kho lưu đối tượng tập trung (Object Repository) và hệ thống báo cáo (Reporting).
@@ -130,6 +133,9 @@ Trong quá trình triển khai thực tế trên ứng dụng mẫu WPF `MiniSum
   * Trong vòng đời phần mềm, giao diện người dùng (UI) biến đổi liên tục (đổi ID, tái cấu trúc layout, thay nhãn hiển thị). Nếu gắn cứng locator trong script, tester phải rà soát và sửa hàng chục đến hàng trăm test case riêng lẻ (hiện tượng *Kịch bản dễ gãy - Flaky Tests*).
   * Với Object Repository, tester chỉ cần cập nhật locator tại một file duy nhất trong kho lưu trữ, toàn bộ các Test Case liên quan sẽ tự động nhận diện theo thông số mới. Đây là sự hiện thực hóa triết lý **Page Object Model (POM)** ở mức công cụ không mã nguồn (Codeless/Low-code), giúp hạn chế nguyên lý *"Nghịch lý thuốc trừ sâu" (Pesticide Paradox)* khi kiểm thử tự động dài hạn.
 
+![Object Repository trong Katalon Studio](screenshots/katalon/03_object_repository_minisum.jpg)
+<p class="figure-caption"><b>Hình 4.2:</b> <i>Kho đối tượng Object Repository lưu trữ định vị phần tử ứng dụng MiniSum</i></p>
+
 #### 2.2.2 Cấu trúc lưu trữ nội bộ của Object Repository trên Desktop (.wrs)
 Khác với kiểm thử Web sử dụng định dạng file `.rs` (`WebElementEntity`), kiểm thử Windows Desktop trong Katalon Studio quy định cấu trúc đối tượng nghiêm ngặt:
 * **Định dạng file:** Mỗi đối tượng kiểm thử Desktop được lưu dưới dạng một file XML có đuôi mở rộng là **`.wrs`** (`WindowsElementEntity`).
@@ -162,6 +168,9 @@ Katalon Studio phối hợp với WinAppDriver để phân giải các thuộc t
 | **NAME** | `Name` attribute (Tiêu đề, Text hiển thị của Control) | **Số 2** | Dễ đọc, nhận diện trực quan theo mắt người dùng. Tuy nhiên rất dễ gãy kịch bản khi ứng dụng hỗ trợ đa ngôn ngữ (i18n) hoặc nội dung nhãn thay đổi. |
 | **CLASS_NAME / CONTROL_TYPE** | `ClassName` (WPF/Win32) / `ControlType` (`Button`, `Edit`, `Text`) | **Số 3** | Thường không mang tính duy nhất trên màn hình; chỉ dùng làm điều kiện lọc kết hợp khi phần tử thiếu `AutomationId`. |
 | **XPATH** | Vị trí cây phân cấp UIA (e.g., `//Window/Grid/StackPanel/Button[1]`) | **Số 4 (Hạn chế)** | Chuỗi XPath trên Windows Desktop rất phức tạp, tốc độ phân giải qua WinAppDriver chậm gấp 3-5 lần; cực kỳ dễ gãy khi lập trình viên thay đổi cấu trúc thẻ bố cục (Grid, StackPanel). |
+
+<p class="table-caption"><b>Bảng 4.1:</b> <i>Các chiến lược định vị phần tử Windows UIA và mức độ ưu tiên trong Katalon Studio</i></p>
+
 
 #### 2.2.4 Các bẫy kỹ thuật thực tế đúc kết từ quá trình thực nghiệm
 Qua quá trình triển khai automation thực tế trên ứng dụng WPF `MiniSum.exe`, nhóm đúc kết được 3 bài học kỹ thuật đặc thù:
@@ -228,6 +237,9 @@ Qua quá trình triển khai automation thực tế trên ứng dụng WPF `Mini
 | **Chụp ảnh Element kèm Object** | **Có (Tích hợp chụp và lưu ảnh)** | Không | Có (Chụp ảnh màn hình kiểm toán) |
 | **Kiểm tra tức thời (Live Highlight)** | **Có (Gọi trực tiếp WinAppDriver để test locator)** | Có (Highlight theo chuột) | Có (Highlight theo chuột) |
 | **Phù hợp sử dụng** | Tester xây dựng kịch bản automation nhanh chóng trong Katalon | Điều tra chuyên sâu cấp hệ thống COM UIA khi Object Spy bị nghẽn | Kiểm tra độ tuân thủ tiêu chuẩn trợ năng (Accessibility) và UI Control |
+
+<p class="table-caption"><b>Bảng 4.2:</b> <i>So sánh tính năng giữa Katalon Windows Object Spy và Microsoft Inspect.exe</i></p>
+
 
 #### 2.3.4 Những lưu ý & Kinh nghiệm thực chiến khi dùng Windows Object Spy
 1. **Tránh bẫy bắt đối tượng cha (Container Selection):**
@@ -303,6 +315,9 @@ graph TD
 | **`@AfterTestCase`** | Ngay sau khi mỗi Test Case kết thúc | Dọn dẹp session, đóng ứng dụng kiểm thử, **chụp ảnh màn hình tự động nếu Test Case bị FAIL/ERROR**. |
 | **`@AfterTestSuite`** | 1 lần duy nhất sau khi toàn bộ Suite hoàn tất | Đóng WinAppDriver, tổng hợp báo cáo HTML/PDF, kích hoạt Webhook gửi thông báo kết quả vào Slack/Email. |
 
+<p class="table-caption"><b>Bảng 4.3:</b> <i>Bảng tra cứu Annotation điều khiển vòng đời kịch bản trong Test Listener</i></p>
+
+
 * **Minh chứng triển khai thực tế trong đồ án (`ScreenshotOnFailure.groovy`):**
   Nhóm đã xây dựng Test Listener chuyên trách chụp ảnh màn hình lỗi, tự động lưu vào thư mục `Reports/Screenshots/` khi có assert thất bại:
   ```groovy
@@ -330,6 +345,9 @@ graph TD
 | **Phạm vi tác động (Scope)** | Cục bộ trong 1 kịch bản kiểm thử | Cụm kịch bản được liên kết trong Suite | Toàn cục xuyên suốt các Suite và Case |
 | **Trách nhiệm chính** | Thực hiện các bước thao tác và kiểm tra kết quả nghiệp vụ (Action & Assertion) | Điều phối luồng chạy, ràng buộc dữ liệu Data-Driven, cấu hình Retry | Giám sát trạng thái, thiết lập/dọn dẹp môi trường (Setup/Teardown), chụp ảnh lỗi tự động |
 | **Khả năng tái sử dụng** | Có thể được gọi độc lập hoặc gọi lồng nhau qua `callTestCase()` | Tái sử dụng để lập lịch chạy định kỳ hoặc đưa vào CI/CD pipeline | Tự động áp dụng cho mọi kịch bản mà không cần gọi tường minh |
+
+<p class="table-caption"><b>Bảng 4.4:</b> <i>Phân cấp cấu trúc tổ chức kịch bản kiểm thử trong Katalon Studio</i></p>
+
 
 ---
 
@@ -391,6 +409,9 @@ graph TD
 ```
 
 ### 5.1 Demo 1: Cài đặt và chuẩn bị môi trường
+
+![Khởi chạy MiniSum trong Katalon](screenshots/katalon/02_minisum_app_launched.jpg)
+<p class="figure-caption"><b>Hình 4.3:</b> <i>Khởi chạy ứng dụng MiniSum thông qua trình điều khiển Windows Driver trên Katalon Studio</i></p>
 * **Mục tiêu:** Chứng minh tính dễ tiếp cận và khả năng kết nối của công cụ.
 * **Các bước chính:**
   1. Kích hoạt *Developer Mode* trên Windows và khởi động `WinAppDriver.exe`.
@@ -398,6 +419,9 @@ graph TD
   3. Dùng *Windows Object Spy* soi vào ứng dụng mẫu (Calculator hoặc ứng dụng WPF) để kiểm tra các thuộc tính UIA (`AutomationId`, `Name`).
 
 ### 5.2 Demo 2: Thao tác cơ bản (Record & Playback + Checkpoint)
+
+![Xác minh Checkpoint](screenshots/katalon/06_checkpoint_verification_pass.jpg)
+<p class="figure-caption"><b>Hình 4.4:</b> <i>Thực thi kịch bản kiểm thử đăng nhập và xác minh Checkpoint nhãn thông báo thành công</i></p>
 * **Mục tiêu:** Minh họa quy trình tự động hóa kịch bản kiểm thử chuẩn (ví dụ: Chức năng Đăng nhập).
 * **Các bước chính:**
   1. Dùng *Windows Recorder* ghi lại thao tác nhập tài khoản, mật khẩu và bấm Submit.
@@ -406,6 +430,12 @@ graph TD
   4. Thực thi kịch bản (Playback) và minh họa trường hợp cố tình kiểm tra sai để xem cơ chế báo lỗi (chụp màn hình và xuất log).
 
 ### 5.3 Demo 3: Kịch bản nâng cao (Data-Driven BVA + Luồng nghiệp vụ)
+
+![Liên kết dữ liệu kiểm thử biên BVA từ file Excel](screenshots/katalon/12_bva_test_suite_data_binding.jpg)
+<p class="figure-caption"><b>Hình 4.5:</b> <i>Thiết lập liên kết dữ liệu kiểm thử giá trị biên (BVA) từ file Excel vào Test Suite</i></p>
+
+![Báo cáo HTML Report tổng quan](screenshots/katalon/15_katalon_html_report_overview.jpg)
+<p class="figure-caption"><b>Hình 4.6:</b> <i>Báo cáo HTML Report trực quan kết quả thực thi kiểm thử tự động trên Katalon Studio</i></p>
 * **Mục tiêu:** Minh họa khả năng chạy kiểm thử tự động với dữ liệu lớn theo kỹ thuật phân tích giá trị biên.
 * **Các bước chính:**
   1. Chuẩn bị file Excel chứa tập dữ liệu biên (ví dụ: các giá trị biên hợp lệ và không hợp lệ của bài toán tính tổng 2 số nguyên).
@@ -421,3 +451,6 @@ graph TD
 | Đội ngũ có cả nhân sự Manual Tester và Automation Tester (cần Dual-view). | Đội ngũ thuần Developer / SDET muốn viết code kiểm thử trực tiếp trong Visual Studio / VS Code (nên chọn WinAppDriver + C# hoặc PyWinAuto). |
 | Cần triển khai nhanh mà không tốn thời gian xây dựng framework từ đầu. | Ứng dụng vẽ hoàn toàn bằng đồ họa custom hoặc công nghệ nhúng không hỗ trợ Windows UIA (cần công cụ so khớp hình ảnh như SikuliX). |
 | Dự án có ngân sách hạn chế (cần bản miễn phí ổn định). | Dự án doanh nghiệp quy mô lớn đòi hỏi kiểm thử đa nền tảng (cả macOS, Linux) cho cùng một mã nguồn desktop. |
+
+<p class="table-caption"><b>Bảng 4.5:</b> <i>Khuyến nghị quyết định lựa chọn công cụ Katalon Studio theo đặc thù dự án</i></p>
+

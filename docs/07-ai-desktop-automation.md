@@ -32,6 +32,7 @@ $\longrightarrow$ **Trí tuệ nhân tạo (AI)**, bao gồm Machine Learning, C
 │ 5. Phân tích nguyên nhân lỗi tự động (Root Cause Analysis)             │
 └────────────────────────────────────────────────────────────────────────┘
 ```
+<p class="figure-caption"><b>Hình 7.1:</b> <i>Sơ đồ 5 hướng ứng dụng AI trọng tâm trong Desktop Automation</i></p>
 
 ### 2.1 Tự phục hồi phần tử định vị (AI-powered Self-Healing Locators)
 * **Vấn đề giải quyết:** Khắc phục tình trạng script bị gãy khi lập trình viên đổi tên ID, thay đổi cấu trúc cây giao diện hoặc cập nhật phiên bản app mới.
@@ -79,6 +80,9 @@ $\longrightarrow$ **Trí tuệ nhân tạo (AI)**, bao gồm Machine Learning, C
 | **Kiểm thử trực quan (Visual Testing)** | Tích hợp thông qua nền tảng đám mây **Katalon TestOps Visual Testing**. | Tích hợp với SDK của các nền tảng Visual AI chuyên dụng: **Applitools Eyes SDK for Windows**. |
 | **Phân tích lỗi thông minh** | Nền tảng TestOps tự động gom nhóm lỗi và phân tích độ ổn định của test case. | Tận dụng các plugin phân tích log AI trên các nền tảng báo cáo (ReportPortal, Allure Report AI). |
 
+<p class="table-caption"><b>Bảng 7.1:</b> <i>Ma trận so sánh năng lực hỗ trợ AI giữa hệ sinh thái Katalon Studio và WinAppDriver</i></p>
+
+
 ---
 
 ---
@@ -100,6 +104,7 @@ Nhóm 02 đã hiện thực hóa toàn bộ các định hướng lý thuyết t
 │ (script-gen-prompt.md) ───► (chatgpt-script-output.cs) ───► (verified-script.cs)│
 └──────────────────────────────────────────────────────────────────────────────────┘
 ```
+<p class="figure-caption"><b>Hình 7.2:</b> <i>Chuỗi thực nghiệm AI Automation của Nhóm 02 trên ứng dụng mẫu MiniSum</i></p>
 
 ### 4.1 AI Demo 1: Tự động hóa thiết kế ca kiểm thử hộp đen BVA
 * **Đầu vào:** Đặc tả kỹ thuật chi tiết tại [`ai/prompts/minisum-spec.md`](../ai/prompts/minisum-spec.md) mô tả quy tắc hai màn hình và miền giới hạn $[-99, 99]$.

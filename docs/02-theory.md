@@ -81,6 +81,7 @@
                                          │  kiểm thử (AUT)  │
                                          └──────────────────┘
 ```
+<p class="figure-caption"><b>Hình 2.1:</b> <i>Sơ đồ tương tác giữa kịch bản kiểm thử và hệ thống phần mềm (AUT)</i></p>
 
 > **Lưu ý:** Kiểm thử tự động không nhằm mục đích thay thế hoàn toàn con người. Tester vẫn giữ vai trò quyết định trong việc xây dựng chiến lược kiểm thử, thiết kế kịch bản kiểm thử biên/ngoại lệ, phân tích nguyên nhân lỗi và bảo trì bộ kịch bản tự động.
 
@@ -120,6 +121,9 @@ Mỗi nền tảng UI trên đòi hỏi cơ chế nhận diện phần tử (Acc
 | **Performance Testing** | Đo lường thời gian khởi động, mức chiếm dụng CPU, RAM, disk I/O | Rất phù hợp (Mức độ cao) |
 | **Usability Testing** | Đánh giá độ thân thiện và trải nghiệm người dùng | Hạn chế (Cần con người đánh giá) |
 | **Exploratory Testing** | Khám phá tự do nhằm tìm lỗi tiềm ẩn ngoài kịch bản định sẵn | Không khả thi (Đòi hỏi tư duy sáng tạo) |
+
+<p class="table-caption"><b>Bảng 2.1:</b> <i>Phân loại các cấp độ kiểm thử phần mềm và mức độ khả thi tự động hóa</i></p>
+
 
 ---
 
@@ -200,6 +204,7 @@ và sinh mã kịch bản
             ▼
 [Xuất báo cáo kết quả kiểm thử (Thành công / Thất bại)]
 ```
+<p class="figure-caption"><b>Hình 2.4:</b> <i>Quy trình chi tiết ghi nhận và phát lại hành vi tương tác giao diện (Record & Playback)</i></p>
 
 ### 4.3 Ưu điểm & Nhược điểm
 
@@ -209,6 +214,12 @@ và sinh mã kịch bản
 | **Thời gian tạo test** | Nhanh chóng tạo được kịch bản kiểm thử ban đầu. | Kịch bản sinh ra thường dài dòng, dư thừa nhiều thao tác thừa. |
 | **Bảo trì** | Thích hợp tạo nhanh smoke test đơn giản ban đầu. | Rất dễ bị gãy (fragile) khi giao diện thay đổi dù chỉ một vị trí nhỏ. |
 | **Xử lý dữ liệu** | Phù hợp với dữ liệu cố định trong kịch bản mẫu. | Không xử lý được dữ liệu động, logic phân nhánh hay vòng lặp. |
+
+<p class="table-caption"><b>Bảng 2.6:</b> <i>Phân tích ưu điểm và nhược điểm khi áp dụng mô hình Page Object Model</i></p>
+
+
+<p class="table-caption"><b>Bảng 2.2:</b> <i>Đánh giá ưu điểm và hạn chế của phương pháp Record & Playback</i></p>
+
 
 ---
 
@@ -259,6 +270,9 @@ Bảng dữ liệu đầu vào (tập tin `login_dataset.xlsx`):
 | TC04: Để trống mật khẩu | `admin_system` | *(để trống)* | Thông báo: "Mật khẩu không được để trống" |
 | TC05: Tài khoản bị khóa | `locked_user` | `User@1234` | Thông báo: "Tài khoản hiện đang bị tạm khóa" |
 
+<p class="table-caption"><b>Bảng 2.3:</b> <i>Thiết kế tập dữ liệu kiểm thử điều khiển bằng dữ liệu (DDT) cho chức năng Đăng nhập</i></p>
+
+
 ---
 
 ## 6. Checkpoints & Assertions
@@ -279,6 +293,9 @@ Bảng dữ liệu đầu vào (tập tin `login_dataset.xlsx`):
 | **Table / DataGrid Checkpoint** | Toàn bộ dữ liệu hiển thị trong bảng | Đối chiếu danh sách 100 giao dịch hiển thị trên DataGridView |
 | **File Checkpoint** | Tệp tin xuất ra từ ứng dụng | So sánh tệp báo cáo PDF/Excel xuất ra với tệp chuẩn mẫu |
 | **Database Checkpoint** | Dữ liệu lưu xuống cơ sở dữ liệu ngầm | Kiểm tra sau khi nhấn Save, một bản ghi mới được thêm vào DB |
+
+<p class="table-caption"><b>Bảng 2.4:</b> <i>Phân loại các hình thức Checkpoint xác minh trong kiểm thử Desktop</i></p>
+
 
 ### 6.3 Kiến trúc Assertion
 
@@ -330,10 +347,17 @@ Kịch bản kiểm thử **không thao tác trực tiếp lên control**, mà g
                                      └───────────────────────────┘
                                         Locator tập trung một nơi
 ```
+<p class="figure-caption"><b>Hình 2.5:</b> <i>So sánh giữa mô hình kiểm thử truyền thống và Page Object Model (POM)</i></p>
 
 ### 7.2 Ví dụ trên MiniSum
 
-Giả sử cần kiểm thử màn hình đăng nhập của `MiniSum.exe`. Cách viết **không có POM** lặp lại locator trong từng test case:
+Giả sử cần kiểm thử màn hình đăng nhập của `MiniSum.exe`.
+
+![Giao diện màn hình Đăng nhập MiniSum](screenshots/app/login.png)
+<p class="figure-caption"><b>Hình 2.2:</b> <i>Giao diện màn hình Đăng nhập của ứng dụng mẫu thực nghiệm MiniSum</i></p>
+
+![Giao diện màn hình Tính tổng MiniSum](screenshots/app/calculator-v2.png)
+<p class="figure-caption"><b>Hình 2.3:</b> <i>Giao diện chức năng Tính tổng và lưu vết lịch sử trên ứng dụng MiniSum v2</i></p> Cách viết **không có POM** lặp lại locator trong từng test case:
 
 ```csharp
 // TC01 - lặp locator ngay trong test
@@ -390,6 +414,9 @@ Khi bản **v2** đổi `btnSum` thành `btnCalculate`, chỉ `CalculatorPage` p
 | **Katalon Studio** | **Object Repository** đóng vai trò kho locator dùng chung; mỗi màn hình là một thư mục (`MiniSum/Login`, `MiniSum/Calculator`). Test case tham chiếu `findWindowsObject('Object Repository/...')` thay vì khai báo locator trực tiếp. Có thể bọc thêm **Custom Keyword** để tạo lớp hành vi (`LoginKeyword.login()`) | POM ở mức “locator tập trung”, chưa phải class đầy đủ |
 | **WinAppDriver + C# NUnit** | Tạo thư mục `PageObjects/` với `LoginPage.cs`, `CalculatorPage.cs`; test case chỉ gọi phương thức | POM đầy đủ theo hướng lập trình hướng đối tượng |
 
+<p class="table-caption"><b>Bảng 2.5:</b> <i>Cơ chế hiện thực mô hình Page Object Model trên các công cụ kiểm thử</i></p>
+
+
 ### 7.4 Ưu điểm, nhược điểm và nguyên tắc áp dụng
 
 | Ưu điểm | Nhược điểm |
@@ -428,6 +455,9 @@ Flaky test là vấn đề nghiêm trọng hơn việc “không có test”, v�
 | Phụ thuộc thứ tự chạy | Chạy riêng thì PASS, chạy cả suite thì FAIL do cửa sổ cũ còn mở |
 | FAIL khi màn hình bị khoá / đổi độ phân giải | Toạ độ click sai khi scale 125% hoặc khi RDP |
 
+<p class="table-caption"><b>Bảng 2.7:</b> <i>Các biểu hiện thực tế đặc trưng của hiện tượng Flaky Test</i></p>
+
+
 ### 8.2 Nguyên nhân gốc rễ
 
 | Nhóm nguyên nhân | Mô tả | Ví dụ |
@@ -438,6 +468,9 @@ Flaky test là vấn đề nghiêm trọng hơn việc “không có test”, v�
 | **Dữ liệu test không cô lập** | Dùng chung file Excel/DB, không reset trước mỗi lần chạy | Lịch sử tính toán (v2) tích luỹ qua nhiều test |
 | **Môi trường** | DPI, độ phân giải, ngôn ngữ, focus, phần mềm diệt virus | Windows scale 150% làm toạ độ click lệch |
 | **Tài nguyên / session** | WinAppDriver session chết, port 4723 bị chiếm | Chạy song song nhiều test trên cùng session |
+
+<p class="table-caption"><b>Bảng 2.8:</b> <i>Phân tích các nhóm nguyên nhân gốc rễ dẫn đến Flaky Test trên Desktop</i></p>
+
 
 ### 8.3 Cách phát hiện
 
@@ -457,6 +490,9 @@ Flaky test là vấn đề nghiêm trọng hơn việc “không có test”, v�
 | **Retry có kiểm soát** | Chỉ retry test đã được xác định là flaky, có ghi log số lần retry | Không dùng retry để “che” lỗi thật |
 | **Quarantine** | Tách test flaky khỏi suite chính, theo dõi riêng cho tới khi sửa xong | Giữ suite chính luôn “xanh” và đáng tin |
 
+<p class="table-caption"><b>Bảng 2.9:</b> <i>Các biện pháp kỹ thuật nhằm phát hiện, cô lập và giảm thiểu Flaky Test</i></p>
+
+
 **Phân biệt flaky test và lỗi thật:**
 
 | Tiêu chí | Flaky Test | Lỗi thật của ứng dụng |
@@ -465,6 +501,9 @@ Flaky test là vấn đề nghiêm trọng hơn việc “không có test”, v�
 | Thay đổi môi trường | Có thể PASS/FAIL khác nhau | FAIL ở mọi môi trường |
 | Log/ảnh chụp | Thường cho thấy script thao tác sai thời điểm | Cho thấy giá trị thực tế sai so với đặc tả |
 | Hành động | Sửa script (wait, locator, isolation) | Báo lỗi cho đội phát triển |
+
+<p class="table-caption"><b>Bảng 2.10:</b> <i>Bộ tiêu chí đối chiếu phân biệt giữa Flaky Test và Lỗi thực sự của ứng dụng</i></p>
+
 
 > **Liên hệ MiniSum:** sau khi đăng nhập thành công, ứng dụng cố ý **giữ màn hình Login thêm 1 giây** trước khi mở cửa sổ Calculator. Nếu script không chờ mà đọc `lblMessage` hoặc tìm `winMain` ngay lập tức, test sẽ flaky. Đây là tình huống được dùng để minh hoạ wait strategy ở mục tiếp theo.
 
@@ -551,6 +590,9 @@ string message = fluentWait.Until(d =>
 | Khả năng chẩn đoán khi FAIL | Thấp (chỉ biết timeout) | Cao | Cao |
 | Khuyến nghị | Chỉ dùng làm lưới an toàn, timeout nhỏ (3–5s) | **Mặc định nên dùng** | Khi cần kiểm soát chi tiết |
 
+<p class="table-caption"><b>Bảng 2.11:</b> <i>So sánh chi tiết các cơ chế chờ và đồng bộ hóa giao diện (Synchronization & Waits)</i></p>
+
+
 **Nguyên tắc thực hành:**
 - **Không dùng `Thread.Sleep`/`delay` cố định** làm cơ chế chờ chính: máy nhanh thì lãng phí, máy chậm vẫn flaky. Chỉ dùng khi thật sự cần (ví dụ chờ animation ngắn) và phải ghi chú lý do.
 - Mỗi bước chờ nên gắn với **một điều kiện nghiệp vụ** (“cửa sổ Calculator đã mở”, “lblResult đã có nội dung”) thay vì “chờ 2 giây”.
@@ -594,6 +636,9 @@ Test Case: nhập A = 5, B = 7, nhấn TINH TONG
 | **Consistency oracle** (nhất quán) | So sánh giữa hai lần chạy / hai phiên bản / hai môi trường | Cùng bộ dữ liệu BVA, kết quả của v1 và v3 phải giống nhau ở miền hợp lệ |
 | **Human oracle** (con người) | Chuyên gia/người dùng đánh giá bằng mắt | Kiểm tra bố cục, màu sắc, thông báo lỗi có dễ hiểu không |
 | **Metamorphic oracle** (biến đổi) | So sánh quan hệ giữa các lần chạy có dữ liệu biến đổi | Đổi chỗ A và B thì tổng không đổi: `f(a,b) = f(b,a)` |
+
+<p class="table-caption"><b>Bảng 2.12:</b> <i>Phân loại các dạng Test Oracle và nguồn dữ liệu đối chiếu kết quả mong đợi</i></p>
+
 
 ### 10.3 Test Oracle trong kiểm thử tự động
 
@@ -658,6 +703,9 @@ Tầng thứ hai đặc biệt quan trọng với desktop automation vì WinAppD
 | Popup/dialog bất ngờ | Click trúng sai phần tử, kết quả sai | Ảnh chụp màn hình cho thấy dialog lạ |
 | Cửa sổ cũ còn mở | Mở thêm instance, đọc nhầm window | Nhiều cửa sổ cùng title trong danh sách |
 | Dữ liệu bẩn từ lần chạy trước | Kết quả phụ thuộc lịch sử (ví dụ danh sách lịch sử v2) | Kết quả khác nhau giữa lần chạy đầu và lần sau |
+
+<p class="table-caption"><b>Bảng 2.13:</b> <i>Các kịch bản sự cố bất thường và chiến lược phục hồi trạng thái (Recovery Testing)</i></p>
+
 
 ### 11.3 Cơ chế phục hồi trong automation
 
@@ -804,6 +852,9 @@ Quy trình bán tự động (Semi-Automated Flow):
 | **Khả năng tích hợp CI/CD** | Tích hợp hoàn hảo vào đường ống tự động | Không tích hợp hoàn toàn được vì cần tương tác người |
 | **Ứng dụng chính** | Regression Testing, Smoke Testing, Performance Testing | Usability Testing, Exploratory Testing, Phần cứng đặc thù |
 
+<p class="table-caption"><b>Bảng 2.14:</b> <i>So sánh mức độ kiểm thử tự động hóa hoàn toàn và bán tự động</i></p>
+
+
 ---
 
 ## 13. Ưu điểm & Nhược điểm của Automation Testing
@@ -820,6 +871,9 @@ Quy trình bán tự động (Semi-Automated Flow):
 | 6 | **Vận hành không giới hạn 24/7** | Có thể lên lịch chạy ngoài giờ làm việc hoặc trên các máy chủ tự động mà không cần nhân sự trực tiếp. |
 | 7 | **Hỗ trợ tối đa cho CI/CD** | Cung cấp phản hồi tức thì (fast feedback loop) cho đội ngũ phát triển sau mỗi lần tích hợp mã nguồn. |
 
+<p class="table-caption"><b>Bảng 2.15:</b> <i>Phân tích giá trị kinh tế và kỹ thuật của việc áp dụng kiểm thử tự động Desktop</i></p>
+
+
 ### Nhược điểm
 
 | STT | Nhược điểm | Thách thức thực tế |
@@ -830,6 +884,9 @@ Quy trình bán tự động (Semi-Automated Flow):
 | 4 | **Yêu cầu kỹ năng lập trình chuyên sâu** | Đòi hỏi kiểm thử viên phải có tư duy phát triển phần mềm, hiểu về cấu trúc ứng dụng và kỹ thuật viết mã sạch. |
 | 5 | **Nguy cơ lỗi sai lệch (False Positives / Negatives)** | Kịch bản có thể báo lỗi do thời gian chờ không chuẩn (chứ không phải app lỗi), làm mất thời gian điều tra nguyên nhân. |
 | 6 | **Thời gian hoàn vốn (ROI) cần độ trễ** | Không mang lại hiệu quả ngay lập tức cho các dự án ngắn hạn, quy mô nhỏ hoặc đang trong giai đoạn thử nghiệm ý tưởng. |
+
+<p class="table-caption"><b>Bảng 2.16:</b> <i>Các rào cản và thách thức thực tế khi triển khai kiểm thử tự động Desktop</i></p>
+
 
 ---
 
@@ -874,6 +931,9 @@ NÊN ÁP DỤNG AUTOMATION                      KHÔNG NÊN ÁP DỤNG AUTOMATIO
 | **Universal Windows Platform** | UWP | Nền tảng ứng dụng đa thiết bị hiện đại của Microsoft Windows |
 | **UI Automation** | UIA | Bộ giao diện lập trình ứng dụng (API) của Windows cho phép đọc và điều khiển thành phần UI |
 | **Return on Investment** | ROI | Tỷ số hoàn vốn đầu tư, đo lường hiệu quả kinh tế của việc áp dụng automation |
+
+<p class="table-caption"><b>Bảng 2.17:</b> <i>Bảng tra cứu thuật ngữ chuyên ngành kiểm thử tự động ứng dụng Desktop</i></p>
+
 
 ---
 

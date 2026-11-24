@@ -1,10 +1,10 @@
-# KẾ HOẠCH CHI TIẾT SEMINAR LẦN 2 – NHÓM 02 (ZipTool)
+# KẾ HOẠCH CHI TIẾT SEMINAR LẦN 2 – Nhóm 02
 ## Chủ đề: Automation Testing for Desktop Applications
 ## Deadline nộp: Trước 31/10/2026 (mục tiêu nội bộ: 30/10 sáng)
 
 ---
 
-## 👥 THÔNG TIN THÀNH VIÊN & PHÂN CHIA ĐÓNG GÓP
+##  THÔNG TIN THÀNH VIÊN & PHÂN CHIA ĐÓNG GÓP
 
 > **Chính sách phân chia:** Chia đều khối lượng công việc, mỗi thành viên đảm nhận mức đóng góp **25.0%** (tổng 100%).
 
@@ -18,122 +18,122 @@
 
 ---
 
-## 📋 TỔNG QUAN TÌNH HÌNH (TRƯỚC LẦN 2)
+##  TỔNG QUAN TÌNH HÌNH (TRƯỚC LẦN 2)
 
 | Hạng mục | Trạng thái Lần 1 | Cần làm thêm Lần 2 |
 |---|---|---|
-| Lý thuyết cơ bản (Theory) | ✅ Hoàn thành | 🔧 Bổ sung POM, Flaky Test, Explicit Wait (GV feedback) |
-| Khảo sát Tool Survey | ✅ Hoàn thành | 🔧 Bổ sung nguyên lý hoạt động chi tiết của tool demo |
-| So sánh Tool (Comparison) | ✅ Hoàn thành | 🔧 Cập nhật số liệu thực từ thực nghiệm |
-| App mẫu MiniSum.exe | ❌ Chưa có | 🔴 Build mới WinForms C# (v1 + v2 + v3) |
-| Demo Katalon Studio | ❌ Chưa có | 🔴 3 kịch bản: Record & Playback, Checkpoint, Data-driven |
-| Demo WinAppDriver | ❌ Chưa có | 🔴 3 kịch bản: Basic, Assert + Screenshot, Data-driven POM |
-| AI Demo thực tế | ❌ Chưa có | 🔴 2 kịch bản: Sinh test case BVA, Sinh test script |
-| Video demo (YouTube) | ❌ Chưa có | 🔴 3 video riêng (Katalon / WinAppDriver / AI) |
-| Slide PowerPoint | ❌ Chưa có | 🔴 Toàn bộ 8 phần, font to, nền trắng, biểu đồ |
-| Git repo + commit log | ✅ Đã setup (27/10) | 🔧 Mỗi thành viên push lên branch riêng |
-| AI usage declaration | ❌ Chưa có | 🔴 Kê khai đầy đủ theo quy định môn học |
-| Báo cáo (report.md) | ✅ Bản thảo | 🔧 Cập nhật + tích hợp nội dung mới + export PDF |
+| Lý thuyết cơ bản (Theory) |  Hoàn thành |  Bổ sung POM, Flaky Test, Explicit Wait (GV feedback) |
+| Khảo sát Tool Survey |  Hoàn thành |  Bổ sung nguyên lý hoạt động chi tiết của tool demo |
+| So sánh Tool (Comparison) |  Hoàn thành |  Cập nhật số liệu thực từ thực nghiệm |
+| App mẫu MiniSum.exe |  Chưa có |  Build mới WinForms C# (v1 + v2 + v3) |
+| Demo Katalon Studio |  Chưa có |  3 kịch bản: Record & Playback, Checkpoint, Data-driven |
+| Demo WinAppDriver |  Chưa có |  3 kịch bản: Basic, Assert + Screenshot, Data-driven POM |
+| AI Demo thực tế |  Chưa có |  2 kịch bản: Sinh test case BVA, Sinh test script |
+| Video demo (YouTube) |  Chưa có |  3 video riêng (Katalon / WinAppDriver / AI) |
+| Slide PowerPoint |  Chưa có |  Toàn bộ 8 phần, font to, nền trắng, biểu đồ |
+| Git repo + commit log |  Đã setup (27/10) |  Mỗi thành viên push lên branch riêng |
+| AI usage declaration |  Chưa có |  Kê khai đầy đủ theo quy định môn học |
+| Báo cáo (report.md) |  Bản thảo |  Cập nhật + tích hợp nội dung mới + export PDF |
 
 ---
 
-## 📅 TIMELINE 4 NGÀY (27–30/10)
+##  TIMELINE 4 NGÀY (27–30/10)
 
-### 🗓️ NGÀY 1 – THỨ 3 (27/10): SETUP NỀN TẢNG *(Hôm nay)*
+### ️ NGÀY 1 – THỨ 3 (27/10): SETUP NỀN TẢNG *(Hôm nay)*
 
 > **Mục tiêu:** Git repo sẵn sàng, mỗi người tạo branch, Tín bắt tay build MiniSum.
 
 | Người | Task | Priority | Output |
 |---|---|:---:|---|
-| **Tín** | ✅ Init Git repo + push nội dung Lần 1 | 🔴 HIGH | Repo trên GitHub đã có |
-| **Tín** | Tạo branch cho từng thành viên | 🔴 HIGH | 5 branches sẵn sàng |
-| **Tín** | Bắt đầu code MiniSum v1 WinForms (Login + Calculator) | 🔴 HIGH | Project .sln khởi tạo |
-| **Kan** | Clone repo, tạo branch `feature/kan-katalon`, cài Katalon Studio | 🟡 MED | Katalon Studio chạy được |
-| **Tùng** | Clone repo, tạo branch `feature/tung-winappdriver`, cài WinAppDriver + Accessibility Insights | 🟡 MED | WinAppDriver.exe chạy được |
-| **Quang** | Clone repo, tạo branch `feature/quang-ai-comparison`, đọc kỹ `07-ai-desktop-automation.md` + chuẩn bị prompt template | 🟡 MED | File `ai/prompts/minisum-spec.md` |
-| **Tín** | Thiết kế Slide PowerPoint toàn bộ (v1 15 slide + v2 34 slide) thay thế M5 | 🔴 HIGH | `slides/seminar-group02-v2.pptx` + PDF |
+| **Tín** |  Init Git repo + push nội dung Lần 1 |  HIGH | Repo trên GitHub đã có |
+| **Tín** | Tạo branch cho từng thành viên |  HIGH | 5 branches sẵn sàng |
+| **Tín** | Bắt đầu code MiniSum v1 WinForms (Login + Calculator) |  HIGH | Project .sln khởi tạo |
+| **Kan** | Clone repo, tạo branch `feature/kan-katalon`, cài Katalon Studio |  MED | Katalon Studio chạy được |
+| **Tùng** | Clone repo, tạo branch `feature/tung-winappdriver`, cài WinAppDriver + Accessibility Insights |  MED | WinAppDriver.exe chạy được |
+| **Quang** | Clone repo, tạo branch `feature/quang-ai-comparison`, đọc kỹ `07-ai-desktop-automation.md` + chuẩn bị prompt template |  MED | File `ai/prompts/minisum-spec.md` |
+| **Tín** | Thiết kế Slide PowerPoint toàn bộ (v1 15 slide + v2 34 slide) thay thế M5 |  HIGH | `slides/seminar-group02-v2.pptx` + PDF |
 
 ---
 
-### 🗓️ NGÀY 2 – THỨ 4 (28/10): DEMO CHÍNH + LÝ THUYẾT BỔ SUNG
+### ️ NGÀY 2 – THỨ 4 (28/10): DEMO CHÍNH + LÝ THUYẾT BỔ SUNG
 
 > **Mục tiêu:** MiniSum.exe sẵn sàng, triển khai các kịch bản demo chính.
 
 | Người | Task | Priority | Output |
 |---|---|:---:|---|
-| **Tín** | Hoàn thiện MiniSum v1 (Login + Calculator + Validation) | 🔴 HIGH | `MiniSum.exe` chạy được, commit lên branch |
-| **Tín** | Build MiniSum v2 (đổi `btnSum` → `btnCalculate`, thêm Dashboard/History) | 🔴 HIGH | `MiniSum_v2.exe` commit lên branch |
-| **Tín** | Bổ sung vào `docs/02-theory.md`: POM đầy đủ + Flaky Test + Explicit vs Implicit Wait | 🔴 HIGH | Section mới trong `02-theory.md` |
-| **Tín** | Bổ sung vào `docs/02-theory.md`: Test Oracle + Recovery Testing | 🟡 MED | Section mới trong `02-theory.md` |
-| **Kan** | Demo Katalon 1: Cài đặt + cấu hình WinAppDriver + mở MiniSum bằng Katalon | 🔴 HIGH | Screenshot từng bước |
-| **Kan** | Demo Katalon 2: Record & Playback kịch bản đăng nhập hợp lệ + Checkpoint `lblMessage` | 🔴 HIGH | Script Katalon + ảnh PASS |
-| **Kan** | Bắt đầu viết bổ sung nguyên lý Katalon: Object Repository, Object Spy, Session init vào `docs/04-katalon-studio.md` | 🟡 MED | Draft section kỹ thuật |
-| **Tùng** | Demo WinAppDriver 1: Mở MiniSum.exe bằng `AppiumDriver`, kiểm tra session khởi tạo | 🔴 HIGH | Script C# cơ bản chạy được |
-| **Tùng** | Demo WinAppDriver 2: Viết test login hợp lệ + `Assert.AreEqual` + test login sai | 🔴 HIGH | Script C# + ảnh PASS/FAIL |
-| **Tùng** | Bắt đầu viết bổ sung nguyên lý WinAppDriver: UIAutomation, WinAPI, cách tìm element vào `docs/05-winappdriver.md` | 🟡 MED | Draft section kỹ thuật |
-| **Quang** | AI Demo 1: Dùng ChatGPT/Gemini sinh 12 test case BVA từ đặc tả MiniSum | 🔴 HIGH | File `ai/output/bva-testcases.xlsx` |
-| **Quang** | Lưu lại toàn bộ prompt đã dùng vào `ai/prompts/testcase-bva-prompt.md` | 🟡 MED | File prompt hoàn chỉnh |
-| **Tín** | Điền nội dung Phần 1–3 vào Slide (Introduction + Theory + Tool Survey) | 🟡 MED | Slide 1-3 hoàn chỉnh |
+| **Tín** | Hoàn thiện MiniSum v1 (Login + Calculator + Validation) |  HIGH | `MiniSum.exe` chạy được, commit lên branch |
+| **Tín** | Build MiniSum v2 (đổi `btnSum` → `btnCalculate`, thêm Dashboard/History) |  HIGH | `MiniSum_v2.exe` commit lên branch |
+| **Tín** | Bổ sung vào `docs/02-theory.md`: POM đầy đủ + Flaky Test + Explicit vs Implicit Wait |  HIGH | Section mới trong `02-theory.md` |
+| **Tín** | Bổ sung vào `docs/02-theory.md`: Test Oracle + Recovery Testing |  MED | Section mới trong `02-theory.md` |
+| **Kan** | Demo Katalon 1: Cài đặt + cấu hình WinAppDriver + mở MiniSum bằng Katalon |  HIGH | Screenshot từng bước |
+| **Kan** | Demo Katalon 2: Record & Playback kịch bản đăng nhập hợp lệ + Checkpoint `lblMessage` |  HIGH | Script Katalon + ảnh PASS |
+| **Kan** | Bắt đầu viết bổ sung nguyên lý Katalon: Object Repository, Object Spy, Session init vào `docs/04-katalon-studio.md` |  MED | Draft section kỹ thuật |
+| **Tùng** | Demo WinAppDriver 1: Mở MiniSum.exe bằng `AppiumDriver`, kiểm tra session khởi tạo |  HIGH | Script C# cơ bản chạy được |
+| **Tùng** | Demo WinAppDriver 2: Viết test login hợp lệ + `Assert.AreEqual` + test login sai |  HIGH | Script C# + ảnh PASS/FAIL |
+| **Tùng** | Bắt đầu viết bổ sung nguyên lý WinAppDriver: UIAutomation, WinAPI, cách tìm element vào `docs/05-winappdriver.md` |  MED | Draft section kỹ thuật |
+| **Quang** | AI Demo 1: Dùng ChatGPT/Gemini sinh 12 test case BVA từ đặc tả MiniSum |  HIGH | File `ai/output/bva-testcases.xlsx` |
+| **Quang** | Lưu lại toàn bộ prompt đã dùng vào `ai/prompts/testcase-bva-prompt.md` |  MED | File prompt hoàn chỉnh |
+| **Tín** | Điền nội dung Phần 1–3 vào Slide (Introduction + Theory + Tool Survey) |  MED | Slide 1-3 hoàn chỉnh |
 
 ---
 
-### 🗓️ NGÀY 3 – THỨ 5 (29/10): HOÀN THIỆN + QUAY VIDEO
+### ️ NGÀY 3 – THỨ 5 (29/10): HOÀN THIỆN + QUAY VIDEO
 
 > **Mục tiêu:** Tất cả demo xong, quay video, Tín bắt đầu tích hợp báo cáo.
 
 | Người | Task | Priority | Output |
 |---|---|:---:|---|
-| **Tín** | Bổ sung nguyên lý hoạt động Katalon (tham khảo từ Kan) vào `04-katalon-studio.md` | 🟡 MED | Section kỹ thuật hoàn chỉnh |
-| **Tín** | Bổ sung nguyên lý hoạt động WinAppDriver (tham khảo từ Tùng) vào `05-winappdriver.md` | 🟡 MED | Section kỹ thuật hoàn chỉnh |
-| **Tín** | Cập nhật `06-comparison.md` với số liệu thực (lấy từ Quang) | 🟡 MED | `06-comparison.md` cập nhật |
-| **Tín** | Tổng hợp `report_v2.md` tích hợp toàn bộ nội dung mới | 🔴 HIGH | `report_v2.md` commit |
-| **Kan** | Demo Katalon 2 (tiếp): Thêm ca đăng nhập sai + Checkpoint (`lblMessage` → "Sai!") | 🔴 HIGH | Script + ảnh FAIL có checkpoint |
-| **Kan** | Demo Katalon 3: Data-driven Testing từ file Excel BVA (đọc file từ Quang) | 🔴 HIGH | Script DDT + Report HTML |
-| **Kan** | Hoàn thiện phần nguyên lý Katalon trong `docs/04-katalon-studio.md` + chụp ảnh mô tả kiến trúc | 🟡 MED | Section kỹ thuật hoàn chỉnh |
-| **Kan** | Quay video Demo Katalon (3 demo nối tiếp), thuyết minh tiếng Việt, nền trắng, chữ dễ đọc | 🔴 HIGH | Video Demo Katalon |
-| **Tùng** | Demo WinAppDriver 3: Data-driven với `[TestCaseSource]` đọc từ file Excel BVA | 🔴 HIGH | Script C# DDT + kết quả |
-| **Tùng** | Viết Page Object Model cho MiniSum: `LoginPage.cs` + `CalculatorPage.cs` | 🟡 MED | 2 file .cs trong repo |
-| **Tùng** | Hoàn thiện phần nguyên lý WinAppDriver trong `docs/05-winappdriver.md` + ảnh kiến trúc | 🟡 MED | Section kỹ thuật hoàn chỉnh |
-| **Tùng** | Quay video Demo WinAppDriver (3 demo nối tiếp), thuyết minh tiếng Việt | 🔴 HIGH | Video Demo WinAppDriver |
-| **Quang** | AI Demo 2: Dùng ChatGPT/Gemini sinh test script C# / Katalon từ các test case đã có | 🔴 HIGH | Script AI-generated + đánh giá chất lượng |
-| **Quang** | Đo thời gian: so sánh "viết test thủ công" vs "AI sinh" (đo thực tế 3 lượt) | 🔴 HIGH | Bảng số liệu thực nghiệm |
-| **Quang** | Cập nhật `docs/06-comparison.md`: thêm cột "AI hỗ trợ", số liệu thực (thời gian, LOC, tỷ lệ phát hiện lỗi) | 🔴 HIGH | `06-comparison.md` v2 |
-| **Quang** | Quay video AI Demo (prompt → sinh test case → sinh script → chạy kiểm tra kết quả) | 🔴 HIGH | Video Demo AI |
-| **Tín** | Điền nội dung Phần 4–5 vào Slide (Katalon + WinAppDriver), chèn ảnh từ Kan và Tùng gửi | 🔴 HIGH | Slide 4-5 hoàn chỉnh |
-| **Tín** | Điền nội dung Phần 6–8 vào Slide (Comparison + AI + Exercise) | 🟡 MED | Slide 6-8 hoàn chỉnh |
+| **Tín** | Bổ sung nguyên lý hoạt động Katalon (tham khảo từ Kan) vào `04-katalon-studio.md` |  MED | Section kỹ thuật hoàn chỉnh |
+| **Tín** | Bổ sung nguyên lý hoạt động WinAppDriver (tham khảo từ Tùng) vào `05-winappdriver.md` |  MED | Section kỹ thuật hoàn chỉnh |
+| **Tín** | Cập nhật `06-comparison.md` với số liệu thực (lấy từ Quang) |  MED | `06-comparison.md` cập nhật |
+| **Tín** | Tổng hợp `report_v2.md` tích hợp toàn bộ nội dung mới |  HIGH | `report_v2.md` commit |
+| **Kan** | Demo Katalon 2 (tiếp): Thêm ca đăng nhập sai + Checkpoint (`lblMessage` → "Sai!") |  HIGH | Script + ảnh FAIL có checkpoint |
+| **Kan** | Demo Katalon 3: Data-driven Testing từ file Excel BVA (đọc file từ Quang) |  HIGH | Script DDT + Report HTML |
+| **Kan** | Hoàn thiện phần nguyên lý Katalon trong `docs/04-katalon-studio.md` + chụp ảnh mô tả kiến trúc |  MED | Section kỹ thuật hoàn chỉnh |
+| **Kan** | Quay video Demo Katalon (3 demo nối tiếp), thuyết minh tiếng Việt, nền trắng, chữ dễ đọc |  HIGH | Video Demo Katalon |
+| **Tùng** | Demo WinAppDriver 3: Data-driven với `[TestCaseSource]` đọc từ file Excel BVA |  HIGH | Script C# DDT + kết quả |
+| **Tùng** | Viết Page Object Model cho MiniSum: `LoginPage.cs` + `CalculatorPage.cs` |  MED | 2 file .cs trong repo |
+| **Tùng** | Hoàn thiện phần nguyên lý WinAppDriver trong `docs/05-winappdriver.md` + ảnh kiến trúc |  MED | Section kỹ thuật hoàn chỉnh |
+| **Tùng** | Quay video Demo WinAppDriver (3 demo nối tiếp), thuyết minh tiếng Việt |  HIGH | Video Demo WinAppDriver |
+| **Quang** | AI Demo 2: Dùng ChatGPT/Gemini sinh test script C# / Katalon từ các test case đã có |  HIGH | Script AI-generated + đánh giá chất lượng |
+| **Quang** | Đo thời gian: so sánh "viết test thủ công" vs "AI sinh" (đo thực tế 3 lượt) |  HIGH | Bảng số liệu thực nghiệm |
+| **Quang** | Cập nhật `docs/06-comparison.md`: thêm cột "AI hỗ trợ", số liệu thực (thời gian, LOC, tỷ lệ phát hiện lỗi) |  HIGH | `06-comparison.md` v2 |
+| **Quang** | Quay video AI Demo (prompt → sinh test case → sinh script → chạy kiểm tra kết quả) |  HIGH | Video Demo AI |
+| **Tín** | Điền nội dung Phần 4–5 vào Slide (Katalon + WinAppDriver), chèn ảnh từ Kan và Tùng gửi |  HIGH | Slide 4-5 hoàn chỉnh |
+| **Tín** | Điền nội dung Phần 6–8 vào Slide (Comparison + AI + Exercise) |  MED | Slide 6-8 hoàn chỉnh |
 
 ---
 
-### 🗓️ NGÀY 4 – THỨ 6 SÁNG (30/10): ĐÓNG GÓI + NỘP BÀI
+### ️ NGÀY 4 – THỨ 6 SÁNG (30/10): ĐÓNG GÓI + NỘP BÀI
 
 > **Mục tiêu:** Nộp bài trước 18:00.
 
 | Người | Task | Priority | Output |
 |---|---|:---:|---|
-| **Kan** | Merge branch `feature/kan-katalon` → `main`, review xung đột | 🔴 HIGH | Code trên main |
-| **Tùng** | Merge branch `feature/tung-winappdriver` → `main`, review xung đột | 🔴 HIGH | Code trên main |
-| **Quang** | Merge branch `feature/quang-ai-comparison` → `main` | 🔴 HIGH | Code trên main |
-| **Tín** | Hoàn thiện slide v2, upload file `.pptx` + export PDF | 🔴 HIGH | Slide trên main |
-| **Tín** | Upload 3 video lên YouTube (unlisted) | 🔴 HIGH | 3 link YouTube |
-| **Tín** | Tạo `video-links.md` với đầy đủ 3 link + mô tả | 🔴 HIGH | File commit trên main |
-| **Tín** | Chạy `git log --oneline --all > git-commit-log.md` | 🟡 MED | File `git-commit-log.md` |
-| **Tín** | Viết `ai-usage-declaration.md` (kê khai AI đã dùng của cả nhóm) | 🔴 HIGH | File AI declaration |
-| **Tín** | Export `report_v2.md` → `report_v2.pdf` | 🔴 HIGH | File PDF |
-| **Tín** | Đóng gói ZIP: kiểm tra size ≤20MB/file, đặt tên đúng `Group02_ZipTool_Lan2.zip` | 🔴 HIGH | File ZIP nộp bài |
-| **Tín** | Nộp bài lên hệ thống | 🔴 HIGH | ✅ Done |
-| **Tín** | Thiết kế đẹp: kiểm tra font to, nền trắng, chữ đen, thêm biểu đồ so sánh | 🟡 MED | Slide final |
-| **Tín** | Export Slide → PDF, đặt tên `seminar-slides-v2.pdf` | 🔴 HIGH | File PDF |
+| **Kan** | Merge branch `feature/kan-katalon` → `main`, review xung đột |  HIGH | Code trên main |
+| **Tùng** | Merge branch `feature/tung-winappdriver` → `main`, review xung đột |  HIGH | Code trên main |
+| **Quang** | Merge branch `feature/quang-ai-comparison` → `main` |  HIGH | Code trên main |
+| **Tín** | Hoàn thiện slide v2, upload file `.pptx` + export PDF |  HIGH | Slide trên main |
+| **Tín** | Upload 3 video lên YouTube (unlisted) |  HIGH | 3 link YouTube |
+| **Tín** | Tạo `video-links.md` với đầy đủ 3 link + mô tả |  HIGH | File commit trên main |
+| **Tín** | Chạy `git log --oneline --all > git-commit-log.md` |  MED | File `git-commit-log.md` |
+| **Tín** | Viết `ai-usage-declaration.md` (kê khai AI đã dùng của cả nhóm) |  HIGH | File AI declaration |
+| **Tín** | Export `report_v2.md` → `report_v2.pdf` |  HIGH | File PDF |
+| **Tín** | Đóng gói ZIP: kiểm tra size ≤20MB/file, đặt tên đúng `Group02_ZipTool_Lan2.zip` |  HIGH | File ZIP nộp bài |
+| **Tín** | Nộp bài lên hệ thống |  HIGH |  Done |
+| **Tín** | Thiết kế đẹp: kiểm tra font to, nền trắng, chữ đen, thêm biểu đồ so sánh |  MED | Slide final |
+| **Tín** | Export Slide → PDF, đặt tên `seminar-slides-v2.pdf` |  HIGH | File PDF |
 
 ---
 
-## 📋 DANH SÁCH CHI TIẾT 94 TASKS (CHIA ĐỀU 24.0h/NGƯỜI)
+##  DANH SÁCH CHI TIẾT 94 TASKS (CHIA ĐỀU 24.0h/NGƯỜI)
 
-### 🧑‍💻 M1 – PHAN TRUNG TÍN (23120372) – Leader + Dev + Báo cáo
+### ‍ M1 – PHAN TRUNG TÍN (23120372) – Leader + Dev + Báo cáo
 **Tổng: 22 tasks – 24.0h – 20% đóng góp**
 
 | # | Task | Giờ | Output |
 |---|---|:---:|---|
-| T01 | ✅ Init Git repo, remote origin, push nội dung Lần 1 | 1.0 | Repo GitHub sẵn sàng |
+| T01 |  Init Git repo, remote origin, push nội dung Lần 1 | 1.0 | Repo GitHub sẵn sàng |
 | T02 | Tạo 5 branches riêng cho từng thành viên | 0.5 | 5 branches tạo sẵn |
 | T03 | Build MiniSum v1: Login screen (user=admin/pass=1234) + Calculate screen (a+b=?) | 3.0 | `MiniSum.exe` chạy, có `btnLogin`, `txtUser`, `txtPass`, `btnSum`, `lblResult` |
 | T04 | Build MiniSum v2: Đổi `btnSum` → `btnCalculate`, thêm Dashboard/History screen | 2.0 | `MiniSum_v2.exe` – demo maintenance & self-healing |
@@ -154,11 +154,11 @@
 | T19 | Điền % contribution vào Google Sheets | 0.5 | Spreadsheet hoàn tất |
 | T20 | Merge tất cả branches → main, giải quyết conflict | 1.5 | `main` branch sạch |
 | T21 | Đóng gói ZIP cuối cùng, kiểm tra ≤20MB/file, đặt tên đúng quy định | 1.5 | `Group02_ZipTool_Lan2.zip` |
-| T22 | Kiểm tra checklist nộp bài và nộp sản phẩm | 0.5 | ✅ Done |
+| T22 | Kiểm tra checklist nộp bài và nộp sản phẩm | 0.5 |  Done |
 
 ---
 
-### 🧑‍💻 M2 – NGUYỄN LÊ QUANG KAN (23120279) – Katalon Studio
+### ‍ M2 – NGUYỄN LÊ QUANG KAN (23120279) – Katalon Studio
 **Tổng: 18 tasks – 24.0h – 20% đóng góp**
 
 | # | Task | Giờ | Output |
@@ -180,11 +180,11 @@
 | K15 | Chụp ảnh toàn bộ kết quả PASS/FAIL, lưu vào `docs/screenshots/katalon/` | 1.0 | Thư mục ảnh |
 | K16 | Quay video Demo Katalon (3 demo nối tiếp): thuyết minh tiếng Việt, nền trắng, font dễ đọc | 2.0 | Video file gửi Tín upload |
 | K17 | Review toàn bộ script Katalon, chuẩn hóa comment (tiếng Việt), commit | 1.0 | Code sạch trên branch |
-| K18 | Tạo Pull Request và merge branch `feature/kan-katalon` → `main` | 0.5 | ✅ Merge |
+| K18 | Tạo Pull Request và merge branch `feature/kan-katalon` → `main` | 0.5 |  Merge |
 
 ---
 
-### 🧑‍💻 M3 – BÙI QUANG TÙNG (20120397) – WinAppDriver + C# NUnit
+### ‍ M3 – BÙI QUANG TÙNG (20120397) – WinAppDriver + C# NUnit
 **Tổng: 21 tasks – 24.0h – 20% đóng góp**
 
 | # | Task | Giờ | Output |
@@ -209,11 +209,11 @@
 | W18 | Chụp ảnh toàn bộ PASS/FAIL, lưu vào `docs/screenshots/winappdriver/` | 1.0 | Thư mục ảnh |
 | W19 | Quay video Demo WinAppDriver (3 demo nối tiếp): thuyết minh tiếng Việt | 2.0 | Video file gửi Tín upload |
 | W20 | Review toàn bộ code C#, chuẩn hóa comment + xmldoc, commit | 1.0 | Code sạch trên branch |
-| W21 | Tạo Pull Request và merge branch `feature/tung-winappdriver` → `main` | 0.5 | ✅ Merge |
+| W21 | Tạo Pull Request và merge branch `feature/tung-winappdriver` → `main` | 0.5 |  Merge |
 
 ---
 
-### 🧑‍💻 M4 – TRẦN VŨ QUANG (23120346) – AI Demo + Comparison
+### ‍ M4 – TRẦN VŨ QUANG (23120346) – AI Demo + Comparison
 **Tổng: 17 tasks – 24.0h – 20% đóng góp**
 
 | # | Task | Giờ | Output |
@@ -234,11 +234,11 @@
 | Q14 | Cập nhật `docs/07-ai-desktop-automation.md`: tổng hợp bài học thực tế khi dùng AI | 1.5 | Section "Kết quả thực nghiệm nhóm" |
 | Q15 | Quay video AI Demo (nối tiếp 2 demo): prompt → output → verify → số liệu so sánh | 2.0 | Video file gửi Tín upload |
 | Q16 | Quản lý lưu trữ prompt + output vào các file `ai/prompts/` và `ai/output/` | 1.0 | Thư mục AI đầy đủ |
-| Q17 | Tạo Pull Request và merge branch `feature/quang-ai-comparison` → `main` | 0.5 | ✅ Merge |
+| Q17 | Tạo Pull Request và merge branch `feature/quang-ai-comparison` → `main` | 0.5 |  Merge |
 
 ---
 
-### 🧑‍💻 NHIỆM VỤ THIẾT KẾ SLIDE POWERPOINT (Chuyển giao cho Phan Trung Tín)
+### ‍ NHIỆM VỤ THIẾT KẾ SLIDE POWERPOINT (Chuyển giao cho Phan Trung Tín)
 **Tổng: 16 tasks slide – Do Leader trực tiếp thực hiện**
 
 | # | Task | Giờ | Output |
@@ -258,11 +258,11 @@
 | P13 | Thêm biểu đồ so sánh tại Phần 6 (Bar chart: thời gian, LOC, tỷ lệ phát hiện lỗi) | 1.0 | Biểu đồ trực quan |
 | P14 | Review toàn bộ slide: font to, nền trắng, chữ đen, đánh số trang 1-34 | 2.0 | Slide final review |
 | P15 | Export `slides/seminar-group02-v2.pptx` → `slides/seminar-slides-v2.pdf` | 0.5 | File PDF |
-| P16 | Tích hợp slide chính thức vào repository | 0.5 | ✅ Merge |
+| P16 | Tích hợp slide chính thức vào repository | 0.5 |  Merge |
 
 ---
 
-## 🌿 QUY TRÌNH LÀM VIỆC NHÓM VỚI GIT
+##  QUY TRÌNH LÀM VIỆC NHÓM VỚI GIT
 
 ### Tạo branch và làm việc
 
@@ -302,7 +302,7 @@ git push origin main
 
 ---
 
-## ✅ CHECKLIST NỘP BÀI LẦN 2
+##  CHECKLIST NỘP BÀI LẦN 2
 
 Trước khi nộp, Tín kiểm tra lần lượt:
 
@@ -322,7 +322,7 @@ Trước khi nộp, Tín kiểm tra lần lượt:
 
 ---
 
-## 📊 BẢNG TỔNG HỢP PHÂN PHỐI % CONTRIBUTION (CHỐT 4 THÀNH VIÊN)
+##  BẢNG TỔNG HỢP PHÂN PHỐI % CONTRIBUTION (CHỐT 4 THÀNH VIÊN)
 
 | Thành viên | MSSV | Vai trò chính | Tasks | Giờ thực tế | % Chốt |
 |---|:---:|---|:---:|:---:|:---:|
@@ -332,4 +332,4 @@ Trước khi nộp, Tín kiểm tra lần lượt:
 | **Trần Vũ Quang** | 23120346 | Demo thực nghiệm AI Test Automation & Test Suite C# & Comparison | 17 | **24.0h** | **25.0%** |
 | **Tổng cộng** | | | **94 tasks** | **120.0h** | **100.0%** |
 
-> 💡 **Kết luận:** Tỷ lệ đóng góp được chốt chia đều 25.0% cho cả 4 thành viên: Phan Trung Tín (25%), Nguyễn Lê Quang Kan (25%), Bùi Quang Tùng (25%), Trần Vũ Quang (25%). Toàn bộ phần việc slide do Tín trực tiếp gánh vác và hoàn thiện.
+>  **Kết luận:** Tỷ lệ đóng góp được chốt chia đều 25.0% cho cả 4 thành viên: Phan Trung Tín (25%), Nguyễn Lê Quang Kan (25%), Bùi Quang Tùng (25%), Trần Vũ Quang (25%). Toàn bộ phần việc slide do Tín trực tiếp gánh vác và hoàn thiện.

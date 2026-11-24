@@ -1,0 +1,58 @@
+\documentclass[12pt]{article}
+
+\usepackage{hcmus-report-template}
+
+% Disable indentation on new paragraphs
+\setlength{\parindent}{0pt}
+
+% Line spacing 1.5
+\renewcommand{\baselinestretch}{1.5}
+
+% Define course name, report name and report title.
+\newcommand{\coursename}{Kiểm thử phần mềm}
+\newcommand{\reportname}{Đề tài: Automation Testing cho Desktop Applications}
+\newcommand{\reporttitle}{Báo cáo Seminar}
+
+\newcommand{\studentname}{Phan Trung Tín (23120372)\\Nguyễn Lê Quang Kan (23120279)\\Bùi Quang Tùng (20120397)\\Trần Vũ Quang (23120346)}
+\newcommand{\teachername}{ThS. Huỳnh Phước Hải}
+
+% Header
+\lhead{\reporttitle}
+\rhead{
+Trường Đại học Khoa học Tự nhiên - ĐHQG HCM\\
+\coursename
+}
+
+% Footer
+\newcommand{\leftfooter}{\LaTeX\ by Nhóm 02}
+\lfoot{\leftfooter}
+\rfoot{Trang \thepage}
+
+% ============ DOCUMENT ============
+\begin{document}
+
+\pagenumbering{roman}
+\input{content/title.tex}
+
+\tableofcontents
+\pagebreak
+\listoftables
+\pagebreak
+\listoffigures
+\pagebreak
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{content/overview.tex}
+\input{content/ch1_introduction.tex}
+\input{content/ch2_theory.tex}
+\input{content/ch3_toolsurvey.tex}
+\input{content/ch4_katalon.tex}
+\input{content/ch5_winappdriver.tex}
+\input{content/ch6_comparison.tex}
+\input{content/ch7_ai.tex}
+\input{content/ch8_exercises.tex}
+\input{content/ch9_conclusion.tex}
+
+\end{document}

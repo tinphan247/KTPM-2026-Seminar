@@ -41,6 +41,9 @@ Hiện nay, thị trường kiểm thử tự động cho ứng dụng desktop �
 | **AutoIt** | AutoIt Team | Miễn phí (Freeware) | Ngôn ngữ script AutoIt | Rất nhẹ, chuyên dùng tự động hóa các tác vụ hệ thống Windows và xử lý popup/dialog hệ điều hành. |
 | **Robot Framework** | Cộng đồng | Mã nguồn mở (Free) | Robot DSL (Python backend) | Kiến trúc kiểm thử hướng từ khóa (Keyword-Driven), có thể mở rộng qua WhiteLibrary hoặc FlaUI library. |
 
+<p class="table-caption"><b>Bảng 3.1:</b> <i>Khảo sát tổng quan thị trường các công cụ kiểm thử tự động Desktop</i></p>
+
+
 ---
 
 ## 2. Bộ tiêu chí đánh giá công cụ Desktop Automation
@@ -95,6 +98,8 @@ BỘ TIÊU CHÍ ĐÁNH GIÁ CÔNG CỤ AUTOMATION TESTING CHO DESKTOP
 | T9 | **Ngôn ngữ lập trình kịch bản** | Hỗ trợ các ngôn ngữ phổ biến trong ngành: C#, Python, Java, JavaScript/TypeScript, Groovy. | 4 |
 | T10 | **Thực thi song song (Parallel Execution)** | Năng lực chạy đồng thời nhiều kịch bản trên các máy ảo hoặc phiên desktop khác nhau để rút ngắn thời gian. | 3 |
 
+<p class="table-caption"><b>Bảng 3.2:</b> <i>Khung tiêu chí Nhóm 1 – Tiêu chí Kỹ thuật (Technical Feasibility)</i></p>
+
 ---
 
 ### 2.3 Nhóm 2: Khả năng sử dụng (Usability & Learning Curve)
@@ -107,6 +112,8 @@ BỘ TIÊU CHÍ ĐÁNH GIÁ CÔNG CỤ AUTOMATION TESTING CHO DESKTOP
 | U4 | **Tích hợp môi trường lập trình (IDE)** | Khả năng tích hợp trực tiếp vào các IDE phổ biến như Visual Studio, Visual Studio Code, IntelliJ, PyCharm. | 3 |
 | U5 | **Giao diện người dùng trực quan (GUI)** | Cung cấp giao diện đồ họa trực quan để theo dõi cây đối tượng (Object Spy/Inspector), quản lý test suite. | 3 |
 
+<p class="table-caption"><b>Bảng 3.3:</b> <i>Khung tiêu chí Nhóm 2 – Tiêu chí Khả dụng & Trải nghiệm (Usability & Productivity)</i></p>
+
 ---
 
 ### 2.4 Nhóm 3: Hiệu năng & Tính ổn định (Performance & Reliability)
@@ -117,6 +124,8 @@ BỘ TIÊU CHÍ ĐÁNH GIÁ CÔNG CỤ AUTOMATION TESTING CHO DESKTOP
 | P2 | **Độ ổn định của kịch bản** | Kịch bản chạy ổn định qua nhiều lần thực thi, hạn chế tối đa hiện tượng Flaky Test (khi pass khi fail không lý do). | 5 |
 | P3 | **Cơ chế đồng bộ hóa (Synchronization)** | Cung cấp các hàm chờ thông minh (Explicit Wait, Fluent Wait) dựa trên trạng thái thật của đối tượng UI thay vì sleep cứng. | 5 |
 | P4 | **Mức tiêu hao tài nguyên** | Mức độ chiếm dụng bộ nhớ RAM và xung nhịp CPU của công cụ khi đang vận hành trong phiên kiểm thử. | 3 |
+
+<p class="table-caption"><b>Bảng 3.4:</b> <i>Khung tiêu chí Nhóm 3 – Tiêu chí Hiệu năng & Vận hành (Performance & Scale)</i></p>
 
 ---
 
@@ -129,6 +138,8 @@ BỘ TIÊU CHÍ ĐÁNH GIÁ CÔNG CỤ AUTOMATION TESTING CHO DESKTOP
 | C3 | **Chi phí đào tạo nhân sự** | Thời gian và chi phí cần bỏ ra để đội ngũ kiểm thử làm chủ được công cụ và quy trình làm việc. | 4 |
 | C4 | **Khả năng thu hồi vốn đầu tư (ROI)** | Mức độ tiết kiệm thời gian và nguồn lực kiểm thử đạt được so với tổng chi phí bỏ ra sau chu kỳ 6-12 tháng. | 4 |
 
+<p class="table-caption"><b>Bảng 3.5:</b> <i>Khung tiêu chí Nhóm 4 – Tiêu chí Chi phí & Bản quyền (Cost of Ownership)</i></p>
+
 ---
 
 ### 2.6 Nhóm 5: Khả năng bảo trì & Tính linh hoạt (Maintainability)
@@ -139,6 +150,8 @@ BỘ TIÊU CHÍ ĐÁNH GIÁ CÔNG CỤ AUTOMATION TESTING CHO DESKTOP
 | M2 | **Hỗ trợ kiến trúc thiết kế chuẩn** | Khả năng triển khai các mẫu thiết kế hướng cấu trúc như Page Object Model (POM), Screenplay Pattern, Keyword-Driven. | 4 |
 | M3 | **Khả năng tái sử dụng (Reusability)** | Cho phép đóng gói các hàm thao tác dùng chung, thư viện dùng chung và bộ dữ liệu kiểm thử dùng chung dễ dàng. | 4 |
 | M4 | **Quản lý phiên bản mã nguồn (VCS / Git)** | Định dạng tệp kịch bản là text thuần (code) dễ merge/diff bằng Git, hay là tệp nhị phân độc quyền khó kiểm soát xung đột. | 4 |
+
+<p class="table-caption"><b>Bảng 3.6:</b> <i>Khung tiêu chí Nhóm 5 – Tiêu chí Bảo trì & Kháng lỗi (Maintainability & Resilience)</i></p>
 
 ---
 
@@ -151,6 +164,8 @@ BỘ TIÊU CHÍ ĐÁNH GIÁ CÔNG CỤ AUTOMATION TESTING CHO DESKTOP
 | E3 | **Mức độ hỗ trợ từ cộng đồng** | Tần suất cập nhật phiên bản mới, tính thường xuyên của các bản vá lỗi và sự tích cực đóng góp từ cộng đồng. | 5 |
 | E4 | **Chất lượng hỗ trợ từ hãng (Vendor Support)** | Cam kết hỗ trợ kỹ thuật trực tiếp từ nhà cung cấp (SLA, hỗ trợ qua ticket, tư vấn giải pháp kỹ thuật). | 3 |
 | E5 | **Tính năng ứng dụng trí tuệ nhân tạo (AI)** | Tích hợp tính năng AI tự động nhận diện control khi thuộc tính đổi (Self-healing), tự sinh kịch bản từ ngôn ngữ tự nhiên. | 4 |
+
+<p class="table-caption"><b>Bảng 3.7:</b> <i>Khung tiêu chí Nhóm 6 – Tiêu chí Hệ sinh thái & Mở rộng (Ecosystem & Extensibility)</i></p>
 
 ---
 
@@ -183,6 +198,9 @@ BỘ TIÊU CHÍ ĐÁNH GIÁ CÔNG CỤ AUTOMATION TESTING CHO DESKTOP
 | **Hệ sinh thái** | E3. Mức độ hỗ trợ từ cộng đồng | 5 | /5 | /5 | |
 | | E5. Tính năng thông minh / AI | 4 | /5 | /5 | |
 | **TỔNG KẾT** | **Tổng điểm đánh giá chuẩn hóa** | **--** | **/100** | **/100** | |
+
+<p class="table-caption"><b>Bảng 3.8:</b> <i>Ma trận tổng hợp thang điểm đánh giá công cụ kiểm thử Desktop theo 10 tiêu chí</i></p>
+
 
 ---
 

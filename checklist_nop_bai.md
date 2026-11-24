@@ -1,6 +1,6 @@
 # CHECKLIST NỘP BÀI – SEMINAR AUTOMATION TESTING FOR DESKTOP APPLICATIONS (ROUND 2)
 
-- **Nhóm thực hiện:** Nhóm 02 (ZipTool)
+- **Nhóm thực hiện:** Nhóm 02
 - **Môn học:** Kiểm thử Phần mềm (Software Testing)
 - **Học kỳ:** HK1 – Năm học 2026-2027
 - **Ngày hoàn tất:** 30/10/2026

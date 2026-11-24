@@ -101,3 +101,6 @@ Sinh viên nộp kết quả cho Giảng viên / Trợ giảng lớp học bằn
 | **4** | **Bài 2: Kiểm thử Biên (BVA)** | - Thực hiện đúng ca biên trên ($A = 99, B = 0$) + Checkpoint PASS.<br>- Thực hiện đúng ca biên dưới ($A = -99, B = 0$) + Checkpoint PASS. | **4.0 đ**<br>(2.0 đ)<br>(2.0 đ) |
 | **5** | **Điểm thưởng (Bonus)** | Bắt được nhãn lỗi `lblError` khi nhập ngoài biên trên `MiniSum_v3.exe`. | **+1.0 đ**<br>*(tối đa 10đ)* |
 | | **TỔNG CỘNG** | **Hoàn thành trọn vẹn kịch bản kiểm thử tự động Desktop trong 30 phút** | **10.0 đ** |
+
+<p class="table-caption"><b>Bảng 8.1:</b> <i>Barem chấm điểm chi tiết bài tập thực hành cá nhân 30 phút tại lớp (Thang điểm 10)</i></p>
+

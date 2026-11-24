@@ -26,6 +26,9 @@ Trong kỷ nguyên phát triển phần mềm theo các mô hình Agile/DevOps v
 | **Thách thức trong việc lựa chọn công cụ** | Hệ sinh thái công cụ automation desktop rất đa dạng (mã nguồn mở, thương mại, GUI-based, code-based), đội ngũ kiểm thử cần bộ tiêu chí rõ ràng để chọn đúng giải pháp. |
 | **Xu hướng ứng dụng trí tuệ nhân tạo (AI)** | Các công nghệ GenAI và Computer Vision đang định hình lại cách sinh kịch bản kiểm thử, tự phục hồi selector (self-healing) và phân tích log lỗi. |
 
+<p class="table-caption"><b>Bảng 1.1:</b> <i>Lý do lựa chọn và tính cấp thiết của đề tài kiểm thử tự động ứng dụng Desktop</i></p>
+
+
 ---
 
 ## 3. Mục tiêu seminar
@@ -51,6 +54,7 @@ Trong kỷ nguyên phát triển phần mềm theo các mô hình Agile/DevOps v
 │  5. Thiết kế bài tập thực hành ứng dụng cho lớp         │
 └─────────────────────────────────────────────────────────┘
 ```
+<p class="figure-caption"><b>Hình 1.1:</b> <i>Sơ đồ mục tiêu cốt lõi của chuyên đề Seminar</i></p>
 
 ---
 

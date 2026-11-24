@@ -1,7 +1,9 @@
 import os
 import re
 import subprocess
+import base64
 import markdown
+import pypdf
 
 base_dir = os.path.abspath('.')
 
@@ -29,53 +31,71 @@ def fix_images(md_text):
         return f'![{alt}]({src})'
     return re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', repl, md_text)
 
-# Load individual chapters
-p1 = read_doc('01-introduction.md')
-p2 = read_doc('02-theory.md')
-p3 = read_doc('03-toolsurvey.md')
-p4 = read_doc('04-katalon-studio.md')
-p5 = read_doc('05-winappdriver.md')
-p6 = read_doc('06-comparison.md')
-p7 = read_doc('07-ai-desktop-automation.md')
-p8 = read_doc('08-exercises.md')
+def clean_chapter_text(md_text):
+    lines = md_text.split('\n')
+    start = 0
+    in_local_toc = False
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith('## Mục lục'):
+            in_local_toc = True
+            continue
+        if in_local_toc:
+            if stripped == '---':
+                start = i + 1
+                in_local_toc = False
+            continue
+        if stripped.startswith('#') or stripped.startswith('>') or stripped.startswith('- **') or stripped == '---' or not stripped:
+            start = i + 1
+            continue
+        else:
+            start = i
+            break
+    return '\n'.join(lines[start:])
 
-header_md = """# BÁO CÁO TOÀN VĂN CHUYÊN ĐỀ SEMINAR
-# AUTOMATION TESTING FOR DESKTOP APPLICATIONS
-## Tự Động Hóa Kiểm Thử Cho Ứng Dụng Desktop (Windows)
+# Load individual chapters
+p1 = clean_chapter_text(read_doc('01-introduction.md'))
+p2 = clean_chapter_text(read_doc('02-theory.md'))
+p3 = clean_chapter_text(read_doc('03-toolsurvey.md'))
+p4 = clean_chapter_text(read_doc('04-katalon-studio.md'))
+p5 = clean_chapter_text(read_doc('05-winappdriver.md'))
+p6 = clean_chapter_text(read_doc('06-comparison.md'))
+p7 = clean_chapter_text(read_doc('07-ai-desktop-automation.md'))
+p8 = clean_chapter_text(read_doc('08-exercises.md'))
+
+# Load HCMUS Logo base64
+logo_path = os.path.join(base_dir, 'docs', 'images', 'hcmus_logo.png')
+logo_b64 = ''
+if os.path.exists(logo_path):
+    with open(logo_path, 'rb') as f:
+        logo_b64 = base64.b64encode(f.read()).decode('utf-8')
+
+header_md = """<div class="report-intro-box">
+<h1 style="page-break-before: avoid; margin-top: 0; text-align: center; font-size: 18pt;">BÁO CÁO TOÀN VĂN CHUYÊN ĐỀ SEMINAR<br><span style="font-size: 14pt; color: #1e3a8a;">AUTOMATION TESTING FOR DESKTOP APPLICATIONS</span></h1>
+<p style="text-align: center; font-style: italic; margin-top: 4px; margin-bottom: 18pt;">Tự Động Hóa Kiểm Thử Cho Ứng Dụng Desktop (Windows)</p>
 
 > **Môn học:** Software Testing (Kiểm thử phần mềm)  
+> **Bộ môn:** Kiểm thử phần mềm  
 > **Khoa:** Công nghệ Thông tin – Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM  
-> **Nhóm thực hiện:** Nhóm 02 (ZipTool)  
+> **Nhóm thực hiện:** Nhóm 02  
 > **Học kỳ:** HK1 – Năm học 2026-2027  
 > **Thời gian nộp bài:** 30/10/2026 (Hạn chót giảng viên: 31/10/2026)
 
 ---
 
-## 👥 THÀNH VIÊN VÀ ĐÁNH GIÁ ĐÓNG GÓP THỰC TẾ (LẦN 2)
+## THÀNH VIÊN VÀ ĐÁNH GIÁ ĐÓNG GÓP THỰC TẾ (LẦN 2)
 
 | STT | Họ và Tên | MSSV | Vai trò chính Lần 2 | Đóng góp thực tế | % Chốt | Trạng thái |
 |:---:|---|:---:|---|---|:---:|:---:|
 | 1 | **Phan Trung Tín** | 23120372 | **Trưởng nhóm (Team Lead)**<br>Phát triển 3 bản `MiniSum.exe`, viết lý thuyết POM/Flaky/Wait/Oracle, thiết kế toàn bộ Slide (v1+v2), Handout bài tập, tích hợp báo cáo & đóng gói | 42.0h (22 tasks) | **25.0%** | Hoàn thành xuất sắc |
 | 2 | **Nguyễn Lê Quang Kan** | 23120279 | **Chuyên trách Katalon Studio**<br>Thực nghiệm 3 demo Katalon, viết Custom Keyword `LoginKeyword.groovy`, Data-Driven BVA, 16 ảnh thực nghiệm, video YouTube | 30.0h (18 tasks) | **25.0%** | Hoàn thành xuất sắc |
-| 3 | **Bùi Quang Tùng** | 20120397 | **Chuyên trách WinAppDriver**<br>Thực nghiệm WinAppDriver + C# NUnit, cài đặt Page Object Model (POM), DDT 12 ca BVA, chụp ảnh kiểm thử | 24.0h (21 tasks) | **25.0%** | Hoàn thành tốt |
-| 4 | **Trần Vũ Quang** | 23120346 | **Chuyên trách AI & Comparison**<br>Prompt Engineering, sinh 19 ca BVA, test suite C# `ai-winappdriver`, số liệu đo đạc so sánh định lượng | 24.0h (17 tasks) | **25.0%** | Hoàn thành tốt |
+| 3 | **Bùi Quang Tùng** | 20120397 | **Chuyên trách WinAppDriver**<br>Thực nghiệm WinAppDriver + C# NUnit, cài đặt Page Object Model (POM), DDT 12 ca BVA, chụp ảnh kiểm thử, video YouTube | 24.0h (21 tasks) | **25.0%** | Hoàn thành tốt |
+| 4 | **Trần Vũ Quang** | 23120346 | **Chuyên trách AI & Comparison**<br>Prompt Engineering, sinh 19 ca BVA, test suite C# `ai-winappdriver`, số liệu đo đạc so sánh định lượng, video YouTube | 24.0h (17 tasks) | **25.0%** | Hoàn thành tốt |
 | **Tổng** | | | | **120.0h (78 tasks)** | **100.0%** | |
 
----
+<p class="table-caption"><b>Bảng 0.1:</b> <i>Phân công vai trò và tỷ lệ đóng góp thực tế của các thành viên Nhóm 02</i></p>
 
-## 📋 MỤC LỤC TỔNG QUAN
-
-1. [Phần 1: Giới Thiệu & Bối Cảnh (Introduction)](#phan-1)
-2. [Phần 2: Cơ Sở Lý Thuyết Kiểm Thử Tự Động Desktop (Theory)](#phan-2)
-3. [Phần 3: Khảo Sát Thị Trường & Bộ Tiêu Chí Đánh Giá (Tool Survey)](#phan-3)
-4. [Phần 4: Nghiên Cứu Công Cụ Đại Diện A – Katalon Studio](#phan-4)
-5. [Phần 5: Nghiên Cứu Công Cụ Đại Diện B – Microsoft WinAppDriver](#phan-5)
-6. [Phần 6: So Sánh Đối Chiếu Toàn Diện (Comparison)](#phan-6)
-7. [Phần 7: Ứng Dụng Trí Tuệ Nhân Tạo (AI) Trong Desktop Automation](#phan-7)
-8. [Phần 8: Hệ Thống Bài Tập Thực Hành 30 Phút Tại Lớp (Exercise)](#phan-8)
-9. [Phần 9: Minh Chứng Thực Nghiệm, Kê Khai AI & Kết Luận](#phan-9)
-
----
+</div>
 """
 
 p9 = """
@@ -119,38 +139,38 @@ Seminar đã hoàn thành xuất sắc các mục tiêu đề ra:
 5. Thiết kế bài tập thực hành 30 phút tại lớp dễ tiếp cận, trực quan và đánh giá chính xác kỹ năng của sinh viên.
 """
 
-# Combine
+# Combine Master Markdown
 full_master_md = f"""{header_md}
 
-# Phần 1: Giới Thiệu & Bối Cảnh (Introduction) <a id="phan-1"></a>
+# 1. Giới Thiệu & Bối Cảnh (Introduction) <a id="phan-1"></a>
 
 {p1}
 
-# Phần 2: Cơ Sở Lý Thuyết Kiểm Thử Tự Động Desktop (Theory) <a id="phan-2"></a>
+# 2. Cơ Sở Lý Thuyết Kiểm Thử Tự Động Desktop (Theory) <a id="phan-2"></a>
 
 {p2}
 
-# Phần 3: Khảo Sát Thị Trường & Bộ Tiêu Chí Đánh Giá (Tool Survey) <a id="phan-3"></a>
+# 3. Khảo Sát Thị Trường & Bộ Tiêu Chí Đánh Giá (Tool Survey) <a id="phan-3"></a>
 
 {p3}
 
-# Phần 4: Nghiên Cứu Công Cụ Đại Diện A – Katalon Studio <a id="phan-4"></a>
+# 4. Nghiên Cứu Công Cụ Đại Diện A – Katalon Studio <a id="phan-4"></a>
 
 {p4}
 
-# Phần 5: Nghiên Cứu Công Cụ Đại Diện B – Microsoft WinAppDriver <a id="phan-5"></a>
+# 5. Nghiên Cứu Công Cụ Đại Diện B – Microsoft WinAppDriver <a id="phan-5"></a>
 
 {p5}
 
-# Phần 6: So Sánh Đối Chiếu Toàn Diện (Comparison) <a id="phan-6"></a>
+# 6. So Sánh Đối Chiếu Toàn Diện (Comparison) <a id="phan-6"></a>
 
 {p6}
 
-# Phần 7: Ứng Dụng Trí Tuệ Nhân Tạo (AI) Trong Desktop Automation <a id="phan-7"></a>
+# 7. Ứng Dụng Trí Tuệ Nhân Tạo (AI) Trong Desktop Automation <a id="phan-7"></a>
 
 {p7}
 
-# Phần 8: Hệ Thống Bài Tập Thực Hành Đề Xuất (Exercise) <a id="phan-8"></a>
+# 8. Hệ Thống Bài Tập Thực Hành Cá Nhân 30 Phút Tại Lớp (Exercise) <a id="phan-8"></a>
 
 {p8}
 
@@ -175,238 +195,749 @@ html_body = markdown.markdown(
     extensions=['tables', 'fenced_code', 'toc']
 )
 
-# HTML Document with elegant print-ready CSS
+# Build Complete HTML matching HCMUS LaTeX Template
 html_full = f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<title>Báo Cáo Seminar – Automation Testing for Desktop Applications</title>
+<meta charset="UTF-8">
+<title>Báo cáo Seminar: Automation Testing for Desktop Applications</title>
 <style>
 @page {{
     size: A4;
-    margin: 20mm 15mm 20mm 15mm;
-    @bottom-center {{
-        content: counter(page);
+    margin: 30mm 20mm 25mm 20mm;
+    @top-left {{
+        content: "Báo cáo Seminar";
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
+        border-bottom: 0.5pt solid black;
+        vertical-align: bottom;
+        padding-bottom: 2mm;
+    }}
+    @top-right {{
+        content: "Trường Đại học Khoa học Tự nhiên - ĐHQG HCM\\A Môn: Kiểm thử phần mềm";
+        white-space: pre-line;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
+        text-align: right;
+        border-bottom: 0.5pt solid black;
+        vertical-align: bottom;
+        padding-bottom: 2mm;
+    }}
+    @bottom-left {{
+        content: "LaTeX by Nhóm 02";
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
+        vertical-align: top;
+        padding-top: 2.5mm;
+    }}
+    @bottom-right {{
+        content: "Trang " counter(page);
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
+        vertical-align: top;
+        padding-top: 2.5mm;
     }}
 }}
+
+@page :first {{
+    margin: 22mm 20mm 20mm 20mm;
+    @top-left {{ content: none; }}
+    @top-right {{ content: none; }}
+    @bottom-left {{ content: none; }}
+    @bottom-right {{ content: none; }}
+}}
+
 body {{
-    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 11pt;
-    line-height: 1.6;
-    color: #1e293b;
-    background: #ffffff;
+    line-height: 1.5;
+    color: #000;
     margin: 0;
     padding: 0;
 }}
+
+/* ========================================================
+   COVER PAGE (TRANG BÌA THEO TEMPLATE KHTN)
+   ======================================================== */
 .cover-page {{
-    text-align: center;
-    padding: 100px 20px 60px 20px;
     page-break-after: always;
+    min-height: 250mm;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
 }}
-.cover-univ {{
+
+.institution-header {{
+    text-align: center;
+    line-height: 1.45;
+}}
+.univ-line1 {{
+    font-size: 12.5pt;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+    margin: 0;
+}}
+.univ-line2 {{
     font-size: 13pt;
     font-weight: bold;
-    color: #334155;
-    margin-bottom: 5px;
-    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 4px 0 0 0;
 }}
-.cover-subuniv {{
-    font-size: 11pt;
-    color: #64748b;
-    margin-bottom: 40px;
-}}
-.cover-title {{
-    font-size: 24pt;
-    font-weight: 800;
-    color: #1d4ed8;
-    margin-bottom: 15px;
-    line-height: 1.3;
-}}
-.cover-subtitle {{
-    font-size: 15pt;
-    font-weight: 600;
-    color: #0f172a;
-    margin-bottom: 50px;
-}}
-.cover-meta {{
-    margin-top: 60px;
+.univ-line3 {{
     font-size: 11.5pt;
-    color: #334155;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin: 10px 0 0 0;
+}}
+.univ-line4 {{
+    font-size: 10.5pt;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+    margin: 4px 0 0 0;
+}}
+
+.cover-rule {{
+    border: none;
+    border-top: 2.5px solid #000;
+    width: 100%;
+    margin: 35px 0 25px 0;
+}}
+
+.cover-title-box {{
+    margin: 20px 0 25px 0;
+}}
+.cover-title-main {{
+    font-size: 24pt;
+    font-weight: bold;
+    margin-bottom: 12px;
+}}
+.cover-title-sub {{
+    font-size: 16pt;
+    font-weight: bold;
+    line-height: 1.35;
+}}
+
+.cover-course {{
+    font-size: 13pt;
+    font-weight: bold;
+    margin: 15px 0 35px 0;
+}}
+
+.cover-info-container {{
+    display: flex;
+    justify-content: space-between;
+    width: 88%;
+    margin: 0 auto 35px auto;
+    font-size: 11.5pt;
     line-height: 1.8;
 }}
-.cover-table {{
-    margin: 0 auto;
-    border-collapse: collapse;
-    width: 85%;
+.info-col-left {{
     text-align: left;
-    margin-top: 20px;
 }}
-.cover-table td {{
-    padding: 6px 12px;
+.info-col-right {{
+    text-align: left;
+    padding-left: 20px;
 }}
-h1 {{
+.info-label {{
+    font-style: italic;
+    font-weight: bold;
+    margin-bottom: 6px;
+}}
+
+.cover-date {{
+    font-size: 11pt;
+    margin: 15px 0 25px 0;
+}}
+
+.cover-logo-box {{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}}
+.hcmus-logo-img {{
+    width: 120px;
+    height: auto;
+    display: inline-block;
+}}
+
+/* ========================================================
+   FRONT MATTER: MỤC LỤC, DANH SÁCH BẢNG & HÌNH
+   ======================================================== */
+.latex-frontmatter {{
+    page-break-after: always;
+}}
+.latex-toc-title {{
     font-size: 18pt;
-    color: #1d4ed8;
-    border-bottom: 2px solid #2563eb;
-    padding-bottom: 6px;
-    margin-top: 35px;
-    margin-bottom: 16px;
+    font-weight: bold;
+    margin: 0 0 14px 0;
+    text-align: left;
+}}
+.toc-entry {{
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 3.5px;
+    font-size: 10.5pt;
+    line-height: 1.32;
+}}
+.toc-sec {{
+    font-weight: bold;
+    margin-top: 6px;
+}}
+.toc-subsec {{
+    padding-left: 18px;
+    font-size: 10pt;
+}}
+.toc-num {{
+    color: #002d9c;
+    min-width: 30px;
+    font-weight: bold;
+}}
+.toc-subsec .toc-num {{
+    min-width: 32px;
+    font-weight: normal;
+}}
+.toc-text {{
+    flex-shrink: 0;
+}}
+.toc-dots {{
+    flex-grow: 1;
+    border-bottom: 1.2pt dotted #444;
+    margin: 0 6px 3px 6px;
+    height: 1em;
+}}
+.toc-page {{
+    min-width: 20px;
+    text-align: right;
+}}
+.toc-sec .toc-page {{
+    font-weight: bold;
+}}
+
+.report-intro-box {{
+    page-break-after: always;
+}}
+.report-intro-box h1 {{
+    page-break-before: avoid !important;
+}}
+
+/* ========================================================
+   BODY CONTENT (LATEX REPORT STYLING)
+   ======================================================== */
+h1 {{
+    font-size: 17pt;
+    font-weight: bold;
+    color: #000;
+    margin-top: 26pt;
+    margin-bottom: 12pt;
+    border: none;
+    padding: 0;
     page-break-before: always;
 }}
-.cover-page h1 {{
+.cover-page h1, .latex-frontmatter h1 {{
     page-break-before: avoid;
 }}
+
 h2 {{
-    font-size: 14pt;
-    color: #0f172a;
-    margin-top: 24px;
-    margin-bottom: 12px;
-    border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 4px;
+    font-size: 13.5pt;
+    font-weight: bold;
+    color: #000;
+    margin-top: 18pt;
+    margin-bottom: 8pt;
+    border: none;
+    padding: 0;
 }}
+
 h3 {{
-    font-size: 12pt;
-    color: #1e293b;
-    margin-top: 18px;
-    margin-bottom: 8px;
+    font-size: 11.5pt;
+    font-weight: bold;
+    color: #000;
+    margin-top: 14pt;
+    margin-bottom: 6pt;
+    border: none;
+    padding: 0;
 }}
+
 p, li {{
     text-align: justify;
-    margin-bottom: 8px;
+    text-justify: inter-word;
+    margin-bottom: 8pt;
+    line-height: 1.5;
 }}
+
 table {{
     width: 100%;
     border-collapse: collapse;
-    margin: 16px 0;
+    margin: 14pt auto;
     font-size: 9.5pt;
+    border: 1px solid black;
     page-break-inside: avoid;
 }}
 th, td {{
-    border: 1px solid #cbd5e1;
-    padding: 7px 10px;
+    border: 0.5pt solid black;
+    padding: 6px 8px;
     text-align: left;
     vertical-align: top;
 }}
 th {{
-    background-color: #f1f5f9;
-    color: #0f172a;
-    font-weight: 600;
+    background-color: #f7f7f7;
+    font-weight: bold;
+    color: #000;
 }}
 tr:nth-child(even) {{
-    background-color: #f8fafc;
+    background-color: #fafafa;
 }}
+
 pre, code {{
     font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 9pt;
+    font-size: 8.5pt;
 }}
 pre {{
-    background-color: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
-    padding: 12px;
+    background-color: #f8f9fa;
+    border: 0.5pt solid #d1d5db;
+    border-radius: 2px;
+    padding: 10px 12px;
     overflow-x: auto;
     page-break-inside: avoid;
     line-height: 1.45;
+    margin: 12pt 0;
 }}
 code {{
     background-color: #f1f5f9;
-    padding: 2px 5px;
-    border-radius: 3px;
-    color: #0f172a;
+    padding: 1px 4px;
+    border-radius: 2px;
 }}
 pre code {{
     background-color: transparent;
     padding: 0;
 }}
+
 img {{
-    max-width: 95%;
+    max-width: 90%;
     height: auto;
     display: block;
-    margin: 14px auto;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin: 12pt auto;
+    border: 0.5pt solid #cbd5e1;
     page-break-inside: avoid;
 }}
-blockquote {{
-    border-left: 4px solid #2563eb;
-    margin: 14px 0;
-    padding: 8px 16px;
-    background-color: #eff6ff;
-    color: #1e3a8a;
-    font-size: 10.5pt;
-    border-radius: 0 4px 4px 0;
+
+.table-caption, .figure-caption {{
+    text-align: center;
+    font-size: 10pt;
+    font-style: italic;
+    margin-top: 4pt;
+    margin-bottom: 14pt;
+    page-break-before: avoid;
+    color: #1e293b;
 }}
+.table-caption b, .figure-caption b {{
+    font-style: normal;
+    font-weight: bold;
+    color: #000;
+}}
+
+blockquote {{
+    border-left: 2.5pt solid #2563eb;
+    margin: 12pt 0;
+    padding: 6pt 12pt;
+    background-color: #f8fafc;
+    color: #1e293b;
+    font-size: 10pt;
+}}
+
 hr {{
     border: 0;
-    border-top: 1px solid #e2e8f0;
-    margin: 25px 0;
+    border-top: 0.5pt solid #cbd5e1;
+    margin: 20pt 0;
 }}
 </style>
 </head>
 <body>
 
+<!-- ========================================================
+     PAGE 1: TRANG BÌA CHUẨN TEMPLATE KHTN - ĐHQG HCM
+     ======================================================== -->
 <div class="cover-page">
-    <div class="cover-univ">Đại Học Quốc Gia TP. Hồ Chí Minh</div>
-    <div class="cover-univ">Trường Đại Học Khoa Học Tự Nhiên – Khoa Công Nghệ Thông Tin</div>
-    <div class="cover-subuniv">Bộ môn Kỹ thuật Phần mềm</div>
-    
-    <div style="margin: 60px 0 40px 0;">
-        <div class="cover-title">BÁO CÁO CHUYÊN ĐỀ SEMINAR</div>
-        <div class="cover-subtitle">AUTOMATION TESTING FOR DESKTOP APPLICATIONS<br><span style="font-size: 13pt; color: #475569; font-weight: normal;">Tự động hóa kiểm thử cho ứng dụng Desktop (Windows)</span></div>
+    <div class="institution-header">
+        <p class="univ-line1">ĐẠI HỌC QUỐC GIA TPHCM</p>
+        <p class="univ-line2">TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN</p>
+        <p class="univ-line3">KHOA CÔNG NGHỆ THÔNG TIN</p>
+        <p class="univ-line4">BỘ MÔN KIỂM THỬ PHẦN MỀM</p>
     </div>
-    
-    <div class="cover-meta">
-        <p><strong>Môn học:</strong> Kiểm thử Phần mềm (Software Testing)</p>
-        <p><strong>Nhóm thực hiện:</strong> Nhóm 02 (ZipTool) — Lớp: 23_1</p>
-        <p><strong>Giảng viên phụ trách:</strong> ThS. Huỳnh Phước Hải</p>
-        
-        <table class="cover-table">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Họ và Tên</th>
-                    <th>MSSV</th>
-                    <th>Vai trò chính (Lần 2)</th>
-                    <th>% Chốt</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><strong>Phan Trung Tín</strong> (Nhóm trưởng)</td>
-                    <td>23120372</td>
-                    <td>Lead, AUT MiniSum, Theory, Slide v1+v2, Handout, Báo cáo</td>
-                    <td><strong>25.0%</strong></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><strong>Nguyễn Lê Quang Kan</strong></td>
-                    <td>23120279</td>
-                    <td>Katalon Studio trọn gói, Keyword, DDT BVA, Video YouTube</td>
-                    <td><strong>25.0%</strong></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><strong>Bùi Quang Tùng</strong></td>
-                    <td>20120397</td>
-                    <td>WinAppDriver + C# NUnit, Page Object Model, DDT NPOI</td>
-                    <td><strong>25.0%</strong></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td><strong>Trần Vũ Quang</strong></td>
-                    <td>23120346</td>
-                    <td>AI Test Automation, Test Suite C# AI-WAD, Comparison</td>
-                    <td><strong>25.0%</strong></td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <p style="margin-top: 50px; font-style: italic;">Thành phố Hồ Chí Minh, ngày 30 tháng 10 năm 2026</p>
+
+    <div class="cover-rule"></div>
+
+    <div class="cover-title-box">
+        <div class="cover-title-main">Báo cáo Seminar</div>
+        <div class="cover-title-sub">Đề tài: Automation Testing cho Desktop Applications</div>
+    </div>
+
+    <div class="cover-rule" style="margin-top: 25px; margin-bottom: 35px;"></div>
+
+    <div class="cover-course">Môn học: Kiểm thử phần mềm</div>
+
+    <div class="cover-info-container">
+        <div class="info-col-left">
+            <div class="info-label">Sinh viên thực hiện:</div>
+            <div>Phan Trung Tín (23120372)</div>
+            <div>Nguyễn Lê Quang Kan (23120279)</div>
+            <div>Bùi Quang Tùng (20120397)</div>
+            <div>Trần Vũ Quang (23120346)</div>
+        </div>
+        <div class="info-col-right">
+            <div class="info-label">Giáo viên hướng dẫn:</div>
+            <div>ThS. Huỳnh Phước Hải</div>
+        </div>
+    </div>
+
+    <div class="cover-date">Thành phố Hồ Chí Minh, ngày 30 tháng 10 năm 2026</div>
+
+    <div class="cover-logo-box">
+        <img src="data:image/png;base64,{logo_b64}" class="hcmus-logo-img" alt="HCMUS Logo">
     </div>
 </div>
 
+<!-- ========================================================
+     PAGE 2: MỤC LỤC (TABLE OF CONTENTS)
+     ======================================================== -->
+<div class="latex-frontmatter">
+    <h1 class="latex-toc-title">Mục lục</h1>
+
+    <div class="toc-entry toc-sec">
+        <span class="toc-num">1</span>
+        <span class="toc-text">Giới Thiệu & Bối Cảnh (Introduction)</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">1</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">1.1</span>
+        <span class="toc-text">Bối cảnh và động lực của kiểm thử tự động Desktop</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">1</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">1.2</span>
+        <span class="toc-text">Đặc thù kỹ thuật của ứng dụng Desktop trên Windows</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">2</span>
+    </div>
+
+    <div class="toc-entry toc-sec">
+        <span class="toc-num">2</span>
+        <span class="toc-text">Cơ Sở Lý Thuyết Kiểm Thử Tự Động Desktop (Theory)</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">4</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">2.1</span>
+        <span class="toc-text">Kiến trúc UI Automation & Cơ chế điều khiển Windows</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">4</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">2.2</span>
+        <span class="toc-text">Kỹ thuật Record & Playback và cơ chế ánh xạ phần tử</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">6</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">2.3</span>
+        <span class="toc-text">Mô hình thiết kế Page Object Model (POM) cho Desktop</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">8</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">2.4</span>
+        <span class="toc-text">Hiện tượng Flaky Test, cơ chế Explicit Wait và Test Oracle</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">10</span>
+    </div>
+
+    <div class="toc-entry toc-sec">
+        <span class="toc-num">3</span>
+        <span class="toc-text">Khảo Sát Thị Trường & Bộ Tiêu Chí Đánh Giá (Tool Survey)</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">13</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">3.1</span>
+        <span class="toc-text">Bức tranh công cụ kiểm thử tự động Desktop hiện nay</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">13</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">3.2</span>
+        <span class="toc-text">Bộ tiêu chí đánh giá toàn diện gồm 10 khía cạnh</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">14</span>
+    </div>
+
+    <div class="toc-entry toc-sec">
+        <span class="toc-num">4</span>
+        <span class="toc-text">Nghiên Cứu Công Cụ Đại Diện A: Katalon Studio</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">17</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">4.1</span>
+        <span class="toc-text">Tổng quan và cơ chế FlaUI tích hợp trong Katalon</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">17</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">4.2</span>
+        <span class="toc-text">Thực nghiệm 3 Demo: Cài đặt, Record/Playback, BVA Data-Driven</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">19</span>
+    </div>
+
+    <div class="toc-entry toc-sec">
+        <span class="toc-num">5</span>
+        <span class="toc-text">Nghiên Cứu Công Cụ Đại Diện B: Microsoft WinAppDriver</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">24</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">5.1</span>
+        <span class="toc-text">Kiến trúc Windows Application Driver và chuẩn WebDriver</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">24</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">5.2</span>
+        <span class="toc-text">Cài đặt Framework C# NUnit POM và thực nghiệm 3 Demo</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">26</span>
+    </div>
+
+    <div class="toc-entry toc-sec">
+        <span class="toc-num">6</span>
+        <span class="toc-text">So Sánh Đối Chiếu Toàn Diện (Comparison)</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">30</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">6.1</span>
+        <span class="toc-text">Đối chiếu tính năng kỹ thuật và trải nghiệm lập trình</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">30</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">6.2</span>
+        <span class="toc-text">Số liệu thực nghiệm định lượng: Thời gian, LOC, Tài nguyên</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">33</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">6.3</span>
+        <span class="toc-text">Ma trận chấm điểm và hướng dẫn lựa chọn công cụ</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">35</span>
+    </div>
+
+    <div class="toc-entry toc-sec">
+        <span class="toc-num">7</span>
+        <span class="toc-text">Ứng Dụng AI Trong Desktop Automation Testing</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">37</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">7.1</span>
+        <span class="toc-text">Quy trình Prompt Engineering 2 pha (Phân tích BVA và Sinh code)</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">37</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">7.2</span>
+        <span class="toc-text">Thực nghiệm đối chiếu: ChatGPT-4, Gemini Advanced, Claude 3.5</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">39</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">7.3</span>
+        <span class="toc-text">Thực thi Test Suite C# AI-WinAppDriver 19 ca BVA đạt 100% PASS</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">42</span>
+    </div>
+
+    <div class="toc-entry toc-sec">
+        <span class="toc-num">8</span>
+        <span class="toc-text">Bài Tập Thực Hành Cá Nhân 30 Phút Tại Lớp (Exercise)</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">44</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">8.1</span>
+        <span class="toc-text">Mục tiêu, chuẩn bị tài nguyên từ GitHub và Starter Kit</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">44</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">8.2</span>
+        <span class="toc-text">Nội dung Bài 1 (Đăng nhập), Bài 2 (Tính tổng BVA) & Barem điểm</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">45</span>
+    </div>
+
+    <div class="toc-entry toc-sec">
+        <span class="toc-num">9</span>
+        <span class="toc-text">Minh Chứng Thực Nghiệm, Kê Khai AI & Kết Luận</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">48</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">9.1</span>
+        <span class="toc-text">Danh sách 3 Video Demo YouTube chính thức</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">48</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">9.2</span>
+        <span class="toc-text">Nhật ký Git Commit Log và Kê khai trung thực sử dụng AI</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">49</span>
+    </div>
+    <div class="toc-entry toc-subsec">
+        <span class="toc-num">9.3</span>
+        <span class="toc-text">Kết luận tổng kết và hướng phát triển</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">50</span>
+    </div>
+</div>
+
+<!-- ========================================================
+     PAGE 3: DANH SÁCH BẢNG (LIST OF TABLES)
+     ======================================================== -->
+<div class="latex-frontmatter">
+    <h1 class="latex-toc-title">Danh sách bảng</h1>
+
+    <div class="toc-entry">
+        <span class="toc-num">1</span>
+        <span class="toc-text">Bảng khảo sát và thang điểm bộ tiêu chí đánh giá công cụ kiểm thử Desktop</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">14</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">2</span>
+        <span class="toc-text">Bảng đối chiếu kỹ thuật chi tiết giữa Katalon Studio và Microsoft WinAppDriver</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">31</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">3</span>
+        <span class="toc-text">Bảng đo đạc định lượng thực nghiệm thời gian, số dòng mã (LOC) và tài nguyên</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">33</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">4</span>
+        <span class="toc-text">Bảng ma trận phân tích so sánh toàn diện 10 tiêu chí</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">35</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">5</span>
+        <span class="toc-text">Bảng 12 ca kiểm thử giá trị biên (BVA) chuẩn hóa do AI sinh</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">38</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">6</span>
+        <span class="toc-text">Bảng đo đạc thời gian sinh kịch bản và tỷ lệ ảo giác giữa các mô hình AI</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">41</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">7</span>
+        <span class="toc-text">Bảng phân bổ thời gian thực hành cá nhân 30 phút tại lớp</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">45</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">8</span>
+        <span class="toc-text">Bảng barem chấm điểm chi tiết bài tập thực hành cá nhân (Thang điểm 10)</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">47</span>
+    </div>
+</div>
+
+<!-- ========================================================
+     PAGE 4: DANH SÁCH HÌNH VẼ (LIST OF FIGURES)
+     ======================================================== -->
+<div class="latex-frontmatter">
+    <h1 class="latex-toc-title">Danh sách hình vẽ</h1>
+
+    <div class="toc-entry">
+        <span class="toc-num">1</span>
+        <span class="toc-text">Sơ đồ kiến trúc kiểm thử tự động ứng dụng Desktop</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">4</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">2</span>
+        <span class="toc-text">Quy trình Record & Playback và cơ chế ánh xạ phần tử Windows UIA</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">6</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">3</span>
+        <span class="toc-text">Mô hình thiết kế kiểm thử Page Object Model (POM) cho ứng dụng Desktop</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">8</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">4</span>
+        <span class="toc-text">Giao diện ứng dụng mẫu MiniSum (Màn hình Đăng nhập và Màn hình Tính tổng)</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">10</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">5</span>
+        <span class="toc-text">Không gian làm việc và Object Repository trong Katalon Studio</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">17</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">6</span>
+        <span class="toc-text">Thực thi kịch bản Record & Playback và xác minh Checkpoint trên Katalon Studio</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">19</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">7</span>
+        <span class="toc-text">Báo cáo HTML Report kết quả thực thi kiểm thử trên Katalon Studio</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">21</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">8</span>
+        <span class="toc-text">Kiến trúc điều khiển của WinAppDriver và Windows Application Driver</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">24</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">9</span>
+        <span class="toc-text">Mã nguồn kịch bản C# NUnit POM và cây thực thi Test Explorer</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">27</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">10</span>
+        <span class="toc-text">Quy trình Prompt Engineering 2 pha ứng dụng AI trong Desktop Automation</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">37</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">11</span>
+        <span class="toc-text">Biểu đồ so sánh thời gian phát triển kịch bản kiểm thử giữa 3 phương pháp</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">40</span>
+    </div>
+</div>
+
+<!-- ========================================================
+     CONTENT: TOÀN BỘ 9 PHẦN NỘI DUNG CHÍNH
+     ======================================================== -->
 {html_body}
 
 </body>
@@ -431,7 +962,7 @@ for target_pdf in target_pdfs:
         edge_exe,
         '--headless',
         '--disable-gpu',
-        '--run-all-compositor-stages-before-draw',
+        '--no-pdf-header-footer',
         f'--print-to-pdf={target_pdf}',
         f'file:///{html_path}'
     ]

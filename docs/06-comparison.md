@@ -27,6 +27,9 @@
 | **Mô hình bản quyền** | Freemium: Bản Free đủ cho nhu cầu cơ bản; các tính năng nâng cao có tính phí. | Mã nguồn mở (Open Source) hoàn toàn, miễn phí bản quyền trọn đời. | WinAppDriver loại bỏ hoàn toàn chi phí đầu tư phần mềm; Katalon phụ thuộc chính sách hãng. |
 | **Tích hợp CI/CD & VCS** | Quản lý theo cấu trúc dự án độc quyền; chạy dòng lệnh qua Katalon Runtime Engine. | Quản lý mã nguồn dạng text thuần qua Git; tích hợp trực tiếp qua CLI (`dotnet test`). | WinAppDriver tối ưu cho đường ống DevOps và dễ xử lý xung đột mã nguồn (merge conflict). |
 
+<p class="table-caption"><b>Bảng 6.1:</b> <i>Bảng đối chiếu kỹ thuật chi tiết giữa Katalon Studio và Microsoft WinAppDriver</i></p>
+
+
 ---
 
 ## 3. So Sánh Chi Tiết Theo 3 Năng Lực Tự Động Hóa Cốt Lõi
@@ -78,6 +81,9 @@
 | **Công đoạn 4:** Debug, sửa lỗi cú pháp, locator và chạy PASS 100% | 15.0 phút | 20.0 phút | **12.0 phút** | Cần can thiệp sửa lỗi window handle và nhãn lỗi `lblError`. |
 | **TỔNG THỜI GIAN HOÀN THÀNH (Lead Time)** | **90.0 phút** (1.5h) | **120.0 phút** (2.0h) | **29.0 phút** (< 0.5h) | **Nhanh hơn 4.1 lần so với Code thủ công, 3.1 lần so với Katalon!** |
 
+<p class="table-caption"><b>Bảng 6.2:</b> <i>Bảng đo đạc định lượng thực nghiệm về thời gian, số dòng mã (LOC) và tài nguyên</i></p>
+
+
 ### 5.2 Thống Kê Số Dòng Mã (LOC), Độ Phức Tạp Và Tỷ Lệ Sửa Mã (Refactor Rate)
 
 Thống kê chi tiết mã nguồn C# NUnit trên nhánh `feature/quang-ai-comparison`:
@@ -89,6 +95,9 @@ Thống kê chi tiết mã nguồn C# NUnit trên nhánh `feature/quang-ai-compa
 | **`BaseTest.cs`** | 45 dòng | 38 dòng | 7 dòng (đường dẫn app động) | 15.5% |
 | **`MiniSumTests.cs` (DDT 12 BVA)** | 66 dòng | 58 dòng | 8 dòng (timing / assertion) | 12.1% |
 | **TỔNG TOÀN BỘ FRAMEWORK** | **215 dòng** | **182 dòng (84.6%)** | **33 dòng (15.4%)** | **15.4%** |
+
+<p class="table-caption"><b>Bảng 6.3:</b> <i>Thống kê chi tiết số dòng mã do AI sinh và tỷ lệ điều chỉnh mã nguồn thực tế</i></p>
+
 
 > **Phân tích kết quả:** Tỷ lệ tái sử dụng mã AI đạt đến **84.6%**. Điều này chứng minh AI không thể thay thế hoàn toàn kỹ sư kiểm thử (vẫn cần 15.4% kiến thức thực chiến để fix các lỗi hệ điều hành và timing), nhưng đóng vai trò là một "bộ tăng áp lực" (force multiplier) khổng lồ cho năng suất lập trình kiểm thử.
 
@@ -128,6 +137,9 @@ gantt
 |---|---|---|---|
 | **Thế mạnh cốt lõi** | - Triển khai nhanh, GUI hoàn chỉnh.<br>- Tích hợp sẵn Recorder, Spy và Báo cáo.<br>- Phù hợp manual tester. | - Tốc độ thực thi cao, tài nguyên nhẹ.<br>- Mã nguồn mở hoàn toàn, không bản quyền.<br>- Tự do thiết kế framework POM sạch.<br>- Thân thiện tuyệt đối với Git & CI/CD. | - **Tốc độ phát triển script cực nhanh (29 phút)**.<br>- Mã nguồn chuẩn POM chất lượng cao.<br>- Giữ trọn vẹn ưu điểm nhẹ và open-source của WinAppDriver.<br>- Tự động hóa việc sinh dữ liệu kiểm thử BVA. |
 | **Hạn chế chính** | - Chiếm nhiều RAM (1.5 - 3 GB).<br>- Giấy phép thương mại có phí.<br>- Khó tùy biến sâu kiến trúc. | - Tốn nhiều công sức lập trình ban đầu.<br>- Đòi hỏi kỹ năng SDET thành thạo.<br>- Không có recorder đồ họa. | - Vẫn cần kỹ sư con người review (15% refactor).<br>- Tiềm ẩn nguy cơ ảo giác nếu prompt không chuẩn.<br>- Phụ thuộc vào chất lượng mô hình LLM. |
+
+<p class="table-caption"><b>Bảng 6.4:</b> <i>Ma trận phân tích và chấm điểm so sánh toàn diện 10 tiêu chí</i></p>
+
 
 ---
 

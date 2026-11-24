@@ -1,4 +1,4 @@
-# 📜 NỘI QUY VÀ NGUYÊN TẮC LÀM VIỆC NHÓM
+#  NỘI QUY VÀ NGUYÊN TẮC LÀM VIỆC NHÓM
 ## Đề tài Seminar: Automation Testing for Desktop Applications
 ### Nhóm 02 – Lớp Kiểm thử phần mềm (Software Testing) – FIT@HCMUS
 **Thời gian áp dụng:** Đợt làm việc nước rút Lần 2 (27/10/2026 – 31/10/2026)  
@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 1. TÔN CHỈ & MỤC TIÊU CHUNG
+##  1. TÔN CHỈ & MỤC TIÊU CHUNG
 
 1. **Mục tiêu tối thượng:** Hoàn thành xuất sắc bài Seminar Lần 2, nộp đúng hạn trước **18:00 ngày 30/10/2026** (trước hạn chót 31/10 của Giảng viên), đạt điểm số cao nhất ở cả 3 phần: Báo cáo kỹ thuật, Demo thực nghiệm, và Slide thuyết trình.
 2. **Nguyên tắc cốt lõi:**
@@ -17,7 +17,7 @@
 
 ---
 
-## 👥 2. PHÂN CÔNG VAI TRÒ & TRÁCH NHIỆM
+##  2. PHÂN CÔNG VAI TRÒ & TRÁCH NHIỆM
 
 | STT | Thành viên | MSSV | Vai trò chính | Trách nhiệm then chốt |
 |:---:|---|:---:|---|---|
@@ -28,9 +28,9 @@
 
 ---
 
-## 🌿 3. QUY ĐỊNH LÀM VIỆC VỚI GIT & GITHUB
+##  3. QUY ĐỊNH LÀM VIỆC VỚI GIT & GITHUB
 
-> ⚠️ **LƯU Ý ĐẶC BIỆT:** Giảng viên sẽ kiểm tra trực tiếp `git log` để đánh giá công sức thực tế của từng cá nhân. Do đó, việc tuân thủ quy tắc Git là **BẮT BUỘC**.
+>  **LƯU Ý ĐẶC BIỆT:** Giảng viên sẽ kiểm tra trực tiếp `git log` để đánh giá công sức thực tế của từng cá nhân. Do đó, việc tuân thủ quy tắc Git là **BẮT BUỘC**.
 
 ### 3.1. Quy tắc phân nhánh (Branching Strategy)
 - Nhánh `main`: Chỉ chứa mã nguồn và tài liệu ổn định đã được kiểm duyệt. **Tuyệt đối không push trực tiếp lên main.**
@@ -59,7 +59,7 @@ chore(tin):   Merge branch và cập nhật checklist nộp bài
 
 ---
 
-## 📁 4. QUY CHUẨN MÃ NGUỒN, TÀI LIỆU & FILE SIZE
+##  4. QUY CHUẨN MÃ NGUỒN, TÀI LIỆU & FILE SIZE
 
 1. **Cấu trúc thư mục:** Không tự ý tạo các thư mục nằm ngoài cấu trúc chuẩn của dự án:
    ```text
@@ -81,7 +81,7 @@ chore(tin):   Merge branch và cập nhật checklist nộp bài
 
 ---
 
-## 🎥 5. TIÊU CHUẨN VIDEO DEMO THỰC NGHIỆM
+##  5. TIÊU CHUẨN VIDEO DEMO THỰC NGHIỆM
 
 Nhóm sẽ sản xuất **3 video demo riêng biệt** tương ứng với 3 nội dung:
 1. `Demo Katalon Studio` (Phụ trách: Kan)
@@ -97,7 +97,7 @@ Nhóm sẽ sản xuất **3 video demo riêng biệt** tương ứng với 3 n�
 
 ---
 
-## 🤖 6. NGUYÊN TẮC SỬ DỤNG TRÍ TUỆ NHÂN TẠO (AI)
+##  6. NGUYÊN TẮC SỬ DỤNG TRÍ TUỆ NHÂN TẠO (AI)
 
 1. **Tính minh bạch:** Được phép sử dụng các công cụ AI (ChatGPT, Gemini, Claude, GitHub Copilot) hỗ trợ công việc. Tuy nhiên, **toàn bộ việc sử dụng phải được kê khai trung thực** trong file `ai-usage-declaration.md`.
 2. **Lưu trữ bằng chứng:**
@@ -109,7 +109,7 @@ Nhóm sẽ sản xuất **3 video demo riêng biệt** tương ứng với 3 n�
 
 ---
 
-## 📊 7. CHÍNH SÁCH ĐÁNH GIÁ ĐÓNG GÓP (% CONTRIBUTION)
+##  7. CHÍNH SÁCH ĐÁNH GIÁ ĐÓNG GÓP (% CONTRIBUTION)
 
 ### 7.1. Mức cơ sở (Baseline)
 - Phân bổ công việc dựa trên năng lực và trách nhiệm thực tế của 4 thành viên chính thức (Phan Trung Tín, Nguyễn Lê Quang Kan, Bùi Quang Tùng, Trần Vũ Quang). Mức cơ sở được thống nhất chia đều: **25.0% cho mỗi thành viên**.
@@ -130,7 +130,7 @@ Nhóm sẽ sản xuất **3 video demo riêng biệt** tương ứng với 3 n�
 
 ---
 
-## ⏰ 8. CHẾ ĐỘ LIÊN LẠC & BÁO CÁO HẰNG NGÀY
+##  8. CHẾ ĐỘ LIÊN LẠC & BÁO CÁO HẰNG NGÀY
 
 1. **Kênh trao đổi chính:** Nhóm **Zalo / Discord** của nhóm. Mọi thành viên phải bật thông báo cho nhóm.
 2. **Daily Check-in (21:00 mỗi tối):**
@@ -146,5 +146,5 @@ Nhóm sẽ sản xuất **3 video demo riêng biệt** tương ứng với 3 n�
 
 ---
 
-> 🤝 **CAM KẾT CỦA TOÀN THỂ THÀNH VIÊN:**  
+>  **CAM KẾT CỦA TOÀN THỂ THÀNH VIÊN:**  
 > Toàn bộ 5 thành viên đã đọc kỹ, thấu hiểu và nhất trí tuân thủ 100% các quy tắc trên vì sự thành công chung của nhóm 02!

@@ -86,6 +86,10 @@ p9 = """
   - **Liên kết YouTube:** [https://www.youtube.com/watch?v=w7c_X5f5SFo](https://www.youtube.com/watch?v=w7c_X5f5SFo)
   - **Chất lượng:** 1080p Full HD, thuyết minh tiếng Việt rõ ràng.
   - **Nội dung:** Cài đặt WinAppDriver, Record & Playback đăng nhập hợp lệ, tạo Checkpoint xác minh nhãn thông báo, Data-Driven Testing với 12 test case BVA đọc từ Excel, thực thi suite và xuất báo cáo HTML.
+- **Demo 2 – WinAppDriver & C# NUnit (Bùi Quang Tùng):**
+  - **Liên kết YouTube:** [https://youtu.be/OujklJs2DhA](https://youtu.be/OujklJs2DhA)
+  - **Chất lượng:** 1080p Full HD, thuyết minh trực quan trên môi trường Visual Studio.
+  - **Nội dung:** Khởi tạo WinAppDriver & WindowsDriver mở MiniSum.exe, kiểm thử Đăng nhập theo mô hình Page Object Model (POM), cơ chế chụp màn hình tự động và Data-Driven Testing với NUnit + NPOI.
 
 ## 9.2 Nhật ký đóng góp trên Git Commit Log
 - Hệ thống kho lưu trữ GitHub: `https://github.com/tinphan247/KTPM-2026-Seminar.git`

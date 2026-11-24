@@ -20,7 +20,7 @@
 ## 3. VIDEO DEMO THỰC NGHIỆM (YOUTUBE)
 - [x] **Danh sách video:** [`video-links.md`](video-links.md)
   - [x] **Video 1 – Katalon Studio (Kan):** [https://www.youtube.com/watch?v=w7c_X5f5SFo](https://www.youtube.com/watch?v=w7c_X5f5SFo) (Full HD 1080p, thuyết minh tiếng Việt, 3 demo).
-  - [ ] **Video 2 – WinAppDriver (Tùng):** ⚠️ Thành viên không nộp video đúng hạn.
+  - [x] **Video 2 – WinAppDriver (Tùng):** [https://youtu.be/OujklJs2DhA](https://youtu.be/OujklJs2DhA) (Khởi tạo, POM Login, DDT BVA NUnit).
   - [ ] **Video 3 – AI (Quang):** ⚠️ Thành viên không nộp video đúng hạn.
 
 ## 4. MÃ NGUỒN KIỂM THỬ (TEST SCRIPTS)

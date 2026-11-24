@@ -14,9 +14,13 @@
 
 ## 2. Demo WinAppDriver – Bùi Quang Tùng
 
-- **Video:** *(Bùi Quang Tùng không nộp video đúng hạn)*
-- **Nội dung demo theo kế hoạch:** Demo 1 (khởi tạo WindowsDriver + mở MiniSum.exe), Demo 2 (login test + `[TearDown]` chụp màn hình), Demo 3 (DDT BVA với NUnit + NPOI)
-- **Trạng thái:** ⚠️ Không nộp
+- **Video:** [Demo WinAppDriver – C# NUnit & Page Object Model](https://youtu.be/OujklJs2DhA)
+- **Người thực hiện:** Bùi Quang Tùng (M3 – WinAppDriver)
+- **Nội dung demo:**
+  - Demo 1: Khởi tạo WinAppDriver & WindowsDriver mở `MiniSum.exe`
+  - Demo 2: Kiểm thử Đăng nhập theo mô hình Page Object Model (POM) + Chụp màn hình khi kết thúc test
+  - Demo 3: Data-Driven Testing (DDT) với bộ dữ liệu BVA (12 test cases) sử dụng NUnit và NPOI
+- **Trạng thái:** ✅ Đã upload thành công (YouTube)
 
 ## 3. Demo AI – Trần Vũ Quang
 
@@ -27,5 +31,5 @@
 ## 4. Tổng hợp & lưu trữ
 
 - [x] Video 1 (Katalon – Kan) – ✅ Đã nộp và kiểm tra
-- [ ] Video 2 (WinAppDriver – Tùng) – ⚠️ Không nộp
+- [x] Video 2 (WinAppDriver – Tùng) – ✅ Đã nộp và kiểm tra
 - [ ] Video 3 (AI – Quang) – ⚠️ Không nộp

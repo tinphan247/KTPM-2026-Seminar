@@ -8,13 +8,12 @@
 
 > **Chính sách phân chia:** Chia đều khối lượng công việc, mỗi thành viên đảm nhận đúng **24.0 giờ làm việc ước tính** và gợi ý mức đóng góp **20.0%** (tổng 100%).
 
-| STT | Họ và Tên | MSSV | Vai trò chính Lần 2 | Branch Git | Tasks | Giờ ước tính | % Gợi ý |
+| STT | Họ và Tên | MSSV | Vai trò chính Lần 2 | Branch Git | Tasks | Giờ thực tế | % Chốt |
 |:---:|---|:---:|---|---|:---:|:---:|:---:|
-| M1 | **Phan Trung Tín** *(Leader)* | 23120372 | Project Lead, Build MiniSum.exe, Bổ sung Theory, Tích hợp & Đóng gói | `feature/tin-setup-report` | 22 | **24.0h** | **20%** |
-| M2 | **Nguyễn Lê Quang Kan** | 23120279 | Demo thực nghiệm Katalon Studio & Tài liệu kỹ thuật | `feature/kan-katalon` | 18 | **24.0h** | **20%** |
+| M1 | **Phan Trung Tín** *(Leader)* | 23120372 | Project Lead, Build MiniSum.exe, Bổ sung Theory, Thiết kế Slide (toàn bộ 8 phần), Tích hợp & Đóng gói | `feature/tin-setup-report` | 38 | **42.0h** | **35%** |
+| M2 | **Nguyễn Lê Quang Kan** | 23120279 | Demo thực nghiệm Katalon Studio & Tài liệu kỹ thuật + Video YouTube | `feature/kan-katalon` | 18 | **30.0h** | **25%** |
 | M3 | **Bùi Quang Tùng** | 20120397 | Demo thực nghiệm WinAppDriver + C# NUnit & POM | `feature/tung-winappdriver` | 21 | **24.0h** | **20%** |
-| M4 | **Trần Vũ Quang** | 23120346 | Thực nghiệm AI Automation & Đo đạc Comparison | `feature/quang-ai-comparison` | 17 | **24.0h** | **20%** |
-| M5 | **Phạm Tấn Phát** | 20120636 | Thiết kế Slide PowerPoint toàn bộ (8 phần) | `feature/phat-slide` | 16 | **24.0h** | **20%** |
+| M4 | **Trần Vũ Quang** | 23120346 | Thực nghiệm AI Automation & Test Suite C# & Đo đạc Comparison | `feature/quang-ai-comparison` | 17 | **24.0h** | **20%** |
 | **Tổng** | | | | | **94 tasks** | **120.0h** | **100%** |
 
 ---
@@ -52,7 +51,7 @@
 | **Kan** | Clone repo, tạo branch `feature/kan-katalon`, cài Katalon Studio | 🟡 MED | Katalon Studio chạy được |
 | **Tùng** | Clone repo, tạo branch `feature/tung-winappdriver`, cài WinAppDriver + Accessibility Insights | 🟡 MED | WinAppDriver.exe chạy được |
 | **Quang** | Clone repo, tạo branch `feature/quang-ai-comparison`, đọc kỹ `07-ai-desktop-automation.md` + chuẩn bị prompt template | 🟡 MED | File `ai/prompts/minisum-spec.md` |
-| **Phát** | Clone repo, tạo branch `feature/phat-slide`, tạo file `.pptx` với đầy đủ mục theo cấu trúc 8 phần | 🟡 MED | File `.pptx` khung có đủ mục |
+| **Tín** | Thiết kế Slide PowerPoint toàn bộ (v1 15 slide + v2 34 slide) thay thế M5 | 🔴 HIGH | `slides/seminar-group02-v2.pptx` + PDF |
 
 ---
 
@@ -74,7 +73,7 @@
 | **Tùng** | Bắt đầu viết bổ sung nguyên lý WinAppDriver: UIAutomation, WinAPI, cách tìm element vào `docs/05-winappdriver.md` | 🟡 MED | Draft section kỹ thuật |
 | **Quang** | AI Demo 1: Dùng ChatGPT/Gemini sinh 12 test case BVA từ đặc tả MiniSum | 🔴 HIGH | File `ai/output/bva-testcases.xlsx` |
 | **Quang** | Lưu lại toàn bộ prompt đã dùng vào `ai/prompts/testcase-bva-prompt.md` | 🟡 MED | File prompt hoàn chỉnh |
-| **Phát** | Điền nội dung Phần 1–3 vào Slide (Introduction + Theory + Tool Survey) | 🟡 MED | Slide 1-3 hoàn chỉnh |
+| **Tín** | Điền nội dung Phần 1–3 vào Slide (Introduction + Theory + Tool Survey) | 🟡 MED | Slide 1-3 hoàn chỉnh |
 
 ---
 
@@ -100,8 +99,8 @@
 | **Quang** | Đo thời gian: so sánh "viết test thủ công" vs "AI sinh" (đo thực tế 3 lượt) | 🔴 HIGH | Bảng số liệu thực nghiệm |
 | **Quang** | Cập nhật `docs/06-comparison.md`: thêm cột "AI hỗ trợ", số liệu thực (thời gian, LOC, tỷ lệ phát hiện lỗi) | 🔴 HIGH | `06-comparison.md` v2 |
 | **Quang** | Quay video AI Demo (prompt → sinh test case → sinh script → chạy kiểm tra kết quả) | 🔴 HIGH | Video Demo AI |
-| **Phát** | Điền nội dung Phần 4–5 vào Slide (Katalon + WinAppDriver), chèn ảnh từ Kan và Tùng gửi | 🔴 HIGH | Slide 4-5 hoàn chỉnh |
-| **Phát** | Điền nội dung Phần 6–8 vào Slide (Comparison + AI + Exercise) | 🟡 MED | Slide 6-8 hoàn chỉnh |
+| **Tín** | Điền nội dung Phần 4–5 vào Slide (Katalon + WinAppDriver), chèn ảnh từ Kan và Tùng gửi | 🔴 HIGH | Slide 4-5 hoàn chỉnh |
+| **Tín** | Điền nội dung Phần 6–8 vào Slide (Comparison + AI + Exercise) | 🟡 MED | Slide 6-8 hoàn chỉnh |
 
 ---
 
@@ -114,7 +113,7 @@
 | **Kan** | Merge branch `feature/kan-katalon` → `main`, review xung đột | 🔴 HIGH | Code trên main |
 | **Tùng** | Merge branch `feature/tung-winappdriver` → `main`, review xung đột | 🔴 HIGH | Code trên main |
 | **Quang** | Merge branch `feature/quang-ai-comparison` → `main` | 🔴 HIGH | Code trên main |
-| **Phát** | Merge branch `feature/phat-slide` → `main`, upload file `.pptx` + export PDF | 🔴 HIGH | Slide trên main |
+| **Tín** | Hoàn thiện slide v2, upload file `.pptx` + export PDF | 🔴 HIGH | Slide trên main |
 | **Tín** | Upload 3 video lên YouTube (unlisted) | 🔴 HIGH | 3 link YouTube |
 | **Tín** | Tạo `video-links.md` với đầy đủ 3 link + mô tả | 🔴 HIGH | File commit trên main |
 | **Tín** | Chạy `git log --oneline --all > git-commit-log.md` | 🟡 MED | File `git-commit-log.md` |
@@ -122,8 +121,8 @@
 | **Tín** | Export `report_v2.md` → `report_v2.pdf` | 🔴 HIGH | File PDF |
 | **Tín** | Đóng gói ZIP: kiểm tra size ≤20MB/file, đặt tên đúng `Group02_ZipTool_Lan2.zip` | 🔴 HIGH | File ZIP nộp bài |
 | **Tín** | Nộp bài lên hệ thống | 🔴 HIGH | ✅ Done |
-| **Phát** | Thiết kế đẹp: kiểm tra font to, nền trắng, chữ đen, thêm biểu đồ so sánh | 🟡 MED | Slide final |
-| **Phát** | Export Slide → PDF, đặt tên `seminar-final.pdf` | 🔴 HIGH | File PDF |
+| **Tín** | Thiết kế đẹp: kiểm tra font to, nền trắng, chữ đen, thêm biểu đồ so sánh | 🟡 MED | Slide final |
+| **Tín** | Export Slide → PDF, đặt tên `seminar-slides-v2.pdf` | 🔴 HIGH | File PDF |
 
 ---
 
@@ -146,7 +145,7 @@
 | T10 | Bổ sung `docs/02-theory.md`: Explicit Wait vs Implicit Wait – so sánh chi tiết | 1.0 | Section Wait Strategy trong theory |
 | T11 | Bổ sung `docs/02-theory.md`: Test Oracle – định nghĩa, phân loại | 0.5 | Section Test Oracle |
 | T12 | Bổ sung `docs/02-theory.md`: Recovery Testing – định nghĩa + ví dụ | 0.5 | Section Recovery Testing |
-| T13 | Tổng hợp `report_v2.md`: tích hợp toàn bộ nội dung mới từ Kan/Tùng/Quang/Phát | 3.5 | `report_v2.md` hoàn chỉnh |
+| T13 | Tổng hợp `report_v2.md`: tích hợp toàn bộ nội dung mới từ Kan/Tùng/Quang | 3.5 | `report_v2.md` hoàn chỉnh |
 | T14 | Export `report_v2.md` → `report_v2.pdf` (dùng Markdown to PDF / Pandoc) | 0.5 | File PDF |
 | T15 | Cập nhật `docs/06-comparison.md` với số liệu thực từ Quang | 1.0 | Comparison v2 |
 | T16 | Viết `video-links.md` với 3 link YouTube + mô tả nội dung từng video | 0.5 | File `video-links.md` |
@@ -239,27 +238,27 @@
 
 ---
 
-### 🧑‍💻 M5 – PHẠM TẤN PHÁT (20120636) – Slide PowerPoint
-**Tổng: 16 tasks – 24.0h – 20% đóng góp**
+### 🧑‍💻 NHIỆM VỤ THIẾT KẾ SLIDE POWERPOINT (Chuyển giao cho Phan Trung Tín)
+**Tổng: 16 tasks slide – Do Leader trực tiếp thực hiện**
 
 | # | Task | Giờ | Output |
 |---|---|:---:|---|
-| P01 | Clone repo, tạo branch `feature/phat-slide`, đọc toàn bộ 9 file `.md` trong `docs/` | 1.5 | Hiểu đầy đủ nội dung báo cáo |
-| P02 | Tạo file `slides/seminar-group02.pptx` với layout chuẩn: nền trắng, font ≥18pt, chữ đen | 1.0 | File PPTX khung |
-| P03 | **Slide Phần 1 (5-7 slide):** Introduction – Giới thiệu đề tài, mục tiêu, phạm vi seminar | 1.5 | Slide 1 hoàn chỉnh |
-| P04 | **Slide Phần 2 (8-10 slide):** Theory – UI Automation, AUT, UIA API, POM, Flaky Test, Wait | 2.5 | Slide 2 hoàn chỉnh |
-| P05 | **Slide Phần 3 (5-6 slide):** Tool Survey – Bức tranh công cụ tổng quan, bảng so sánh sơ bộ | 1.5 | Slide 3 hoàn chỉnh |
-| P06 | **Slide Phần 4 (8-10 slide):** Katalon Studio – Kiến trúc, Object Spy, 3 Demo (ảnh từ Kan) | 2.5 | Slide 4 hoàn chỉnh |
-| P07 | **Slide Phần 5 (8-10 slide):** WinAppDriver – Kiến trúc, UIAutomation, 3 Demo (ảnh từ Tùng) | 2.5 | Slide 5 hoàn chỉnh |
-| P08 | **Slide Phần 6 (5-6 slide):** Comparison – Bảng so sánh đầy đủ, phân tích định tính & định lượng | 2.0 | Slide 6 hoàn chỉnh |
-| P09 | **Slide Phần 7 (5-6 slide):** AI Demo – Prompt engineering, output, so sánh AI vs thủ công | 2.0 | Slide 7 hoàn chỉnh |
-| P10 | **Slide Phần 8 (3-4 slide):** Exercises – Hệ thống câu hỏi, bài tập thực hành | 1.0 | Slide 8 hoàn chỉnh |
+| P01 | Nghiên cứu toàn bộ nội dung báo cáo 9 phần | 1.5 | Hiểu đầy đủ nội dung báo cáo |
+| P02 | Tạo file `slides/seminar-group02-v2.pptx` với layout chuẩn: nền trắng, font ≥18pt, chữ đen | 1.0 | File PPTX khung |
+| P03 | **Slide Phần 1:** Introduction – Giới thiệu đề tài, mục tiêu, phạm vi seminar | 1.5 | Slide 1 hoàn chỉnh |
+| P04 | **Slide Phần 2:** Theory – UI Automation, AUT, UIA API, POM, Flaky Test, Wait | 2.5 | Slide 2 hoàn chỉnh |
+| P05 | **Slide Phần 3:** Tool Survey – Bức tranh công cụ tổng quan, bảng so sánh sơ bộ | 1.5 | Slide 3 hoàn chỉnh |
+| P06 | **Slide Phần 4:** Katalon Studio – Kiến trúc, Object Spy, 3 Demo (ảnh từ Kan) | 2.5 | Slide 4 hoàn chỉnh |
+| P07 | **Slide Phần 5:** WinAppDriver – Kiến trúc, UIAutomation, 3 Demo (ảnh từ Tùng) | 2.5 | Slide 5 hoàn chỉnh |
+| P08 | **Slide Phần 6:** Comparison – Bảng so sánh đầy đủ, phân tích định tính & định lượng | 2.0 | Slide 6 hoàn chỉnh |
+| P09 | **Slide Phần 7:** AI Demo – Prompt engineering, output, so sánh AI vs thủ công | 2.0 | Slide 7 hoàn chỉnh |
+| P10 | **Slide Phần 8:** Exercises – Hệ thống câu hỏi, bài tập thực hành | 1.0 | Slide 8 hoàn chỉnh |
 | P11 | Thiết kế slide kết/tổng kết (Q&A, kết luận, tài liệu tham khảo, cảm ơn) | 1.0 | Slide kết hoàn chỉnh |
 | P12 | Chèn ảnh screenshot từ Kan (Katalon) + Tùng (WinAppDriver) + Quang (AI) vào đúng phần | 2.0 | Ảnh minh họa đúng chỗ |
 | P13 | Thêm biểu đồ so sánh tại Phần 6 (Bar chart: thời gian, LOC, tỷ lệ phát hiện lỗi) | 1.0 | Biểu đồ trực quan |
-| P14 | Review toàn bộ slide: font to, nền trắng, chữ đen, không rối, không quá chữ/slide | 2.0 | Slide final review |
-| P15 | Export `seminar-group02.pptx` → `seminar-final.pdf` | 0.5 | File PDF |
-| P16 | Tạo Pull Request và merge branch `feature/phat-slide` → `main` | 0.5 | ✅ Merge |
+| P14 | Review toàn bộ slide: font to, nền trắng, chữ đen, đánh số trang 1-34 | 2.0 | Slide final review |
+| P15 | Export `slides/seminar-group02-v2.pptx` → `slides/seminar-slides-v2.pdf` | 0.5 | File PDF |
+| P16 | Tích hợp slide chính thức vào repository | 0.5 | ✅ Merge |
 
 ---
 
@@ -285,7 +284,7 @@ feat(kan):    Thêm tính năng / script / tài liệu mới (Kan)
 fix(tung):    Sửa lỗi script (Tùng)
 docs(tin):    Cập nhật tài liệu markdown (Tín)
 demo(quang):  Thêm file demo AI (Quang)
-slide(phat):  Cập nhật slide (Phát)
+slide(tin):   Cập nhật slide (Tín)
 chore(tin):   Task admin (setup, packaging, merge)
 ```
 
@@ -297,7 +296,7 @@ git pull origin main
 git merge feature/kan-katalon
 git merge feature/tung-winappdriver
 git merge feature/quang-ai-comparison
-git merge feature/phat-slide
+git merge feature/tin-slide
 git push origin main
 ```
 
@@ -323,15 +322,14 @@ Trước khi nộp, Tín kiểm tra lần lượt:
 
 ---
 
-## 📊 BẢNG TỔNG HỢP PHÂN PHỐI % CONTRIBUTION (CHIA ĐỀU)
+## 📊 BẢNG TỔNG HỢP PHÂN PHỐI % CONTRIBUTION (CHỐT 4 THÀNH VIÊN)
 
-| Thành viên | MSSV | Vai trò chính | Tasks | Giờ ước tính | % Gợi ý |
+| Thành viên | MSSV | Vai trò chính | Tasks | Giờ thực tế | % Chốt |
 |---|:---:|---|:---:|:---:|:---:|
-| **Phan Trung Tín** | 23120372 | Leader, Build App, Bổ sung Theory, Tích hợp & Nộp | 22 | **24.0h** | **20.0%** |
-| **Nguyễn Lê Quang Kan** | 23120279 | Demo thực nghiệm Katalon Studio & Tài liệu kỹ thuật | 18 | **24.0h** | **20.0%** |
+| **Phan Trung Tín** | 23120372 | Leader, Build App, Bổ sung Theory, Thiết kế Slide v1+v2, Handout bài tập, Tích hợp & Nộp | 38 | **42.0h** | **35.0%** |
+| **Nguyễn Lê Quang Kan** | 23120279 | Demo thực nghiệm Katalon Studio & Tài liệu kỹ thuật + Video YouTube | 18 | **30.0h** | **25.0%** |
 | **Bùi Quang Tùng** | 20120397 | Demo thực nghiệm WinAppDriver + C# NUnit & POM | 21 | **24.0h** | **20.0%** |
-| **Trần Vũ Quang** | 23120346 | Demo thực nghiệm AI Test Automation & Comparison | 17 | **24.0h** | **20.0%** |
-| **Phạm Tấn Phát** | 20120636 | Thiết kế Slide thuyết trình PowerPoint toàn bộ (8 phần) | 16 | **24.0h** | **20.0%** |
+| **Trần Vũ Quang** | 23120346 | Demo thực nghiệm AI Test Automation & Test Suite C# & Comparison | 17 | **24.0h** | **20.0%** |
 | **Tổng cộng** | | | **94 tasks** | **120.0h** | **100.0%** |
 
-> 💡 **Kết luận:** Kế hoạch đã được cân bằng chính xác **24.0 giờ** và **20.0%** cho mỗi thành viên trong nhóm, đảm bảo công bằng, rõ ràng trách nhiệm và minh bạch trên Git commit history.
+> 💡 **Kết luận:** Tỷ lệ đóng góp được ghi nhận công bằng theo kết quả thực tế bàn giao: Phan Trung Tín (35%), Nguyễn Lê Quang Kan (25%), Bùi Quang Tùng (20%), Trần Vũ Quang (20%). Toàn bộ phần việc slide do Tín trực tiếp gánh vác và hoàn thiện.

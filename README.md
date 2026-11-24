@@ -9,14 +9,13 @@
 
 ## 👥 Danh sách thành viên nhóm
 
-| STT | Họ và Tên | MSSV | Vai trò chính | Branch Git | Tasks | Giờ ước tính | % Gợi ý |
+| STT | Họ và Tên | MSSV | Vai trò chính | Branch Git | Tasks | Giờ thực tế | % Chốt |
 |:---:|---|:---:|---|---|:---:|:---:|:---:|
-| M1 | **Phan Trung Tín** *(Leader)* | 23120372 | Trưởng nhóm, Build `MiniSum.exe`, Lý thuyết, Tích hợp báo cáo, Đóng gói | `feature/tin-setup-report` | 22 | **24.0h** | **20%** |
-| M2 | **Nguyễn Lê Quang Kan** | 23120279 | Nghiên cứu & Demo thực hành **Katalon Studio** | `feature/kan-katalon` | 18 | **24.0h** | **20%** |
-| M3 | **Bùi Quang Tùng** | 20120397 | Nghiên cứu & Demo thực hành **WinAppDriver** + C# NUnit | `feature/tung-winappdriver` | 21 | **24.0h** | **20%** |
-| M4 | **Trần Vũ Quang** | 23120346 | Nghiên cứu **AI in Test Automation** + So sánh số liệu thực | `feature/quang-ai-comparison` | 17 | **24.0h** | **20%** |
-| M5 | **Phạm Tấn Phát** | 20120636 | Thiết kế Slide PowerPoint toàn bộ (8 phần) | `feature/phat-slide` | 16 | **24.0h** | **20%** |
-| **Tổng** | | | | | **94** | **120.0h** | **100%** |
+| M1 | **Phan Trung Tín** *(Leader)* | 23120372 | Trưởng nhóm, Build `MiniSum.exe`, Lý thuyết, Thiết kế Slide, Handout bài tập, Tích hợp & Đóng gói | `feature/tin-setup-report` | 22 | **42.0h** | **35%** |
+| M2 | **Nguyễn Lê Quang Kan** | 23120279 | Nghiên cứu & Demo thực hành **Katalon Studio** + Video YouTube | `feature/kan-katalon` | 18 | **30.0h** | **25%** |
+| M3 | **Bùi Quang Tùng** | 20120397 | Nghiên cứu & Demo thực hành **WinAppDriver** + C# NUnit & POM | `feature/tung-winappdriver` | 21 | **24.0h** | **20%** |
+| M4 | **Trần Vũ Quang** | 23120346 | Nghiên cứu **AI in Test Automation** + Test Suite C# & Comparison | `feature/quang-ai-comparison` | 17 | **24.0h** | **20%** |
+| **Tổng** | | | | | **78** | **120.0h** | **100%** |
 
 ---
 
@@ -45,6 +44,7 @@ KTPM-2026-Seminar/
 │   ├── 06-comparison.md                # 6. So sánh đối chiếu toàn diện (Katalon vs WinAppDriver)
 │   ├── 07-ai-desktop-automation.md     # 7. Ứng dụng AI trong Automation Testing
 │   ├── 08-exercises.md                 # 8. Hệ thống câu hỏi & bài tập thực hành
+│   ├── 09-huong-dan-bai-tap.md         # 9. Handout: từ clone repo đến khi nộp bài (Katalon)
 │   └── report.md                       # Báo cáo toàn văn tổng hợp
 ├── case-study-app/                     # Ứng dụng mẫu phục vụ kiểm thử (MiniSum)
 │   ├── MiniSum/                        # Mã nguồn ứng dụng WinForms C# (.NET)
@@ -57,7 +57,7 @@ KTPM-2026-Seminar/
 ├── ai/                                 # Tài nguyên thực nghiệm AI (Quang – M4)
 │   ├── prompts/                        # Các mẫu Prompt sinh Test case & Script
 │   └── output/                         # Kết quả sinh tự động từ AI & đối chiếu
-├── slides/                             # Slide báo cáo thuyết trình (Phát – M5)
+├── slides/                             # Slide báo cáo thuyết trình (Tín – M1)
 ├── video-links.md                      # Danh sách 3 link video demo YouTube
 ├── git-commit-log.md                   # Nhật ký commit lịch sử đóng góp
 └── ai-usage-declaration.md             # Kê khai chi tiết việc sử dụng AI
@@ -112,7 +112,7 @@ git push origin feature/[branch-của-bạn]
 feat(kan):     Thêm script/tài liệu Katalon mới
 feat(tung):    Thêm script/tài liệu WinAppDriver mới
 feat(quang):   Thêm prompt/output AI thực nghiệm mới
-slide(phat):   Cập nhật slide thuyết trình
+slide(tin):   Cập nhật slide thuyết trình
 docs(tin):     Cập nhật tài liệu markdown
 fix(tung):     Sửa lỗi script C# NUnit
 chore(tin):    Task admin – merge, packaging, setup

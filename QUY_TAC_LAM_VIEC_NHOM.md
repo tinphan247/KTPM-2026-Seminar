@@ -21,11 +21,10 @@
 
 | STT | Thành viên | MSSV | Vai trò chính | Trách nhiệm then chốt |
 |:---:|---|:---:|---|---|
-| **M1** | **Phan Trung Tín** | 23120372 | **Nhóm trưởng (Team Lead)** | • Điều phối tiến độ, tổ chức họp sync hằng ngày.<br>• Xây dựng ứng dụng mẫu `MiniSum.exe` (v1, v2, v3).<br>• Bổ sung cơ sở lý thuyết (POM, Flaky Test, Wait, Oracle).<br>• Review Pull Request, merge code, đóng gói ZIP và nộp bài.<br>• Có quyền quyết định cuối cùng khi nhóm có bất đồng kỹ thuật. |
+| **M1** | **Phan Trung Tín** | 23120372 | **Nhóm trưởng (Team Lead)** | • Điều phối tiến độ, tổ chức họp sync hằng ngày.<br>• Xây dựng ứng dụng mẫu `MiniSum.exe` (v1, v2, v3).<br>• Bổ sung cơ sở lý thuyết (POM, Flaky Test, Wait, Oracle).<br>• Thiết kế Slide PowerPoint (toàn bộ 8 phần, v1 + v2).<br>• Soạn tài liệu Handout hướng dẫn bài tập thực hành.<br>• Review Pull Request, merge code, đóng gói ZIP và nộp bài.<br>• Có quyền quyết định cuối cùng khi nhóm có bất đồng kỹ thuật. |
 | **M2** | **Nguyễn Lê Quang Kan** | 23120279 | **Chuyên trách Katalon Studio** | • Thiết lập môi trường và cấu hình Katalon Studio kết nối WinAppDriver.<br>• Thực nghiệm 3 nhóm demo (Record-Playback, Checkpoint, Data-Driven).<br>• Viết tài liệu phân tích nguyên lý hoạt động sâu sắc của Katalon.<br>• Quay video demo Katalon thuyết minh tiếng Việt rõ ràng. |
-| **M3** | **Bùi Quang Tùng** | 20120397 | **Chuyên trách WinAppDriver** | • Thiết lập WinAppDriver và Accessibility Insights for Windows.<br>• Phát triển dự án test C# NUnit áp dụng Page Object Model (POM).<br>• Thực nghiệm 3 nhóm demo (Basic, Assert + Screenshot on Fail, DDT).<br>• Viết tài liệu nguyên lý WinAppDriver & quay video demo WinAppDriver. |
-| **M4** | **Trần Vũ Quang** | 23120346 | **Chuyên trách AI & Comparison** | • Thiết kế Prompt sinh Test case BVA và Test script tự động.<br>• Thực nghiệm định lượng: đo thời gian viết test, LOC, tỷ lệ ảo giác của AI.<br>• Cập nhật bảng đối chiếu công cụ và vẽ biểu đồ so sánh thực nghiệm.<br>• Chuẩn hóa dữ liệu test và quay video demo thực tế quy trình AI. |
-| **M5** | **Phạm Tấn Phát** | 20120636 | **Chuyên trách Slide Thuyết trình** | • Nghiên cứu toàn bộ báo cáo để cô đọng thành slide thuyết trình 8 phần.<br>• Thiết kế chuẩn thẩm mỹ: nền trắng, chữ đen, font chữ to rõ (≥18pt).<br>• Chèn hình ảnh thực nghiệm, biểu đồ số liệu trực quan, layout khoa học.<br>• Xuất bản file PowerPoint (`.pptx`) và export PDF chính thức (`.pdf`). |
+| **M3** | **Bùi Quang Tùng** | 20120397 | **Chuyên trách WinAppDriver** | • Thiết lập WinAppDriver và Accessibility Insights for Windows.<br>• Phát triển dự án test C# NUnit áp dụng Page Object Model (POM).<br>• Thực nghiệm 3 nhóm demo (Basic, Assert + Screenshot on Fail, DDT).<br>• Viết tài liệu nguyên lý WinAppDriver & demo-scripts C# NUnit. |
+| **M4** | **Trần Vũ Quang** | 23120346 | **Chuyên trách AI & Comparison** | • Thiết kế Prompt sinh Test case BVA và Test script tự động.<br>• Thực nghiệm định lượng: đo thời gian viết test, LOC, tỷ lệ ảo giác của AI.<br>• Xây dựng dự án kiểm thử riêng `ai-winappdriver` chạy 19 ca BVA.<br>• Cập nhật bảng đối chiếu công cụ và vẽ biểu đồ so sánh thực nghiệm.<br>• Chuẩn hóa dữ liệu test và xây dựng kịch bản video AI. |
 
 ---
 
@@ -40,7 +39,6 @@
   - `feature/kan-katalon` (Kan)
   - `feature/tung-winappdriver` (Tùng)
   - `feature/quang-ai-comparison` (Quang)
-  - `feature/phat-slide` (Phát)
 
 ### 3.2. Quy ước Commit Message (Conventional Commits)
 Mỗi commit phải ghi rõ loại hành động và tên người thực hiện:
@@ -48,7 +46,7 @@ Mỗi commit phải ghi rõ loại hành động và tên người thực hiện
 feat(kan):    Thêm test script Record-Playback cho màn hình Login
 feat(tung):   Cài đặt Page Object Model cho CalculatorPage.cs
 demo(quang):  Bổ sung prompt và output thực nghiệm sinh test case BVA
-slide(phat):  Hoàn thành thiết kế slide Phần 4 - Katalon Studio
+slide(tin):   Hoàn thành thiết kế slide PowerPoint thuyết trình
 docs(tin):    Bổ sung lý thuyết Page Object Model vào 02-theory.md
 fix(tung):    Sửa lỗi locator FindElementByAccessibilityId bị timeout
 chore(tin):   Merge branch và cập nhật checklist nộp bài
@@ -114,7 +112,8 @@ Nhóm sẽ sản xuất **3 video demo riêng biệt** tương ứng với 3 n�
 ## 📊 7. CHÍNH SÁCH ĐÁNH GIÁ ĐÓNG GÓP (% CONTRIBUTION)
 
 ### 7.1. Mức cơ sở (Baseline)
-- Khởi điểm ban đầu: **20.0% đều cho cả 5 thành viên** (dựa trên 24.0 giờ làm việc ước tính và số lượng task tương đương).
+- Phân bổ công việc dựa trên năng lực và trách nhiệm thực tế của 4 thành viên chính thức (Phan Trung Tín, Nguyễn Lê Quang Kan, Bùi Quang Tùng, Trần Vũ Quang).
+- Trưởng nhóm đảm nhận thêm nhiệm vụ thiết kế slide thuyết trình thay cho thành viên đã rời nhóm.
 
 ### 7.2. Quy tắc trừ điểm đóng góp:
 - **Trễ hạn task:** Trễ hạn quá 6 giờ mà không báo trước hoặc không có lý do bất khả kháng: **-1% đến -2%** / lần.

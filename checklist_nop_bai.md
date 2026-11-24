@@ -41,12 +41,11 @@
 
 ## 8. ĐÁNH GIÁ ĐÓNG GÓP (% CONTRIBUTION)
 - [x] **Bảng đánh giá chính thức theo mẫu khoa:** [`2026-2027-HK1-Group02-Project Contribution.xlsx`](2026-2027-HK1-Group02-Project Contribution.xlsx)
-  - **Phan Trung Tín:** **35.0%** (Lead, MiniSum, Theory, Slide, AI, Report, Packaging)
-  - **Nguyễn Lê Quang Kan:** **35.0%** (Katalon Studio trọn gói, Keyword, DDT, Video YouTube)
-  - **Bùi Quang Tùng:** **30.0%** (WinAppDriver + C# NUnit, Page Object Model, DDT)
-  - **Trần Vũ Quang:** **0.0%** (Không đạt tiến độ)
-  - **Phạm Tấn Phát:** **0.0%** (Không đạt tiến độ)
-- [x] **Bảng theo dõi nội bộ:** [`Group02_Task_List.xlsx`](Group02_Task_List.xlsx) (đồng bộ 35/35/30).
+  - **Phan Trung Tín:** **35.0%** (Lead, MiniSum, Theory, Slide v1+v2, Handout bài tập, Report, Packaging)
+  - **Nguyễn Lê Quang Kan:** **25.0%** (Katalon Studio trọn gói, Keyword, DDT, Video YouTube)
+  - **Bùi Quang Tùng:** **20.0%** (WinAppDriver + C# NUnit, Page Object Model, DDT)
+  - **Trần Vũ Quang:** **20.0%** (AI Prompt/Output, Test Suite C# AI-WinAppDriver, Comparison)
+- [x] **Bảng theo dõi nội bộ:** [`Group02_Task_List.xlsx`](Group02_Task_List.xlsx) (đồng bộ 35/25/20/20).
 
 ## 9. ĐÓNG GÓI SẢN PHẨM (ZIP PACKAGE)
 - [x] **Tên file nén:** `Group02_ZipTool_Lan2.zip` (chứa đúng tiền tố ZipTool theo quy định).

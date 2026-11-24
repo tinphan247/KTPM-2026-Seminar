@@ -14,12 +14,11 @@
 
 | STT | Họ và Tên | MSSV | Vai trò chính Lần 2 | Đóng góp thực tế | % Chốt | Trạng thái |
 |:---:|---|:---:|---|---|:---:|:---:|
-| 1 | **Phan Trung Tín** | 23120372 | **Trưởng nhóm (Team Lead)**<br>Phát triển 3 bản `MiniSum.exe`, viết lý thuyết POM/Flaky/Wait/Oracle, slide PPTX, thực nghiệm AI, tích hợp & đóng gói | 42.0h (22 tasks) | **35.0%** | Hoàn thành xuất sắc |
-| 2 | **Nguyễn Lê Quang Kan** | 23120279 | **Chuyên trách Katalon Studio**<br>Thực nghiệm 3 demo Katalon, viết Custom Keyword `LoginKeyword.groovy`, Data-Driven BVA, 16 ảnh thực nghiệm, video YouTube | 42.0h (18 tasks) | **35.0%** | Hoàn thành xuất sắc |
-| 3 | **Bùi Quang Tùng** | 20120397 | **Chuyên trách WinAppDriver**<br>Thực nghiệm WinAppDriver + C# NUnit, cài đặt Page Object Model (POM), DDT 12 ca BVA, chụp ảnh kiểm thử | 36.0h (21 tasks) | **30.0%** | Hoàn thành tốt |
-| 4 | **Trần Vũ Quang** | 23120346 | Thành viên nhóm | 0.0h (0 tasks) | **0.0%** | Không đạt tiến độ |
-| 5 | **Phạm Tấn Phát** | 20120636 | Thành viên nhóm | 0.0h (0 tasks) | **0.0%** | Không đạt tiến độ |
-| **Tổng** | | | | **120.0h (61 tasks)** | **100.0%** | |
+| 1 | **Phan Trung Tín** | 23120372 | **Trưởng nhóm (Team Lead)**<br>Phát triển 3 bản `MiniSum.exe`, viết lý thuyết POM/Flaky/Wait/Oracle, thiết kế toàn bộ Slide (v1+v2), Handout bài tập, tích hợp báo cáo & đóng gói | 42.0h (22 tasks) | **35.0%** | Hoàn thành xuất sắc |
+| 2 | **Nguyễn Lê Quang Kan** | 23120279 | **Chuyên trách Katalon Studio**<br>Thực nghiệm 3 demo Katalon, viết Custom Keyword `LoginKeyword.groovy`, Data-Driven BVA, 16 ảnh thực nghiệm, video YouTube | 30.0h (18 tasks) | **25.0%** | Hoàn thành xuất sắc |
+| 3 | **Bùi Quang Tùng** | 20120397 | **Chuyên trách WinAppDriver**<br>Thực nghiệm WinAppDriver + C# NUnit, cài đặt Page Object Model (POM), DDT 12 ca BVA, chụp ảnh kiểm thử | 24.0h (21 tasks) | **20.0%** | Hoàn thành tốt |
+| 4 | **Trần Vũ Quang** | 23120346 | **Chuyên trách AI & Comparison**<br>Prompt Engineering, sinh 19 ca BVA, test suite C# `ai-winappdriver`, số liệu đo đạc so sánh định lượng | 24.0h (17 tasks) | **20.0%** | Hoàn thành tốt |
+| **Tổng** | | | | **120.0h (78 tasks)** | **100.0%** | |
 
 ---
 
@@ -32,7 +31,7 @@
 5. [Phần 5: Nghiên Cứu Công Cụ Đại Diện B – Microsoft WinAppDriver](#phan-5)
 6. [Phần 6: So Sánh Đối Chiếu Toàn Diện (Comparison)](#phan-6)
 7. [Phần 7: Ứng Dụng Trí Tuệ Nhân Tạo (AI) Trong Desktop Automation](#phan-7)
-8. [Phần 8: Hệ Thống Bài Tập Thực Hành Đề Xuất (Exercise)](#phan-8)
+8. [Phần 8: Hệ Thống Bài Tập Thực Hành 30 Phút Tại Lớp (Exercise)](#phan-8)
 9. [Phần 9: Minh Chứng Thực Nghiệm, Kê Khai AI & Kết Luận](#phan-9)
 
 ---
@@ -2166,104 +2165,96 @@ Nhóm 02 đã hiện thực hóa trọn vẹn kịch bản ứng dụng AI vào 
 # Đề Xuất Bài Tập Thực Hành: Desktop Automation Testing
 ## Chuyên đề: Automation Testing cho Desktop Applications
 
-- **Người thực hiện:** Quang
-- **Mục tiêu:** Thiết kế hệ thống bài tập thực hành theo phân tầng mức độ nhận thức (Cơ bản - Vừa sức - Nâng cao), giúp sinh viên củng cố lý thuyết kiểm thử hộp đen và thực hành kỹ năng tự động hóa trên ứng dụng desktop thực tế.
+- **Hình thức:** Thực hành trực tiếp tại lớp (In-Class Hands-on Lab).
+- **Thời lượng:** Đúng **30 phút**.
+- **Công cụ chính:** Katalon Studio (bản Free) · Ứng dụng mẫu: `MiniSum.exe` (WinForms C# .NET 8).
+- **Mục tiêu:** Giúp sinh viên tiếp cận nhanh, tự tay xây dựng được kịch bản kiểm thử tự động hoàn chỉnh từ thao tác giao diện đến thiết lập Checkpoint xác minh kết quả chỉ trong một buổi học.
 
 ---
 
-## 1. Mục Tiêu và Nguyên Tắc Xây Dựng Bài Tập
+## 1. Mục Tiêu và Định Hướng Tinh Gọn (Cho 30 Phút Tại Lớp)
 
-Hệ thống bài tập được thiết kế tuân thủ 3 nguyên tắc sư phạm và kỹ thuật:
-1. **Bám sát chương trình lý thuyết:** Gắn kết trực tiếp với các bài học trong chương trình: Kỹ thuật phân tích giá trị biên (BVA - Bài 4), Chuyển trạng thái (State Transition - Bài 6), Cấu trúc Test Case (Bài 7) và Tái hiện lỗi trong Bug Report (Bài 8).
-2. **Khả thi về công cụ và bản quyền:** Sinh viên có thể tự do lựa chọn thực hiện bằng **Katalon Studio (Bản Free)** hoặc **Microsoft WinAppDriver (C# / Python)** mà không chịu ràng buộc về chi phí giấy phép.
-3. **Sử dụng ứng dụng mẫu chung (MiniSum):** Cung cấp sẵn file thực thi `.exe` chuẩn hóa về mặt định danh (`AutomationId`), giúp sinh viên tập trung rèn luyện tư duy kiểm thử thay vì mất thời gian sửa lỗi môi trường.
-
----
-
-## 2. Thông Tin Ứng Dụng Mẫu (MiniSum)
-
-Sinh viên tải các file thực thi trong thư mục `case-study-app/` của kho lưu trữ nhóm. Các thuộc tính định danh chính được cung cấp sẵn:
-* **Màn hình Đăng nhập (Login Window):**
-  * Ô nhập tài khoản: `txtUser` (Tài khoản hợp lệ: `admin`)
-  * Ô nhập mật khẩu: `txtPass` (Mật khẩu hợp lệ: `1234`)
-  * Nút đăng nhập: `btnLogin`
-  * Nhãn thông báo trạng thái: `lblMessage`
-* **Màn hình Tính toán (Main Window):**
-  * Ô nhập số A: `txtA` (Giới hạn số nguyên $A \in [-99, 99]$)
-  * Ô nhập số B: `txtB` (Giới hạn số nguyên $B \in [-99, 99]$)
-  * Nút tính tổng: `btnSum` (bản v1, v3) hoặc `btnCalculate` (bản v2)
-  * Nhãn kết quả hợp lệ: `lblResult`
-  * Nhãn thông báo lỗi: `lblError` (chỉ có ở bản v3)
-  * Nút đăng xuất: `btnLogout`
-
-> **Chọn đúng file theo bài tập:** Bài 1 dùng `MiniSum.exe` (v1); Bài 2 dùng `MiniSum_v3.exe` vì chỉ bản này có `lblError`; Bài 3 dùng `MiniSum_v2.exe`. Mọi thông điệp của ứng dụng đều là **ASCII không dấu** (ví dụ `Dang nhap thanh cong`), nên checkpoint phải so sánh đúng từng ký tự.
+Bài tập được thiết kế lại nhằm **giảm thiểu tối đa rào cản kỹ thuật** và loại bỏ các bước chuẩn bị rườm rà (không bắt buộc cấu hình Data Binding với file Excel phức tạp):
+1. **Thời lượng vừa vặn 30 phút:** Sinh viên có thể hoàn thành trọn vẹn 2 bài tập nhỏ ngay tại phòng máy.
+2. **Sử dụng Starter Project có sẵn:** Cung cấp sẵn kho đối tượng (*Object Repository*) của `MiniSum` trong thư mục `demo-scripts/katalon/` để sinh viên không mất thời gian dò tìm locator (`AutomationId`) bằng Object Spy.
+3. **Trọng tâm vào tư duy kiểm thử (Test Oracle):** Tập trung rèn luyện 2 kỹ năng cốt lõi:
+   - Thao tác tự động với điều khiển Desktop (`Set Text`, `Click`).
+   - Thiết lập điểm kiểm tra kết quả kỳ vọng bằng **Checkpoint** (`Verify Element Text`).
 
 ---
 
-## 3. Nội Dung Chi Tiết Bộ 3 Bài Tập
+## 2. Chuẩn Bị Nhanh (5 Phút Đầu Giờ)
 
-### BÀI TẬP 1 (Mức độ Cơ bản): Xây Dựng Kịch Bản Đăng Nhập & Checkpoint
-* **Thời lượng ước tính:** 15 – 20 phút.
-* **Mục tiêu:** Làm quen với cơ chế nhận diện phần tử (`AutomationId`), ghi thao tác (Record) hoặc viết mã kịch bản cơ bản, và thiết lập điểm kiểm tra kết quả kỳ vọng (Test Oracle).
-* **Nội dung yêu cầu:**
-  1. Khởi động ứng dụng `MiniSum.exe`.
-  2. Thực hiện kịch bản kiểm thử ca hợp lệ: Nhập `txtUser = "admin"`, `txtPass = "1234"`, nhấp chuột vào nút `btnLogin`.
-  3. Thêm một **Checkpoint (Assertion)** để xác minh nhãn `lblMessage` hiển thị đúng nội dung: `Dang nhap thanh cong`.
-  4. Tạo tiếp một ca kiểm thử phụ cho trường hợp đăng nhập thất bại (nhập sai mật khẩu) và xác minh nhãn hiển thị `Sai tai khoan hoac mat khau`.
-  5. Lưu ý: sau khi đăng nhập thành công, ứng dụng giữ màn hình Login thêm **1 giây** rồi mới chuyển sang màn hình Tính toán — cần dùng explicit wait thay vì `sleep` cứng khi chuyển màn hình.
-* **Yêu cầu nộp:**
-  * File kịch bản kiểm thử (Test Case của Katalon hoặc file mã nguồn C#/Python).
-  * Ảnh chụp màn hình kết quả chạy thực thi (Execution Report) thể hiện trạng thái PASS.
+1. Nháy đúp mở file `case-study-app/MiniSum.exe` để chắc chắn máy đã có **.NET 8 Desktop Runtime** (thấy cửa sổ *MiniSum - Dang nhap* hiện lên là đạt).
+2. Mở Katalon Studio, mở project hoặc nạp thư mục `demo-scripts/katalon/`.
+3. Kiểm tra các đối tượng giao diện đã có sẵn trong *Object Repository*:
+   - Màn hình Login: `txtUser`, `txtPass`, `btnLogin`, `lblMessage`.
+   - Màn hình Calculator: `txtA`, `txtB`, `btnSum`, `lblResult`, `lblError`.
 
 ---
 
-### BÀI TẬP 2 (Mức độ Vừa sức): Kiểm Thử Điều Khiển Bằng Dữ Liệu (Data-Driven BVA)
-* **Thời lượng ước tính:** 30 – 45 phút.
-* **Mục tiêu:** Vận dụng lý thuyết phân tích giá trị biên (BVA) để xây dựng bộ dữ liệu kiểm thử và áp dụng kỹ thuật Data-Driven Testing để kiểm thử tự động hàng loạt.
-* **Nội dung yêu cầu:**
-  1. **Thiết kế dữ liệu:** Trên `MiniSum_v3.exe` (bản duy nhất có `lblError`), tạo một file Excel (`BVA_TestData.xlsx`) chứa ít nhất **6 ca kiểm thử** cho chức năng tính tổng hai số nguyên $A, B \in [-99, 99]$:
-     * 2 ca giá trị biên hợp lệ (ví dụ: $A = -99, B = 9 \rightarrow \text{Tổng} = -90$; $A = 99, B = 9 \rightarrow \text{Tổng} = 108$).
-     * 2 ca giá trị ngoài biên dưới và trên (ví dụ: $A = -100, B = 9$; $A = 100, B = 9 \rightarrow$ Kỳ vọng `lblError` = `A ngoai mien [-99, 99]`).
-     * 1 ca giá trị không hợp lệ về kiểu dữ liệu (ví dụ: $A = \text{"xyz"}, B = 10 \rightarrow$ Kỳ vọng `lblError` = `Gia tri khong hop le: phai la so nguyen`).
-     * 1 ca biên của toán tử thứ hai ($B = -99$).
-  2. **Xây dựng kịch bản Data-Driven:**
-     * Tham số hóa kịch bản tính tổng để nhận giá trị `${A}`, `${B}`, `${Expected}` từ file Excel.
-     * Cấu hình logic kiểm tra: Nếu `${Expected}` là giá trị số thì kiểm tra nhãn `lblResult`; nếu `${Expected}` là `"LOI"` thì kiểm tra nhãn `lblError` và so sánh đúng nội dung thông điệp lỗi.
-  3. Thực thi toàn bộ bộ dữ liệu trong một phiên chạy tự động.
-* **Yêu cầu nộp:**
-  * File dữ liệu `BVA_TestData.xlsx`.
-  * Mã nguồn kịch bản kiểm thử có cơ chế binding dữ liệu.
-  * Báo cáo thực thi chi tiết thể hiện kết quả Pass/Fail cho từng dòng dữ liệu.
+## 3. Nội Dung Chi Tiết Bài Tập Thực Hành 30 Phút
+
+### BÀI TẬP 1 (15 Phút): Tự Động Hóa Đăng Nhập & Xác Minh Thông Báo (4.0 Điểm)
+
+* **Mục tiêu:** Tạo kịch bản kiểm thử luồng đăng nhập và xác minh kết quả phản hồi bằng Checkpoint.
+* **Các bước thực hiện:**
+  1. Tạo Test Case mới đặt tên: `TC_Login_<MSSV>`.
+  2. Thêm bước mở ứng dụng `MiniSum.exe` (sử dụng từ khóa `Start Application` trỏ tới file `.exe`).
+  3. **Ca 1 (Đăng nhập hợp lệ):**
+     - Nhập `txtUser` = `"admin"`.
+     - Nhập `txtPass` = `"1234"`.
+     - Nhấp chuột vào nút `btnLogin`.
+     - **Thêm Checkpoint:** Dùng từ khóa `Verify Element Text` trên đối tượng `lblMessage` với nội dung kỳ vọng là: `Dang nhap thanh cong`.
+  4. **Ca 2 (Đăng nhập sai):**
+     - Nhập mật khẩu sai: `txtPass` = `"wrongpass"`.
+     - Nhấp nút `btnLogin`.
+     - **Thêm Checkpoint:** Xác minh `lblMessage` hiển thị: `Sai tai khoan hoac mat khau`.
+  5. Chạy thử nghiệm và đảm bảo kết quả kiểm thử báo **PASSED (màu xanh)**.
 
 ---
 
-### BÀI TẬP 3 (Mức độ Nâng cao): Xử Lý Biến Động Giao Diện & Bảo Trì Kịch Bản
-* **Thời lượng ước tính:** Bài tập về nhà / Nghiên cứu chuyên sâu.
-* **Mục tiêu:** Rèn luyện tư duy thiết kế kịch bản bền vững và kỹ năng bảo trì — giải quyết bài toán "kịch bản dễ gãy" (fragile tests) khi phần mềm nâng cấp giao diện.
-* **Tình huống giả định:** 
-  * Nhà phát triển phát hành phiên bản cập nhật `MiniSum_v2.exe`. Trong phiên bản này, để chuẩn hóa mã nguồn, định danh (`AutomationId`) của nút bấm tính tổng được đổi từ `btnSum` thành `btnCalculate` (nhãn hiển thị trên nút vẫn là `TINH TONG`), đồng thời bổ sung màn hình Lịch sử.
-  * Hậu quả: Toàn bộ kịch bản kiểm thử xây dựng ở Bài tập 2 khi chạy trên bản v2 đều bị FAIL hàng loạt do lỗi không tìm thấy phần tử (*ElementNotFoundException*).
-* **Nội dung yêu cầu:**
-  1. Chạy kịch bản cũ trên bản v2, chụp lại log lỗi thực thi và phân tích nguyên nhân gốc của lỗi (Root Cause).
-  2. Thực hiện **bảo trì và tái cấu trúc (Refactoring)** bộ định vị theo nguyên tắc tập trung:
-     * *Nếu làm trên Katalon Studio:* Cập nhật lại thuộc tính của đối tượng trong *Object Repository* từ `btnSum` sang `btnCalculate` mà không sửa đổi bất kỳ dòng kịch bản nào trong Test Case.
-     * *Nếu làm trên WinAppDriver:* Cập nhật lại biến locator trong lớp *Page Object* tương ứng.
-  3. Thực thi lại toàn bộ kịch bản và chứng minh toàn bộ các ca kiểm thử PASS trở lại.
-  4. Trả lời câu hỏi phân tích ngắn (khoảng 5-7 dòng): *Tại sao việc quản lý locator tập trung (Object Repository / Page Object Model) lại giúp giảm chi phí bảo trì so với việc gán cứng locator trực tiếp trong kịch bản? Liên hệ với nguyên lý kiểm thử "Nghịch lý thuốc trừ sâu".*
-* **Yêu cầu nộp:**
-  * Báo cáo phân tích lỗi ban đầu và ảnh chụp màn hình sau khi khắc phục thành công.
-  * Đoạn trả lời câu hỏi phân tích lý thuyết bảo trì.
+### BÀI TẬP 2 (12 Phút): Tự Động Hóa Tính Tổng & Kiểm Thử Giá Trị Biên (6.0 Điểm)
+
+* **Mục tiêu:** Tương tác với màn hình tính toán và kiểm thử chức năng tính tổng với các giá trị biên của bài toán $A, B \in [-99, 99]$.
+* **Các bước thực hiện:**
+  1. Tạo Test Case mới đặt tên: `TC_Calculate_<MSSV>` (hoặc viết tiếp vào sau bước đăng nhập thành công của Bài 1).
+  2. **Thao tác tính tổng cơ bản (3.0 điểm):**
+     - Xóa ô và nhập `txtA` = `"10"`.
+     - Xóa ô và nhập `txtB` = `"20"`.
+     - Nhấp chuột vào nút tính tổng `btnSum`.
+     - **Thêm Checkpoint:** Dùng `Verify Element Text` kiểm tra nhãn kết quả `lblResult` có đúng chuỗi: `Ket qua: 10 + 20 = 30`.
+  3. **Kiểm thử giá trị biên đơn giản (3.0 điểm):**
+     Thực hiện liên tiếp 2 ca kiểm thử biên trực tiếp trên giao diện:
+     - **Ca biên trên:** Nhập $A = 99$, $B = 0 \to$ Nhấp `btnSum` $\to$ Checkpoint xác minh `lblResult` = `Ket qua: 99 + 0 = 99`.
+     - **Ca biên dưới:** Nhập $A = -99$, $B = 0 \to$ Nhấp `btnSum` $\to$ Checkpoint xác minh `lblResult` = `Ket qua: -99 + 0 = -99`.
+  4. Chạy kiểm thử toàn bộ và quan sát kết quả thực thi tự động.
 
 ---
 
-## 4 Barem đánh giá chi tiết
+### PHẦN MỞ RỘNG / ĐIỂM THƯỞNG (Tùy Chọn – Bonus +1.0 Điểm)
+* Nếu hoàn thành sớm, sinh viên mở ứng dụng `case-study-app/MiniSum_v3.exe` (bản có kiểm tra ràng buộc biên và nhãn lỗi `lblError`).
+* Nhập giá trị vượt biên: $A = 100$, $B = 0 \to$ Nhấp `btnSum`.
+* **Thêm Checkpoint:** Xác minh nhãn lỗi `lblError` hiển thị đúng thông điệp: `A ngoai mien [-99, 99]`.
 
-| Hạng mục | Tiêu chí đánh giá chi tiết | Điểm tối đa |
+---
+
+## 4. Hướng Dẫn Nộp Bài (3 Phút Cuối Giờ)
+
+Sinh viên nộp sản phẩm trực tiếp cho giảng viên/trợ giảng theo một trong hai hình thức:
+1. **Xuất báo cáo HTML:** Vào mục *Reports* của Katalon Studio $\to$ Mở file HTML Report thể hiện các bước thực thi đều **PASSED** $\to$ Chụp ảnh màn hình toàn bộ kèm thông tin MSSV.
+2. **Nén thư mục Test Case:** Nén các file kịch bản trong thư mục `Test Cases/` thành file `<MSSV>_Lab30m.zip` để nộp.
+
+---
+
+## 5. Barem Chấm Điểm Chi Tiết (Thang Điểm 10)
+
+| Hạng mục | Tiêu chí đánh giá chi tiết | Điểm |
 |---|---|:---:|
-| **Bài tập 1** | - Mở được ứng dụng, thực thi đúng thao tác đăng nhập.<br>- Thiết lập Checkpoint đúng nhãn và chạy PASS.<br>- Có ca kiểm thử phụ cho trường hợp đăng nhập sai. | **3.0 điểm**<br>(1.0 đ)<br>(1.0 đ)<br>(1.0 đ) |
-| **Bài tập 2** | - Thiết kế file dữ liệu Excel chuẩn lý thuyết BVA (đủ ca hợp lệ và biên lỗi).<br>- Tham số hóa và binding dữ liệu vào kịch bản thành công.<br>- Xử lý đúng điều kiện kiểm tra kết quả số và thông báo lỗi. | **4.0 điểm**<br>(1.5 đ)<br>(1.5 đ)<br>(1.0 đ) |
-| **Bài tập 3** | - Phân tích đúng nguyên nhân lỗi khi đổi ID phần tử.<br>- Thực hiện cập nhật locator tập trung (Object Repository / Page Object).<br>- Câu trả lời phân tích lý thuyết bảo trì mạch lạc, đúng bản chất. | **3.0 điểm**<br>(1.0 đ)<br>(1.0 đ)<br>(1.0 đ) |
-| **TỔNG CỘNG** | **Đánh giá toàn diện kỹ năng thực hành và tư duy lý thuyết** | **10.0 điểm** |
+| **Bài tập 1: Đăng nhập** | - Mở được ứng dụng `MiniSum.exe` thành công.<br>- Thực hiện đúng thao tác đăng nhập hợp lệ và Checkpoint `lblMessage` PASS.<br>- Bổ sung ca đăng nhập sai và xác minh thông báo lỗi PASS. | **4.0 điểm**<br>(1.0 đ)<br>(2.0 đ)<br>(1.0 đ) |
+| **Bài tập 2: Tính tổng & Biên** | - Nhập dữ liệu A, B, bấm nút `btnSum` và Checkpoint `lblResult` PASS.<br>- Thực hiện đúng ca kiểm thử biên trên ($A = 99$).<br>- Thực hiện đúng ca kiểm thử biên dưới ($A = -99$). | **6.0 điểm**<br>(2.0 đ)<br>(2.0 đ)<br>(2.0 đ) |
+| **Điểm thưởng (Bonus)** | - Bắt được nhãn lỗi `lblError` khi nhập giá trị vượt biên trên `MiniSum_v3.exe`. | **+1.0 điểm**<br>*(tối đa 10.0)* |
+| **TỔNG CỘNG** | **Đánh giá trọn vẹn kỹ năng Desktop Automation cơ bản trong 30 phút** | **10.0 điểm** |
 
 
 
@@ -2279,7 +2270,8 @@ Sinh viên tải các file thực thi trong thư mục `case-study-app/` của k
 - Hệ thống kho lưu trữ GitHub: `https://github.com/tinphan247/KTPM-2026-Seminar.git`
 - Toàn bộ quá trình làm việc, giải quyết lỗi, phát triển ứng dụng mẫu và tài liệu đều được commit liên tục, minh bạch:
   - **Phan Trung Tín:** 27 commits chính thức trên Git log.
-  - **Nguyễn Lê Quang Kan:** 14 commits chính thức trên Git log.
+  - **Trần Vũ Quang:** 17 commits chính thức trên Git log (PR #3).
+  - **Nguyễn Lê Quang Kan:** 14 commits chính thức trên Git log (PR #1).
   - **Bùi Quang Tùng:** 4 commits chính thức trên Git log.
   - Toàn bộ lịch sử commit chi tiết xem tại file `git-commit-log.md`.
 
@@ -2295,4 +2287,5 @@ Seminar đã hoàn thành xuất sắc các mục tiêu đề ra:
 2. Xây dựng ứng dụng mẫu thực tế `MiniSum.exe` (v1, v2, v3) theo phong cách hiện đại Fluent Light để làm AUT cho toàn bộ demo.
 3. Thực nghiệm sâu sắc hai đại diện tiêu biểu: **Katalon Studio** (Low-Code GUI) và **WinAppDriver** (Code-First), với các số liệu so sánh định lượng rõ ràng.
 4. Triển khai thành công thực nghiệm AI Test Automation giúp rút ngắn 77.7% thời gian thiết kế kịch bản kiểm thử.
+5. Thiết kế bài tập thực hành 30 phút tại lớp dễ tiếp cận, trực quan và đánh giá chính xác kỹ năng của sinh viên.
 

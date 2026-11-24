@@ -6,11 +6,28 @@
  */
 
 import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
+import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.util.KeywordUtil
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 
-String appPath = 'D:\\KAN\\N4_1\\semina\\KTPM-2026-Seminar\\case-study-app\\MiniSum_v3.exe'
+// Tự động xác định đường dẫn MiniSum_v3.exe từ repo được clone từ GitHub
+String projectDir = RunConfiguration.getProjectDir()
+String appPath = ''
+for (String candidate : [
+    projectDir + '/../../case-study-app/MiniSum_v3.exe',
+    projectDir + '/../case-study-app/MiniSum_v3.exe',
+    projectDir + '/case-study-app/MiniSum_v3.exe',
+    'case-study-app/MiniSum_v3.exe'
+]) {
+    if (new File(candidate).exists()) {
+        appPath = new File(candidate).getCanonicalPath()
+        break
+    }
+}
+if (!appPath || !new File(appPath).exists()) {
+    appPath = projectDir + '/case-study-app/MiniSum_v3.exe'
+}
 
 // Bước 1: Khởi động và đăng nhập nếu màn hình Calculator chưa mở (Tái sử dụng phiên cho DDT)
 boolean isCalcOpen = false

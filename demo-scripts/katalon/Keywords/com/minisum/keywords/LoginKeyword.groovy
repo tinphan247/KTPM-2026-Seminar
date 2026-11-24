@@ -28,9 +28,20 @@ class LoginKeyword {
      * @param timeoutSoGiay Thoi gian cho toi da (giay)
      */
     @Keyword
-    def login(String appPath = 'D:\\KAN\\N4_1\\semina\\KTPM-2026-Seminar\\case-study-app\\MiniSum_v3.exe', String username = 'admin', String password = '1234', int timeoutSoGiay = 10) {
-        if (!new File(appPath).exists()) {
-            appPath = 'D:\\KAN\\N4_1\\semina\\Tool_A_Katalon_Artifacts\\MiniSum\\bin\\Release\\net6.0-windows\\MiniSum_v3.exe'
+    def login(String appPath = '', String username = 'admin', String password = '1234', int timeoutSoGiay = 10) {
+        if (!appPath || !new File(appPath).exists()) {
+            String projectDir = com.kms.katalon.core.configuration.RunConfiguration.getProjectDir()
+            for (String candidate : [
+                projectDir + '/../../case-study-app/MiniSum_v3.exe',
+                projectDir + '/../case-study-app/MiniSum_v3.exe',
+                projectDir + '/case-study-app/MiniSum_v3.exe',
+                'case-study-app/MiniSum_v3.exe'
+            ]) {
+                if (new File(candidate).exists()) {
+                    appPath = new File(candidate).getCanonicalPath()
+                    break
+                }
+            }
         }
         
         // Cấu hình URL WinAppDriver cho Katalon Studio v11+

@@ -47,10 +47,13 @@ class ScreenshotOnFailure {
         } catch (Exception e) {
             KeywordUtil.logInfo("⚡ FlaUI.WebDriver chưa bật trên cổng 4723, đang tự động khởi động...")
             try {
-                String flauiPath = "C:\\Users\\Admin\\.katalon\\packages\\KS-11.7.0\\configuration\\resources\\extensions\\FlaUIWebDriver\\FlaUI.WebDriver.exe"
-                new ProcessBuilder(flauiPath, "--urls=http://127.0.0.1:4723").start()
-                Thread.sleep(2000)
-                KeywordUtil.logInfo("✔ FlaUI.WebDriver đã được khởi động trên cổng 4723.")
+                String userHome = System.getProperty("user.home")
+                String flauiPath = userHome + "\\.katalon\\packages\\KS-11.7.0\\configuration\\resources\\extensions\\FlaUIWebDriver\\FlaUI.WebDriver.exe"
+                if (new File(flauiPath).exists()) {
+                    new ProcessBuilder(flauiPath, "--urls=http://127.0.0.1:4723").start()
+                    Thread.sleep(2000)
+                    KeywordUtil.logInfo("✔ FlaUI.WebDriver đã được khởi động trên cổng 4723.")
+                }
             } catch (Exception ex) {
                 KeywordUtil.logWarning("Không thể khởi động FlaUI.WebDriver tự động: " + ex.getMessage())
             }

@@ -1,11 +1,29 @@
 # NHẬT KÝ COMMIT LỊCH SỬ DỰ ÁN (GIT COMMIT LOG)
 
-- **Tổng số commits:** 60
+- **Tổng số commits:** 78
 - **Kho lưu trữ:** https://github.com/tinphan247/KTPM-2026-Seminar.git
 - **Ngày trích xuất:** 30/10/2026
 
 | Mã Hash | Người thực hiện | Thời gian | Thông điệp commit (Conventional Commits) |
 |:---:|---|:---:|---|
+| e74cc77 | **tinphan247** | 2026-11-24 12:43 | Merge remote-tracking branch 'origin/main' and recompile report with 4-member team and simplified 30m exercises |
+| f6f0418 | **tinphan247** | 2026-11-24 12:42 | docs(tin): add seminar slides v2 (pdf and pptx) |
+| d376f34 | **tinphan247** | 2026-11-24 12:42 | chore(tin): remove Phat from docs, update contribution to 35/25/20/20, simplify 30m in-class exercises, recompile final report |
+| 25acfa9 | **tinphan247** | 2026-11-13 18:12 | docs(bai-tap): them handout tu clone den nop bai, bo sung .NET runtime va sua bai 3 |
+| b22798f | **tinphan247** | 2026-11-13 17:58 | slides(tin): danh lai so trang 1-34 va them dong cong cu vao slide bai tap |
+| 335b3aa | **tinphan247** | 2026-11-13 17:54 | docs(bai-tap): chon Katalon lam cong cu chinh, them muc moi truong va track B |
+| 42a38b8 | **tinphan247** | 2026-11-13 17:00 | slides(tin): crop lai anh demo Katalon cho de doc hon |
+| a0ada49 | **tinphan247** | 2026-11-13 16:15 | slides(tin): bo sung 4 slide gioi thieu Katalon va WinAppDriver |
+| 6270723 | **tinphan247** | 2026-11-13 01:33 | slides(tin): them ban nhap 30 slide (ban sach, bang + anh thuc te) |
+| 6564ee8 | **tinphan247** | 2026-11-13 00:09 | docs(tin): bo sung deliverable con thieu (report_v2, slides, video-links, git log, AI declaration, contribution) |
+| cc45235 | **Vu Quang** | 2026-10-30 20:28 | Merge pull request #3 from tinphan247/feature/quang-ai-comparison |
+| 60b64d5 | **Vu Quang** | 2026-10-30 20:23 | Merge branch 'main' into feature/quang-ai-comparison |
+| a3dcbc1 | **tvquang0511** | 2026-10-30 19:54 | test(quang): update AiGeneratedBvaTests with 19 verified AI test cases |
+| 52a8fff | **tvquang0511** | 2026-10-30 19:39 | docs(quang): replace hardcoded table with placeholder in script-gen-prompt |
+| fa7251f | **tvquang0511** | 2026-10-30 19:30 | docs(quang): update script-gen-prompt with 2-stage workflow and desktop automation constraints |
+| 428f3a2 | **tvquang0511** | 2026-10-30 19:19 | fix(quang): fix window switching, process cleanup, and result extraction in winappdriver suites |
+| 462aa83 | **tvquang0511** | 2026-10-30 18:26 | feat(quang): thiet lap du an test rieng demo-scripts/ai-winappdriver va cap nhat prompt chien luoc 2 pha |
+| 56addac | **tinphan247** | 2026-10-30 17:22 | docs(tin): refresh git-commit-log.md with 60 commits |
 | 6adfd15 | **tinphan247** | 2026-10-30 17:22 | docs(tin): update contribution split to Tin 35%, Kan 35%, Tung 30% |
 | 7d4355b | **tinphan247** | 2026-10-30 17:16 | docs(tin): update git-commit-log.md with final 58 commits |
 | e4790ef | **tinphan247** | 2026-10-30 17:16 | docs(tin): update final deliverables - report PDF, 50-50 contribution, slides, and AI output |

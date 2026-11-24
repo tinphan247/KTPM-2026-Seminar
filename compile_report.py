@@ -90,6 +90,10 @@ p9 = """
   - **Liên kết YouTube:** [https://youtu.be/OujklJs2DhA](https://youtu.be/OujklJs2DhA)
   - **Chất lượng:** 1080p Full HD, thuyết minh trực quan trên môi trường Visual Studio.
   - **Nội dung:** Khởi tạo WinAppDriver & WindowsDriver mở MiniSum.exe, kiểm thử Đăng nhập theo mô hình Page Object Model (POM), cơ chế chụp màn hình tự động và Data-Driven Testing với NUnit + NPOI.
+- **Demo 3 – AI in Desktop Test Automation (Trần Vũ Quang):**
+  - **Liên kết YouTube:** [https://www.youtube.com/watch?v=144GVavGjWA](https://www.youtube.com/watch?v=144GVavGjWA)
+  - **Chất lượng:** 1080p Full HD, thuyết minh quy trình Prompt Engineering và thực thi script.
+  - **Nội dung:** Thử nghiệm kỹ thuật Prompting 2 pha với ChatGPT-4, Gemini Advanced và Claude 3.5; sinh mã nguồn C# WinAppDriver Page Object Model hoàn chỉnh và thực thi suite kiểm thử tự động 19 ca BVA trên ứng dụng MiniSum PASS 100%.
 
 ## 9.2 Nhật ký đóng góp trên Git Commit Log
 - Hệ thống kho lưu trữ GitHub: `https://github.com/tinphan247/KTPM-2026-Seminar.git`

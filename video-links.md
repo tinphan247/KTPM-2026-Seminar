@@ -24,12 +24,16 @@
 
 ## 3. Demo AI – Trần Vũ Quang
 
-- **Video:** *(Trần Vũ Quang không nộp video đúng hạn)*
-- **Nội dung demo theo kế hoạch:** Prompt → Sinh test case BVA → Sinh script C# NUnit/Katalon → Run test
-- **Trạng thái:** ⚠️ Không nộp
+- **Video:** [Demo AI Test Automation – ChatGPT-4 sinh Test Case BVA & C# POM Script](https://www.youtube.com/watch?v=144GVavGjWA)
+- **Người thực hiện:** Trần Vũ Quang (M4 – AI & Comparison)
+- **Nội dung demo:**
+  - Demo 1: Thiết kế Prompt đặc tả kỹ thuật và sinh 12 ca kiểm thử BVA chuẩn hóa bằng ChatGPT-4, Gemini Advanced, Claude 3.5
+  - Demo 2: Kỹ thuật Prompt 2 pha sinh mã nguồn kiểm thử tự động C# NUnit WinAppDriver theo mô hình Page Object Model (POM)
+  - Demo 3: Thực thi tự động Test Suite C# `ai-winappdriver` chạy 19 ca BVA trên môi trường thực tế MiniSum, đạt tỷ lệ PASS 100%
+- **Trạng thái:** ✅ Đã upload thành công (YouTube)
 
 ## 4. Tổng hợp & lưu trữ
 
 - [x] Video 1 (Katalon – Kan) – ✅ Đã nộp và kiểm tra
 - [x] Video 2 (WinAppDriver – Tùng) – ✅ Đã nộp và kiểm tra
-- [ ] Video 3 (AI – Quang) – ⚠️ Không nộp
+- [x] Video 3 (AI – Quang) – ✅ Đã nộp và kiểm tra

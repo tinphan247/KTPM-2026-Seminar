@@ -308,7 +308,7 @@ Trước khi nộp, Tín kiểm tra lần lượt:
 
 - [ ] **Báo cáo:** `report_v2.md` + `report_v2.pdf` (có đủ 9 phần, cập nhật nguyên lý tool)
 - [ ] **Slide:** `seminar-group02.pptx` + `seminar-final.pdf` (font to, nền trắng, chữ đen, biểu đồ)
-- [ ] **Video links:** `video-links.md` có đủ 3 link YouTube (Katalon / WinAppDriver / AI)
+- [x] **Video links:** `video-links.md` có đủ cả 3 link YouTube (Katalon / WinAppDriver / AI)
 - [ ] **Source code Katalon:** `demo-scripts/katalon/` có đủ script 3 demo
 - [ ] **Source code WinAppDriver:** `demo-scripts/winappdriver/` có `MiniSumTests.csproj` + PageObjects
 - [ ] **AI output:** `ai/prompts/` + `ai/output/` có đủ file prompt + kết quả + Excel BVA

@@ -21,7 +21,7 @@
 - [x] **Danh sách video:** [`video-links.md`](video-links.md)
   - [x] **Video 1 – Katalon Studio (Kan):** [https://www.youtube.com/watch?v=w7c_X5f5SFo](https://www.youtube.com/watch?v=w7c_X5f5SFo) (Full HD 1080p, thuyết minh tiếng Việt, 3 demo).
   - [x] **Video 2 – WinAppDriver (Tùng):** [https://youtu.be/OujklJs2DhA](https://youtu.be/OujklJs2DhA) (Khởi tạo, POM Login, DDT BVA NUnit).
-  - [ ] **Video 3 – AI (Quang):** ⚠️ Thành viên không nộp video đúng hạn.
+  - [x] **Video 3 – AI Test Automation (Quang):** [https://www.youtube.com/watch?v=144GVavGjWA](https://www.youtube.com/watch?v=144GVavGjWA) (Prompt Engineering, ChatGPT sinh C# POM, chạy 19 ca BVA).
 
 ## 4. MÃ NGUỒN KIỂM THỬ (TEST SCRIPTS)
 - [x] **Katalon Studio:** Thư mục [`demo-scripts/katalon/`](demo-scripts/katalon/) (Object Repository, Test Cases TC01, TC02, TC03 DDT, BVA_TestSuite, Custom Keyword `LoginKeyword.groovy`).

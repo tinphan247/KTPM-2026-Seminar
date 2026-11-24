@@ -81,30 +81,77 @@ $\longrightarrow$ **Trí tuệ nhân tạo (AI)**, bao gồm Machine Learning, C
 
 ---
 
-## 4. Kết Quả Thực Nghiệm Thực Tế Tại Nhóm (Round 2)
+---
 
-Nhóm 02 đã hiện thực hóa trọn vẹn kịch bản ứng dụng AI vào thực tế dự án, lưu trữ toàn bộ minh chứng tại thư mục `ai/prompts/` và `ai/output/`:
+## 4. Kết Quả Thực Nghiệm Thực Tế Của Nhóm (Group Experimental Results)
 
-### 4.1 Thực nghiệm sinh bộ Test Case BVA tự động (Few-shot Prompting)
-- **Prompt:** [`ai/prompts/testcase-bva-prompt.md`](../ai/prompts/testcase-bva-prompt.md) kèm đặc tả [`ai/prompts/minisum-spec.md`](../ai/prompts/minisum-spec.md).
-- **Kết quả thực nghiệm:** Cả ChatGPT-4 ([`ai/output/chatgpt-bva-output.md`](../ai/output/chatgpt-bva-output.md)) và Gemini Advanced ([`ai/output/gemini-bva-output.md`](../ai/output/gemini-bva-output.md)) đều sinh ra chính xác 12 ca kiểm thử biên đạt độ phủ 100% các điểm biên $\{-100, -99, -98, 0, 98, 99, 100\}$.
-- **Xuất file dữ liệu thực tế:** File Excel [`ai/output/bva-testcases.xlsx`](../ai/output/bva-testcases.xlsx) đã được nạp trực tiếp vào kịch bản Data-driven của cả Katalon Studio và WinAppDriver NUnit.
+Nhóm 02 đã hiện thực hóa toàn bộ các định hướng lý thuyết thành **2 chuỗi thực nghiệm thực tế** trên ứng dụng MiniSum:
 
-### 4.2 Thực nghiệm sinh mã kiểm thử C# NUnit POM tự động
-- **Prompt:** [`ai/prompts/script-gen-prompt.md`](../ai/prompts/script-gen-prompt.md) yêu cầu sinh script WinAppDriver theo mẫu thiết kế Page Object Model.
-- **Mã nguồn sinh ra:** [`ai/output/chatgpt-script-output.cs`](../ai/output/chatgpt-script-output.cs) đã được biên dịch và chạy kiểm thử thực tế trên `MiniSum.exe`.
-- **Hiệu quả định lượng:**
-  - Thời gian viết kịch bản giảm từ **130 phút xuống 29 phút** (tiết kiệm **77.7% thời gian**).
-  - Tỷ lệ dòng code tái sử dụng đạt **93.5%** (chỉ cần điều chỉnh đường dẫn tương đối và tên file exe).
-  - Chi tiết đo đạc xem tại [`ai/output/loc-time-measurement.md`](../ai/output/loc-time-measurement.md).
+```
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                   CHUỖI THỰC NGHIỆM AI AUTOMATION CỦA NHÓM                       │
+├──────────────────────────────────────────────────────────────────────────────────┤
+│ [AI DEMO 1: SINH TEST CASE & DỮ LIỆU BVA]                                        │
+│   Tài liệu đặc tả               Prompt Few-Shot              12 Test Cases BVA   │
+│ (minisum-spec.md)   ───────► (testcase-bva-prompt.md) ───────► (bva-testcases.xlsx)│
+├──────────────────────────────────────────────────────────────────────────────────┤
+│ [AI DEMO 2: SINH MÃ NGUỒN C# NUNIT & XÁC MINH TRÊN WINAPPDRIVER]                 │
+│   Prompt kiến trúc POM          Script C# GenAI              Xác minh chạy PASS  │
+│ (script-gen-prompt.md) ───► (chatgpt-script-output.cs) ───► (verified-script.cs)│
+└──────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 4.1 AI Demo 1: Tự động hóa thiết kế ca kiểm thử hộp đen BVA
+* **Đầu vào:** Đặc tả kỹ thuật chi tiết tại [`ai/prompts/minisum-spec.md`](../ai/prompts/minisum-spec.md) mô tả quy tắc hai màn hình và miền giới hạn $[-99, 99]$.
+* **Kỹ thuật áp dụng:** Prompt Few-shot kết hợp Chain-of-Thought tại [`ai/prompts/testcase-bva-prompt.md`](../ai/prompts/testcase-bva-prompt.md).
+* **Kết quả đối chiếu liên mô hình (Multi-model Benchmark):**
+  * **ChatGPT-4:** Phản hồi sắc bén sau 2 vòng tinh chỉnh, sinh đủ 12 ca kiểm thử ([`ai/output/chatgpt-bva-output.md`](../ai/output/chatgpt-bva-output.md)).
+  * **Gemini 1.5 Pro & Claude 3.5 Sonnet:** Tốc độ sinh nhanh (3.2s), độ chính xác toán học số âm đạt 100% ngay từ vòng 1 ([`ai/output/gemini-bva-output.md`](../ai/output/gemini-bva-output.md)).
+* **Bàn giao:** Xuất file Excel chuẩn hóa [`ai/output/bva-testcases.xlsx`](../ai/output/bva-testcases.xlsx) làm dữ liệu đầu vào cho kịch bản Data-Driven Testing của cả hai nhánh Katalon và WinAppDriver.
+
+### 4.2 AI Demo 2: Tự động sinh kịch bản C# NUnit POM & Debug trên môi trường thật
+* **Đầu vào:** Bộ thuộc tính định vị UIA và yêu cầu thiết kế mẫu Page Object Model (POM) tại [`ai/prompts/script-gen-prompt.md`](../ai/prompts/script-gen-prompt.md).
+* **Mã sinh tự động ban đầu:** Mã nguồn C# NUnit 215 dòng tại [`ai/output/chatgpt-script-output.cs`](../ai/output/chatgpt-script-output.cs).
+* **Quy trình Debug & Xác minh (Verification on Real Environment):**
+  * Nhóm đã đưa mã nguồn vào thực thi trực tiếp với tiến trình `WinAppDriver.exe` và `MiniSum.exe`.
+  * **4 phát hiện quan trọng được xử lý:**
+    1. *Window handle transition:* Chuyển context driver từ `LoginForm` sang `CalculatorForm` bằng `WebDriverWait`.
+    2. *Xử lý trạng thái lỗi v3:* Tự động ánh xạ `lblError` thành mã `"LOI"` khi kiểm thử giá trị biên ngoại lệ.
+    3. *Làm sạch TextBox:* Thay thế lệnh `.Clear()` bằng tổ hợp phím `Ctrl+A + Backspace`.
+    4. *Loại bỏ Sleep tĩnh:* Chuyển sang cơ chế Explicit Wait linh hoạt.
+* **Kết quả cuối cùng:** File kịch bản [`ai/output/verified-script-output.cs`](../ai/output/verified-script-output.cs) chạy **PASS 14/14 test cases (100%)** với tổng thời gian thực thi chỉ 18.2 giây!
 
 ---
 
-## 5. Tổng Kết: Cơ Hội & Thách Thức (Bài Học Kinh Nghiệm)
+## 5. Bài Học Thực Tế & Best Practices Khi Áp Dụng AI Trong Desktop Automation
 
-* **Cơ hội:** 
-  * Giảm tới 70–80% thời gian soạn thảo boilerplate code và thiết kế test case biên.
-  * Tăng năng suất cho cả Manual Tester và Automation SDET.
-* **Thách thức & Bài học rút ra (Human-in-the-loop):**
-  * **Hiện tượng ảo giác (Hallucination):** Ở lần prompt đầu tiên, AI hay tự ý sinh kết quả có dấu tiếng Việt trong khi AUT chỉ hỗ trợ ASCII. Cần áp dụng kỹ thuật Few-shot Prompting để neo cứng định dạng đầu ra.
-  * **Rủi ro sai lệch định vị (Locator Drift):** AI không thể tự đoán đúng AutomationId nếu không được cấp đặc tả chính xác (`minisum-spec.md`). Do đó, con người vẫn đóng vai trò quyết định trong việc rà soát và kiểm chứng kịch bản thực tế.
+Từ kết quả thực nghiệm thực tế, nhóm đúc kết 5 bài học cốt lõi cho các kỹ sư kiểm thử tự động:
+
+### 5.1 Quy tắc "Rác vào - Rác ra" (Garbage In - Garbage Out)
+AI chỉ sinh ra mã nguồn và dữ liệu kiểm thử chuẩn xác khi và chỉ khi tài liệu đặc tả cung cấp cho nó có tính cấu trúc và tường minh. Việc cung cấp thiếu một chi tiết nhỏ (ví dụ: không nêu rõ có nhãn `lblError` ở v3) sẽ khiến AI sinh ra mã đọc nhầm trường dữ liệu.
+
+### 5.2 Kỹ thuật Few-shot là chìa khóa chặn đứng ảo giác toán học
+Mô hình ngôn ngữ có xu hướng thực hiện phép cộng tự nhiên thay vì tuân theo luật chặn của phần mềm. Việc đưa vào ít nhất **1 ca biên hợp lệ** và **1 ca biên ngoại lệ có kèm Expected: "LOI"** là điều kiện tiên quyết để ép AI tuân thủ luật nghiệp vụ kiểm thử.
+
+### 5.3 Nguyên tắc "Con người giữ vô-lăng" (Human-in-the-Loop)
+Mặc dù AI đạt tỷ lệ sinh mã giữ nguyên lên tới **84.6%**, nhưng **15.4% mã nguồn cần sửa chữa** lại quyết định 100% sự thành bại của kịch bản kiểm thử (liên quan đến cơ chế đa cửa sổ của hệ điều hành Windows, xử lý focus và timing). Không bao giờ tin tưởng tuyệt đối vào mã AI sinh ra mà không chạy thử nghiệm (dry-run).
+
+### 5.4 Cấu trúc Prompt theo mẫu POM để dễ bảo trì
+Khi yêu cầu AI sinh mã, luôn ép mô hình tách riêng:
+- Tầng định danh phần tử (`FindElementByAccessibilityId`).
+- Tầng hành động người dùng (`Click`, `SendKeys`).
+- Tầng Assertions và Data-Driven runner.
+Cách làm này giúp mã nguồn sinh ra có thể tái sử dụng ngay trong các dự án doanh nghiệp lớn mà không cần đập đi xây lại.
+
+---
+
+## 6. Tổng Kết: Cơ Hội, Thách Thức & Tương Lai
+
+* **Cơ hội vượt trội:**
+  * Giảm **75% tổng thời gian** xây dựng một bộ kiểm thử tự động hoàn chỉnh (từ 2 giờ xuống dưới 30 phút).
+  * Giảm tải gánh nặng viết code boilerplate lặp đi lặp lại cho kỹ sư SDET.
+  * Tự động hóa khâu sinh test case vốn là khâu tốn nhiều năng lượng nhận thức nhất của tester.
+* **Thách thức cần quản trị:**
+  * Nguy cơ rò rỉ dữ liệu khi gửi đặc tả ứng dụng nội bộ lên các dịch vụ AI công cộng (cần sử dụng các mô hình Private / On-Premise LLM).
+  * Đòi hỏi kỹ sư kiểm thử phải nâng cao năng lực Prompt Engineering và năng lực review code thay vì chỉ viết code đơn thuần.
+

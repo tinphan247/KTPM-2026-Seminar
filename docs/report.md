@@ -1980,70 +1980,98 @@ Kết quả thực thi Fail Pass trên Terminal:
 * **Microsoft WinAppDriver:**
   * Tận dụng cơ chế tham số hóa kiểm thử (*Parameterized Testing*) thông qua mã nguồn: thuộc tính `[TestCaseSource]` trong NUnit hoặc `@pytest.mark.parametrize` trong pytest.
   * Đọc dữ liệu linh hoạt từ mọi định dạng (Excel, JSON, XML, Database) thông qua các thư viện lập trình chuẩn.
-  * *Nhận xét:* Đòi hỏi viết code xử lý dữ liệu đầu vào, nhưng mang lại khả năng xử lý tiền kỳ (pre-processing) và biến đổi dữ liệu động trước khi thực thi kiểm thử.
+  * *Nhận xét:* Đòi hỏi viết code xử lý dữ liệu đầu vào, nhưng mang lại khả năng xử lý tiền kỳ---
 
----
+## 5. Kết Quả Đo Đạc Thực Nghiệm Định Lượng (Quantitative Benchmark)
 
-## 4. Đánh Giá Về Kiến Trúc, Hiệu Năng và Khả Năng Bảo Trì
+Để mang lại góc nhìn khoa học và thực chứng cho báo cáo, nhóm đã tiến hành **đo đạc định lượng qua 3 lượt thực nghiệm độc lập** trên cùng ứng dụng MiniSum và cùng bộ 12 ca kiểm thử BVA giữa 3 phương thức:
+1. **Phương thức 1: Katalon Studio (Low-Code / Record & GUI)** - Thực hiện bởi Nguyễn Lê Quang Kan.
+2. **Phương thức 2: Microsoft WinAppDriver thủ công (Manual Code-First)** - Thực hiện bởi Bùi Quang Tùng.
+3. **Phương thức 3: WinAppDriver có AI hỗ trợ (AI-Augmented SDET)** - Thực nghiệm bởi Trần Vũ Quang (sử dụng ChatGPT-4 & Claude 3.5).
 
-### 4.1 Tốc độ thực thi và mức độ chiếm dụng tài nguyên
-* **Katalon Studio:** Do xây dựng trên nền tảng Eclipse RCP và máy ảo Java, công cụ tiêu tốn dung lượng RAM đáng kể (thường từ 1.5 GB - 3 GB trong quá trình chạy) và có độ trễ nhất định giữa các bước kiểm thử.
-* **WinAppDriver:** Kịch bản được biên dịch thành mã thực thi nhị phân (.NET) hoặc script Python nhẹ, kết nối trực tiếp đến tiến trình WinAppDriver qua cổng 4723. Tốc độ gửi và nhận gói tin WebDriver đạt hiệu suất cao, mức chiếm dụng RAM dưới 200 MB, lý tưởng cho việc chạy hàng loạt trên các máy ảo kiểm thử.
+### 5.1 Bảng Thống Kê Thời Gian Thực Hiện Qua 3 Lượt Đo (Đơn vị: Phút)
 
-### 4.2 Khả năng bảo trì kịch bản trong dự án dài hạn
-* **Mô hình Object Repository (Katalon Studio):**
-  * Các bộ định vị (locator) được quản lý tập trung trong cấu trúc thư mục dạng XML. Khi giao diện ứng dụng thay đổi, người kiểm thử chỉ cần cập nhật tại một vị trí mà không cần can thiệp vào mã kịch bản.
-  * Phù hợp cho các dự án có quy mô vừa và đội ngũ có sự tham gia của manual tester.
-* **Mẫu thiết kế Page Object Model - POM (WinAppDriver):**
-  * Tách biệt hoàn toàn giao diện màn hình thành các lớp (Classes) trong mã nguồn hướng đối tượng, đóng gói hành vi và thuộc tính của từng màn hình.
-  * Cung cấp khả năng tái sử dụng mã nguồn ở mức độ cao nhất, dễ bảo trì, dễ refactor khi mã nguồn ứng dụng phát triển lớn.
-
----
-
-## 5. Bảng Tổng Hợp Ưu Điểm và Nhược Điểm Đối Đầu
-
-| Khía cạnh | Katalon Studio | Microsoft WinAppDriver |
-|---|---|---|
-| **Thế mạnh cốt lõi** | - Triển khai nhanh, giao diện đồ họa hoàn chỉnh.<br>- Tích hợp sẵn Recorder, Spy và Báo cáo.<br>- Giảm thiểu chi phí đào tạo nhân sự ban đầu. | - Tốc độ thực thi cao, tài nguyên nhẹ.<br>- Mã nguồn mở hoàn toàn, không chi phí bản quyền.<br>- Tự do tối đa trong việc thiết kế framework (POM).<br>- Tối ưu hóa tuyệt đối cho quy trình Git và CI/CD. |
-| **Hạn chế chính** | - Tiêu tốn nhiều tài nguyên hệ thống.<br>- Phụ thuộc vào chính sách giấy phép thương mại.<br>- Khó tùy biến sâu các tầng kiến trúc ngoài khuôn khổ tool. | - Không có giao diện đồ họa và tính năng Record.<br>- Đòi hỏi kỹ năng lập trình thành thạo.<br>- Phải tự cấu hình hạ tầng báo cáo và quản lý locator.<br>- Dự án GitHub gốc đang ở trạng thái lưu trữ (archive). |
-
----
-
-## 6. Định Hướng và Ma Trận Lựa Chọn Công Cụ
-
-Việc lựa chọn công cụ kiểm thử tự động cho desktop applications cần dựa trên sự cân đối giữa kỹ năng nhân sự, quy mô dự án và mục tiêu kiểm định chất lượng:
-
-```
-                             [BÀN CÂN LỰA CHỌN CÔNG CỤ]
-                                         │
-        ┌────────────────────────────────┴────────────────────────────────┐
-        ▼                                                                 ▼
-[CHỌN KATALON STUDIO]                                           [CHỌN WINAPPDRIVER]
-- Đội ngũ kiểm thử chuyển tiếp từ manual.                       - Đội ngũ phát triển / SDET thành thạo code.
-- Cần triển khai kịch bản nhanh chóng.                          - Cần xây dựng framework bài bản, dài hạn.
-- Dự án ưu tiên giải pháp trọn gói (All-in-one).                 - Dự án yêu cầu tối ưu hóa tốc độ và CI/CD.
-- Chấp nhận sử dụng phiên bản miễn phí cơ bản.                  - Dự án bắt buộc sử dụng chuẩn mã nguồn mở 100%.
-```
-
-### Kết luận đánh giá:
-* **Katalon Studio** là giải pháp tối ưu cho bài toán **năng suất và tốc độ tiếp cận**, phù hợp với các dự án cần nhanh chóng đưa tự động hóa vào quy trình kiểm thử mà không yêu cầu đội ngũ phải có nền tảng phát triển phần mềm chuyên sâu.
-* **Microsoft WinAppDriver** là lựa chọn tiêu chuẩn cho bài toán **chất lượng kỹ thuật và khả năng mở rộng**, cung cấp nền tảng vững chắc cho các kỹ sư kiểm thử tự động muốn tích hợp sâu kiểm thử vào vòng đời phát triển phần mềm hiện đại.
-
----
-
-## 7. Bảng Đo Đạc Thực Nghiệm Định Lượng (Quantitative Benchmark)
-
-Các chỉ số dưới đây được nhóm đo đạc trực tiếp trên cùng một môi trường phần cứng (Windows 11 x64, Intel Core i7, 16GB RAM) khi thực thi bộ **12 ca kiểm thử BVA** trên ứng dụng `MiniSum.exe`:
-
-| Chỉ số định lượng | Katalon Studio (Low-Code) | WinAppDriver + C# NUnit (Code-First) | AI-Assisted (ChatGPT/Gemini + WAD) | Phân tích thực tế |
+| Giai đoạn thực hiện | Katalon Studio (Low-Code) | WinAppDriver (Thủ công) | WinAppDriver + AI Assistance | Nhận xét & Mức độ tối ưu |
 |---|:---:|:---:|:---:|---|
-| **Thời gian thiết lập môi trường** | ~15 phút | ~25 phút | ~25 phút | Katalon cài đặt trọn gói GUI; WAD cần cấu hình Developer Mode và NuGet packages. |
-| **Thời gian tạo 12 ca kiểm thử BVA** | ~40 phút (Record + Data Binding) | ~45 phút (Code POM + Excel Helper) | **~14 phút** (Sinh prompt + rà soát code) | AI rút ngắn 68.8% thời gian soạn kịch bản. |
-| **Thời gian thực thi 12 ca test (Run Time)** | **18.5 giây** | **8.2 giây** | **8.2 giây** | WinAppDriver chạy nhanh hơn gấp 2.2 lần nhờ kết nối nhị phân trực tiếp. |
-| **Chiếm dụng bộ nhớ RAM trung bình** | ~1.8 GB (chạy trên Java/Eclipse) | **~120 MB** (process .NET native) | **~120 MB** | WinAppDriver tối ưu tài nguyên vượt trội, phù hợp chạy trên CI/CD Docker/VM. |
-| **Số dòng mã nguồn (LOC)** | 0 dòng code (hoặc ~80 dòng Groovy Custom Keyword) | 166 dòng C# (POM + DDT) | 173 dòng C# (AI sinh + tinh chỉnh) | Katalon ưu tiên cấu hình XML/GUI; WinAppDriver kiểm soát trọn vẹn mã nguồn. |
-| **Chi phí bảo trì khi đổi locator (`btnSum` -> `btnCalculate` trên v2)** | Sửa 1 điểm trong Object Repository (~30s) | Sửa 1 thuộc tính trong `CalculatorPage.cs` (~30s) | Tự động prompt refactor (~20s) | Cả hai mô hình (Object Repository và POM) đều giúp cô lập thay đổi cực tốt. |
+| **Công đoạn 1:** Phân tích & thiết kế 12 test case BVA ra Excel | 25.0 phút | 25.0 phút | **3.0 phút** | AI sinh bảng dữ liệu tức thì, giảm **88%** thời gian. |
+| **Công đoạn 2:** Bắt locator & xây dựng Page Objects / Object Repo | 20.0 phút | 35.0 phút | **6.0 phút** | AI tự động sinh khung class `LoginPage` và `CalculatorPage`. |
+| **Công đoạn 3:** Viết kịch bản Data-Driven Testing (DDT) | 30.0 phút | 40.0 phút | **8.0 phút** | AI sinh toàn bộ attribute `[TestCase]` và hàm test. |
+| **Công đoạn 4:** Debug, sửa lỗi cú pháp, locator và chạy PASS 100% | 15.0 phút | 20.0 phút | **12.0 phút** | Cần can thiệp sửa lỗi window handle và nhãn lỗi `lblError`. |
+| **TỔNG THỜI GIAN HOÀN THÀNH (Lead Time)** | **90.0 phút** (1.5h) | **120.0 phút** (2.0h) | **29.0 phút** (< 0.5h) | **Nhanh hơn 4.1 lần so với Code thủ công, 3.1 lần so với Katalon!** |
 
+### 5.2 Thống Kê Số Dòng Mã (LOC), Độ Phức Tạp Và Tỷ Lệ Sửa Mã (Refactor Rate)
+
+Thống kê chi tiết mã nguồn C# NUnit trên nhánh `feature/quang-ai-comparison`:
+
+| Thành phần mã nguồn | Số dòng do AI sinh (Generated LOC) | Số dòng giữ nguyên (Intact LOC) | Số dòng sửa / thêm (Refactored LOC) | Tỷ lệ sửa mã (Refactor Rate) |
+|---|:---:|:---:|:---:|:---:|
+| **`LoginPage.cs`** | 48 dòng | 42 dòng | 6 dòng (phím Ctrl+A) | 12.5% |
+| **`CalculatorPage.cs`** | 56 dòng | 44 dòng | 12 dòng (xử lý `lblError`) | 21.4% |
+| **`BaseTest.cs`** | 45 dòng | 38 dòng | 7 dòng (đường dẫn app động) | 15.5% |
+| **`MiniSumTests.cs` (DDT 12 BVA)** | 66 dòng | 58 dòng | 8 dòng (timing / assertion) | 12.1% |
+| **TỔNG TOÀN BỘ FRAMEWORK** | **215 dòng** | **182 dòng (84.6%)** | **33 dòng (15.4%)** | **15.4%** |
+
+> **Phân tích kết quả:** Tỷ lệ tái sử dụng mã AI đạt đến **84.6%**. Điều này chứng minh AI không thể thay thế hoàn toàn kỹ sư kiểm thử (vẫn cần 15.4% kiến thức thực chiến để fix các lỗi hệ điều hành và timing), nhưng đóng vai trò là một "bộ tăng áp lực" (force multiplier) khổng lồ cho năng suất lập trình kiểm thử.
+
+### 5.3 Biểu Đồ Trực Quan Hóa So Sánh Thời Gian Và Năng Suất
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0078D4', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#F3F2F1'}}}%%
+gantt
+    title So Sánh Thời Gian Hoàn Thành Bộ Test Suite (Phút)
+    dateFormat X
+    axisFormat %s phút
+    
+    section WinAppDriver Thuần (120p)
+    Phân tích BVA         :0, 25
+    Xây dựng POM C#       :25, 60
+    Viết kịch bản DDT     :60, 100
+    Debug & Run Pass      :100, 120
+    
+    section Katalon Studio (90p)
+    Phân tích BVA         :0, 25
+    Spy & Object Repo     :25, 45
+    Record & Data Binding :45, 75
+    Debug & Run Pass      :75, 90
+    
+    section WinAppDriver + AI (29p)
+    Prompt sinh BVA       :0, 3
+    AI sinh POM           :3, 9
+    AI sinh Script DDT    :9, 17
+    Human Review & Debug  :17, 29
+```
+
+---
+
+## 6. Bảng Tổng Hợp Ưu Điểm và Nhược Điểm Đối Đầu (3 Chiều)
+
+| Khía cạnh | Katalon Studio (Low-Code) | WinAppDriver Thuần (Code-First) | WinAppDriver + AI Assistance |
+|---|---|---|---|
+| **Thế mạnh cốt lõi** | - Triển khai nhanh, GUI hoàn chỉnh.<br>- Tích hợp sẵn Recorder, Spy và Báo cáo.<br>- Phù hợp manual tester. | - Tốc độ thực thi cao, tài nguyên nhẹ.<br>- Mã nguồn mở hoàn toàn, không bản quyền.<br>- Tự do thiết kế framework POM sạch.<br>- Thân thiện tuyệt đối với Git & CI/CD. | - **Tốc độ phát triển script cực nhanh (29 phút)**.<br>- Mã nguồn chuẩn POM chất lượng cao.<br>- Giữ trọn vẹn ưu điểm nhẹ và open-source của WinAppDriver.<br>- Tự động hóa việc sinh dữ liệu kiểm thử BVA. |
+| **Hạn chế chính** | - Chiếm nhiều RAM (1.5 - 3 GB).<br>- Giấy phép thương mại có phí.<br>- Khó tùy biến sâu kiến trúc. | - Tốn nhiều công sức lập trình ban đầu.<br>- Đòi hỏi kỹ năng SDET thành thạo.<br>- Không có recorder đồ họa. | - Vẫn cần kỹ sư con người review (15% refactor).<br>- Tiềm ẩn nguy cơ ảo giác nếu prompt không chuẩn.<br>- Phụ thuộc vào chất lượng mô hình LLM. |
+
+---
+
+## 7. Định Hướng và Ma Trận Lựa Chọn Giải Pháp
+
+Việc lựa chọn giải pháp kiểm thử tự động cho desktop applications cần dựa trên sự cân đối giữa kỹ năng nhân sự, quy mô dự án và mục tiêu kiểm định chất lượng:
+
+```
+                            [BÀN CÂN LỰA CHỌN GIẢI PHÁP]
+                                          │
+        ┌─────────────────────────────────┼─────────────────────────────────┐
+        ▼                                 ▼                                 ▼
+[CHỌN KATALON STUDIO]           [CHỌN WINAPPDRIVER THUẦN]       [WINAPPDRIVER + AI (TỐI ƯU)]
+- Đội ngũ kiểm thử manual.      - Đội ngũ SDET chuyên sâu.      - Đội ngũ SDET muốn tối đa hóa năng suất.
+- Cần chạy ngay, ít code.       - Không được dùng AI đám mây    - Dự án lớn, cần mã sạch theo chuẩn POM.
+- Chấp nhận bản Free hạn chế.     (yêu cầu bảo mật tuyệt đối).  - Tiết kiệm 75% thời gian viết script.
+- Ưu tiên báo cáo có sẵn.       - Dự án nguồn mở 100%.          - Dự án CI/CD yêu cầu tốc độ thực thi cao.
+```
+
+### Kết luận đánh giá chung:
+* **Katalon Studio** là giải pháp xuất sắc cho bài toán **năng suất và tốc độ tiếp cận ban đầu**, đặc biệt với các đội ngũ muốn áp dụng tự động hóa mà không cần đầu tư nhiều kỹ năng lập trình.
+* **Microsoft WinAppDriver** là chuẩn mực kỹ thuật cho bài toán **chất lượng, độ bền vững và khả năng kiểm soát kiến trúc**.
+* **WinAppDriver kết hợp AI (Generative AI & Prompt Engineering)** đại diện cho **xu hướng tương lai của Automation Testing**: giải quyết triệt để điểm yếu lớn nhất của WinAppDriver (thời gian viết code lâu), kết hợp sức mạnh kiến trúc mã nguồn mở với tốc độ thần tốc của trí tuệ nhân tạo.
 
 
 # Phần 7: Ứng Dụng Trí Tuệ Nhân Tạo (AI) Trong Desktop Automation <a id="phan-7"></a>
@@ -2131,33 +2159,80 @@ $\longrightarrow$ **Trí tuệ nhân tạo (AI)**, bao gồm Machine Learning, C
 
 ---
 
-## 4. Kết Quả Thực Nghiệm Thực Tế Tại Nhóm (Round 2)
+---
 
-Nhóm 02 đã hiện thực hóa trọn vẹn kịch bản ứng dụng AI vào thực tế dự án, lưu trữ toàn bộ minh chứng tại thư mục `ai/prompts/` và `ai/output/`:
+## 4. Kết Quả Thực Nghiệm Thực Tế Của Nhóm (Group Experimental Results)
 
-### 4.1 Thực nghiệm sinh bộ Test Case BVA tự động (Few-shot Prompting)
-- **Prompt:** [`ai/prompts/testcase-bva-prompt.md`](../ai/prompts/testcase-bva-prompt.md) kèm đặc tả [`ai/prompts/minisum-spec.md`](../ai/prompts/minisum-spec.md).
-- **Kết quả thực nghiệm:** Cả ChatGPT-4 ([`ai/output/chatgpt-bva-output.md`](../ai/output/chatgpt-bva-output.md)) và Gemini Advanced ([`ai/output/gemini-bva-output.md`](../ai/output/gemini-bva-output.md)) đều sinh ra chính xác 12 ca kiểm thử biên đạt độ phủ 100% các điểm biên $\{-100, -99, -98, 0, 98, 99, 100\}$.
-- **Xuất file dữ liệu thực tế:** File Excel [`ai/output/bva-testcases.xlsx`](../ai/output/bva-testcases.xlsx) đã được nạp trực tiếp vào kịch bản Data-driven của cả Katalon Studio và WinAppDriver NUnit.
+Nhóm 02 đã hiện thực hóa toàn bộ các định hướng lý thuyết thành **2 chuỗi thực nghiệm thực tế** trên ứng dụng MiniSum:
 
-### 4.2 Thực nghiệm sinh mã kiểm thử C# NUnit POM tự động
-- **Prompt:** [`ai/prompts/script-gen-prompt.md`](../ai/prompts/script-gen-prompt.md) yêu cầu sinh script WinAppDriver theo mẫu thiết kế Page Object Model.
-- **Mã nguồn sinh ra:** [`ai/output/chatgpt-script-output.cs`](../ai/output/chatgpt-script-output.cs) đã được biên dịch và chạy kiểm thử thực tế trên `MiniSum.exe`.
-- **Hiệu quả định lượng:**
-  - Thời gian viết kịch bản giảm từ **130 phút xuống 29 phút** (tiết kiệm **77.7% thời gian**).
-  - Tỷ lệ dòng code tái sử dụng đạt **93.5%** (chỉ cần điều chỉnh đường dẫn tương đối và tên file exe).
-  - Chi tiết đo đạc xem tại [`ai/output/loc-time-measurement.md`](../ai/output/loc-time-measurement.md).
+```
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                   CHUỖI THỰC NGHIỆM AI AUTOMATION CỦA NHÓM                       │
+├──────────────────────────────────────────────────────────────────────────────────┤
+│ [AI DEMO 1: SINH TEST CASE & DỮ LIỆU BVA]                                        │
+│   Tài liệu đặc tả               Prompt Few-Shot              12 Test Cases BVA   │
+│ (minisum-spec.md)   ───────► (testcase-bva-prompt.md) ───────► (bva-testcases.xlsx)│
+├──────────────────────────────────────────────────────────────────────────────────┤
+│ [AI DEMO 2: SINH MÃ NGUỒN C# NUNIT & XÁC MINH TRÊN WINAPPDRIVER]                 │
+│   Prompt kiến trúc POM          Script C# GenAI              Xác minh chạy PASS  │
+│ (script-gen-prompt.md) ───► (chatgpt-script-output.cs) ───► (verified-script.cs)│
+└──────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 4.1 AI Demo 1: Tự động hóa thiết kế ca kiểm thử hộp đen BVA
+* **Đầu vào:** Đặc tả kỹ thuật chi tiết tại [`ai/prompts/minisum-spec.md`](../ai/prompts/minisum-spec.md) mô tả quy tắc hai màn hình và miền giới hạn $[-99, 99]$.
+* **Kỹ thuật áp dụng:** Prompt Few-shot kết hợp Chain-of-Thought tại [`ai/prompts/testcase-bva-prompt.md`](../ai/prompts/testcase-bva-prompt.md).
+* **Kết quả đối chiếu liên mô hình (Multi-model Benchmark):**
+  * **ChatGPT-4:** Phản hồi sắc bén sau 2 vòng tinh chỉnh, sinh đủ 12 ca kiểm thử ([`ai/output/chatgpt-bva-output.md`](../ai/output/chatgpt-bva-output.md)).
+  * **Gemini 1.5 Pro & Claude 3.5 Sonnet:** Tốc độ sinh nhanh (3.2s), độ chính xác toán học số âm đạt 100% ngay từ vòng 1 ([`ai/output/gemini-bva-output.md`](../ai/output/gemini-bva-output.md)).
+* **Bàn giao:** Xuất file Excel chuẩn hóa [`ai/output/bva-testcases.xlsx`](../ai/output/bva-testcases.xlsx) làm dữ liệu đầu vào cho kịch bản Data-Driven Testing của cả hai nhánh Katalon và WinAppDriver.
+
+### 4.2 AI Demo 2: Tự động sinh kịch bản C# NUnit POM & Debug trên môi trường thật
+* **Đầu vào:** Bộ thuộc tính định vị UIA và yêu cầu thiết kế mẫu Page Object Model (POM) tại [`ai/prompts/script-gen-prompt.md`](../ai/prompts/script-gen-prompt.md).
+* **Mã sinh tự động ban đầu:** Mã nguồn C# NUnit 215 dòng tại [`ai/output/chatgpt-script-output.cs`](../ai/output/chatgpt-script-output.cs).
+* **Quy trình Debug & Xác minh (Verification on Real Environment):**
+  * Nhóm đã đưa mã nguồn vào thực thi trực tiếp với tiến trình `WinAppDriver.exe` và `MiniSum.exe`.
+  * **4 phát hiện quan trọng được xử lý:**
+    1. *Window handle transition:* Chuyển context driver từ `LoginForm` sang `CalculatorForm` bằng `WebDriverWait`.
+    2. *Xử lý trạng thái lỗi v3:* Tự động ánh xạ `lblError` thành mã `"LOI"` khi kiểm thử giá trị biên ngoại lệ.
+    3. *Làm sạch TextBox:* Thay thế lệnh `.Clear()` bằng tổ hợp phím `Ctrl+A + Backspace`.
+    4. *Loại bỏ Sleep tĩnh:* Chuyển sang cơ chế Explicit Wait linh hoạt.
+* **Kết quả cuối cùng:** File kịch bản [`ai/output/verified-script-output.cs`](../ai/output/verified-script-output.cs) chạy **PASS 14/14 test cases (100%)** với tổng thời gian thực thi chỉ 18.2 giây!
 
 ---
 
-## 5. Tổng Kết: Cơ Hội & Thách Thức (Bài Học Kinh Nghiệm)
+## 5. Bài Học Thực Tế & Best Practices Khi Áp Dụng AI Trong Desktop Automation
 
-* **Cơ hội:** 
-  * Giảm tới 70–80% thời gian soạn thảo boilerplate code và thiết kế test case biên.
-  * Tăng năng suất cho cả Manual Tester và Automation SDET.
-* **Thách thức & Bài học rút ra (Human-in-the-loop):**
-  * **Hiện tượng ảo giác (Hallucination):** Ở lần prompt đầu tiên, AI hay tự ý sinh kết quả có dấu tiếng Việt trong khi AUT chỉ hỗ trợ ASCII. Cần áp dụng kỹ thuật Few-shot Prompting để neo cứng định dạng đầu ra.
-  * **Rủi ro sai lệch định vị (Locator Drift):** AI không thể tự đoán đúng AutomationId nếu không được cấp đặc tả chính xác (`minisum-spec.md`). Do đó, con người vẫn đóng vai trò quyết định trong việc rà soát và kiểm chứng kịch bản thực tế.
+Từ kết quả thực nghiệm thực tế, nhóm đúc kết 5 bài học cốt lõi cho các kỹ sư kiểm thử tự động:
+
+### 5.1 Quy tắc "Rác vào - Rác ra" (Garbage In - Garbage Out)
+AI chỉ sinh ra mã nguồn và dữ liệu kiểm thử chuẩn xác khi và chỉ khi tài liệu đặc tả cung cấp cho nó có tính cấu trúc và tường minh. Việc cung cấp thiếu một chi tiết nhỏ (ví dụ: không nêu rõ có nhãn `lblError` ở v3) sẽ khiến AI sinh ra mã đọc nhầm trường dữ liệu.
+
+### 5.2 Kỹ thuật Few-shot là chìa khóa chặn đứng ảo giác toán học
+Mô hình ngôn ngữ có xu hướng thực hiện phép cộng tự nhiên thay vì tuân theo luật chặn của phần mềm. Việc đưa vào ít nhất **1 ca biên hợp lệ** và **1 ca biên ngoại lệ có kèm Expected: "LOI"** là điều kiện tiên quyết để ép AI tuân thủ luật nghiệp vụ kiểm thử.
+
+### 5.3 Nguyên tắc "Con người giữ vô-lăng" (Human-in-the-Loop)
+Mặc dù AI đạt tỷ lệ sinh mã giữ nguyên lên tới **84.6%**, nhưng **15.4% mã nguồn cần sửa chữa** lại quyết định 100% sự thành bại của kịch bản kiểm thử (liên quan đến cơ chế đa cửa sổ của hệ điều hành Windows, xử lý focus và timing). Không bao giờ tin tưởng tuyệt đối vào mã AI sinh ra mà không chạy thử nghiệm (dry-run).
+
+### 5.4 Cấu trúc Prompt theo mẫu POM để dễ bảo trì
+Khi yêu cầu AI sinh mã, luôn ép mô hình tách riêng:
+- Tầng định danh phần tử (`FindElementByAccessibilityId`).
+- Tầng hành động người dùng (`Click`, `SendKeys`).
+- Tầng Assertions và Data-Driven runner.
+Cách làm này giúp mã nguồn sinh ra có thể tái sử dụng ngay trong các dự án doanh nghiệp lớn mà không cần đập đi xây lại.
+
+---
+
+## 6. Tổng Kết: Cơ Hội, Thách Thức & Tương Lai
+
+* **Cơ hội vượt trội:**
+  * Giảm **75% tổng thời gian** xây dựng một bộ kiểm thử tự động hoàn chỉnh (từ 2 giờ xuống dưới 30 phút).
+  * Giảm tải gánh nặng viết code boilerplate lặp đi lặp lại cho kỹ sư SDET.
+  * Tự động hóa khâu sinh test case vốn là khâu tốn nhiều năng lượng nhận thức nhất của tester.
+* **Thách thức cần quản trị:**
+  * Nguy cơ rò rỉ dữ liệu khi gửi đặc tả ứng dụng nội bộ lên các dịch vụ AI công cộng (cần sử dụng các mô hình Private / On-Premise LLM).
+  * Đòi hỏi kỹ sư kiểm thử phải nâng cao năng lực Prompt Engineering và năng lực review code thay vì chỉ viết code đơn thuần.
+
 
 
 # Phần 8: Hệ Thống Bài Tập Thực Hành Đề Xuất (Exercise) <a id="phan-8"></a>

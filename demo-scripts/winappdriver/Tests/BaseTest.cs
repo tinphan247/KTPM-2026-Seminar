@@ -83,6 +83,19 @@ namespace MiniSumTests.Tests
                 driver.Dispose();
                 driver = null;
             }
+
+            try
+            {
+                foreach (var p in System.Diagnostics.Process.GetProcessesByName("MiniSum_v3"))
+                {
+                    try { p.Kill(); } catch { }
+                }
+                foreach (var p in System.Diagnostics.Process.GetProcessesByName("MiniSum"))
+                {
+                    try { p.Kill(); } catch { }
+                }
+            }
+            catch { }
         }
     }
 }

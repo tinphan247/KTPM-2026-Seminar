@@ -1,11 +1,13 @@
 # NHẬT KÝ COMMIT LỊCH SỬ DỰ ÁN (GIT COMMIT LOG)
 
-- **Tổng số commits:** 78
+- **Tổng số commits:** 80
 - **Kho lưu trữ:** https://github.com/tinphan247/KTPM-2026-Seminar.git
 - **Ngày trích xuất:** 30/10/2026
 
 | Mã Hash | Người thực hiện | Thời gian | Thông điệp commit (Conventional Commits) |
 |:---:|---|:---:|---|
+| 9f5023f | **tinphan247** | 2026-11-24 12:50 | chore(tin): update contribution to 25% equal split across all 4 members and docs |
+| 049a240 | **tinphan247** | 2026-11-24 12:44 | docs(tin): update git-commit-log.md with all 78 commits |
 | e74cc77 | **tinphan247** | 2026-11-24 12:43 | Merge remote-tracking branch 'origin/main' and recompile report with 4-member team and simplified 30m exercises |
 | f6f0418 | **tinphan247** | 2026-11-24 12:42 | docs(tin): add seminar slides v2 (pdf and pptx) |
 | d376f34 | **tinphan247** | 2026-11-24 12:42 | chore(tin): remove Phat from docs, update contribution to 35/25/20/20, simplify 30m in-class exercises, recompile final report |

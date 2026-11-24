@@ -6,7 +6,7 @@
 
 | Mã Hash | Người thực hiện | Thời gian | Thông điệp commit (Conventional Commits) |
 |:---:|---|:---:|---|
-| d319f32 | **tinphan247** | 2026-11-25 00:25 | docs(report): export full seminar report to Microsoft Word document (.docx) format |
+| 66b99ce | **tinphan247** | 2026-11-25 00:25 | docs(report): export full seminar report to Microsoft Word document (.docx) format |
 | cd2378a | **tinphan247** | 2026-11-25 00:07 | revert(report): restore LaTeX color report version (commit 71648b2) per user request |
 | 9d91ccd | **tinphan247** | 2026-11-24 23:55 | docs(report): update footer to Nhom 02 topic, convert text boxes to plain text, render Mermaid flowcharts to monochrome PNGs, clean logo transparency |
 | 71648b2 | **tinphan247** | 2026-11-24 23:15 | docs(report): update HCMUS LaTeX template styling with new logo, rename department to KTPM, set Nhom 02 footer, remove emojis, add table and figure captions, and add LaTeX project |

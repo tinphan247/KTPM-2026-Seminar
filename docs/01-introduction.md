@@ -33,28 +33,13 @@ Trong kỷ nguyên phát triển phần mềm theo các mô hình Agile/DevOps v
 
 ## 3. Mục tiêu seminar
 
-```
-┌─────────────────────────────────────────────────────────┐
-│              MỤC TIÊU CỐT LÕI CỦA SEMINAR               │
-│                                                         │
-│  1. Làm chủ lý thuyết nền tảng về Automation Testing    │
-│     dành riêng cho môi trường Desktop Applications      │
-│                                                         │
-│  2. Khảo sát thị trường và thiết lập bộ tiêu chí chuẩn  │
-│     nhằm đánh giá, so sánh 2 công cụ đại diện           │
-│                                                         │
-│  3. Xây dựng kịch bản thực nghiệm và demo thực tế:      │
-│     - Quy trình cài đặt môi trường                      │
-│     - Kịch bản kiểm thử cơ bản (Record & Playback, DDT) │
-│     - Kịch bản workflow phức tạp                        │
-│                                                         │
-│  4. Nghiên cứu tiềm năng ứng dụng AI trong hỗ trợ       │
-│     tự động hóa kiểm thử desktop                        │
-│                                                         │
-│  5. Thiết kế bài tập thực hành ứng dụng cho lớp         │
-└─────────────────────────────────────────────────────────┘
-```
-<p class="figure-caption"><b>Hình 1.1:</b> <i>Sơ đồ mục tiêu cốt lõi của chuyên đề Seminar</i></p>
+Chuyên đề Seminar tập trung vào 5 mục tiêu cốt lõi sau:
+
+1. **Làm chủ lý thuyết nền tảng:** Nắm vững các khái niệm, cơ chế điều khiển và kiến trúc của Automation Testing dành riêng cho môi trường Desktop Applications trên hệ điều hành Windows.
+2. **Khảo sát thị trường và thiết lập tiêu chí chuẩn:** Xây dựng bộ khung 10 tiêu chí đánh giá toàn diện nhằm so sánh khách quan giữa hai trường phái công cụ: Low-Code GUI (Katalon Studio) và Code-First SDK (Microsoft WinAppDriver).
+3. **Xây dựng kịch bản thực nghiệm và demo thực tế:** Triển khai 3 cấp độ demo trên cùng ứng dụng mẫu MiniSum (Cài đặt môi trường, Record & Playback kết hợp Checkpoint, và Data-Driven Testing với kỹ thuật phân tích giá trị biên BVA).
+4. **Nghiên cứu ứng dụng Trí tuệ Nhân tạo (AI):** Khai thác Prompt Engineering 2 pha để tự động hóa thiết kế test case biên và sinh mã nguồn C# NUnit Page Object Model hoàn chỉnh.
+5. **Thiết kế bài tập thực hành ứng dụng:** Xây dựng bài lab cá nhân 30 phút trực quan, độc lập, thao tác trực tiếp trên mã nguồn clone từ GitHub.
 
 ---
 

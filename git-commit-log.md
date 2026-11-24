@@ -1,12 +1,13 @@
 # NHẬT KÝ COMMIT LỊCH SỬ DỰ ÁN (GIT COMMIT LOG)
 
-- **Tổng số commits:** 88
+- **Tổng số commits:** 89
 - **Kho lưu trữ:** https://github.com/tinphan247/KTPM-2026-Seminar.git
 - **Ngày trích xuất:** 30/10/2026
 
 | Mã Hash | Người thực hiện | Thời gian | Thông điệp commit (Conventional Commits) |
 |:---:|---|:---:|---|
-| 29b30c2 | **tinphan247** | 2026-11-24 23:15 | docs(report): update HCMUS LaTeX template styling with new logo, rename department to KTPM, set Nhóm 02 footer, remove emojis, add table and figure captions, and add LaTeX project |
+| 606a08b | **tinphan247** | 2026-11-24 23:55 | docs(report): update footer to Nhom 02 topic, convert text boxes to plain text, render Mermaid flowcharts to monochrome PNGs, clean logo transparency |
+| 71648b2 | **tinphan247** | 2026-11-24 23:15 | docs(report): update HCMUS LaTeX template styling with new logo, rename department to KTPM, set Nhom 02 footer, remove emojis, add table and figure captions, and add LaTeX project |
 | 3438aae | **tinphan247** | 2026-11-24 17:15 | docs(tin): refresh git-commit-log.md with 83 commits |
 | d68eb1e | **tinphan247** | 2026-11-24 17:11 | docs(quang): add YouTube demo video link for AI Desktop Automation (Task Q15) |
 | 85e5ff1 | **tinphan247** | 2026-11-24 16:26 | docs(tin): refresh git-commit-log.md with 82 commits |

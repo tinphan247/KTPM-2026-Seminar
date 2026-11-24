@@ -18,7 +18,7 @@
   * *Script View:* Chế độ code Groovy thuần, cho phép tùy biến logic, xử lý điều kiện, vòng lặp phức tạp.
 
 ![Không gian làm việc Katalon Studio](screenshots/katalon/01_katalon_project_explorer.jpg)
-<p class="figure-caption"><b>Hình 4.1:</b> <i>Giao diện làm việc và cấu trúc thư mục dự án kiểm thử trong Katalon Studio</i></p>
+<p class="figure-caption"><b>Hình 6:</b> <i>Giao diện làm việc và cấu trúc thư mục dự án kiểm thử trong Katalon Studio</i></p>
 
 ### 1.2 Lý do lựa chọn cho seminar
 1. **Chi phí 0 đồng:** Bản Free không giới hạn thời gian dùng thử (loại bỏ rủi ro hết hạn bản quyền trong quá trình học tập và báo cáo).
@@ -134,7 +134,7 @@ Trong quá trình triển khai thực tế trên ứng dụng mẫu WPF `MiniSum
   * Với Object Repository, tester chỉ cần cập nhật locator tại một file duy nhất trong kho lưu trữ, toàn bộ các Test Case liên quan sẽ tự động nhận diện theo thông số mới. Đây là sự hiện thực hóa triết lý **Page Object Model (POM)** ở mức công cụ không mã nguồn (Codeless/Low-code), giúp hạn chế nguyên lý *"Nghịch lý thuốc trừ sâu" (Pesticide Paradox)* khi kiểm thử tự động dài hạn.
 
 ![Object Repository trong Katalon Studio](screenshots/katalon/03_object_repository_minisum.jpg)
-<p class="figure-caption"><b>Hình 4.2:</b> <i>Kho đối tượng Object Repository lưu trữ định vị phần tử ứng dụng MiniSum</i></p>
+<p class="figure-caption"><b>Hình 7:</b> <i>Kho đối tượng Object Repository lưu trữ định vị phần tử ứng dụng MiniSum</i></p>
 
 #### 2.2.2 Cấu trúc lưu trữ nội bộ của Object Repository trên Desktop (.wrs)
 Khác với kiểm thử Web sử dụng định dạng file `.rs` (`WebElementEntity`), kiểm thử Windows Desktop trong Katalon Studio quy định cấu trúc đối tượng nghiêm ngặt:
@@ -411,7 +411,7 @@ graph TD
 ### 5.1 Demo 1: Cài đặt và chuẩn bị môi trường
 
 ![Khởi chạy MiniSum trong Katalon](screenshots/katalon/02_minisum_app_launched.jpg)
-<p class="figure-caption"><b>Hình 4.3:</b> <i>Khởi chạy ứng dụng MiniSum thông qua trình điều khiển Windows Driver trên Katalon Studio</i></p>
+<p class="figure-caption"><b>Hình 8:</b> <i>Khởi chạy ứng dụng MiniSum thông qua trình điều khiển Windows Driver trên Katalon Studio</i></p>
 * **Mục tiêu:** Chứng minh tính dễ tiếp cận và khả năng kết nối của công cụ.
 * **Các bước chính:**
   1. Kích hoạt *Developer Mode* trên Windows và khởi động `WinAppDriver.exe`.
@@ -421,7 +421,7 @@ graph TD
 ### 5.2 Demo 2: Thao tác cơ bản (Record & Playback + Checkpoint)
 
 ![Xác minh Checkpoint](screenshots/katalon/06_checkpoint_verification_pass.jpg)
-<p class="figure-caption"><b>Hình 4.4:</b> <i>Thực thi kịch bản kiểm thử đăng nhập và xác minh Checkpoint nhãn thông báo thành công</i></p>
+<p class="figure-caption"><b>Hình 9:</b> <i>Thực thi kịch bản kiểm thử đăng nhập và xác minh Checkpoint nhãn thông báo thành công</i></p>
 * **Mục tiêu:** Minh họa quy trình tự động hóa kịch bản kiểm thử chuẩn (ví dụ: Chức năng Đăng nhập).
 * **Các bước chính:**
   1. Dùng *Windows Recorder* ghi lại thao tác nhập tài khoản, mật khẩu và bấm Submit.
@@ -432,10 +432,10 @@ graph TD
 ### 5.3 Demo 3: Kịch bản nâng cao (Data-Driven BVA + Luồng nghiệp vụ)
 
 ![Liên kết dữ liệu kiểm thử biên BVA từ file Excel](screenshots/katalon/12_bva_test_suite_data_binding.jpg)
-<p class="figure-caption"><b>Hình 4.5:</b> <i>Thiết lập liên kết dữ liệu kiểm thử giá trị biên (BVA) từ file Excel vào Test Suite</i></p>
+<p class="figure-caption"><b>Hình 10:</b> <i>Thiết lập liên kết dữ liệu kiểm thử giá trị biên (BVA) từ file Excel vào Test Suite</i></p>
 
 ![Báo cáo HTML Report tổng quan](screenshots/katalon/15_katalon_html_report_overview.jpg)
-<p class="figure-caption"><b>Hình 4.6:</b> <i>Báo cáo HTML Report trực quan kết quả thực thi kiểm thử tự động trên Katalon Studio</i></p>
+<p class="figure-caption"><b>Hình 11:</b> <i>Báo cáo HTML Report trực quan kết quả thực thi kiểm thử tự động trên Katalon Studio</i></p>
 * **Mục tiêu:** Minh họa khả năng chạy kiểm thử tự động với dữ liệu lớn theo kỹ thuật phân tích giá trị biên.
 * **Các bước chính:**
   1. Chuẩn bị file Excel chứa tập dữ liệu biên (ví dụ: các giá trị biên hợp lệ và không hợp lệ của bài toán tính tổng 2 số nguyên).

@@ -252,43 +252,43 @@ public void CaptureScreenOnFailure()
 Quá trình kiểm thử bắt đầu bằng việc khởi chạy tiến trình `WinAppDriver.exe` dưới quyền quản trị (Administrator), sẵn sàng lắng nghe các lệnh HTTP RESTful tại cổng mặc định `4723`.
 
 ![Cửa sổ Console khởi chạy WinAppDriver](<../demo-scripts/winappdriver/screen short/winappdriver.png>)
-<p class="figure-caption"><b>Hình 5.1:</b> <i>Cửa sổ Console khởi chạy dịch vụ Microsoft WinAppDriver tại cổng 4723</i></p>
+<p class="figure-caption"><b>Hình 12:</b> <i>Cửa sổ Console khởi chạy dịch vụ Microsoft WinAppDriver tại cổng 4723</i></p>
 
 ### 7.2 Khảo sát phần tử giao diện bằng Accessibility Insights for Windows
 Nhóm sử dụng công cụ *Accessibility Insights for Windows* để bóc tách cây giao diện UI Automation (UIA) và trích xuất các thuộc tính định danh `AutomationId` đáng tin cậy của ứng dụng `MiniSum.exe`:
 
 ![Accessibility Insights - Màn hình Đăng nhập](<../demo-scripts/winappdriver/screen short/DANG_NHAP.png>)
-<p class="figure-caption"><b>Hình 5.2:</b> <i>Dò tìm thuộc tính AutomationId các phần tử trên màn hình Đăng nhập bằng Accessibility Insights</i></p>
+<p class="figure-caption"><b>Hình 13:</b> <i>Dò tìm thuộc tính AutomationId các phần tử trên màn hình Đăng nhập bằng Accessibility Insights</i></p>
 
 ![Accessibility Insights - Nút Đăng xuất](<../demo-scripts/winappdriver/screen short/DANG_XUAT.png>)
-<p class="figure-caption"><b>Hình 5.3:</b> <i>Dò tìm thuộc tính và AutomationId của nút Đăng xuất (btnLogout)</i></p>
+<p class="figure-caption"><b>Hình 14:</b> <i>Dò tìm thuộc tính và AutomationId của nút Đăng xuất (btnLogout)</i></p>
 
 ![Accessibility Insights - Ô hiển thị kết quả](<../demo-scripts/winappdriver/screen short/ketqua.png>)
-<p class="figure-caption"><b>Hình 5.4:</b> <i>Dò tìm thuộc tính AutomationId ô hiển thị kết quả tính toán (lblResult)</i></p>
+<p class="figure-caption"><b>Hình 15:</b> <i>Dò tìm thuộc tính AutomationId ô hiển thị kết quả tính toán (lblResult)</i></p>
 
 ![Accessibility Insights - Trường nhập Mật khẩu](<../demo-scripts/winappdriver/screen short/Mat_Khau.png>)
-<p class="figure-caption"><b>Hình 5.5:</b> <i>Dò tìm thuộc tính AutomationId trường nhập mật khẩu (txtPassword)</i></p>
+<p class="figure-caption"><b>Hình 16:</b> <i>Dò tìm thuộc tính AutomationId trường nhập mật khẩu (txtPassword)</i></p>
 
 ![Accessibility Insights - Thông báo sai đăng nhập](<../demo-scripts/winappdriver/screen short/Sai_tai_khoan_hoac_mat_khau.png>)
-<p class="figure-caption"><b>Hình 5.6:</b> <i>Dò tìm thuộc tính nhãn cảnh báo đăng nhập thất bại (lblMessage)</i></p>
+<p class="figure-caption"><b>Hình 17:</b> <i>Dò tìm thuộc tính nhãn cảnh báo đăng nhập thất bại (lblMessage)</i></p>
 
 ![Accessibility Insights - Ô nhập số A](<../demo-scripts/winappdriver/screen short/So_A.png>)
-<p class="figure-caption"><b>Hình 5.7:</b> <i>Dò tìm thuộc tính AutomationId ô nhập số thứ nhất (txtNumA)</i></p>
+<p class="figure-caption"><b>Hình 18:</b> <i>Dò tìm thuộc tính AutomationId ô nhập số thứ nhất (txtNumA)</i></p>
 
 ![Accessibility Insights - Ô nhập số B](<../demo-scripts/winappdriver/screen short/So_B.png>)
-<p class="figure-caption"><b>Hình 5.8:</b> <i>Dò tìm thuộc tính AutomationId ô nhập số thứ hai (txtNumB)</i></p>
+<p class="figure-caption"><b>Hình 19:</b> <i>Dò tìm thuộc tính AutomationId ô nhập số thứ hai (txtNumB)</i></p>
 
 ![Accessibility Insights - Trường tài khoản](<../demo-scripts/winappdriver/screen short/Tai_Khoan.png>)
-<p class="figure-caption"><b>Hình 5.9:</b> <i>Dò tìm thuộc tính AutomationId trường nhập tài khoản (txtUsername)</i></p>
+<p class="figure-caption"><b>Hình 20:</b> <i>Dò tìm thuộc tính AutomationId trường nhập tài khoản (txtUsername)</i></p>
 
 ![Accessibility Insights - Nút Tính tổng](<../demo-scripts/winappdriver/screen short/Tinh_Tong.png>)
-<p class="figure-caption"><b>Hình 5.10:</b> <i>Dò tìm thuộc tính AutomationId nút thực thi Tính tổng (btnCalculate)</i></p>
+<p class="figure-caption"><b>Hình 21:</b> <i>Dò tìm thuộc tính AutomationId nút thực thi Tính tổng (btnCalculate)</i></p>
 
 ### 7.3 Kết quả thực thi kiểm thử trên Terminal
 Sau khi xây dựng hoàn tất mã nguồn kiểm thử NUnit theo mô hình Page Object Model (POM), kịch bản được thực thi hoàn toàn tự động thông qua dòng lệnh `dotnet test`.
 
 ![Kết quả thực thi Test Pass trên Terminal](<../demo-scripts/winappdriver/screen short/test_pass_terminal.png>)
-<p class="figure-caption"><b>Hình 5.11:</b> <i>Kết quả thực thi toàn bộ kịch bản kiểm thử WinAppDriver thành công (100% Passed) trên Terminal</i></p>
+<p class="figure-caption"><b>Hình 22:</b> <i>Kết quả thực thi toàn bộ kịch bản kiểm thử WinAppDriver thành công (100% Passed) trên Terminal</i></p>
 
 ![Cơ chế bẫy lỗi và chụp ảnh tự động khi test fail](<../demo-scripts/winappdriver/screen short/image.png>)
-<p class="figure-caption"><b>Hình 5.12:</b> <i>Minh chứng cơ chế bắt ngoại lệ và chụp ảnh màn hình tự động lưu trữ khi phát hiện ca kiểm thử thất bại</i></p>
+<p class="figure-caption"><b>Hình 23:</b> <i>Minh chứng cơ chế bắt ngoại lệ và chụp ảnh màn hình tự động lưu trữ khi phát hiện ca kiểm thử thất bại</i></p>

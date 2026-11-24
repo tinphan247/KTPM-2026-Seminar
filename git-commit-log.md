@@ -1,11 +1,13 @@
 # NHẬT KÝ COMMIT LỊCH SỬ DỰ ÁN (GIT COMMIT LOG)
 
-- **Tổng số commits:** 82
+- **Tổng số commits:** 84
 - **Kho lưu trữ:** https://github.com/tinphan247/KTPM-2026-Seminar.git
 - **Ngày trích xuất:** 30/10/2026
 
 | Mã Hash | Người thực hiện | Thời gian | Thông điệp commit (Conventional Commits) |
 |:---:|---|:---:|---|
+| 2ed9994 | **tinphan247** | 2026-11-24 16:26 | docs(bai-tap): rewrite in-class 30m individual lab with GitHub repo paths and remove personal machine paths |
+| f2867dd | **tinphan247** | 2026-11-24 15:55 | docs(tin): refresh git-commit-log.md with 81 commits |
 | 859e77e | **tinphan247** | 2026-11-24 15:55 | docs(tung): add YouTube demo video link for WinAppDriver (Task T16) |
 | 3da82c9 | **tinphan247** | 2026-11-24 12:50 | docs(tin): refresh git-commit-log.md with 79 commits |
 | 9f5023f | **tinphan247** | 2026-11-24 12:50 | chore(tin): update contribution to 25% equal split across all 4 members and docs |

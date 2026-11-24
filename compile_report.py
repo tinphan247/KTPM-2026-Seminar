@@ -71,7 +71,7 @@ if os.path.exists(logo_path):
         logo_b64 = base64.b64encode(f.read()).decode('utf-8')
 
 header_md = """<div class="report-intro-box">
-<h1 style="page-break-before: avoid; margin-top: 0; text-align: center; font-size: 18pt;">BÁO CÁO TOÀN VĂN CHUYÊN ĐỀ SEMINAR<br><span style="font-size: 14pt; color: #000000;">AUTOMATION TESTING FOR DESKTOP APPLICATIONS</span></h1>
+<h1 style="page-break-before: avoid; margin-top: 0; text-align: center; font-size: 18pt;">BÁO CÁO TOÀN VĂN CHUYÊN ĐỀ SEMINAR<br><span style="font-size: 14pt; color: #1e3a8a;">AUTOMATION TESTING FOR DESKTOP APPLICATIONS</span></h1>
 <p style="text-align: center; font-style: italic; margin-top: 4px; margin-bottom: 18pt;">Tự Động Hóa Kiểm Thử Cho Ứng Dụng Desktop (Windows)</p>
 
 > **Môn học:** Software Testing (Kiểm thử phần mềm)  
@@ -117,7 +117,12 @@ p9 = """
 
 ## 9.2 Nhật ký đóng góp trên Git Commit Log
 - Hệ thống kho lưu trữ GitHub: `https://github.com/tinphan247/KTPM-2026-Seminar.git`
-- Toàn bộ quá trình làm việc, giải quyết lỗi, phát triển ứng dụng mẫu và tài liệu đều được commit liên tục, minh bạch. Chi tiết xem tại `git-commit-log.md`.
+- Toàn bộ quá trình làm việc, giải quyết lỗi, phát triển ứng dụng mẫu và tài liệu đều được commit liên tục, minh bạch:
+  - **Phan Trung Tín:** 27 commits chính thức trên Git log.
+  - **Trần Vũ Quang:** 17 commits chính thức trên Git log (PR #3).
+  - **Nguyễn Lê Quang Kan:** 14 commits chính thức trên Git log (PR #1).
+  - **Bùi Quang Tùng:** 4 commits chính thức trên Git log.
+  - Toàn bộ lịch sử commit chi tiết xem tại file `git-commit-log.md`.
 
 ## 9.3 Kê khai sử dụng Trí tuệ Nhân tạo (AI Usage Declaration)
 Theo quy định môn học, nhóm thực hiện kê khai minh bạch:
@@ -190,7 +195,7 @@ html_body = markdown.markdown(
     extensions=['tables', 'fenced_code', 'toc']
 )
 
-# Build Complete HTML matching HCMUS LaTeX Template with MONOCHROME (B&W) STYLING
+# Build Complete HTML matching HCMUS LaTeX Template
 html_full = f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -204,8 +209,7 @@ html_full = f"""<!DOCTYPE html>
         content: "Báo cáo Seminar";
         font-family: 'Times New Roman', Times, serif;
         font-size: 10pt;
-        color: #000000;
-        border-bottom: 0.5pt solid #000000;
+        border-bottom: 0.5pt solid black;
         vertical-align: bottom;
         padding-bottom: 2mm;
     }}
@@ -214,17 +218,15 @@ html_full = f"""<!DOCTYPE html>
         white-space: pre-line;
         font-family: 'Times New Roman', Times, serif;
         font-size: 10pt;
-        color: #000000;
         text-align: right;
-        border-bottom: 0.5pt solid #000000;
+        border-bottom: 0.5pt solid black;
         vertical-align: bottom;
         padding-bottom: 2mm;
     }}
     @bottom-left {{
-        content: "Nhóm 02 · Automation Testing for Desktop Applications";
+        content: "LaTeX by Nhóm 02";
         font-family: 'Times New Roman', Times, serif;
         font-size: 10pt;
-        color: #000000;
         vertical-align: top;
         padding-top: 2.5mm;
     }}
@@ -232,7 +234,6 @@ html_full = f"""<!DOCTYPE html>
         content: "Trang " counter(page);
         font-family: 'Times New Roman', Times, serif;
         font-size: 10pt;
-        color: #000000;
         vertical-align: top;
         padding-top: 2.5mm;
     }}
@@ -250,7 +251,7 @@ body {{
     font-family: 'Times New Roman', Times, serif;
     font-size: 11pt;
     line-height: 1.5;
-    color: #000000;
+    color: #000;
     margin: 0;
     padding: 0;
 }}
@@ -277,33 +278,29 @@ body {{
     font-weight: normal;
     letter-spacing: 0.5px;
     margin: 0;
-    color: #000000;
 }}
 .univ-line2 {{
     font-size: 13pt;
     font-weight: bold;
     letter-spacing: 0.5px;
     margin: 4px 0 0 0;
-    color: #000000;
 }}
 .univ-line3 {{
     font-size: 11.5pt;
     font-weight: bold;
     letter-spacing: 0.5px;
     margin: 10px 0 0 0;
-    color: #000000;
 }}
 .univ-line4 {{
     font-size: 10.5pt;
     font-weight: normal;
     letter-spacing: 0.5px;
     margin: 4px 0 0 0;
-    color: #000000;
 }}
 
 .cover-rule {{
     border: none;
-    border-top: 2.5px solid #000000;
+    border-top: 2.5px solid #000;
     width: 100%;
     margin: 35px 0 25px 0;
 }}
@@ -315,20 +312,17 @@ body {{
     font-size: 24pt;
     font-weight: bold;
     margin-bottom: 12px;
-    color: #000000;
 }}
 .cover-title-sub {{
     font-size: 16pt;
     font-weight: bold;
     line-height: 1.35;
-    color: #000000;
 }}
 
 .cover-course {{
     font-size: 13pt;
     font-weight: bold;
     margin: 15px 0 35px 0;
-    color: #000000;
 }}
 
 .cover-info-container {{
@@ -338,7 +332,6 @@ body {{
     margin: 0 auto 35px auto;
     font-size: 11.5pt;
     line-height: 1.8;
-    color: #000000;
 }}
 .info-col-left {{
     text-align: left;
@@ -356,7 +349,6 @@ body {{
 .cover-date {{
     font-size: 11pt;
     margin: 15px 0 25px 0;
-    color: #000000;
 }}
 
 .cover-logo-box {{
@@ -367,7 +359,6 @@ body {{
     width: 120px;
     height: auto;
     display: inline-block;
-    background: transparent !important;
 }}
 
 /* ========================================================
@@ -381,7 +372,6 @@ body {{
     font-weight: bold;
     margin: 0 0 14px 0;
     text-align: left;
-    color: #000000;
 }}
 .toc-entry {{
     display: flex;
@@ -389,7 +379,6 @@ body {{
     margin-bottom: 3.5px;
     font-size: 10.5pt;
     line-height: 1.32;
-    color: #000000;
 }}
 .toc-sec {{
     font-weight: bold;
@@ -400,7 +389,7 @@ body {{
     font-size: 10pt;
 }}
 .toc-num {{
-    color: #000000;
+    color: #002d9c;
     min-width: 30px;
     font-weight: bold;
 }}
@@ -410,18 +399,16 @@ body {{
 }}
 .toc-text {{
     flex-shrink: 0;
-    color: #000000;
 }}
 .toc-dots {{
     flex-grow: 1;
-    border-bottom: 1.2pt dotted #444444;
+    border-bottom: 1.2pt dotted #444;
     margin: 0 6px 3px 6px;
     height: 1em;
 }}
 .toc-page {{
     min-width: 20px;
     text-align: right;
-    color: #000000;
 }}
 .toc-sec .toc-page {{
     font-weight: bold;
@@ -435,12 +422,12 @@ body {{
 }}
 
 /* ========================================================
-   BODY CONTENT (LATEX MONOCHROME REPORT STYLING)
+   BODY CONTENT (LATEX REPORT STYLING)
    ======================================================== */
 h1 {{
     font-size: 17pt;
     font-weight: bold;
-    color: #000000;
+    color: #000;
     margin-top: 26pt;
     margin-bottom: 12pt;
     border: none;
@@ -454,7 +441,7 @@ h1 {{
 h2 {{
     font-size: 13.5pt;
     font-weight: bold;
-    color: #000000;
+    color: #000;
     margin-top: 18pt;
     margin-bottom: 8pt;
     border: none;
@@ -464,7 +451,7 @@ h2 {{
 h3 {{
     font-size: 11.5pt;
     font-weight: bold;
-    color: #000000;
+    color: #000;
     margin-top: 14pt;
     margin-bottom: 6pt;
     border: none;
@@ -476,33 +463,26 @@ p, li {{
     text-justify: inter-word;
     margin-bottom: 8pt;
     line-height: 1.5;
-    color: #000000;
-}}
-
-a {{
-    color: #000000;
-    text-decoration: none;
 }}
 
 table {{
     width: 100%;
     border-collapse: collapse;
-    margin: 14pt auto 4pt auto;
+    margin: 14pt auto;
     font-size: 9.5pt;
-    border: 1px solid #000000;
+    border: 1px solid black;
     page-break-inside: avoid;
 }}
 th, td {{
-    border: 0.5pt solid #000000;
+    border: 0.5pt solid black;
     padding: 6px 8px;
     text-align: left;
     vertical-align: top;
-    color: #000000;
 }}
 th {{
-    background-color: #f2f2f2;
+    background-color: #f7f7f7;
     font-weight: bold;
-    color: #000000;
+    color: #000;
 }}
 tr:nth-child(even) {{
     background-color: #fafafa;
@@ -511,11 +491,10 @@ tr:nth-child(even) {{
 pre, code {{
     font-family: 'Consolas', 'Courier New', monospace;
     font-size: 8.5pt;
-    color: #000000;
 }}
 pre {{
-    background-color: #f9f9f9;
-    border: 0.5pt solid #cccccc;
+    background-color: #f8f9fa;
+    border: 0.5pt solid #d1d5db;
     border-radius: 2px;
     padding: 10px 12px;
     overflow-x: auto;
@@ -524,7 +503,7 @@ pre {{
     margin: 12pt 0;
 }}
 code {{
-    background-color: #f2f2f2;
+    background-color: #f1f5f9;
     padding: 1px 4px;
     border-radius: 2px;
 }}
@@ -537,10 +516,9 @@ img {{
     max-width: 90%;
     height: auto;
     display: block;
-    margin: 12pt auto 4pt auto;
-    border: 0.5pt solid #aaaaaa;
+    margin: 12pt auto;
+    border: 0.5pt solid #cbd5e1;
     page-break-inside: avoid;
-    background: transparent;
 }}
 
 .table-caption, .figure-caption {{
@@ -550,26 +528,26 @@ img {{
     margin-top: 4pt;
     margin-bottom: 14pt;
     page-break-before: avoid;
-    color: #000000;
+    color: #1e293b;
 }}
 .table-caption b, .figure-caption b {{
     font-style: normal;
     font-weight: bold;
-    color: #000000;
+    color: #000;
 }}
 
 blockquote {{
-    border-left: 2.5pt solid #000000;
+    border-left: 2.5pt solid #2563eb;
     margin: 12pt 0;
     padding: 6pt 12pt;
-    background-color: #f7f7f7;
-    color: #000000;
+    background-color: #f8fafc;
+    color: #1e293b;
     font-size: 10pt;
 }}
 
 hr {{
     border: 0;
-    border-top: 0.5pt solid #888888;
+    border-top: 0.5pt solid #cbd5e1;
     margin: 20pt 0;
 }}
 </style>
@@ -891,147 +869,69 @@ hr {{
 
     <div class="toc-entry">
         <span class="toc-num">1</span>
-        <span class="toc-text">Sơ đồ kiến trúc kiểm thử tự động ứng dụng Desktop (Mermaid Flowchart)</span>
+        <span class="toc-text">Sơ đồ kiến trúc kiểm thử tự động ứng dụng Desktop</span>
         <span class="toc-dots"></span>
         <span class="toc-page">4</span>
     </div>
     <div class="toc-entry">
         <span class="toc-num">2</span>
-        <span class="toc-text">Giao diện màn hình Đăng nhập của ứng dụng mẫu thực nghiệm MiniSum</span>
+        <span class="toc-text">Quy trình Record & Playback và cơ chế ánh xạ phần tử Windows UIA</span>
         <span class="toc-dots"></span>
-        <span class="toc-page">8</span>
+        <span class="toc-page">6</span>
     </div>
     <div class="toc-entry">
         <span class="toc-num">3</span>
-        <span class="toc-text">Giao diện chức năng Tính tổng và lưu vết lịch sử trên ứng dụng MiniSum v2</span>
+        <span class="toc-text">Mô hình thiết kế kiểm thử Page Object Model (POM) cho ứng dụng Desktop</span>
         <span class="toc-dots"></span>
         <span class="toc-page">8</span>
     </div>
     <div class="toc-entry">
         <span class="toc-num">4</span>
-        <span class="toc-text">Quy trình ghi nhận và phát lại hành vi tương tác giao diện Record & Playback (Mermaid Flowchart)</span>
+        <span class="toc-text">Giao diện ứng dụng mẫu MiniSum (Màn hình Đăng nhập và Màn hình Tính tổng)</span>
         <span class="toc-dots"></span>
-        <span class="toc-page">9</span>
+        <span class="toc-page">10</span>
     </div>
     <div class="toc-entry">
         <span class="toc-num">5</span>
-        <span class="toc-text">Mô hình thiết kế kiểm thử Page Object Model (POM) cho ứng dụng Desktop (Mermaid Flowchart)</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">11</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">6</span>
-        <span class="toc-text">Giao diện làm việc và cấu trúc thư mục dự án kiểm thử trong Katalon Studio</span>
+        <span class="toc-text">Không gian làm việc và Object Repository trong Katalon Studio</span>
         <span class="toc-dots"></span>
         <span class="toc-page">17</span>
     </div>
     <div class="toc-entry">
-        <span class="toc-num">7</span>
-        <span class="toc-text">Kho đối tượng Object Repository lưu trữ định vị phần tử ứng dụng MiniSum</span>
+        <span class="toc-num">6</span>
+        <span class="toc-text">Thực thi kịch bản Record & Playback và xác minh Checkpoint trên Katalon Studio</span>
         <span class="toc-dots"></span>
-        <span class="toc-page">18</span>
+        <span class="toc-page">19</span>
+    </div>
+    <div class="toc-entry">
+        <span class="toc-num">7</span>
+        <span class="toc-text">Báo cáo HTML Report kết quả thực thi kiểm thử trên Katalon Studio</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">21</span>
     </div>
     <div class="toc-entry">
         <span class="toc-num">8</span>
-        <span class="toc-text">Khởi chạy ứng dụng MiniSum thông qua trình điều khiển Windows Driver trên Katalon Studio</span>
+        <span class="toc-text">Kiến trúc điều khiển của WinAppDriver và Windows Application Driver</span>
         <span class="toc-dots"></span>
-        <span class="toc-page">20</span>
+        <span class="toc-page">24</span>
     </div>
     <div class="toc-entry">
         <span class="toc-num">9</span>
-        <span class="toc-text">Thực thi kịch bản kiểm thử đăng nhập và xác minh Checkpoint nhãn thông báo thành công</span>
+        <span class="toc-text">Mã nguồn kịch bản C# NUnit POM và cây thực thi Test Explorer</span>
         <span class="toc-dots"></span>
-        <span class="toc-page">20</span>
+        <span class="toc-page">27</span>
     </div>
     <div class="toc-entry">
         <span class="toc-num">10</span>
-        <span class="toc-text">Thiết lập liên kết dữ liệu kiểm thử giá trị biên (BVA) từ file Excel vào Test Suite</span>
+        <span class="toc-text">Quy trình Prompt Engineering 2 pha ứng dụng AI trong Desktop Automation</span>
         <span class="toc-dots"></span>
-        <span class="toc-page">21</span>
+        <span class="toc-page">37</span>
     </div>
     <div class="toc-entry">
         <span class="toc-num">11</span>
-        <span class="toc-text">Báo cáo HTML Report trực quan kết quả thực thi kiểm thử tự động trên Katalon Studio</span>
+        <span class="toc-text">Biểu đồ so sánh thời gian phát triển kịch bản kiểm thử giữa 3 phương pháp</span>
         <span class="toc-dots"></span>
-        <span class="toc-page">21</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">12</span>
-        <span class="toc-text">Cửa sổ Console khởi chạy dịch vụ Microsoft WinAppDriver tại cổng 4723</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">25</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">13</span>
-        <span class="toc-text">Dò tìm thuộc tính AutomationId các phần tử trên màn hình Đăng nhập bằng Accessibility Insights</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">26</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">14</span>
-        <span class="toc-text">Dò tìm thuộc tính và AutomationId của nút Đăng xuất (btnLogout)</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">26</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">15</span>
-        <span class="toc-text">Dò tìm thuộc tính AutomationId ô hiển thị kết quả tính toán (lblResult)</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">26</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">16</span>
-        <span class="toc-text">Dò tìm thuộc tính AutomationId trường nhập mật khẩu (txtPassword)</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">27</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">17</span>
-        <span class="toc-text">Dò tìm thuộc tính nhãn cảnh báo đăng nhập thất bại (lblMessage)</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">27</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">18</span>
-        <span class="toc-text">Dò tìm thuộc tính AutomationId ô nhập số thứ nhất (txtNumA)</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">27</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">19</span>
-        <span class="toc-text">Dò tìm thuộc tính AutomationId ô nhập số thứ hai (txtNumB)</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">27</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">20</span>
-        <span class="toc-text">Dò tìm thuộc tính AutomationId trường nhập tài khoản (txtUsername)</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">28</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">21</span>
-        <span class="toc-text">Dò tìm thuộc tính AutomationId nút thực thi Tính tổng (btnCalculate)</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">28</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">22</span>
-        <span class="toc-text">Kết quả thực thi toàn bộ kịch bản kiểm thử WinAppDriver thành công (100% Passed) trên Terminal</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">29</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">23</span>
-        <span class="toc-text">Minh chứng cơ chế bắt ngoại lệ và chụp ảnh màn hình tự động lưu trữ khi phát hiện ca kiểm thử thất bại</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">29</span>
-    </div>
-    <div class="toc-entry">
-        <span class="toc-num">24</span>
-        <span class="toc-text">Sơ đồ quy trình Prompt Engineering 2 pha ứng dụng AI trong kiểm thử thực tế (Mermaid Flowchart)</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">38</span>
+        <span class="toc-page">40</span>
     </div>
 </div>
 

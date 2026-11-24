@@ -19,13 +19,20 @@ $\longrightarrow$ **Trí tuệ nhân tạo (AI)**, bao gồm Machine Learning, C
 
 ## 2. Năm (5) Hướng Ứng Dụng AI Trọng Tâm Trong Desktop Automation
 
-Năm hướng ứng dụng AI trọng tâm trong kiểm thử tự động Desktop bao gồm:
-
-1. **AI Tự phục hồi Selector (Self-Healing Locators):** Tự động phát hiện và bù đắp các định danh giao diện bị đứt gãy khi ứng dụng cập nhật.
-2. **Kiểm thử trực quan (Visual AI Testing):** Ứng dụng thị giác máy tính (Computer Vision) để so khớp giao diện pixel và nhận diện lệch bố cục đồ họa.
-3. **AI Sinh kịch bản kiểm thử (Test Script Generation):** Sử dụng các mô hình ngôn ngữ lớn (LLM) để sinh mã nguồn kịch bản kiểm thử tự động từ tài liệu đặc tả.
-4. **AI Sinh dữ liệu kiểm thử (Synthetic Test Data Generation):** Sinh các bộ dữ liệu kiểm thử biên (BVA) và dữ liệu phức tạp tự động phục vụ Data-Driven Testing.
-5. **Phân tích nguyên nhân lỗi tự động (Root Cause Analysis):** Đọc log ngoại lệ, stack trace và đưa ra khuyến nghị sửa lỗi nhanh chóng.
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│             5 HƯỚNG ỨNG DỤNG AI TRONG DESKTOP AUTOMATION               │
+├───────────────────────────────────┬────────────────────────────────────┤
+│ 1. AI Tự phục hồi Selector       │ 2. Kiểm thử trực quan (Visual AI)  │
+│    (Self-Healing Locators)        │    (Computer Vision / OpenCV)      │
+├───────────────────────────────────┼────────────────────────────────────┤
+│ 3. AI Sinh kịch bản kiểm thử     │ 4. AI Sinh dữ liệu kiểm thử        │
+│    (Test Script Generation)       │    (Synthetic Test Data)           │
+├───────────────────────────────────┴────────────────────────────────────┤
+│ 5. Phân tích nguyên nhân lỗi tự động (Root Cause Analysis)             │
+└────────────────────────────────────────────────────────────────────────┘
+```
+<p class="figure-caption"><b>Hình 7.1:</b> <i>Sơ đồ 5 hướng ứng dụng AI trọng tâm trong Desktop Automation</i></p>
 
 ### 2.1 Tự phục hồi phần tử định vị (AI-powered Self-Healing Locators)
 * **Vấn đề giải quyết:** Khắc phục tình trạng script bị gãy khi lập trình viên đổi tên ID, thay đổi cấu trúc cây giao diện hoặc cập nhật phiên bản app mới.
@@ -84,8 +91,20 @@ Năm hướng ứng dụng AI trọng tâm trong kiểm thử tự động Deskt
 
 Nhóm 02 đã hiện thực hóa toàn bộ các định hướng lý thuyết thành **2 chuỗi thực nghiệm thực tế** trên ứng dụng MiniSum:
 
-![Sơ đồ quy trình Prompt Engineering 2 pha ứng dụng AI](images/diagram_04_ai_prompt_engineering.png)
-<p class="figure-caption"><b>Hình 24:</b> <i>Sơ đồ quy trình Prompt Engineering 2 pha ứng dụng AI trong kiểm thử thực tế</i></p>
+```
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                   CHUỖI THỰC NGHIỆM AI AUTOMATION CỦA NHÓM                       │
+├──────────────────────────────────────────────────────────────────────────────────┤
+│ [AI DEMO 1: SINH TEST CASE & DỮ LIỆU BVA]                                        │
+│   Tài liệu đặc tả               Prompt Few-Shot              12 Test Cases BVA   │
+│ (minisum-spec.md)   ───────► (testcase-bva-prompt.md) ───────► (bva-testcases.xlsx)│
+├──────────────────────────────────────────────────────────────────────────────────┤
+│ [AI DEMO 2: SINH MÃ NGUỒN C# NUNIT & XÁC MINH TRÊN WINAPPDRIVER]                 │
+│   Prompt kiến trúc POM          Script C# GenAI              Xác minh chạy PASS  │
+│ (script-gen-prompt.md) ───► (chatgpt-script-output.cs) ───► (verified-script.cs)│
+└──────────────────────────────────────────────────────────────────────────────────┘
+```
+<p class="figure-caption"><b>Hình 7.2:</b> <i>Chuỗi thực nghiệm AI Automation của Nhóm 02 trên ứng dụng mẫu MiniSum</i></p>
 
 ### 4.1 AI Demo 1: Tự động hóa thiết kế ca kiểm thử hộp đen BVA
 * **Đầu vào:** Đặc tả kỹ thuật chi tiết tại [`ai/prompts/minisum-spec.md`](../ai/prompts/minisum-spec.md) mô tả quy tắc hai màn hình và miền giới hạn $[-99, 99]$.

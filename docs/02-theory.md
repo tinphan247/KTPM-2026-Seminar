@@ -68,8 +68,20 @@
 
 **Automation Testing** (Kiểm thử tự động) là quá trình áp dụng các công cụ phần mềm chuyên dụng nhằm thực thi tự động các kịch bản kiểm thử (test cases), tự động nhập dữ liệu đầu vào, tương tác với giao diện người dùng hoặc tầng API, và so sánh kết quả thực tế (actual results) với kết quả kỳ vọng (expected results) mà không cần sự can thiệp thủ công của con người trong quá trình chạy.
 
-![Sơ đồ kiến trúc kiểm thử tự động Desktop](images/diagram_01_architecture.png)
-<p class="figure-caption"><b>Hình 1:</b> <i>Sơ đồ kiến trúc tổng quan của hệ thống kiểm thử tự động ứng dụng Desktop</i></p>
+```
+┌──────────────┐    Kịch bản kiểm thử    ┌──────────────────┐
+│   Tester     │ ──────────────────────► │  Automation Tool │
+│  (Thiết kế,  │                         │  (Thực thi test) │
+│   Phân tích) │ ◄────────────────────── │                  │
+└──────────────┘      Báo cáo kết quả    └────────┬─────────┘
+                                                  │ Tương tác
+                                                  ▼
+                                         ┌──────────────────┐
+                                         │  Ứng dụng cần    │
+                                         │  kiểm thử (AUT)  │
+                                         └──────────────────┘
+```
+<p class="figure-caption"><b>Hình 2.1:</b> <i>Sơ đồ tương tác giữa kịch bản kiểm thử và hệ thống phần mềm (AUT)</i></p>
 
 > **Lưu ý:** Kiểm thử tự động không nhằm mục đích thay thế hoàn toàn con người. Tester vẫn giữ vai trò quyết định trong việc xây dựng chiến lược kiểm thử, thiết kế kịch bản kiểm thử biên/ngoại lệ, phân tích nguyên nhân lỗi và bảo trì bộ kịch bản tự động.
 
@@ -171,8 +183,28 @@ và sinh mã kịch bản
 
 ### 4.2 Luồng hoạt động
 
-![Quy trình Record và Playback](images/diagram_02_record_playback.png)
-<p class="figure-caption"><b>Hình 4:</b> <i>Quy trình chi tiết ghi nhận và phát lại hành vi tương tác giao diện Record & Playback</i></p>
+```
+[Bắt đầu quá trình Record]
+            │
+            ▼
+[Tester thao tác các bước kiểm thử trên AUT]
+            │
+            ▼
+[Công cụ bắt sự kiện: Control Name, AutomationId, Tọa độ, Thao tác nhập]
+            │
+            ▼
+[Công cụ tự động sinh mã kịch bản (C#, Python, Groovy, VBScript...)]
+            │
+            ▼
+[Tester bổ sung các Checkpoint / Assertion và tối ưu hóa selector]
+            │
+            ▼
+[Chạy Playback: Công cụ điều khiển AUT và đối chiếu kết quả]
+            │
+            ▼
+[Xuất báo cáo kết quả kiểm thử (Thành công / Thất bại)]
+```
+<p class="figure-caption"><b>Hình 2.4:</b> <i>Quy trình chi tiết ghi nhận và phát lại hành vi tương tác giao diện (Record & Playback)</i></p>
 
 ### 4.3 Ưu điểm & Nhược điểm
 
@@ -301,18 +333,31 @@ Bảng dữ liệu đầu vào (tập tin `login_dataset.xlsx`):
 
 Kịch bản kiểm thử **không thao tác trực tiếp lên control**, mà gọi các phương thức nghiệp vụ do page object cung cấp. Nhờ vậy khi giao diện thay đổi, chỉ cần sửa **một chỗ** trong page object thay vì sửa toàn bộ kịch bản.
 
-![Mô hình thiết kế kiểm thử Page Object Model](images/diagram_03_pom_model.png)
-<p class="figure-caption"><b>Hình 5:</b> <i>Mô hình thiết kế kiểm thử phân lớp Page Object Model (POM) cho ứng dụng Desktop</i></p>
+```
+        Không dùng POM                        Dùng POM
+┌───────────────────────────┐        ┌───────────────────────────┐
+│ TC01_Login                │        │ TC01_Login                │
+│  find("txtUser").sendKeys│        │  loginPage.Login(u, p)    │
+│  find("txtPass").sendKeys│        │  Assert(lblMessage)       │
+│  find("btnLogin").click  │        └─────────────┬─────────────┘
+│  find("lblMessage")...   │                      │ gọi
+└───────────────────────────┘        ┌─────────────▼─────────────┐
+   Locator rải khắp test case        │ LoginPage                 │
+   → đổi UI phải sửa nhiều nơi       │  locator + Login()        │
+                                     └───────────────────────────┘
+                                        Locator tập trung một nơi
+```
+<p class="figure-caption"><b>Hình 2.5:</b> <i>So sánh giữa mô hình kiểm thử truyền thống và Page Object Model (POM)</i></p>
 
 ### 7.2 Ví dụ trên MiniSum
 
 Giả sử cần kiểm thử màn hình đăng nhập của `MiniSum.exe`.
 
 ![Giao diện màn hình Đăng nhập MiniSum](screenshots/app/login.png)
-<p class="figure-caption"><b>Hình 2:</b> <i>Giao diện màn hình Đăng nhập của ứng dụng mẫu thực nghiệm MiniSum</i></p>
+<p class="figure-caption"><b>Hình 2.2:</b> <i>Giao diện màn hình Đăng nhập của ứng dụng mẫu thực nghiệm MiniSum</i></p>
 
 ![Giao diện màn hình Tính tổng MiniSum](screenshots/app/calculator-v2.png)
-<p class="figure-caption"><b>Hình 3:</b> <i>Giao diện chức năng Tính tổng và lưu vết lịch sử trên ứng dụng MiniSum v2</i></p> Cách viết **không có POM** lặp lại locator trong từng test case:
+<p class="figure-caption"><b>Hình 2.3:</b> <i>Giao diện chức năng Tính tổng và lưu vết lịch sử trên ứng dụng MiniSum v2</i></p> Cách viết **không có POM** lặp lại locator trong từng test case:
 
 ```csharp
 // TC01 - lặp locator ngay trong test

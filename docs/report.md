@@ -1,5 +1,5 @@
 <div class="report-intro-box">
-<h1 style="page-break-before: avoid; margin-top: 0; text-align: center; font-size: 18pt;">BÁO CÁO TOÀN VĂN CHUYÊN ĐỀ SEMINAR<br><span style="font-size: 14pt; color: #000000;">AUTOMATION TESTING FOR DESKTOP APPLICATIONS</span></h1>
+<h1 style="page-break-before: avoid; margin-top: 0; text-align: center; font-size: 18pt;">BÁO CÁO TOÀN VĂN CHUYÊN ĐỀ SEMINAR<br><span style="font-size: 14pt; color: #1e3a8a;">AUTOMATION TESTING FOR DESKTOP APPLICATIONS</span></h1>
 <p style="text-align: center; font-style: italic; margin-top: 4px; margin-bottom: 18pt;">Tự Động Hóa Kiểm Thử Cho Ứng Dụng Desktop (Windows)</p>
 
 > **Môn học:** Software Testing (Kiểm thử phần mềm)  
@@ -51,13 +51,28 @@ Trong kỷ nguyên phát triển phần mềm theo các mô hình Agile/DevOps v
 
 ## 3. Mục tiêu seminar
 
-Chuyên đề Seminar tập trung vào 5 mục tiêu cốt lõi sau:
-
-1. **Làm chủ lý thuyết nền tảng:** Nắm vững các khái niệm, cơ chế điều khiển và kiến trúc của Automation Testing dành riêng cho môi trường Desktop Applications trên hệ điều hành Windows.
-2. **Khảo sát thị trường và thiết lập tiêu chí chuẩn:** Xây dựng bộ khung 10 tiêu chí đánh giá toàn diện nhằm so sánh khách quan giữa hai trường phái công cụ: Low-Code GUI (Katalon Studio) và Code-First SDK (Microsoft WinAppDriver).
-3. **Xây dựng kịch bản thực nghiệm và demo thực tế:** Triển khai 3 cấp độ demo trên cùng ứng dụng mẫu MiniSum (Cài đặt môi trường, Record & Playback kết hợp Checkpoint, và Data-Driven Testing với kỹ thuật phân tích giá trị biên BVA).
-4. **Nghiên cứu ứng dụng Trí tuệ Nhân tạo (AI):** Khai thác Prompt Engineering 2 pha để tự động hóa thiết kế test case biên và sinh mã nguồn C# NUnit Page Object Model hoàn chỉnh.
-5. **Thiết kế bài tập thực hành ứng dụng:** Xây dựng bài lab cá nhân 30 phút trực quan, độc lập, thao tác trực tiếp trên mã nguồn clone từ GitHub.
+```
+┌─────────────────────────────────────────────────────────┐
+│              MỤC TIÊU CỐT LÕI CỦA SEMINAR               │
+│                                                         │
+│  1. Làm chủ lý thuyết nền tảng về Automation Testing    │
+│     dành riêng cho môi trường Desktop Applications      │
+│                                                         │
+│  2. Khảo sát thị trường và thiết lập bộ tiêu chí chuẩn  │
+│     nhằm đánh giá, so sánh 2 công cụ đại diện           │
+│                                                         │
+│  3. Xây dựng kịch bản thực nghiệm và demo thực tế:      │
+│     - Quy trình cài đặt môi trường                      │
+│     - Kịch bản kiểm thử cơ bản (Record & Playback, DDT) │
+│     - Kịch bản workflow phức tạp                        │
+│                                                         │
+│  4. Nghiên cứu tiềm năng ứng dụng AI trong hỗ trợ       │
+│     tự động hóa kiểm thử desktop                        │
+│                                                         │
+│  5. Thiết kế bài tập thực hành ứng dụng cho lớp         │
+└─────────────────────────────────────────────────────────┘
+```
+<p class="figure-caption"><b>Hình 1.1:</b> <i>Sơ đồ mục tiêu cốt lõi của chuyên đề Seminar</i></p>
 
 ---
 
@@ -77,8 +92,20 @@ Chuyên đề Seminar tập trung vào 5 mục tiêu cốt lõi sau:
 
 **Automation Testing** (Kiểm thử tự động) là quá trình áp dụng các công cụ phần mềm chuyên dụng nhằm thực thi tự động các kịch bản kiểm thử (test cases), tự động nhập dữ liệu đầu vào, tương tác với giao diện người dùng hoặc tầng API, và so sánh kết quả thực tế (actual results) với kết quả kỳ vọng (expected results) mà không cần sự can thiệp thủ công của con người trong quá trình chạy.
 
-![Sơ đồ kiến trúc kiểm thử tự động Desktop](images/diagram_01_architecture.png)
-<p class="figure-caption"><b>Hình 1:</b> <i>Sơ đồ kiến trúc tổng quan của hệ thống kiểm thử tự động ứng dụng Desktop</i></p>
+```
+┌──────────────┐    Kịch bản kiểm thử    ┌──────────────────┐
+│   Tester     │ ──────────────────────► │  Automation Tool │
+│  (Thiết kế,  │                         │  (Thực thi test) │
+│   Phân tích) │ ◄────────────────────── │                  │
+└──────────────┘      Báo cáo kết quả    └────────┬─────────┘
+                                                  │ Tương tác
+                                                  ▼
+                                         ┌──────────────────┐
+                                         │  Ứng dụng cần    │
+                                         │  kiểm thử (AUT)  │
+                                         └──────────────────┘
+```
+<p class="figure-caption"><b>Hình 2.1:</b> <i>Sơ đồ tương tác giữa kịch bản kiểm thử và hệ thống phần mềm (AUT)</i></p>
 
 > **Lưu ý:** Kiểm thử tự động không nhằm mục đích thay thế hoàn toàn con người. Tester vẫn giữ vai trò quyết định trong việc xây dựng chiến lược kiểm thử, thiết kế kịch bản kiểm thử biên/ngoại lệ, phân tích nguyên nhân lỗi và bảo trì bộ kịch bản tự động.
 
@@ -180,8 +207,28 @@ và sinh mã kịch bản
 
 ### 4.2 Luồng hoạt động
 
-![Quy trình Record và Playback](images/diagram_02_record_playback.png)
-<p class="figure-caption"><b>Hình 4:</b> <i>Quy trình chi tiết ghi nhận và phát lại hành vi tương tác giao diện Record & Playback</i></p>
+```
+[Bắt đầu quá trình Record]
+            │
+            ▼
+[Tester thao tác các bước kiểm thử trên AUT]
+            │
+            ▼
+[Công cụ bắt sự kiện: Control Name, AutomationId, Tọa độ, Thao tác nhập]
+            │
+            ▼
+[Công cụ tự động sinh mã kịch bản (C#, Python, Groovy, VBScript...)]
+            │
+            ▼
+[Tester bổ sung các Checkpoint / Assertion và tối ưu hóa selector]
+            │
+            ▼
+[Chạy Playback: Công cụ điều khiển AUT và đối chiếu kết quả]
+            │
+            ▼
+[Xuất báo cáo kết quả kiểm thử (Thành công / Thất bại)]
+```
+<p class="figure-caption"><b>Hình 2.4:</b> <i>Quy trình chi tiết ghi nhận và phát lại hành vi tương tác giao diện (Record & Playback)</i></p>
 
 ### 4.3 Ưu điểm & Nhược điểm
 
@@ -310,18 +357,31 @@ Bảng dữ liệu đầu vào (tập tin `login_dataset.xlsx`):
 
 Kịch bản kiểm thử **không thao tác trực tiếp lên control**, mà gọi các phương thức nghiệp vụ do page object cung cấp. Nhờ vậy khi giao diện thay đổi, chỉ cần sửa **một chỗ** trong page object thay vì sửa toàn bộ kịch bản.
 
-![Mô hình thiết kế kiểm thử Page Object Model](images/diagram_03_pom_model.png)
-<p class="figure-caption"><b>Hình 5:</b> <i>Mô hình thiết kế kiểm thử phân lớp Page Object Model (POM) cho ứng dụng Desktop</i></p>
+```
+        Không dùng POM                        Dùng POM
+┌───────────────────────────┐        ┌───────────────────────────┐
+│ TC01_Login                │        │ TC01_Login                │
+│  find("txtUser").sendKeys│        │  loginPage.Login(u, p)    │
+│  find("txtPass").sendKeys│        │  Assert(lblMessage)       │
+│  find("btnLogin").click  │        └─────────────┬─────────────┘
+│  find("lblMessage")...   │                      │ gọi
+└───────────────────────────┘        ┌─────────────▼─────────────┐
+   Locator rải khắp test case        │ LoginPage                 │
+   → đổi UI phải sửa nhiều nơi       │  locator + Login()        │
+                                     └───────────────────────────┘
+                                        Locator tập trung một nơi
+```
+<p class="figure-caption"><b>Hình 2.5:</b> <i>So sánh giữa mô hình kiểm thử truyền thống và Page Object Model (POM)</i></p>
 
 ### 7.2 Ví dụ trên MiniSum
 
 Giả sử cần kiểm thử màn hình đăng nhập của `MiniSum.exe`.
 
 ![Giao diện màn hình Đăng nhập MiniSum](screenshots/app/login.png)
-<p class="figure-caption"><b>Hình 2:</b> <i>Giao diện màn hình Đăng nhập của ứng dụng mẫu thực nghiệm MiniSum</i></p>
+<p class="figure-caption"><b>Hình 2.2:</b> <i>Giao diện màn hình Đăng nhập của ứng dụng mẫu thực nghiệm MiniSum</i></p>
 
 ![Giao diện màn hình Tính tổng MiniSum](screenshots/app/calculator-v2.png)
-<p class="figure-caption"><b>Hình 3:</b> <i>Giao diện chức năng Tính tổng và lưu vết lịch sử trên ứng dụng MiniSum v2</i></p> Cách viết **không có POM** lặp lại locator trong từng test case:
+<p class="figure-caption"><b>Hình 2.3:</b> <i>Giao diện chức năng Tính tổng và lưu vết lịch sử trên ứng dụng MiniSum v2</i></p> Cách viết **không có POM** lặp lại locator trong từng test case:
 
 ```csharp
 // TC01 - lặp locator ngay trong test
@@ -1128,7 +1188,7 @@ Nhằm đảm bảo tính khách quan và chiều sâu khoa học cho buổi sem
   * *Script View:* Chế độ code Groovy thuần, cho phép tùy biến logic, xử lý điều kiện, vòng lặp phức tạp.
 
 ![Không gian làm việc Katalon Studio](screenshots/katalon/01_katalon_project_explorer.jpg)
-<p class="figure-caption"><b>Hình 6:</b> <i>Giao diện làm việc và cấu trúc thư mục dự án kiểm thử trong Katalon Studio</i></p>
+<p class="figure-caption"><b>Hình 4.1:</b> <i>Giao diện làm việc và cấu trúc thư mục dự án kiểm thử trong Katalon Studio</i></p>
 
 ### 1.2 Lý do lựa chọn cho seminar
 1. **Chi phí 0 đồng:** Bản Free không giới hạn thời gian dùng thử (loại bỏ rủi ro hết hạn bản quyền trong quá trình học tập và báo cáo).
@@ -1244,7 +1304,7 @@ Trong quá trình triển khai thực tế trên ứng dụng mẫu WPF `MiniSum
   * Với Object Repository, tester chỉ cần cập nhật locator tại một file duy nhất trong kho lưu trữ, toàn bộ các Test Case liên quan sẽ tự động nhận diện theo thông số mới. Đây là sự hiện thực hóa triết lý **Page Object Model (POM)** ở mức công cụ không mã nguồn (Codeless/Low-code), giúp hạn chế nguyên lý *"Nghịch lý thuốc trừ sâu" (Pesticide Paradox)* khi kiểm thử tự động dài hạn.
 
 ![Object Repository trong Katalon Studio](screenshots/katalon/03_object_repository_minisum.jpg)
-<p class="figure-caption"><b>Hình 7:</b> <i>Kho đối tượng Object Repository lưu trữ định vị phần tử ứng dụng MiniSum</i></p>
+<p class="figure-caption"><b>Hình 4.2:</b> <i>Kho đối tượng Object Repository lưu trữ định vị phần tử ứng dụng MiniSum</i></p>
 
 #### 2.2.2 Cấu trúc lưu trữ nội bộ của Object Repository trên Desktop (.wrs)
 Khác với kiểm thử Web sử dụng định dạng file `.rs` (`WebElementEntity`), kiểm thử Windows Desktop trong Katalon Studio quy định cấu trúc đối tượng nghiêm ngặt:
@@ -1521,7 +1581,7 @@ graph TD
 ### 5.1 Demo 1: Cài đặt và chuẩn bị môi trường
 
 ![Khởi chạy MiniSum trong Katalon](screenshots/katalon/02_minisum_app_launched.jpg)
-<p class="figure-caption"><b>Hình 8:</b> <i>Khởi chạy ứng dụng MiniSum thông qua trình điều khiển Windows Driver trên Katalon Studio</i></p>
+<p class="figure-caption"><b>Hình 4.3:</b> <i>Khởi chạy ứng dụng MiniSum thông qua trình điều khiển Windows Driver trên Katalon Studio</i></p>
 * **Mục tiêu:** Chứng minh tính dễ tiếp cận và khả năng kết nối của công cụ.
 * **Các bước chính:**
   1. Kích hoạt *Developer Mode* trên Windows và khởi động `WinAppDriver.exe`.
@@ -1531,7 +1591,7 @@ graph TD
 ### 5.2 Demo 2: Thao tác cơ bản (Record & Playback + Checkpoint)
 
 ![Xác minh Checkpoint](screenshots/katalon/06_checkpoint_verification_pass.jpg)
-<p class="figure-caption"><b>Hình 9:</b> <i>Thực thi kịch bản kiểm thử đăng nhập và xác minh Checkpoint nhãn thông báo thành công</i></p>
+<p class="figure-caption"><b>Hình 4.4:</b> <i>Thực thi kịch bản kiểm thử đăng nhập và xác minh Checkpoint nhãn thông báo thành công</i></p>
 * **Mục tiêu:** Minh họa quy trình tự động hóa kịch bản kiểm thử chuẩn (ví dụ: Chức năng Đăng nhập).
 * **Các bước chính:**
   1. Dùng *Windows Recorder* ghi lại thao tác nhập tài khoản, mật khẩu và bấm Submit.
@@ -1542,10 +1602,10 @@ graph TD
 ### 5.3 Demo 3: Kịch bản nâng cao (Data-Driven BVA + Luồng nghiệp vụ)
 
 ![Liên kết dữ liệu kiểm thử biên BVA từ file Excel](screenshots/katalon/12_bva_test_suite_data_binding.jpg)
-<p class="figure-caption"><b>Hình 10:</b> <i>Thiết lập liên kết dữ liệu kiểm thử giá trị biên (BVA) từ file Excel vào Test Suite</i></p>
+<p class="figure-caption"><b>Hình 4.5:</b> <i>Thiết lập liên kết dữ liệu kiểm thử giá trị biên (BVA) từ file Excel vào Test Suite</i></p>
 
 ![Báo cáo HTML Report tổng quan](screenshots/katalon/15_katalon_html_report_overview.jpg)
-<p class="figure-caption"><b>Hình 11:</b> <i>Báo cáo HTML Report trực quan kết quả thực thi kiểm thử tự động trên Katalon Studio</i></p>
+<p class="figure-caption"><b>Hình 4.6:</b> <i>Báo cáo HTML Report trực quan kết quả thực thi kiểm thử tự động trên Katalon Studio</i></p>
 * **Mục tiêu:** Minh họa khả năng chạy kiểm thử tự động với dữ liệu lớn theo kỹ thuật phân tích giá trị biên.
 * **Các bước chính:**
   1. Chuẩn bị file Excel chứa tập dữ liệu biên (ví dụ: các giá trị biên hợp lệ và không hợp lệ của bài toán tính tổng 2 số nguyên).
@@ -1811,46 +1871,46 @@ public void CaptureScreenOnFailure()
 Quá trình kiểm thử bắt đầu bằng việc khởi chạy tiến trình `WinAppDriver.exe` dưới quyền quản trị (Administrator), sẵn sàng lắng nghe các lệnh HTTP RESTful tại cổng mặc định `4723`.
 
 ![Cửa sổ Console khởi chạy WinAppDriver](<../demo-scripts/winappdriver/screen short/winappdriver.png>)
-<p class="figure-caption"><b>Hình 12:</b> <i>Cửa sổ Console khởi chạy dịch vụ Microsoft WinAppDriver tại cổng 4723</i></p>
+<p class="figure-caption"><b>Hình 5.1:</b> <i>Cửa sổ Console khởi chạy dịch vụ Microsoft WinAppDriver tại cổng 4723</i></p>
 
 ### 7.2 Khảo sát phần tử giao diện bằng Accessibility Insights for Windows
 Nhóm sử dụng công cụ *Accessibility Insights for Windows* để bóc tách cây giao diện UI Automation (UIA) và trích xuất các thuộc tính định danh `AutomationId` đáng tin cậy của ứng dụng `MiniSum.exe`:
 
 ![Accessibility Insights - Màn hình Đăng nhập](<../demo-scripts/winappdriver/screen short/DANG_NHAP.png>)
-<p class="figure-caption"><b>Hình 13:</b> <i>Dò tìm thuộc tính AutomationId các phần tử trên màn hình Đăng nhập bằng Accessibility Insights</i></p>
+<p class="figure-caption"><b>Hình 5.2:</b> <i>Dò tìm thuộc tính AutomationId các phần tử trên màn hình Đăng nhập bằng Accessibility Insights</i></p>
 
 ![Accessibility Insights - Nút Đăng xuất](<../demo-scripts/winappdriver/screen short/DANG_XUAT.png>)
-<p class="figure-caption"><b>Hình 14:</b> <i>Dò tìm thuộc tính và AutomationId của nút Đăng xuất (btnLogout)</i></p>
+<p class="figure-caption"><b>Hình 5.3:</b> <i>Dò tìm thuộc tính và AutomationId của nút Đăng xuất (btnLogout)</i></p>
 
 ![Accessibility Insights - Ô hiển thị kết quả](<../demo-scripts/winappdriver/screen short/ketqua.png>)
-<p class="figure-caption"><b>Hình 15:</b> <i>Dò tìm thuộc tính AutomationId ô hiển thị kết quả tính toán (lblResult)</i></p>
+<p class="figure-caption"><b>Hình 5.4:</b> <i>Dò tìm thuộc tính AutomationId ô hiển thị kết quả tính toán (lblResult)</i></p>
 
 ![Accessibility Insights - Trường nhập Mật khẩu](<../demo-scripts/winappdriver/screen short/Mat_Khau.png>)
-<p class="figure-caption"><b>Hình 16:</b> <i>Dò tìm thuộc tính AutomationId trường nhập mật khẩu (txtPassword)</i></p>
+<p class="figure-caption"><b>Hình 5.5:</b> <i>Dò tìm thuộc tính AutomationId trường nhập mật khẩu (txtPassword)</i></p>
 
 ![Accessibility Insights - Thông báo sai đăng nhập](<../demo-scripts/winappdriver/screen short/Sai_tai_khoan_hoac_mat_khau.png>)
-<p class="figure-caption"><b>Hình 17:</b> <i>Dò tìm thuộc tính nhãn cảnh báo đăng nhập thất bại (lblMessage)</i></p>
+<p class="figure-caption"><b>Hình 5.6:</b> <i>Dò tìm thuộc tính nhãn cảnh báo đăng nhập thất bại (lblMessage)</i></p>
 
 ![Accessibility Insights - Ô nhập số A](<../demo-scripts/winappdriver/screen short/So_A.png>)
-<p class="figure-caption"><b>Hình 18:</b> <i>Dò tìm thuộc tính AutomationId ô nhập số thứ nhất (txtNumA)</i></p>
+<p class="figure-caption"><b>Hình 5.7:</b> <i>Dò tìm thuộc tính AutomationId ô nhập số thứ nhất (txtNumA)</i></p>
 
 ![Accessibility Insights - Ô nhập số B](<../demo-scripts/winappdriver/screen short/So_B.png>)
-<p class="figure-caption"><b>Hình 19:</b> <i>Dò tìm thuộc tính AutomationId ô nhập số thứ hai (txtNumB)</i></p>
+<p class="figure-caption"><b>Hình 5.8:</b> <i>Dò tìm thuộc tính AutomationId ô nhập số thứ hai (txtNumB)</i></p>
 
 ![Accessibility Insights - Trường tài khoản](<../demo-scripts/winappdriver/screen short/Tai_Khoan.png>)
-<p class="figure-caption"><b>Hình 20:</b> <i>Dò tìm thuộc tính AutomationId trường nhập tài khoản (txtUsername)</i></p>
+<p class="figure-caption"><b>Hình 5.9:</b> <i>Dò tìm thuộc tính AutomationId trường nhập tài khoản (txtUsername)</i></p>
 
 ![Accessibility Insights - Nút Tính tổng](<../demo-scripts/winappdriver/screen short/Tinh_Tong.png>)
-<p class="figure-caption"><b>Hình 21:</b> <i>Dò tìm thuộc tính AutomationId nút thực thi Tính tổng (btnCalculate)</i></p>
+<p class="figure-caption"><b>Hình 5.10:</b> <i>Dò tìm thuộc tính AutomationId nút thực thi Tính tổng (btnCalculate)</i></p>
 
 ### 7.3 Kết quả thực thi kiểm thử trên Terminal
 Sau khi xây dựng hoàn tất mã nguồn kiểm thử NUnit theo mô hình Page Object Model (POM), kịch bản được thực thi hoàn toàn tự động thông qua dòng lệnh `dotnet test`.
 
 ![Kết quả thực thi Test Pass trên Terminal](<../demo-scripts/winappdriver/screen short/test_pass_terminal.png>)
-<p class="figure-caption"><b>Hình 22:</b> <i>Kết quả thực thi toàn bộ kịch bản kiểm thử WinAppDriver thành công (100% Passed) trên Terminal</i></p>
+<p class="figure-caption"><b>Hình 5.11:</b> <i>Kết quả thực thi toàn bộ kịch bản kiểm thử WinAppDriver thành công (100% Passed) trên Terminal</i></p>
 
 ![Cơ chế bẫy lỗi và chụp ảnh tự động khi test fail](<../demo-scripts/winappdriver/screen short/image.png>)
-<p class="figure-caption"><b>Hình 23:</b> <i>Minh chứng cơ chế bắt ngoại lệ và chụp ảnh màn hình tự động lưu trữ khi phát hiện ca kiểm thử thất bại</i></p>
+<p class="figure-caption"><b>Hình 5.12:</b> <i>Minh chứng cơ chế bắt ngoại lệ và chụp ảnh màn hình tự động lưu trữ khi phát hiện ca kiểm thử thất bại</i></p>
 
 
 # 6. So Sánh Đối Chiếu Toàn Diện (Comparison) <a id="phan-6"></a>
@@ -2025,13 +2085,20 @@ $\longrightarrow$ **Trí tuệ nhân tạo (AI)**, bao gồm Machine Learning, C
 
 ## 2. Năm (5) Hướng Ứng Dụng AI Trọng Tâm Trong Desktop Automation
 
-Năm hướng ứng dụng AI trọng tâm trong kiểm thử tự động Desktop bao gồm:
-
-1. **AI Tự phục hồi Selector (Self-Healing Locators):** Tự động phát hiện và bù đắp các định danh giao diện bị đứt gãy khi ứng dụng cập nhật.
-2. **Kiểm thử trực quan (Visual AI Testing):** Ứng dụng thị giác máy tính (Computer Vision) để so khớp giao diện pixel và nhận diện lệch bố cục đồ họa.
-3. **AI Sinh kịch bản kiểm thử (Test Script Generation):** Sử dụng các mô hình ngôn ngữ lớn (LLM) để sinh mã nguồn kịch bản kiểm thử tự động từ tài liệu đặc tả.
-4. **AI Sinh dữ liệu kiểm thử (Synthetic Test Data Generation):** Sinh các bộ dữ liệu kiểm thử biên (BVA) và dữ liệu phức tạp tự động phục vụ Data-Driven Testing.
-5. **Phân tích nguyên nhân lỗi tự động (Root Cause Analysis):** Đọc log ngoại lệ, stack trace và đưa ra khuyến nghị sửa lỗi nhanh chóng.
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│             5 HƯỚNG ỨNG DỤNG AI TRONG DESKTOP AUTOMATION               │
+├───────────────────────────────────┬────────────────────────────────────┤
+│ 1. AI Tự phục hồi Selector       │ 2. Kiểm thử trực quan (Visual AI)  │
+│    (Self-Healing Locators)        │    (Computer Vision / OpenCV)      │
+├───────────────────────────────────┼────────────────────────────────────┤
+│ 3. AI Sinh kịch bản kiểm thử     │ 4. AI Sinh dữ liệu kiểm thử        │
+│    (Test Script Generation)       │    (Synthetic Test Data)           │
+├───────────────────────────────────┴────────────────────────────────────┤
+│ 5. Phân tích nguyên nhân lỗi tự động (Root Cause Analysis)             │
+└────────────────────────────────────────────────────────────────────────┘
+```
+<p class="figure-caption"><b>Hình 7.1:</b> <i>Sơ đồ 5 hướng ứng dụng AI trọng tâm trong Desktop Automation</i></p>
 
 ### 2.1 Tự phục hồi phần tử định vị (AI-powered Self-Healing Locators)
 * **Vấn đề giải quyết:** Khắc phục tình trạng script bị gãy khi lập trình viên đổi tên ID, thay đổi cấu trúc cây giao diện hoặc cập nhật phiên bản app mới.
@@ -2090,8 +2157,20 @@ Năm hướng ứng dụng AI trọng tâm trong kiểm thử tự động Deskt
 
 Nhóm 02 đã hiện thực hóa toàn bộ các định hướng lý thuyết thành **2 chuỗi thực nghiệm thực tế** trên ứng dụng MiniSum:
 
-![Sơ đồ quy trình Prompt Engineering 2 pha ứng dụng AI](images/diagram_04_ai_prompt_engineering.png)
-<p class="figure-caption"><b>Hình 24:</b> <i>Sơ đồ quy trình Prompt Engineering 2 pha ứng dụng AI trong kiểm thử thực tế</i></p>
+```
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                   CHUỖI THỰC NGHIỆM AI AUTOMATION CỦA NHÓM                       │
+├──────────────────────────────────────────────────────────────────────────────────┤
+│ [AI DEMO 1: SINH TEST CASE & DỮ LIỆU BVA]                                        │
+│   Tài liệu đặc tả               Prompt Few-Shot              12 Test Cases BVA   │
+│ (minisum-spec.md)   ───────► (testcase-bva-prompt.md) ───────► (bva-testcases.xlsx)│
+├──────────────────────────────────────────────────────────────────────────────────┤
+│ [AI DEMO 2: SINH MÃ NGUỒN C# NUNIT & XÁC MINH TRÊN WINAPPDRIVER]                 │
+│   Prompt kiến trúc POM          Script C# GenAI              Xác minh chạy PASS  │
+│ (script-gen-prompt.md) ───► (chatgpt-script-output.cs) ───► (verified-script.cs)│
+└──────────────────────────────────────────────────────────────────────────────────┘
+```
+<p class="figure-caption"><b>Hình 7.2:</b> <i>Chuỗi thực nghiệm AI Automation của Nhóm 02 trên ứng dụng mẫu MiniSum</i></p>
 
 ### 4.1 AI Demo 1: Tự động hóa thiết kế ca kiểm thử hộp đen BVA
 * **Đầu vào:** Đặc tả kỹ thuật chi tiết tại [`ai/prompts/minisum-spec.md`](../ai/prompts/minisum-spec.md) mô tả quy tắc hai màn hình và miền giới hạn $[-99, 99]$.
@@ -2265,7 +2344,12 @@ Sinh viên nộp kết quả cho Giảng viên / Trợ giảng lớp học bằn
 
 ## 9.2 Nhật ký đóng góp trên Git Commit Log
 - Hệ thống kho lưu trữ GitHub: `https://github.com/tinphan247/KTPM-2026-Seminar.git`
-- Toàn bộ quá trình làm việc, giải quyết lỗi, phát triển ứng dụng mẫu và tài liệu đều được commit liên tục, minh bạch. Chi tiết xem tại `git-commit-log.md`.
+- Toàn bộ quá trình làm việc, giải quyết lỗi, phát triển ứng dụng mẫu và tài liệu đều được commit liên tục, minh bạch:
+  - **Phan Trung Tín:** 27 commits chính thức trên Git log.
+  - **Trần Vũ Quang:** 17 commits chính thức trên Git log (PR #3).
+  - **Nguyễn Lê Quang Kan:** 14 commits chính thức trên Git log (PR #1).
+  - **Bùi Quang Tùng:** 4 commits chính thức trên Git log.
+  - Toàn bộ lịch sử commit chi tiết xem tại file `git-commit-log.md`.
 
 ## 9.3 Kê khai sử dụng Trí tuệ Nhân tạo (AI Usage Declaration)
 Theo quy định môn học, nhóm thực hiện kê khai minh bạch:
